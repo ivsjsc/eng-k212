@@ -100,6 +100,34 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
     }
   }[language];
 
+  const projectIdForConsole = 'arctic-outpost-472823-r2';
+
+  const getFriendlyError = (raw?: string | null) => {
+    if (!raw) return null;
+    // map common Firebase auth errors to friendly messages
+    if (raw.includes('requests-from-referrer')) {
+      const msg = (
+        <div className="text-sm text-red-700">
+          Firebase chặn yêu cầu từ trang này vì domain chưa được phép.
+          <div className="mt-2">
+            Hãy thêm <strong>localhost</strong> (hoặc domain/dev của bạn) vào Authorized domains trong Firebase Console.
+          </div>
+          <div className="mt-3 flex gap-2">
+            <a className="text-sm text-blue-700 underline" target="_blank" rel="noreferrer" href={`https://console.firebase.google.com/project/${projectIdForConsole}/authentication/settings`}>
+              Mở Firebase Authentication settings
+            </a>
+            <button className="text-sm px-2 py-1 bg-gray-100 rounded" onClick={() => { navigator.clipboard?.writeText('Add domain: localhost'); }}>
+              Sao chép hướng dẫn
+            </button>
+          </div>
+        </div>
+      );
+      return msg;
+    }
+    // default: normalized message
+    return <span className="text-red-600">{raw}</span>;
+  };
+
   const setupRecaptcha = () => {
     if (!auth) return;
     if (!window.recaptchaVerifier) {
@@ -301,49 +329,53 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
   );
 
   return (
-    <div className="flex flex-col items-center justify-center h-full p-4 sm:p-6">
+    <div className="min-h-screen bg-gradient-to-b from-white via-sky-50 to-white flex items-center justify-center p-6">
        <div id="recaptcha-container"></div>
-       <div className="w-full max-w-sm">
-            <div className="card-glass p-8">
+       <div className="w-full max-w-md">
+            <div className="bg-white shadow-lg rounded-2xl p-8">
                 <div className="text-center mb-6">
-                    <img src="https://ivs.edu.vn/wp-content/uploads/2023/11/logo-ivs-no-bg-e1700125959147.png" alt="IVS English Logo" className="w-16 h-16 mx-auto mb-4" />
-                    <h2 className="text-2xl font-bold">{isLoginView ? `${t.loginTitle}` : `${t.signupTitle}`}</h2>
+                    <img src="https://ivs.edu.vn/wp-content/uploads/2023/11/logo-ivs-no-bg-e1700125959147.png" alt="IVS English Logo" className="w-20 h-20 mx-auto mb-4" />
+                    <h2 className="text-3xl font-extrabold text-sky-700">{isLoginView ? `${t.loginTitle}` : `${t.signupTitle}`}</h2>
+                    <p className="text-sm text-slate-600 mt-1">{isLoginView ? 'Chào mừng trở lại' : 'Tạo tài khoản mới'}</p>
                 </div>
-                
-                {authMethod === 'email' ? renderEmailForm() : renderPhoneForm()}
 
-                {error && <p className="text-red-500 text-sm text-center pt-2">{error}</p>}
-                
+                {successMessage && <div className="mb-4 p-3 bg-green-50 border border-green-200 text-green-800 rounded">{successMessage}</div>}
+                {error && <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-800 rounded">{getFriendlyError(error)}</div>}
+
+                <div className="space-y-4">
+                  {authMethod === 'email' ? renderEmailForm() : renderPhoneForm()}
+                </div>
+
                 <div className="relative my-6">
-                    <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-300 dark:border-slate-600"></div></div>
-                    <div className="relative flex justify-center text-sm"><span className="px-2 bg-white dark:bg-slate-800 text-slate-500">{t.or}</span></div>
+                    <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-200"></div></div>
+                    <div className="relative flex justify-center text-sm"><span className="px-3 bg-white text-slate-500">{t.or}</span></div>
                 </div>
 
                 <div className="space-y-3">
-                  <button onClick={handleGoogleSignIn} className="btn bg-slate-700 hover:bg-slate-800 text-white w-full" disabled={isLoading}>
-                      <i className="fa-brands fa-google mr-2"></i> {t.googleBtn}
+                  <button onClick={handleGoogleSignIn} className="flex items-center justify-center gap-3 w-full py-2 rounded-lg border border-slate-200 bg-white hover:bg-sky-50" disabled={isLoading}>
+                      <img src="/google-icon.svg" alt="Google" className="w-5 h-5" /> <span className="text-slate-700">{t.googleBtn}</span>
                   </button>
                   {authMethod === 'email' ? (
-                    <button onClick={() => setAuthMethod('phone')} className="btn btn-secondary w-full" disabled={isLoading}>
-                      <i className="fa-solid fa-phone mr-2"></i> {t.phoneBtn}
+                    <button onClick={() => setAuthMethod('phone')} className="flex items-center justify-center gap-3 w-full py-2 rounded-lg bg-sky-600 text-white" disabled={isLoading}>
+                      <i className="fa-solid fa-phone"></i> {t.phoneBtn}
                     </button>
                   ) : (
-                     <button onClick={() => setAuthMethod('email')} className="btn btn-secondary w-full" disabled={isLoading}>
-                      <i className="fa-solid fa-envelope mr-2"></i> {t.emailBtn}
+                     <button onClick={() => setAuthMethod('email')} className="flex items-center justify-center gap-3 w-full py-2 rounded-lg bg-sky-600 text-white" disabled={isLoading}>
+                      <i className="fa-solid fa-envelope"></i> {t.emailBtn}
                     </button>
                   )}
                 </div>
-                
-                <p className="text-center text-sm text-slate-600 dark:text-slate-400 mt-6">
+
+                <p className="text-center text-sm text-slate-600 mt-6">
                     {isLoginView ? t.loginPrompt : t.signupPrompt}{' '}
-                    <button onClick={() => { setIsLoginView(!isLoginView); setError(null); }} className="font-semibold text-blue-500 hover:underline">
+                    <button onClick={() => { setIsLoginView(!isLoginView); setError(null); setSuccessMessage(null); }} className="font-semibold text-sky-600 hover:underline">
                         {isLoginView ? t.signupTitle : t.loginTitle}
                     </button>
                 </p>
             </div>
 
             <div className="text-center mt-6">
-                <button onClick={onBack} className="text-sm text-slate-500 hover:text-blue-500 hover:underline">
+                <button onClick={onBack} className="text-sm text-slate-500 hover:text-sky-600 hover:underline">
                     <i className="fa-solid fa-arrow-left mr-2"></i>{t.goBack}
                 </button>
             </div>
