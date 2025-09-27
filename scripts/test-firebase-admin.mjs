@@ -1,9 +1,22 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 async function run() {
-  const root = path.resolve(new URL('.', import.meta.url).pathname, '..');
-  const b64Path = path.join(root, 'service-account.b64');
+  // Use fileURLToPath to handle Windows paths correctly
+  const scriptDir = path.dirname(fileURLToPath(import.meta.url));
+  let root = path.resolve(scriptDir, '..');
+  let b64Path = path.join(root, 'service-account.b64');
+
+  // Fallback: also check project cwd (useful in some environments)
+  if (!fs.existsSync(b64Path)) {
+    const cwdPath = path.join(process.cwd(), 'service-account.b64');
+    if (fs.existsSync(cwdPath)) {
+      b64Path = cwdPath;
+      root = process.cwd();
+    }
+  }
+
   if (!fs.existsSync(b64Path)) {
     console.error('service-account.b64 not found in project root. Place your base64-encoded service account as service-account.b64');
     process.exit(1);
