@@ -1,4 +1,5 @@
-import admin from 'firebase-admin';
+// Netlify Function: setUserAi.js (ESM)
+// Supports TEST_NO_ADMIN=1 for local testing without firebase-admin installed.
 
 function parseServiceAccount(raw) {
   if (!raw) return null;
@@ -7,14 +8,42 @@ function parseServiceAccount(raw) {
   return null;
 }
 
-let adminApp = null;
+let adminModule = null;
 
 async function initAdminIfNeeded() {
-  if (adminApp) return;
-  const saRaw = process.env.SERVICE_ACCOUNT_JSON;
+  if (adminModule) return;
+  const saRaw = process.env.SERVICE_ACCOUNT_JSON || '';
   const sa = parseServiceAccount(saRaw);
-  if (!sa) throw new Error('SERVICE_ACCOUNT_JSON is missing or invalid');
-  adminApp = admin.initializeApp({ credential: admin.credential.cert(sa), projectId: sa.project_id });
+  if (!sa && !process.env.TEST_NO_ADMIN) throw new Error('SERVICE_ACCOUNT_JSON is missing or invalid');
+
+  if (process.env.TEST_NO_ADMIN) {
+    // Minimal mock for local testing
+    adminModule = {
+      auth() {
+        return {
+          async verifyIdToken(token) {
+            if (!token) throw new Error('Missing token (mock)');
+            return { uid: 'mock-admin', admin: true };
+          },
+          async getUser(uid) {
+            return { uid, customClaims: {} };
+          },
+          async setCustomUserClaims(uid, claims) { return; }
+        };
+      },
+      firestore() {
+        return { collection() { return { doc() { return { set: async () => {} } } } } };
+      }
+    };
+    return;
+  }
+
+  // Real firebase-admin init
+  const adminPkg = await import('firebase-admin').catch(() => null);
+  if (!adminPkg) throw new Error('firebase-admin is not installed locally; set TEST_NO_ADMIN=1 to run tests without it');
+  const admin = adminPkg.default || adminPkg;
+  adminModule = admin;
+  admin.initializeApp({ credential: admin.credential.cert(sa), projectId: sa.project_id });
 }
 
 export const handler = async (event, context) => {
@@ -27,7 +56,7 @@ export const handler = async (event, context) => {
 
     await initAdminIfNeeded();
 
-    const decoded = await admin.auth().verifyIdToken(idToken).catch(err => { throw { code: 401, message: 'Invalid ID token: ' + (err && err.message ? err.message : err) }; });
+    const decoded = await adminModule.auth().verifyIdToken(idToken).catch(err => { throw { code: 401, message: 'Invalid ID token: ' + (err && err.message ? err.message : err) }; });
     if (!decoded || !decoded.admin) return { statusCode: 403, body: JSON.stringify({ error: 'Caller is not an admin' }) };
 
     let body = {};
@@ -36,12 +65,12 @@ export const handler = async (event, context) => {
     const aiEnabled = !!body.aiEnabled;
     if (!uid) return { statusCode: 400, body: JSON.stringify({ error: 'Missing field: uid' }) };
 
-    const user = await admin.auth().getUser(uid);
+    const user = await adminModule.auth().getUser(uid);
     const existingClaims = user.customClaims || {};
     const newClaims = Object.assign({}, existingClaims, { aiEnabled });
-    await admin.auth().setCustomUserClaims(uid, newClaims);
+    await adminModule.auth().setCustomUserClaims(uid, newClaims);
 
-    const firestore = admin.firestore();
+    const firestore = adminModule.firestore();
     await firestore.collection('userSettings').doc(uid).set({ aiEnabled }, { merge: true });
 
     return { statusCode: 200, body: JSON.stringify({ success: true, uid, aiEnabled }) };
@@ -51,42 +80,4 @@ export const handler = async (event, context) => {
     return { statusCode: code, body: JSON.stringify({ error: message }) };
   }
 };
-// Minimal Netlify function for local testing
-// This file intentionally keeps behavior simple so it can be required and called locally.
 
-function parseServiceAccount(raw) {
-  if (!raw) return null;
-  try { return JSON.parse(raw); } catch (e) {}
-  try { return JSON.parse(Buffer.from(raw, 'base64').toString('utf8')); } catch (e) {}
-  return null;
-}
-
-let admin = null;
-
-async function initAdminIfNeeded() {
-  if (admin) return;
-  const saRaw = process.env.SERVICE_ACCOUNT_JSON;
-  const sa = parseServiceAccount(saRaw);
-  if (!sa) throw new Error('SERVICE_ACCOUNT_JSON is missing or invalid');
-  admin = require('firebase-admin');
-  admin.initializeApp({ credential: admin.credential.cert(sa), projectId: sa.project_id });
-}
-
-exports.handler = async function(event, context) {
-  try {
-    if (event.httpMethod !== 'POST') return { statusCode: 405, body: JSON.stringify({ error: 'Use POST' }) };
-    const authHeader = (event.headers && (event.headers.authorization || event.headers.Authorization)) || '';
-    const m = authHeader.match(/^Bearer\s+(.*)$/i);
-    if (!m) return { statusCode: 401, body: JSON.stringify({ error: 'Missing bearer' }) };
-    const idToken = m[1];
-    // initialize admin (will throw if env missing)
-    await initAdminIfNeeded();
-    // verify token - may throw
-    await admin.auth().verifyIdToken(idToken);
-    const body = event.body ? JSON.parse(event.body) : {};
-    if (!body.uid) return { statusCode: 400, body: JSON.stringify({ error: 'missing uid' }) };
-    return { statusCode: 200, body: JSON.stringify({ ok: true }) };
-  } catch (err) {
-    return { statusCode: 500, body: JSON.stringify({ error: String(err && err.message ? err.message : err) }) };
-  }
-};
