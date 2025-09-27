@@ -1,6 +1,8 @@
 // Simple assistant proxy server (ESM)
 import http from 'http';
 import { URL } from 'url';
+import fs from 'fs/promises';
+import path from 'path';
 
 const PORT = process.env.PORT || 3001;
 const PROVIDER = (process.env.PROVIDER || '').toLowerCase();
@@ -89,6 +91,45 @@ function localFallback(personaName, message) {
     return `${personaName}: Xin chào! Mình là ${personaName}. Bạn cần hỗ trợ gì?`;
   }
   return `${personaName}: Mình chưa hiểu rõ, bạn mô tả kỹ hơn giúp mình nhé?`;
+}
+
+// Lightweight retrieval from data/ files to surface domain content without an external model
+async function retrievalAnswer(message) {
+  try {
+    const dataDir = path.resolve(process.cwd(), 'data');
+    const files = await fs.readdir(dataDir);
+    const query = (message || '').toLowerCase();
+    if (!query || files.length === 0) return null;
+
+    for (const file of files) {
+      try {
+        const fp = path.join(dataDir, file);
+        const stat = await fs.stat(fp);
+        if (!stat.isFile()) continue;
+        const content = await fs.readFile(fp, 'utf8');
+        const lower = content.toLowerCase();
+        // find the earliest match of any keyword token of length >=3
+        const tokens = query.split(/\W+/).filter(t => t.length >= 3);
+        for (const t of tokens) {
+          const idx = lower.indexOf(t);
+          if (idx !== -1) {
+            // extract surrounding context (up to 300 chars)
+            const start = Math.max(0, idx - 120);
+            const excerpt = content.substring(start, Math.min(content.length, idx + 180)).trim();
+            // Return excerpt and source filename
+            return `(${file}) ${excerpt.replace(/\s+/g, ' ').trim()}`;
+          }
+        }
+      } catch (e) {
+        // ignore per-file errors
+        continue;
+      }
+    }
+  } catch (e) {
+    // if data dir missing or other error, silently ignore
+    return null;
+  }
+  return null;
 }
 
 const server = http.createServer(async (req, res) => {
