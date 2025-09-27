@@ -101,22 +101,38 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
   }[language];
 
   const projectIdForConsole = 'arctic-outpost-472823-r2';
+  const currentHost = typeof window !== 'undefined' ? window.location.hostname : '';
+  const currentOrigin = typeof window !== 'undefined' ? window.location.origin : '';
+  const authRedirectUrl = currentOrigin ? `${currentOrigin.replace(/\/$/, '')}/__/auth/handler` : '';
 
   const getFriendlyError = (raw?: string | null) => {
     if (!raw) return null;
     // map common Firebase auth errors to friendly messages
     if (raw.includes('requests-from-referrer')) {
+      const displayHost = currentHost || 'your-domain.com';
+      const displayOrigin = currentOrigin || 'https://your-domain.com';
+      const redirectUri = authRedirectUrl || `${displayOrigin.replace(/\/$/, '')}/__/auth/handler`;
+      const clipboardText = [
+        `Firebase Console → Authentication → Settings → Authorized domains → Add: ${displayHost}`,
+        `Google Cloud Console → OAuth client → Authorized JavaScript origins → ${displayOrigin}`,
+        `Google Cloud Console → OAuth client → Authorized redirect URIs → ${redirectUri}`
+      ].join('\n');
       const msg = (
         <div className="text-sm text-red-700">
           Firebase chặn yêu cầu từ trang này vì domain chưa được phép.
           <div className="mt-2">
-            Hãy thêm <strong>localhost</strong> (hoặc domain/dev của bạn) vào Authorized domains trong Firebase Console.
+            Hãy thêm <strong>{displayHost}</strong> (hoặc domain/dev của bạn) vào Authorized domains trong Firebase Console và cập nhật OAuth client.
           </div>
-          <div className="mt-3 flex gap-2">
+          <ul className="mt-3 list-disc pl-4 space-y-1 text-red-600/90">
+            <li>Firebase Console → Authentication → Settings → Authorized domains → Add <strong>{displayHost}</strong>.</li>
+            <li>Google Cloud Console → OAuth client → thêm JavaScript origin: <strong>{displayOrigin}</strong>.</li>
+            <li>Google Cloud Console → OAuth client → thêm Redirect URI: <strong>{redirectUri}</strong>.</li>
+          </ul>
+          <div className="mt-3 flex flex-wrap gap-2">
             <a className="text-sm text-blue-700 underline" target="_blank" rel="noreferrer" href={`https://console.firebase.google.com/project/${projectIdForConsole}/authentication/settings`}>
               Mở Firebase Authentication settings
             </a>
-            <button className="text-sm px-2 py-1 bg-gray-100 rounded" onClick={() => { navigator.clipboard?.writeText('Add domain: localhost'); }}>
+            <button className="text-sm px-2 py-1 bg-gray-100 rounded" onClick={() => { navigator.clipboard?.writeText(clipboardText); }}>
               Sao chép hướng dẫn
             </button>
           </div>
