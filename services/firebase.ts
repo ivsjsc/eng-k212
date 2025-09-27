@@ -23,6 +23,7 @@ import {
     type Firestore
 } from "firebase/firestore";
 import { getFunctions } from 'firebase/functions';
+const admin = require('firebase-admin');
 
 // User-provided Firebase configuration to fix connection issues.
 const firebaseConfig = {
@@ -71,6 +72,64 @@ try {
   firebaseError = `Firebase initialization failed: ${e.message}`;
   console.error(firebaseError, e);
 }
+
+function loadServiceAccount() {
+  const raw = process.env.SERVICE_ACCOUNT_JSON || '';
+  if (!raw) throw new Error('SERVICE_ACCOUNT_JSON is not set');
+  try {
+    if (raw.trim().startsWith('{')) return JSON.parse(raw);
+    return JSON.parse(Buffer.from(raw, 'base64').toString('utf8'));
+  } catch (e) {
+    throw new Error('Invalid SERVICE_ACCOUNT_JSON: ' + e.message);
+  }
+}
+
+// initialize admin once
+if (!admin.apps.length) {
+  const serviceAccount = loadServiceAccount();
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
+
+exports.handler = async function (event, context) {
+  try {
+    // Only POST
+    if (event.httpMethod !== 'POST') {
+      return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
+    }
+
+    // Verify Authorization header contains idToken
+    const authHeader = (event.headers && (event.headers.authorization || event.headers.Authorization)) || '';
+    const idToken = authHeader.startsWith('Bearer ') ? authHeader.split('Bearer ')[1] : null;
+    if (!idToken) {
+      return { statusCode: 401, body: JSON.stringify({ error: 'Missing Authorization header' }) };
+    }
+
+    // Verify token and admin claim
+    const caller = await admin.auth().verifyIdToken(idToken);
+    if (!caller || !caller.admin) {
+      return { statusCode: 403, body: JSON.stringify({ error: 'Forbidden: admin only' }) };
+    }
+
+    const body = event.body ? JSON.parse(event.body) : {};
+    const { uid, aiEnabled } = body;
+    if (!uid) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Missing uid' }) };
+    }
+
+    // Set custom claim
+    await admin.auth().setCustomUserClaims(uid, { aiEnabled: !!aiEnabled });
+
+    // Mirror to Firestore for client reads
+    await admin.firestore().doc(`userSettings/${uid}`).set({ aiEnabled: !!aiEnabled }, { merge: true });
+
+    return { statusCode: 200, body: JSON.stringify({ success: true }) };
+  } catch (err) {
+    console.error('setUserAi error:', err);
+    return { statusCode: 500, body: JSON.stringify({ error: err.message || 'server error' }) };
+  }
+};
 
 export { 
     auth, 
