@@ -26,3 +26,9 @@ dist-ssr
 # Local Netlify folder
 .netlify
 secrets/
+
+# Environment and secrets
+.env
+.env.local
+service-account.b64
+service-account.json
