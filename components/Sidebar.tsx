@@ -9,9 +9,10 @@ interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
   onLogout: () => void;
+  isAdmin?: boolean;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ user, currentView, setView, language, isOpen, onClose, onLogout }) => {
+const Sidebar: React.FC<SidebarProps> = ({ user, currentView, setView, language, isOpen, onClose, onLogout, isAdmin }) => {
   const t = {
     en: {
       home: 'Home',
@@ -21,6 +22,7 @@ const Sidebar: React.FC<SidebarProps> = ({ user, currentView, setView, language,
       speakingPartner: 'Speaking Partner',
       settings: 'Settings',
       userGuide: 'User Guide',
+      admin: 'Admin',
       logout: 'Logout',
     },
     vi: {
@@ -31,6 +33,7 @@ const Sidebar: React.FC<SidebarProps> = ({ user, currentView, setView, language,
       speakingPartner: 'Luyện nói',
       settings: 'Cài đặt',
       userGuide: 'Hướng dẫn',
+      admin: 'Quản trị',
       logout: 'Đăng xuất',
     }
   };
@@ -57,6 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({ user, currentView, setView, language,
   ];
 
   const navItems = user.role === 'teacher' ? teacherNavItems : studentNavItems;
+  const adminNavItem = { view: 'admin' as View, icon: 'fa-shield-halved', label: 'admin' as keyof typeof t.en };
 
   // FIX: Explicitly type NavLink as React.FC to resolve issue where TypeScript incorrectly treats the 'key' prop as a standard prop.
   const NavLink: React.FC<{ item: { view: View; icon: string; label: keyof typeof t.en } }> = ({ item }) => (
@@ -107,6 +111,8 @@ const Sidebar: React.FC<SidebarProps> = ({ user, currentView, setView, language,
             {navItems.map(item => <NavLink key={item.view} item={item} />)}
             <hr className="my-4 border-slate-200 dark:border-slate-700" />
             {commonNavItems.map(item => <NavLink key={item.view} item={item} />)}
+            {/* Admin link (visible only to admins) */}
+            {isAdmin ? <NavLink key={adminNavItem.view} item={adminNavItem} /> : null}
           </ul>
         </nav>
         
