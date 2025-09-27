@@ -3,6 +3,7 @@ import {
     auth, 
     db, 
     googleProvider,
+  onAuthStateChanged,
     createUserWithEmailAndPassword, 
     signInWithEmailAndPassword, 
     signInWithRedirect,
@@ -45,6 +46,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isOtpSent, setIsOtpSent] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);
 
   const t = {
     en: {
@@ -116,6 +119,13 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
     if (authMethod === 'phone') {
       setupRecaptcha();
     }
+    // subscribe to auth state to show signed-in user profile in UI
+    if (auth) {
+      const unsub = onAuthStateChanged(auth, (u) => {
+        setCurrentUser(u || null);
+      });
+      return () => unsub();
+    }
   }, [authMethod]);
   
   const handleEmailAuth = async (e: React.FormEvent) => {
@@ -132,6 +142,9 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
     try {
       if (isLoginView) {
         await signInWithEmailAndPassword(auth, email, password);
+        setSuccessMessage('Đăng nhập thành công. Chuyển hướng...');
+        // short delay to let UI update then redirect to home
+        setTimeout(() => { window.location.href = '/'; }, 900);
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const firebaseUser = userCredential.user;
@@ -139,6 +152,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
 
         const newUser: User = { ...MOCK_USER, id: firebaseUser.uid, name, role: selectedRole };
         await setDoc(doc(db, "users", firebaseUser.uid), newUser);
+        setSuccessMessage('Tạo tài khoản thành công. Chuyển hướng...');
+        setTimeout(() => { window.location.href = '/'; }, 900);
       }
     } catch (err: any) {
       setError(err.message.replace('Firebase: ', ''));
@@ -197,6 +212,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
         };
         await setDoc(userDocRef, newUser);
       }
+      setSuccessMessage('Xác thực thành công. Chuyển hướng...');
+      setTimeout(() => { window.location.href = '/'; }, 900);
 
     } catch (err: any) {
       setError(err.message.replace('Firebase: ', ''));
