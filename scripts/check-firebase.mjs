@@ -1,15 +1,16 @@
 import { initializeApp, getApps } from 'firebase/app';
 
 // Same config as in services/firebase.ts
+// Read config from environment when available (do not commit secrets)
 const firebaseConfig = {
-  apiKey: "AIzaSyB9lCtWV3f5pbGQJ6gvFeGbuAtF3Dl1fPs",
-  authDomain: "arctic-outpost-472823-r2.firebaseapp.com",
-  databaseURL: "https://arctic-outpost-472823-r2-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "arctic-outpost-472823-r2",
-  storageBucket: "arctic-outpost-472823-r2.appspot.com",
-  messagingSenderId: "125352513706",
-  appId: "1:125352513706:web:0bdd068ff703ff569680d3",
-  measurementId: "G-T492DDR4DZ"
+  apiKey: process.env.VITE_FIREBASE_API_KEY || 'REPLACE_WITH_YOUR_FIREBASE_API_KEY',
+  authDomain: process.env.VITE_FIREBASE_AUTH_DOMAIN || 'arctic-outpost-472823-r2.firebaseapp.com',
+  databaseURL: process.env.VITE_FIREBASE_DATABASE_URL || 'https://arctic-outpost-472823-r2-default-rtdb.asia-southeast1.firebasedatabase.app',
+  projectId: process.env.VITE_FIREBASE_PROJECT_ID || 'arctic-outpost-472823-r2',
+  storageBucket: process.env.VITE_FIREBASE_STORAGE_BUCKET || 'arctic-outpost-472823-r2.appspot.com',
+  messagingSenderId: process.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '125352513706',
+  appId: process.env.VITE_FIREBASE_APP_ID || '1:125352513706:web:0bdd068ff703ff569680d3',
+  measurementId: process.env.VITE_FIREBASE_MEASUREMENT_ID || 'G-T492DDR4DZ'
 };
 
 (async () => {
