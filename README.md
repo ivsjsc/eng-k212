@@ -47,3 +47,22 @@ node server/index.js
 ```
 
 The client `js/ai-chatbot.js` will POST to `/api/assistant` and fall back to local responses if the server is unreachable.
+
+### Firestore security rules
+
+There's a sample `firestore.rules` in the repo with conservative defaults:
+
+- `users/{uid}`: readable/writable only by the authenticated user with matching uid. Client-side writes are allowed for create/update, deletes are disabled.
+- `publicContent`: readable by anyone; writes/changes require an `admin` custom claim on the user token.
+
+To deploy these rules to your Firebase project:
+
+```powershell
+# install firebase-tools if you haven't
+# npm install -g firebase-tools
+# firebase login
+# from project root
+firebase deploy --only firestore:rules
+```
+
+Make sure to test auth flows in the UI after enabling providers in Firebase Console (Email/Password, Google, Phone).
