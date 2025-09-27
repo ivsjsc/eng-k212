@@ -193,11 +193,13 @@
       this.addMessage('user', message);
       inputField.value = '';
 
-      // generate assistant reply (local simulation). In real integration you'd call server/AI.
-      const reply = this.generateResponse(message);
-      setTimeout(() => {
+      // Try server-side AI proxy first; fall back to local simulation
+      this.callServerAssistant(message).then(reply => {
         this.addMessage('bot', reply);
-      }, 700 + Math.random() * 600);
+      }).catch(() => {
+        const reply = this.generateResponse(message);
+        setTimeout(() => { this.addMessage('bot', reply); }, 300 + Math.random() * 700);
+      });
     }
 
     addMessage(sender, text) {
@@ -242,6 +244,29 @@
       }
 
       return `${this.prefs.personaName}: Mình chưa hiểu rõ, bạn mô tả kỹ hơn giúp mình nhé?`;
+    }
+
+    async callServerAssistant(message) {
+      // simple health check: attempt to POST to /api/assistant on same host/port
+      try {
+        const payload = {
+          message,
+          personaName: this.prefs.personaName || 'Assistant',
+          privacyMode: !!this.prefs.privacyMode
+        };
+        const resp = await fetch('/api/assistant', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!resp.ok) throw new Error('bad response');
+        const data = await resp.json();
+        if (data && data.reply) return data.reply;
+        throw new Error('no reply');
+      } catch (e) {
+        // rethrow to allow fallback
+        throw e;
+      }
     }
 
     loadPreferences() {
