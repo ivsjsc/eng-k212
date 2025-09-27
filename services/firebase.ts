@@ -1,4 +1,4 @@
-import { initializeApp, type FirebaseApp } from "firebase/app";
+import { initializeApp, getApps, type FirebaseApp } from "firebase/app";
 import { getAnalytics, type Analytics } from "firebase/analytics";
 import { 
     getAuth, 
@@ -47,7 +47,8 @@ let analyticsClient: Analytics | null = null;
 
 try {
   if (firebaseConfig && firebaseConfig.apiKey) {
-      const app: FirebaseApp = initializeApp(firebaseConfig);
+  // Avoid double-initialization during HMR or if this module is evaluated multiple times
+  const app: FirebaseApp = getApps().length ? (getApps()[0] as FirebaseApp) : initializeApp(firebaseConfig);
       // Helpful debug log so client-side initialisation is visible in the browser console
       try {
         // app.options is present on successful initialization
