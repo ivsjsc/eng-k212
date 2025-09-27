@@ -1,25 +1,12 @@
-import fs from 'fs';
-import url from 'url';
-
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
-const backupPath = new URL('../service-account-backup/service-account.json', import.meta.url).pathname;
-
-if (!fs.existsSync(backupPath)) {
-  console.error('Backup service account not found at', backupPath);
-  process.exit(1);
-}
-
-const raw = fs.readFileSync(backupPath, 'utf8');
-process.env.SERVICE_ACCOUNT_JSON = raw;
+// Test harness runs in TEST_NO_ADMIN mode by default so no local service account is required.
+process.env.TEST_NO_ADMIN = '1';
 
 import { handler } from '../netlify/functions/setUserAi.js';
 
 (async () => {
-  const event = {
-    httpMethod: 'POST',
-    headers: { authorization: 'Bearer invalid-token' },
-    body: JSON.stringify({ uid: 'some-uid', aiEnabled: true }),
-  };
+  // Run in TEST_NO_ADMIN mode so firebase-admin isn't required locally.
+  process.env.TEST_NO_ADMIN = '1';
+  const event = { httpMethod: 'POST', headers: { authorization: 'Bearer mock-admin-token' }, body: JSON.stringify({ uid: 'some-user', aiEnabled: true }) };
   const res = await handler(event, {});
-  console.log('Response:', res);
+  console.log('res', res);
 })();
