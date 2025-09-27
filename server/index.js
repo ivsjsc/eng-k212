@@ -1,8 +1,6 @@
-// Simple assistant proxy server
-// Supports PROVIDER=hf (Hugging Face Inference) or openai (OpenAI). If no provider configured
-// the server falls back to a safe local response generator.
-const http = require('http');
-const { URL } = require('url');
+// Simple assistant proxy server (ESM)
+import http from 'http';
+import { URL } from 'url';
 
 const PORT = process.env.PORT || 3001;
 const PROVIDER = (process.env.PROVIDER || '').toLowerCase();
@@ -48,10 +46,8 @@ async function callHuggingFace(prompt) {
   const contentType = res.headers.get('content-type') || '';
   if (contentType.includes('application/json')) {
     const data = await res.json();
-    // data may be an array with generated_text or a string
     if (Array.isArray(data) && data.length && data[0].generated_text) return data[0].generated_text;
     if (data.generated_text) return data.generated_text;
-    // fallback: stringify
     return JSON.stringify(data);
   }
   return await res.text();
@@ -120,7 +116,6 @@ const server = http.createServer(async (req, res) => {
         return res.end(JSON.stringify({reply}));
       }
 
-      // Compose a short prompt that instructs the model to use persona
       const prompt = `You are ${personaName}. Answer the user's question concisely in Vietnamese when possible. User: ${message}`;
 
       let modelReply = null;
