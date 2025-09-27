@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 // FIX: Explicitly adding the .tsx extension can help resolve module issues in some environments.
 import App from './App.tsx';
 import './index.css';
+import { logger } from './utils/logger';
 
 const container = document.getElementById('root');
 if (container) {
@@ -19,5 +20,5 @@ if (container) {
     loader.remove();
   }
 } else {
-  console.error('Fatal Error: Root element #root not found in the DOM.');
+  logger.critical('Fatal Error: Root element #root not found in the DOM.');
 }

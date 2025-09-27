@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import * as XLSX from 'https://cdn.sheetjs.com/xlsx-0.20.2/package/xlsx.mjs';
 import type { Classes, Student, ClassData, ClassScheduleItem, Grade } from '../types';
+import { exportToExcel, readExcelFile, type ExcelData } from '../utils/excelHelper';
+import { logger } from '../utils/logger';
 import StudentCard from './StudentCard';
 import StudentRow from './StudentRow';
 import StudentReportModal from './StudentReportModal';
@@ -206,7 +207,7 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ classes, setClasses
     setClassForNewStudent(null);
   };
 
-  const handleDownloadTemplate = () => {
+  const handleDownloadTemplate = async () => {
     const headers = {
         stt: t.excel.header_stt,
         name: t.excel.header_name,
@@ -218,48 +219,56 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ classes, setClasses
         final: t.excel.header_final,
     };
 
-    const exampleData = [
-        {
-            [headers.stt]: 1,
-            [headers.name]: t.excel.example_name,
-            [headers.dob]: t.excel.example_dob,
-            [headers.gender]: t.excel.example_gender,
-            [headers.oral]: t.excel.example_oral,
-            [headers.min15]: t.excel.example_15m,
-            [headers.midterm]: t.excel.example_midterm,
-            [headers.final]: t.excel.example_final,
-        },
-        { [headers.stt]: 2 }
-    ];
+    const excelData: ExcelData = {
+      headers: [
+        headers.stt,
+        headers.name,
+        headers.dob,
+        headers.gender,
+        headers.oral,
+        headers.min15,
+        headers.midterm,
+        headers.final
+      ],
+      rows: [
+        [
+          1,
+          t.excel.example_name,
+          t.excel.example_dob,
+          t.excel.example_gender,
+          t.excel.example_oral,
+          t.excel.example_15m,
+          t.excel.example_midterm,
+          t.excel.example_final
+        ],
+        [2, '', '', '', '', '', '', ''] // Empty row for user input
+      ]
+    };
     
-    const ws = XLSX.utils.json_to_sheet(exampleData, {
-        header: Object.values(headers)
-    });
-    ws['!cols'] = [
-        { wch: 5 }, { wch: 30 }, { wch: 20 }, { wch: 15 },
-        { wch: 20 }, { wch: 20 }, { wch: 20 }, { wch: 20 },
-    ];
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Student List");
     const fileName = language === 'vi' ? 'mau_nhap_diem_hoc_sinh.xlsx' : 'student_grade_template.xlsx';
-    XLSX.writeFile(wb, fileName);
+    await exportToExcel(excelData, {
+      filename: fileName,
+      sheetName: "Student List",
+      title: language === 'vi' ? 'Mẫu nhập điểm học sinh' : 'Student Grade Template'
+    });
   };
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, classId: string) => {
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>, classId: string) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
     setIsUploading(true);
     setUploadMessage(null);
     
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const data = new Uint8Array(e.target!.result as ArrayBuffer);
-        const workbook = XLSX.read(data, { type: "array", cellDates: true });
-        const sheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[sheetName];
-        const json: any[] = XLSX.utils.sheet_to_json(worksheet, { raw: false });
+    try {
+      const excelData = await readExcelFile(file);
+      const json = excelData.rows.map(row => {
+        const obj: any = {};
+        excelData.headers.forEach((header, index) => {
+          obj[header] = row[index];
+        });
+        return obj;
+      });
         
         const headers = t.excel;
         const gradeCols: { header: string; coeff: 1 | 2 | 3, name: string }[] = [
@@ -332,16 +341,14 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ classes, setClasses
         setClasses(updatedClasses);
 
         setUploadMessage({ classId, type: 'success', text: t.alert.success(newStudents.length) });
-      } catch (error) {
-        console.error("Error processing Excel file:", error);
+    } catch (error) {
+        logger.error("Error processing Excel file:", error);
         setUploadMessage({ classId, type: 'error', text: t.alert.fail });
-      } finally {
+    } finally {
         setIsUploading(false);
         if (event.target) event.target.value = '';
         setTimeout(() => setUploadMessage(null), 5000);
-      }
-    };
-    reader.readAsArrayBuffer(file);
+    }
   };
 
   if (Object.keys(classes).length === 0) {

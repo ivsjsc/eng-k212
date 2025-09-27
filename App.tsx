@@ -1,23 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import type { View, User, Course, Classes } from './types';
 import { MOCK_CLASSES, MOCK_USER } from './constants.ts';
 import { auth, db, firebaseError, onAuthStateChanged, signOut, doc, getDoc, setDoc, updateDoc, getRedirectResult } from './services/firebase.ts';
+import { logger } from './utils/logger';
 
-import Sidebar from './components/Sidebar.tsx';
-import Header from './components/Header';
-import AdminPanel from './components/AdminPanel';
-import Home from './components/Home';
-import Dashboard from './components/Dashboard';
-import CourseDetail from './components/CourseDetail';
-import TeacherDashboard from './components/TeacherDashboard';
-import WritingGrader from './components/WritingGrader';
-import SpeakingPartner from './components/SpeakingPartner';
-import Settings from './components/Settings';
-import UserGuide from './components/UserGuide';
-import AssistiveTouch from './components/AssistiveTouch.tsx';
-import AuthPage from './components/AuthPage.tsx';
+// Lazy load heavy components
+const Sidebar = lazy(() => import('./components/Sidebar.tsx'));
+const Header = lazy(() => import('./components/Header'));
+const AdminPanel = lazy(() => import('./components/AdminPanel'));
+const Home = lazy(() => import('./components/Home'));
+const Dashboard = lazy(() => import('./components/Dashboard'));
+const CourseDetail = lazy(() => import('./components/CourseDetail'));
+const TeacherDashboard = lazy(() => import('./components/TeacherDashboard'));
+const WritingGrader = lazy(() => import('./components/WritingGrader'));
+const SpeakingPartner = lazy(() => import('./components/SpeakingPartner'));
+const Settings = lazy(() => import('./components/Settings'));
+const UserGuide = lazy(() => import('./components/UserGuide'));
+const AssistiveTouch = lazy(() => import('./components/AssistiveTouch.tsx'));
+const AuthPage = lazy(() => import('./components/AuthPage.tsx'));
+const RoleSelectionPage = lazy(() => import('./components/RoleSelectionPage.tsx'));
+
+// Keep Loading component as regular import since it's needed immediately
 import Loading from './components/Loading.tsx';
-import RoleSelectionPage from './components/RoleSelectionPage.tsx';
+import ErrorBoundary from './components/ErrorBoundary';
+
+// Loading fallback component for Suspense
+const LoadingFallback = () => (
+  <div className="flex items-center justify-center h-64">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+  </div>
+);
 
 function App() {
   // State for application
@@ -86,7 +98,7 @@ function App() {
                 }
             }
         } catch (error) {
-            console.error("Error handling redirect result:", error);
+            logger.error("Error handling redirect result:", error);
         }
     };
     handleRedirectResult();
@@ -98,7 +110,7 @@ function App() {
           const idTokenResult = await firebaseUser.getIdTokenResult();
           setIsAdmin(!!idTokenResult?.claims?.admin);
         } catch (e) {
-          console.warn('Failed to read idTokenResult for claims', e);
+          logger.warn('Failed to read idTokenResult for claims', e);
           setIsAdmin(false);
         }
         const userDocRef = doc(db!, "users", firebaseUser.uid);
@@ -118,7 +130,7 @@ function App() {
             }
           }
         } else {
-          console.warn("User document not found for UID:", firebaseUser.uid, "This may happen during redirect sign-in.");
+          logger.warn("User document not found for UID:", firebaseUser.uid, "This may happen during redirect sign-in.");
         }
       } else {
         setUser(null);
@@ -169,7 +181,7 @@ function App() {
             await updateDoc(userDocRef, { ...updatedUser });
             setUser(updatedUser);
         } catch (error) {
-            console.error("Error updating user profile:", error);
+            logger.error("Error updating user profile:", error);
         }
     } else if (user && user.id.startsWith('guest-')) {
         setUser(updatedUser); // Update local guest user state
@@ -183,7 +195,7 @@ function App() {
             await setDoc(classesDocRef, updatedClasses);
             setClasses(updatedClasses);
         } catch(error) {
-            console.error("Error updating classes:", error);
+            logger.error("Error updating classes:", error);
         }
     } else if (user && user.id.startsWith('guest-')) {
         setClasses(updatedClasses); // Update local guest classes state
@@ -288,47 +300,67 @@ function App() {
   if (!user) {
     return (
       <div className="h-screen bg-slate-100 dark:bg-slate-900">
-        {authStep === 'roleSelection' ? (
-          <RoleSelectionPage
-            onSelectRole={(role) => {
-              setSelectedRole(role);
-              setAuthStep('login');
-            }}
-            onGuestLogin={handleGuestLogin}
-            language={language}
-            setLanguage={setLanguage}
-          />
-        ) : (
-          <AuthPage
-            language={language}
-            selectedRole={selectedRole}
-            onBack={() => setAuthStep('roleSelection')}
-          />
-        )}
+        <Suspense fallback={<Loading />}>
+          {authStep === 'roleSelection' ? (
+            <RoleSelectionPage
+              onSelectRole={(role) => {
+                setSelectedRole(role);
+                setAuthStep('login');
+              }}
+              onGuestLogin={handleGuestLogin}
+              language={language}
+              setLanguage={setLanguage}
+            />
+          ) : (
+            <AuthPage
+              language={language}
+              selectedRole={selectedRole}
+              onBack={() => setAuthStep('roleSelection')}
+            />
+          )}
+        </Suspense>
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen bg-slate-100 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-200">
-      <Sidebar 
-        user={user} 
-        currentView={currentView} 
-        setView={handleSetView} 
-        language={language} 
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-        onLogout={handleLogout}
-        isAdmin={isAdmin}
-      />
-      <div className="flex-1 flex flex-col h-screen">
-        <Header currentView={currentView} language={language} onMenuClick={() => setIsSidebarOpen(true)} />
-        <main className="flex-1 overflow-y-auto custom-scrollbar relative">
-          {renderView()}
-          <AssistiveTouch setView={handleSetView} language={language} />
-        </main>
+    <ErrorBoundary>
+      <div className="flex h-screen bg-slate-100 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-200">
+        <Suspense fallback={<LoadingFallback />}>
+          <ErrorBoundary>
+            <Sidebar 
+              user={user} 
+              currentView={currentView} 
+              setView={handleSetView} 
+              language={language} 
+              isOpen={isSidebarOpen}
+              onClose={() => setIsSidebarOpen(false)}
+              onLogout={handleLogout}
+              isAdmin={isAdmin}
+            />
+          </ErrorBoundary>
+        </Suspense>
+        <div className="flex-1 flex flex-col h-screen">
+          <Suspense fallback={<LoadingFallback />}>
+            <ErrorBoundary>
+              <Header currentView={currentView} language={language} onMenuClick={() => setIsSidebarOpen(true)} />
+            </ErrorBoundary>
+          </Suspense>
+          <main className="flex-1 overflow-y-auto custom-scrollbar relative">
+            <Suspense fallback={<LoadingFallback />}>
+              <ErrorBoundary>
+                {renderView()}
+              </ErrorBoundary>
+            </Suspense>
+            <Suspense fallback={<LoadingFallback />}>
+              <ErrorBoundary>
+                <AssistiveTouch setView={handleSetView} language={language} />
+              </ErrorBoundary>
+            </Suspense>
+          </main>
+        </div>
       </div>
-    </div>
+    </ErrorBoundary>
   );
 }
 

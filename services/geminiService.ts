@@ -2,6 +2,7 @@
 // The API key must be sourced from environment variables, not user input/localStorage.
 import { GoogleGenAI, Type, Chat } from "@google/genai";
 import type { WritingFeedback, CurriculumLesson, QuizQuestion, GeneratedSentence } from '../types';
+import { logger } from '../utils/logger';
 
 let aiInstance: GoogleGenAI | null = null;
 
@@ -10,21 +11,21 @@ let aiInstance: GoogleGenAI | null = null;
  * Throws an error if the API key is not available when an AI feature is used.
  */
 function getAiInstance(): GoogleGenAI {
-  if (!process.env.API_KEY) {
+  if (!import.meta.env.VITE_GEMINI_API_KEY) {
     throw new Error("AI features are not available. Please contact the administrator to configure the API key.");
   }
   
   // Initialize only once.
   if (!aiInstance) {
-    aiInstance = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    aiInstance = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
   }
 
   return aiInstance;
 }
 
 export const isAiConfigured = (): boolean => {
-  // FIX: Check for API key in environment variables, not localStorage.
-  return !!process.env.API_KEY;
+  // Check for API key in environment variables
+  return !!import.meta.env.VITE_GEMINI_API_KEY;
 };
 
 export const gradeWriting = async (topic: string, text: string): Promise<WritingFeedback> => {
@@ -54,7 +55,7 @@ export const gradeWriting = async (topic: string, text: string): Promise<Writing
     const jsonString = response.text.trim();
     return JSON.parse(jsonString) as WritingFeedback;
   } catch (e) {
-    console.error("Failed to parse Gemini JSON response:", e);
+    logger.error("Failed to parse Gemini JSON response:", e);
     throw new Error("Could not get feedback from AI. Please try again.");
   }
 };
@@ -85,7 +86,7 @@ export const translateToVietnamese = async (text: string): Promise<string> => {
     });
     return response.text.trim();
   } catch (error) {
-    console.error("Error translating text:", error);
+    logger.error("Error translating text:", error);
     throw new Error("Failed to translate text.");
   }
 };
@@ -130,7 +131,7 @@ export const generateQuiz = async (lesson: CurriculumLesson, language: 'en' | 'v
         const data = JSON.parse(response.text.trim());
         return data.quiz || [];
     } catch (e) {
-        console.error("Failed to parse Gemini JSON for quiz:", e);
+        logger.error("Failed to parse Gemini JSON for quiz:", e);
         throw new Error("Could not generate a quiz from the AI. Please try again.");
     }
 };
@@ -174,7 +175,7 @@ export const generateSampleSentences = async (lesson: CurriculumLesson, language
         const data = JSON.parse(response.text.trim());
         return data.sentences || [];
     } catch (e) {
-        console.error("Failed to parse Gemini JSON for sentences:", e);
+        logger.error("Failed to parse Gemini JSON for sentences:", e);
         throw new Error("Could not generate sample sentences from the AI. Please try again.");
     }
 };
@@ -194,7 +195,7 @@ export const generateStoryStarter = async (lesson: CurriculumLesson, language: '
         });
         return response.text.trim();
     } catch (error) {
-        console.error("Error generating story starter:", error);
+        logger.error("Error generating story starter:", error);
         throw new Error("Failed to generate a story starter.");
     }
 };
