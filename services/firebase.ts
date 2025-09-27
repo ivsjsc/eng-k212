@@ -1,4 +1,5 @@
 import { initializeApp, type FirebaseApp } from "firebase/app";
+import { getAnalytics, type Analytics } from "firebase/analytics";
 import { 
     getAuth, 
     onAuthStateChanged, 
@@ -42,6 +43,7 @@ let db: Firestore | null = null;
 let firebaseError: string | null = null;
 let googleProvider: GoogleAuthProvider | null = null;
 let functionsClient: ReturnType<typeof getFunctions> | null = null;
+let analyticsClient: Analytics | null = null;
 
 try {
   if (firebaseConfig && firebaseConfig.apiKey) {
@@ -62,6 +64,15 @@ try {
         } catch (e) {
           // ignore if functions can't initialize in current environment
         }
+        // Initialize Analytics only in browser environments when measurementId is present
+        try {
+          // getAnalytics requires a browser environment; guard with typeof window
+          if (typeof window !== 'undefined' && (app.options?.measurementId || firebaseConfig.measurementId)) {
+            analyticsClient = getAnalytics(app);
+          }
+        } catch (e) {
+          // ignore analytics initialization failures (e.g., in tests or SSR)
+        }
       googleProvider = new GoogleAuthProvider();
   } else {
       firebaseError = "Firebase configuration is missing or invalid. Please check the hardcoded config in services/firebase.ts.";
@@ -81,6 +92,7 @@ export {
     firebaseError,
     googleProvider,
   functionsClient,
+    analyticsClient,
     onAuthStateChanged,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
