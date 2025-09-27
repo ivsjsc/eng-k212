@@ -24,17 +24,18 @@ import {
     type Firestore
 } from "firebase/firestore";
 import { getFunctions } from 'firebase/functions';
+import { logger } from '../utils/logger';
 
-// User-provided Firebase configuration to fix connection issues.
+// Firebase configuration from environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyB9lCtWV3f5pbGQJ6gvFeGbuAtF3Dl1fPs",
-  authDomain: "arctic-outpost-472823-r2.firebaseapp.com",
-  databaseURL: "https://arctic-outpost-472823-r2-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "arctic-outpost-472823-r2",
-  storageBucket: "arctic-outpost-472823-r2.appspot.com",
-  messagingSenderId: "125352513706",
-  appId: "1:125352513706:web:0bdd068ff703ff569680d3",
-  measurementId: "G-T492DDR4DZ"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 
@@ -52,10 +53,9 @@ try {
       // Helpful debug log so client-side initialisation is visible in the browser console
       try {
         // app.options is present on successful initialization
-        // eslint-disable-next-line no-console
-        console.log('Firebase initialized (client). Project ID:', app.options?.projectId || '(unknown)');
+        logger.debug('Firebase initialized (client). Project ID:', app.options?.projectId || '(unknown)');
       } catch (e) {
-        // ignore console errors in unusual environments
+        // ignore logging errors in unusual environments
       }
       auth = getAuth(app);
       db = getFirestore(app);
@@ -76,12 +76,12 @@ try {
         }
       googleProvider = new GoogleAuthProvider();
   } else {
-      firebaseError = "Firebase configuration is missing or invalid. Please check the hardcoded config in services/firebase.ts.";
-      console.error(firebaseError);
+      firebaseError = "Firebase configuration is missing or invalid. Please check your environment variables (.env.local file).";
+      logger.error(firebaseError);
   }
 } catch (e: any) {
   firebaseError = `Firebase initialization failed: ${e.message}`;
-  console.error(firebaseError, e);
+  logger.error(firebaseError, e);
 }
 
 // Note: server-side admin logic has been moved to Netlify Functions under netlify/functions/
