@@ -31,3 +31,13 @@ export async function setUserAiNetlify(targetUid: string, aiEnabled: boolean) {
   if (!res.ok) throw new Error(payload?.error || 'setUserAi failed');
   return payload;
 }
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
