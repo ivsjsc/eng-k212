@@ -22,6 +22,7 @@ import {
     updateDoc,
     type Firestore
 } from "firebase/firestore";
+import { getFunctions } from 'firebase/functions';
 
 // User-provided Firebase configuration to fix connection issues.
 const firebaseConfig = {
@@ -40,12 +41,27 @@ let auth: Auth | null = null;
 let db: Firestore | null = null;
 let firebaseError: string | null = null;
 let googleProvider: GoogleAuthProvider | null = null;
+let functionsClient: ReturnType<typeof getFunctions> | null = null;
 
 try {
   if (firebaseConfig && firebaseConfig.apiKey) {
       const app: FirebaseApp = initializeApp(firebaseConfig);
+      // Helpful debug log so client-side initialisation is visible in the browser console
+      try {
+        // app.options is present on successful initialization
+        // eslint-disable-next-line no-console
+        console.log('Firebase initialized (client). Project ID:', app.options?.projectId || '(unknown)');
+      } catch (e) {
+        // ignore console errors in unusual environments
+      }
       auth = getAuth(app);
       db = getFirestore(app);
+        // export client Functions instance for callable functions
+        try {
+          functionsClient = getFunctions(app);
+        } catch (e) {
+          // ignore if functions can't initialize in current environment
+        }
       googleProvider = new GoogleAuthProvider();
   } else {
       firebaseError = "Firebase configuration is missing or invalid. Please check the hardcoded config in services/firebase.ts.";
@@ -61,6 +77,7 @@ export {
     db, 
     firebaseError,
     googleProvider,
+  functionsClient,
     onAuthStateChanged,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,

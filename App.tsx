@@ -5,6 +5,7 @@ import { auth, db, firebaseError, onAuthStateChanged, signOut, doc, getDoc, setD
 
 import Sidebar from './components/Sidebar.tsx';
 import Header from './components/Header';
+import AdminPanel from './components/AdminPanel';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
 import CourseDetail from './components/CourseDetail';
@@ -32,6 +33,7 @@ function App() {
   const [currentView, setCurrentView] = useState<View>('home');
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // Appearance states (persisted in localStorage for simplicity)
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -91,6 +93,14 @@ function App() {
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
+        // Check for custom claims (admin) on login
+        try {
+          const idTokenResult = await firebaseUser.getIdTokenResult();
+          setIsAdmin(!!idTokenResult?.claims?.admin);
+        } catch (e) {
+          console.warn('Failed to read idTokenResult for claims', e);
+          setIsAdmin(false);
+        }
         const userDocRef = doc(db!, "users", firebaseUser.uid);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists()) {
@@ -114,6 +124,7 @@ function App() {
         setUser(null);
         setClasses({});
         setAuthStep('roleSelection'); // Reset to first step on logout
+        setIsAdmin(false);
       }
       setIsAuthLoading(false);
     });
@@ -245,6 +256,8 @@ function App() {
                 />;
       case 'user-guide':
         return <UserGuide language={language} />;
+      case 'admin':
+        return isAdmin ? <AdminPanel /> : <Home user={user!} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes}/>;
       default:
         return <Home user={user!} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes}/>;
     }
@@ -306,6 +319,7 @@ function App() {
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
         onLogout={handleLogout}
+        isAdmin={isAdmin}
       />
       <div className="flex-1 flex flex-col h-screen">
         <Header currentView={currentView} language={language} onMenuClick={() => setIsSidebarOpen(true)} />
