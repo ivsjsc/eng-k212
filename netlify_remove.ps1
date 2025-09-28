@@ -7,7 +7,7 @@ Write-Host "Listing installed plugins for site $siteId..."
 try {
   $plugins = Invoke-RestMethod -Method Get -Uri "https://api.netlify.com/api/v1/sites/$siteId/plugins" -Headers @{ Authorization = "Bearer $token" }
 } catch {
-  Write-Host "Failed to list plugins: $($_.Exception.Message)"
+  Write-Host "Failed to list plugins:" $_.Exception.Message
   exit 2
 }
 
@@ -28,9 +28,9 @@ foreach ($p in $nextPlugin) {
   Write-Host "Uninstalling plugin id $pluginId ..."
   try {
     Invoke-RestMethod -Method Delete -Uri "https://api.netlify.com/api/v1/sites/$siteId/plugins/$pluginId" -Headers @{ Authorization = "Bearer $token" } -ErrorAction Stop
-    Write-Host "Uninstalled plugin id $pluginId"
+    Write-Host "Uninstalled plugin id" $pluginId
   } catch {
-    Write-Host "Failed to uninstall plugin id $pluginId: $($_.Exception.Message)"
+    Write-Host "Failed to uninstall plugin id" $pluginId ":" $_.Exception.Message
   }
 }
 
@@ -40,6 +40,6 @@ try {
   $deploy = Invoke-RestMethod -Method Post -Uri "https://api.netlify.com/api/v1/sites/$siteId/builds" -Headers @{ Authorization = "Bearer $token" } -Body $body -ContentType 'application/json'
   Write-Host ("Deploy triggered. Deploy id: {0}" -f $deploy.id)
 } catch {
-  Write-Host "Failed to trigger deploy: $($_.Exception.Message)"
+  Write-Host "Failed to trigger deploy:" $_.Exception.Message
   exit 3
 }
