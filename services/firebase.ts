@@ -26,16 +26,21 @@ import {
 import { getFunctions } from 'firebase/functions';
 import { logger } from '../utils/logger';
 
-// Firebase configuration from environment variables
+// Firebase configuration: prefer build-time VITE_ envs, but allow a runtime fallback
+// by exposing a `window.__FIREBASE_CONFIG__` object (for example via a public/env.js uploaded
+// to the site or served by the host). This lets you fix or rotate keys without rebuilding.
+const runtimeConfig = typeof window !== 'undefined' ? (window as any).__FIREBASE_CONFIG__ : undefined;
+
+const _env = (import.meta as any).env || {};
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+  apiKey: _env.VITE_FIREBASE_API_KEY || runtimeConfig?.apiKey,
+  authDomain: _env.VITE_FIREBASE_AUTH_DOMAIN || runtimeConfig?.authDomain,
+  databaseURL: _env.VITE_FIREBASE_DATABASE_URL || runtimeConfig?.databaseURL,
+  projectId: _env.VITE_FIREBASE_PROJECT_ID || runtimeConfig?.projectId,
+  storageBucket: _env.VITE_FIREBASE_STORAGE_BUCKET || runtimeConfig?.storageBucket,
+  messagingSenderId: _env.VITE_FIREBASE_MESSAGING_SENDER_ID || runtimeConfig?.messagingSenderId,
+  appId: _env.VITE_FIREBASE_APP_ID || runtimeConfig?.appId,
+  measurementId: _env.VITE_FIREBASE_MEASUREMENT_ID || runtimeConfig?.measurementId
 };
 
 
