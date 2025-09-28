@@ -12,17 +12,7 @@ export default defineConfig(({ mode }) => {
         host: '0.0.0.0',
       },
       plugins: [
-        react({
-          // Enable React Fast Refresh
-          fastRefresh: true,
-          // Optimize for production
-          babel: isProduction ? {
-            plugins: [
-              // Remove console.log in production
-              ['transform-remove-console', { exclude: ['error', 'warn'] }]
-            ]
-          } : undefined
-        })
+        react()
       ],
       define: {
         // Environment variables are handled by Vite automatically with VITE_ prefix
