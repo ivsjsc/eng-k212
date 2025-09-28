@@ -16,6 +16,7 @@ import {
 } from '../services/firebase.ts';
 import { MOCK_USER } from '../constants.ts';
 import type { User } from '../types.ts';
+import AuthModal from './AuthModal';
 
 // Add RecaptchaVerifier to window interface
 declare global {
@@ -48,6 +49,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<any>(null);
+
+  const [authModalOpen, setAuthModalOpen] = useState(false);
 
   const t = {
     en: {
@@ -380,6 +383,13 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                       <i className="fa-solid fa-envelope"></i> {t.emailBtn}
                     </button>
                   )}
+                  {/* Enhanced Modal Login Button */}
+                  <button 
+                    onClick={() => setAuthModalOpen(true)} 
+                    className="flex items-center justify-center gap-3 w-full py-2 rounded-lg bg-gradient-to-r from-orange-500 to-orange-600 text-white hover:from-orange-600 hover:to-orange-700 shadow-md transition-all duration-200"
+                  >
+                    <i className="fa-solid fa-user-circle"></i> Đăng nhập nhanh
+                  </button>
                 </div>
 
                 <p className="text-center text-sm text-slate-600 mt-6">
@@ -396,6 +406,23 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                 </button>
             </div>
        </div>
+
+       {/* Enhanced AuthModal Integration */}
+       <AuthModal 
+         open={authModalOpen} 
+         onClose={() => setAuthModalOpen(false)}
+         onSubmit={async ({ email, password }) => {
+           try {
+             if (!auth) throw new Error('Firebase chưa sẵn sàng');
+             await signInWithEmailAndPassword(auth, email, password);
+             setAuthModalOpen(false);
+             setSuccessMessage('Đăng nhập thành công!');
+             setTimeout(() => { window.location.href = '/'; }, 500);
+           } catch (err: any) {
+             throw new Error(err.message.replace('Firebase: ', '') || 'Đăng nhập thất bại');
+           }
+         }}
+       />
     </div>
   );
 };
