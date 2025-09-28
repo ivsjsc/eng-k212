@@ -5,3 +5,6 @@
 
 /* Import small local custom styles (kept as a fallback for component-specific rules) */
 @import "./src/styles/custom.css";
+
+/* Enhanced UI/UX styles */
+@import "./src/styles/enhancements.css";
