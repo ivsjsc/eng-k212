@@ -1,6 +1,6 @@
 // types.ts
 
-export type View = 'home' | 'curriculum' | 'teacher-dashboard' | 'writing-grader' | 'speaking-partner' | 'settings' | 'user-guide' | 'admin';
+export type View = 'home' | 'curriculum' | 'teacher-dashboard' | 'writing-grader' | 'speaking-partner' | 'settings' | 'user-guide' | 'admin' | 'ai-content-generator';
 
 export interface User {
   id: string;
@@ -55,15 +55,58 @@ export interface ChatMessage {
   text: string;
 }
 
+export type DifficultyLevel = 'Beginner' | 'Intermediate' | 'Advanced';
+export type QuestionType = 'multiple-choice' | 'true-false' | 'fill-blank';
+
 export interface QuizQuestion {
   question: string;
   options: string[];
   answer: string;
+  type?: QuestionType;
+  difficulty?: DifficultyLevel;
 }
 
 export interface GeneratedSentence {
   sentence: string;
   focus: string;
+}
+
+export interface Dialogue {
+  speaker: string;
+  text: string;
+}
+
+export interface GeneratedConversation {
+  scenario: string;
+  level: string;
+  dialogues: Dialogue[];
+}
+
+export interface LessonPlan {
+  title: string;
+  objectives: string[];
+  warmUp: string;
+  presentation: string;
+  practice: string;
+  production: string;
+  coolDown: string;
+  duration: string;
+}
+
+export interface ReadingPassage {
+  title: string;
+  text: string;
+  level: string;
+  comprehensionQuestions: QuizQuestion[];
+}
+
+export interface GrammarExercise {
+  title: string;
+  instructions: string;
+  questions: {
+    prompt: string;
+    answer: string;
+  }[];
 }
 
 // Based on data/curriculum.ts and other data files
