@@ -1,6 +1,6 @@
 // types.ts
 
-export type View = 'home' | 'curriculum' | 'teacher-dashboard' | 'writing-grader' | 'speaking-partner' | 'settings' | 'user-guide' | 'admin';
+export type View = 'home' | 'curriculum' | 'teacher-dashboard' | 'writing-grader' | 'speaking-partner' | 'settings' | 'user-guide' | 'admin' | 'ai-content-generator';
 
 export interface User {
   id: string;
