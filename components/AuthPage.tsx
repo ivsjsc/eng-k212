@@ -310,7 +310,12 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
             role: selectedRole,
             phone: user.phoneNumber || phoneNumber
         };
-        await setDoc(userDocRef, newUser);
+        // Lưu thông tin người dùng vào Firestore với createdAt
+        await setDoc(userDocRef, {
+          ...newUser,
+          uid: user.uid,
+          createdAt: new Date().toISOString()
+        });
       }
       setSuccessMessage('Xác thực thành công. Chuyển hướng...');
       setTimeout(() => { window.location.href = '/'; }, 900);
