@@ -9,6 +9,9 @@ import {
     signInWithRedirect,
     RecaptchaVerifier,
     signInWithPhoneNumber,
+    sendEmailVerification,
+    sendPasswordResetEmail,
+    signOut,
     setDoc, 
     getDoc,
     doc, 
@@ -48,6 +51,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<any>(null);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
 
   const t = {
     en: {
@@ -73,6 +78,13 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
       forgotPassword: "Forgot password?",
       or: "OR",
       goBack: "Go back to role selection",
+      resetPasswordTitle: "Reset Password",
+      resetPasswordDesc: "Enter your email address and we'll send you a link to reset your password.",
+      sendResetEmailBtn: "Send Reset Link",
+      backToLogin: "Back to Login",
+      resetEmailSent: "Password reset email sent! Check your inbox.",
+      emailNotVerified: "Please verify your email before logging in. Check your inbox for verification link.",
+      verificationEmailSent: "Verification email sent! Please check your inbox and verify your email before logging in.",
     },
     vi: {
       loginTitle: "Đăng nhập",
@@ -97,6 +109,13 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
       forgotPassword: "Quên mật khẩu?",
       or: "HOẶC",
       goBack: "Quay lại chọn vai trò",
+      resetPasswordTitle: "Khôi phục mật khẩu",
+      resetPasswordDesc: "Nhập địa chỉ email của bạn và chúng tôi sẽ gửi link để đặt lại mật khẩu.",
+      sendResetEmailBtn: "Gửi link khôi phục",
+      backToLogin: "Quay lại đăng nhập",
+      resetEmailSent: "Email khôi phục mật khẩu đã được gửi! Vui lòng kiểm tra hộp thư.",
+      emailNotVerified: "Vui lòng xác thực email trước khi đăng nhập. Kiểm tra hộp thư để tìm link xác thực.",
+      verificationEmailSent: "Email xác thực đã được gửi! Vui lòng kiểm tra hộp thư và xác thực email trước khi đăng nhập.",
     }
   }[language];
 
@@ -185,19 +204,56 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
 
     try {
       if (isLoginView) {
-        await signInWithEmailAndPassword(auth, email, password);
+        // Đăng nhập với email và mật khẩu
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const firebaseUser = userCredential.user;
+        
+        // Kiểm tra email đã xác thực chưa
+        if (!firebaseUser.emailVerified) {
+          // Nếu chưa xác thực, hiển thị lỗi và đăng xuất
+          setError(t.emailNotVerified);
+          await signOut(auth);
+          setIsLoading(false);
+          return;
+        }
+        
         setSuccessMessage('Đăng nhập thành công. Chuyển hướng...');
         // short delay to let UI update then redirect to home
         setTimeout(() => { window.location.href = '/'; }, 900);
       } else {
+        // Tạo tài khoản mới
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const firebaseUser = userCredential.user;
         await updateProfile(firebaseUser, { displayName: name });
 
-        const newUser: User = { ...MOCK_USER, id: firebaseUser.uid, name, role: selectedRole };
-        await setDoc(doc(db, "users", firebaseUser.uid), newUser);
-        setSuccessMessage('Tạo tài khoản thành công. Chuyển hướng...');
-        setTimeout(() => { window.location.href = '/'; }, 900);
+        // Gửi email xác thực
+        await sendEmailVerification(firebaseUser);
+
+        // Lưu thông tin người dùng vào Firestore với đầy đủ thông tin
+        const newUser: User = { 
+          ...MOCK_USER, 
+          id: firebaseUser.uid, 
+          email: firebaseUser.email || email,
+          name, 
+          role: selectedRole 
+        };
+        
+        // Thêm createdAt vào document
+        await setDoc(doc(db, "users", firebaseUser.uid), {
+          ...newUser,
+          uid: firebaseUser.uid,
+          createdAt: new Date().toISOString()
+        });
+        
+        // Đăng xuất sau khi đăng ký để bắt buộc xác thực email
+        await signOut(auth);
+        
+        setSuccessMessage(t.verificationEmailSent);
+        // Chuyển sang chế độ đăng nhập sau 3 giây
+        setTimeout(() => { 
+          setIsLoginView(true);
+          setSuccessMessage(null);
+        }, 3000);
       }
     } catch (err: any) {
       setError(err.message.replace('Firebase: ', ''));
@@ -254,11 +310,45 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
             role: selectedRole,
             phone: user.phoneNumber || phoneNumber
         };
-        await setDoc(userDocRef, newUser);
+        // Lưu thông tin người dùng vào Firestore với createdAt
+        await setDoc(userDocRef, {
+          ...newUser,
+          uid: user.uid,
+          createdAt: new Date().toISOString()
+        });
       }
       setSuccessMessage('Xác thực thành công. Chuyển hướng...');
       setTimeout(() => { window.location.href = '/'; }, 900);
 
+    } catch (err: any) {
+      setError(err.message.replace('Firebase: ', ''));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Xử lý gửi email khôi phục mật khẩu
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+    
+    if (!auth) {
+      setError(t.authError);
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      // Gửi email khôi phục mật khẩu
+      await sendPasswordResetEmail(auth, resetEmail);
+      setSuccessMessage(t.resetEmailSent);
+      // Đóng modal và reset form sau 2 giây
+      setTimeout(() => {
+        setShowForgotPassword(false);
+        setResetEmail('');
+        setSuccessMessage(null);
+      }, 2000);
     } catch (err: any) {
       setError(err.message.replace('Firebase: ', ''));
     } finally {
@@ -301,7 +391,15 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
         <div>
           <div className="flex justify-between">
               <label className="form-label">{t.passwordLabel}</label>
-              {isLoginView && <a href="#" className="text-sm text-blue-500 hover:underline">{t.forgotPassword}</a>}
+              {isLoginView && (
+                <button 
+                  type="button"
+                  onClick={() => setShowForgotPassword(true)} 
+                  className="text-sm text-blue-500 hover:underline"
+                >
+                  {t.forgotPassword}
+                </button>
+              )}
           </div>
           <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="form-input" required />
       </div>
@@ -396,6 +494,56 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                 </button>
             </div>
        </div>
+
+       {/* Modal Quên mật khẩu */}
+       {showForgotPassword && (
+         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+           <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
+             <h3 className="text-2xl font-bold text-sky-700 mb-2">{t.resetPasswordTitle}</h3>
+             <p className="text-sm text-slate-600 mb-6">{t.resetPasswordDesc}</p>
+             
+             {successMessage && <div className="mb-4 p-3 bg-green-50 border border-green-200 text-green-800 rounded text-sm">{successMessage}</div>}
+             {error && <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-800 rounded text-sm">{getFriendlyError(error)}</div>}
+             
+             <form onSubmit={handleForgotPassword} className="space-y-4">
+               <div>
+                 <label className="form-label">{t.emailLabel}</label>
+                 <input 
+                   type="email" 
+                   value={resetEmail} 
+                   onChange={e => setResetEmail(e.target.value)} 
+                   className="form-input" 
+                   required 
+                   placeholder={t.emailLabel}
+                 />
+               </div>
+               
+               <div className="flex gap-3">
+                 <button 
+                   type="button"
+                   onClick={() => {
+                     setShowForgotPassword(false);
+                     setResetEmail('');
+                     setError(null);
+                     setSuccessMessage(null);
+                   }}
+                   className="flex-1 py-2 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-50"
+                   disabled={isLoading}
+                 >
+                   {t.backToLogin}
+                 </button>
+                 <button 
+                   type="submit"
+                   className="flex-1 py-2 rounded-lg bg-sky-600 text-white hover:bg-sky-700"
+                   disabled={isLoading}
+                 >
+                   {isLoading ? t.loading : t.sendResetEmailBtn}
+                 </button>
+               </div>
+             </form>
+           </div>
+         </div>
+       )}
     </div>
   );
 };
