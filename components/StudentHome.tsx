@@ -1,6 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import type { User, Course, View } from '../types';
 import CourseCard from './CourseCard';
+import ProgressChart from './ProgressChart';
+import LearningCalendar from './LearningCalendar';
+import SkillRadar from './SkillRadar';
+import RecommendedLessons from './RecommendedLessons';
+import StudyGroup from './StudyGroup';
+import AchievementBadges from './AchievementBadges';
 import { curriculumData } from '../data/curriculum';
 
 interface StudentHomeProps {
@@ -11,6 +17,7 @@ interface StudentHomeProps {
 }
 
 const StudentHome: React.FC<StudentHomeProps> = ({ user, onSelectCourse, language, setView }) => {
+  const [activeTab, setActiveTab] = useState<'overview' | 'progress' | 'achievements' | 'social'>('overview');
 
   const allCourses = useMemo(() => {
     const colorPalette = ['#4A90E2', '#50E3C2', '#F5A623', '#BD10E0', '#9013FE', '#D0021B', '#F8E71C', '#7ED321'];
@@ -39,6 +46,45 @@ const StudentHome: React.FC<StudentHomeProps> = ({ user, onSelectCourse, languag
   const pinnedCourses = useMemo(() => {
       return allCourses.filter(course => user.pinnedCourses?.includes(course.id));
   }, [allCourses, user.pinnedCourses]);
+
+  // Mock data for progress tracking
+  const skillsData = [
+    { skill: language === 'vi' ? 'Nghe' : 'Listening', level: 75 },
+    { skill: language === 'vi' ? 'Nói' : 'Speaking', level: 60 },
+    { skill: language === 'vi' ? 'Đọc' : 'Reading', level: 85 },
+    { skill: language === 'vi' ? 'Viết' : 'Writing', level: 70 },
+    { skill: language === 'vi' ? 'Ngữ pháp' : 'Grammar', level: 80 },
+    { skill: language === 'vi' ? 'Từ vựng' : 'Vocabulary', level: 90 }
+  ];
+
+  const progressData = [
+    { label: language === 'vi' ? 'Hoàn thành bài học' : 'Lessons Completed', value: 65, color: '#4A90E2' },
+    { label: language === 'vi' ? 'Bài tập đã nộp' : 'Assignments Submitted', value: 80, color: '#50E3C2' },
+    { label: language === 'vi' ? 'Điểm trung bình' : 'Average Score', value: 85, color: '#F5A623' },
+    { label: language === 'vi' ? 'Tiến độ tổng thể' : 'Overall Progress', value: 70, color: '#BD10E0' }
+  ];
+
+  const calendarEvents = [
+    { id: '1', title: language === 'vi' ? 'Bài 5: Ngữ pháp' : 'Lesson 5: Grammar', date: new Date(), type: 'lesson' as const },
+    { id: '2', title: language === 'vi' ? 'Bài tập về nhà' : 'Homework Assignment', date: new Date(Date.now() + 86400000), type: 'assignment' as const },
+    { id: '3', title: language === 'vi' ? 'Kiểm tra giữa kỳ' : 'Midterm Test', date: new Date(Date.now() + 86400000 * 3), type: 'test' as const }
+  ];
+
+  const recommendations = pinnedCourses.slice(0, 2).map(course => ({
+    course,
+    reason: language === 'vi' 
+      ? 'Tiếp tục từ nơi bạn đã dừng lại' 
+      : 'Continue from where you left off',
+    priority: 'high' as const
+  }));
+
+  const mockBadges = [
+    { id: '1', name: language === 'vi' ? 'Người học siêng năng' : 'Eager Learner', icon: 'fa-book', color: 'bg-blue-500', description: language === 'vi' ? 'Hoàn thành 10 bài học' : 'Complete 10 lessons', earned: true },
+    { id: '2', name: language === 'vi' ? 'Chuỗi 7 ngày' : '7-Day Streak', icon: 'fa-fire', color: 'bg-red-500', description: language === 'vi' ? 'Học liên tục 7 ngày' : 'Learn for 7 days straight', earned: true },
+    { id: '3', name: language === 'vi' ? 'Thạc sĩ Từ vựng' : 'Vocabulary Master', icon: 'fa-spell-check', color: 'bg-green-500', description: language === 'vi' ? 'Học 100 từ mới' : 'Learn 100 new words', earned: false, progress: 65 },
+    { id: '4', name: language === 'vi' ? 'Người giúp đỡ' : 'Helper', icon: 'fa-hands-helping', color: 'bg-purple-500', description: language === 'vi' ? 'Giúp 5 bạn học' : 'Help 5 classmates', earned: false, progress: 40 },
+    { id: '5', name: language === 'vi' ? 'Nhà vô địch Quiz' : 'Quiz Champion', icon: 'fa-trophy', color: 'bg-yellow-500', description: language === 'vi' ? 'Đạt điểm 100% trong quiz' : 'Score 100% in a quiz', earned: false }
+  ];
   
   const t = {
     en: {
@@ -51,6 +97,14 @@ const StudentHome: React.FC<StudentHomeProps> = ({ user, onSelectCourse, languag
       noPinned: "No Pinned Courses",
       pinPrompt: "Go to the Curriculum to pin a course and get started!",
       explore: "Explore Curriculum",
+      overview: "Overview",
+      progress: "Progress",
+      achievements: "Achievements",
+      social: "Social",
+      continueLearning: "Continue Learning",
+      timeSpent: "Time Spent Today",
+      lessonsCompleted: "Lessons Completed",
+      nextLesson: "Next Lesson"
     },
     vi: {
       welcome: `Chào mừng trở lại, ${user.name}!`,
@@ -62,6 +116,14 @@ const StudentHome: React.FC<StudentHomeProps> = ({ user, onSelectCourse, languag
       noPinned: "Chưa có khóa học nào được ghim",
       pinPrompt: "Vào mục Chương trình để ghim một khóa học và bắt đầu học!",
       explore: "Khám phá Chương trình",
+      overview: "Tổng quan",
+      progress: "Tiến độ",
+      achievements: "Thành tựu",
+      social: "Xã hội",
+      continueLearning: "Tiếp tục học",
+      timeSpent: "Thời gian học hôm nay",
+      lessonsCompleted: "Bài học đã hoàn thành",
+      nextLesson: "Bài học tiếp theo"
     }
   }[language];
 
@@ -72,58 +134,142 @@ const StudentHome: React.FC<StudentHomeProps> = ({ user, onSelectCourse, languag
         <p className="mt-1 text-lg text-slate-600 dark:text-slate-400">{t.subtitle}</p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="card-glass p-6 flex items-center gap-4">
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="card-glass p-6 flex items-center gap-4 hover:shadow-lg transition-shadow cursor-pointer">
             <i className="fa-solid fa-star text-4xl text-amber-400"></i>
             <div>
-                <p className="text-2xl font-bold">{user.points}</p>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{user.points}</p>
                 <p className="text-sm text-slate-500">{t.points}</p>
             </div>
         </div>
-        <div className="card-glass p-6 flex items-center gap-4">
+        <div className="card-glass p-6 flex items-center gap-4 hover:shadow-lg transition-shadow cursor-pointer">
             <i className="fa-solid fa-fire-flame-curved text-4xl text-red-500"></i>
             <div>
-                <p className="text-2xl font-bold">{user.streak}</p>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{user.streak}</p>
                 <p className="text-sm text-slate-500">{t.streak}</p>
             </div>
         </div>
-        <div className="card-glass p-6 flex items-center gap-4">
-            <i className="fa-solid fa-gem text-4xl text-sky-500"></i>
+        <div className="card-glass p-6 flex items-center gap-4 hover:shadow-lg transition-shadow cursor-pointer" onClick={() => setActiveTab('achievements')}>
+            <i className="fa-solid fa-trophy text-4xl text-yellow-500"></i>
             <div>
-                <p className="text-2xl font-bold">{user.badges.length}</p>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{mockBadges.filter(b => b.earned).length}</p>
                 <p className="text-sm text-slate-500">{t.badges}</p>
+            </div>
+        </div>
+        <div className="card-glass p-6 flex items-center gap-4 hover:shadow-lg transition-shadow cursor-pointer">
+            <i className="fa-solid fa-clock text-4xl text-blue-500"></i>
+            <div>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">2h 30m</p>
+                <p className="text-sm text-slate-500">{t.timeSpent}</p>
             </div>
         </div>
       </div>
 
-      <div>
-        <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-4">
-            {t.myCourses}
-        </h2>
-        {pinnedCourses.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {pinnedCourses.map(course => (
-              <CourseCard
-                key={course.id}
-                course={course}
-                onSelect={() => onSelectCourse(course)}
-                isPinned={true}
-                onPinToggle={() => { /* This would be handled in curriculum view */ }}
+      {/* Navigation Tabs */}
+      <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+        {[
+          { id: 'overview', label: t.overview, icon: 'fa-home' },
+          { id: 'progress', label: t.progress, icon: 'fa-chart-line' },
+          { id: 'achievements', label: t.achievements, icon: 'fa-trophy' },
+          { id: 'social', label: t.social, icon: 'fa-users' }
+        ].map(tab => (
+          <button
+            key={tab.id}
+            className={`px-6 py-3 rounded-lg font-medium transition-all whitespace-nowrap ${
+              activeTab === tab.id
+                ? 'bg-blue-500 text-white shadow-lg'
+                : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
+            }`}
+            onClick={() => setActiveTab(tab.id as any)}
+          >
+            <i className={`fa-solid ${tab.icon} mr-2`}></i>
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Tab Content */}
+      {activeTab === 'overview' && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-4">
+                <i className="fa-solid fa-book-open mr-2 text-blue-500"></i>
+                {t.continueLearning}
+              </h2>
+              {pinnedCourses.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {pinnedCourses.map(course => (
+                    <CourseCard
+                      key={course.id}
+                      course={course}
+                      onSelect={() => onSelectCourse(course)}
+                      isPinned={true}
+                      onPinToggle={() => { /* This would be handled in curriculum view */ }}
+                      language={language}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12 card-glass">
+                  <i className="fa-solid fa-thumbtack text-4xl text-slate-400 mb-4"></i>
+                  <h3 className="text-xl font-semibold mb-2">{t.noPinned}</h3>
+                  <p className="text-slate-500 mb-6">{t.pinPrompt}</p>
+                  <button onClick={() => setView('curriculum')} className="btn btn-primary">
+                      {t.explore}
+                  </button>
+                </div>
+              )}
+            </div>
+            
+            {recommendations.length > 0 && (
+              <RecommendedLessons
+                recommendations={recommendations}
+                onSelectCourse={onSelectCourse}
                 language={language}
               />
-            ))}
+            )}
           </div>
-        ) : (
-          <div className="text-center py-12 card-glass">
-            <i className="fa-solid fa-thumbtack text-4xl text-slate-400 mb-4"></i>
-            <h3 className="text-xl font-semibold mb-2">{t.noPinned}</h3>
-            <p className="text-slate-500 mb-6">{t.pinPrompt}</p>
-            <button onClick={() => setView('curriculum')} className="btn btn-primary">
-                {t.explore}
-            </button>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            <LearningCalendar events={calendarEvents} language={language} />
+            <ProgressChart data={progressData} language={language} />
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
+      {activeTab === 'progress' && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <SkillRadar skills={skillsData} language={language} />
+          <ProgressChart data={progressData} language={language} />
+          <div className="lg:col-span-2">
+            <LearningCalendar events={calendarEvents} language={language} />
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'achievements' && (
+        <AchievementBadges badges={mockBadges} language={language} />
+      )}
+
+      {activeTab === 'social' && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <StudyGroup language={language} />
+          <div className="card-glass p-6">
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-4">
+              <i className="fa-solid fa-comments mr-2 text-green-500"></i>
+              {language === 'vi' ? 'Diễn đàn Học tập' : 'Learning Forum'}
+            </h3>
+            <div className="text-center py-12">
+              <i className="fa-solid fa-message-lines text-4xl text-slate-400 mb-3"></i>
+              <p className="text-slate-500">{language === 'vi' ? 'Tính năng sắp ra mắt!' : 'Coming soon!'}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
