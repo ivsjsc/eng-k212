@@ -60,7 +60,11 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView }) =>
     setIsAiLoading(true);
     setAiError(null);
     try {
-      const questions = await generateQuiz(lesson.rawLesson, language);
+      const questions = await generateQuiz(lesson.rawLesson, language, {
+        numQuestions: 5,
+        difficulty: 'Intermediate',
+        questionTypes: ['multiple-choice']
+      });
       setAiData(questions);
     } catch (err) {
       setAiError(err instanceof Error ? err.message : 'Unknown error');
