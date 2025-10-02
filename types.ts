@@ -5,6 +5,7 @@ export type View = 'home' | 'curriculum' | 'teacher-dashboard' | 'writing-grader
 export interface User {
   id: string;
   name: string;
+  email?: string;
   avatar: string; // font-awesome class
   level: string;
   points: number;

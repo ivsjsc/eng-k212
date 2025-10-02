@@ -13,6 +13,8 @@ import {
     getRedirectResult,
     RecaptchaVerifier,
     signInWithPhoneNumber,
+    sendEmailVerification,
+    sendPasswordResetEmail,
     type Auth
 } from "firebase/auth";
 import { 
@@ -104,6 +106,8 @@ export {
     updateProfile,
     RecaptchaVerifier,
     signInWithPhoneNumber,
+    sendEmailVerification,
+    sendPasswordResetEmail,
     doc,
     getDoc,
     setDoc,
