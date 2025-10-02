@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import type { CurriculumLesson, DifficultyLevel, QuestionType } from '../types';
 import { 
-  generateQuiz, 
-  generateConversation, 
-  generateLessonPlan,
-  generateReadingPassage,
-  generateGrammarExercise,
+  generateQuizCached as generateQuiz, 
+  generateConversationCached as generateConversation, 
+  generateLessonPlanCached as generateLessonPlan,
+  generateReadingPassageCached as generateReadingPassage,
+  generateGrammarExerciseCached as generateGrammarExercise,
   isAiConfigured 
-} from '../services/geminiService';
+} from '../services/aiContentService';
 import {
   exportQuizToJSON,
   exportQuizToExcel,
