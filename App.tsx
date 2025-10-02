@@ -12,6 +12,7 @@ const Home = lazy(() => import('./components/Home'));
 const Dashboard = lazy(() => import('./components/Dashboard'));
 const CourseDetail = lazy(() => import('./components/CourseDetail'));
 const TeacherDashboard = lazy(() => import('./components/TeacherDashboard'));
+const AIContentGenerator = lazy(() => import('./components/AIContentGenerator'));
 const WritingGrader = lazy(() => import('./components/WritingGrader'));
 const SpeakingPartner = lazy(() => import('./components/SpeakingPartner'));
 const Settings = lazy(() => import('./components/Settings'));
@@ -247,6 +248,8 @@ function App() {
         return <Dashboard onSelectCourse={handleSelectCourse} user={user!} onUpdateUser={handleUpdateUser} language={language}/>;
       case 'teacher-dashboard':
         return <TeacherDashboard classes={classes} setClasses={handleUpdateClasses} language={language} />;
+      case 'ai-content-generator':
+        return <AIContentGenerator language={language} />;
       case 'writing-grader':
         return <WritingGrader language={language} setView={handleSetView} />;
       case 'speaking-partner':
