@@ -70,7 +70,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({ onSelectRole, onG
         </header>
         
         <div className="w-full">
-            <img src="https://ivs.edu.vn/wp-content/uploads/2023/11/logo-ivs-no-bg-e1700125959147.png" alt="IVS English Logo" className="w-24 h-24 mx-auto mb-4" />
+            <img src="/images/logo/logo.png" alt="IVS English Logo" className="w-24 h-24 mx-auto mb-4" />
             <h1 className="text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mb-2">{t.welcome}</h1>
             <p className="text-lg text-slate-500 dark:text-slate-400 mb-12">{t.subtitle}</p>
 
