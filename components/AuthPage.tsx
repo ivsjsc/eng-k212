@@ -119,7 +119,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
     }
   }[language];
 
-  const projectIdForConsole = 'arctic-outpost-472823-r2';
+  const projectIdForConsole = 'englishlearners-8df3c';
   const currentHost = typeof window !== 'undefined' ? window.location.hostname : '';
   const currentOrigin = typeof window !== 'undefined' ? window.location.origin : '';
   const authRedirectUrl = currentOrigin ? `${currentOrigin.replace(/\/$/, '')}/__/auth/handler` : '';

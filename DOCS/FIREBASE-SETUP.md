@@ -22,7 +22,7 @@ firebase login
 # list projects and choose one
 firebase projects:list
 # set the active project for CLI
-firebase use --add arctic-outpost-472823-r2
+firebase use --add englishlearners-8df3c
 ```
 
 ## 3) Deploy Firestore rules
