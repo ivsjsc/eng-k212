@@ -1,6 +1,10 @@
 # Remove Netlify NextJS plugin (if any) and trigger deploy with clear cache
-# WARNING: this uses the token and site id hardcoded below - keep them secret
-$token = 'nfp_3Ud36VpRWAh1pbBFAwCLvPicoaDuX5DM090b'
+# WARNING: this script now expects the Netlify API token to be provided via the NETLIFY_TOKEN environment variable.
+$token = $env:NETLIFY_TOKEN
+if (-not $token) {
+  Write-Host "ERROR: NETLIFY_TOKEN environment variable is not set. Please set it to your Netlify API token."
+  exit 1
+}
 $siteId = '675653b26a58276bb7d2f600'
 
 Write-Host "Listing installed plugins for site $siteId..."
