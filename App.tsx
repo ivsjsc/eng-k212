@@ -1,29 +1,29 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { View, User, Course, Classes } from './types';
-import { MOCK_CLASSES, MOCK_USER } from './constants.ts';
-import { auth, db, ... } from './services/firebase.ts'
+import { MOCK_CLASSES, MOCK_USER } from './constants';
+import { auth, db, ... } from './services/firebase'
 import { logger } from './utils/logger';
 
 // Lazy load heavy components
-const Sidebar = lazy(() => import('./components/Sidebar.tsx'));
+const Sidebar = lazy(() => import('./components/Sidebar'));
 const Header = lazy(() => import('./components/Header'));
 const AdminPanel = lazy(() => import('./components/AdminPanel'));
 const Home = lazy(() => import('./components/Home'));
 const Dashboard = lazy(() => import('./components/Dashboard'));
 const CourseDetail = lazy(() => import('./components/CourseDetail'));
 const TeacherDashboard = lazy(() => import('./components/TeacherDashboard'));
-const ClassAnalyticsDashboard = lazy(() => import('./components/ClassAnalyticsDashboard')); // (mới)
-const AIContentGenerator = lazy(() => import('./components/AIContentGenerator'));          // (giữ từ main)
+const ClassAnalyticsDashboard = lazy(() => import('./components/ClassAnalyticsDashboard'));
+const AIContentGenerator = lazy(() => import('./components/AIContentGenerator'));
 const WritingGrader = lazy(() => import('./components/WritingGrader'));
 const SpeakingPartner = lazy(() => import('./components/SpeakingPartner'));
 const Settings = lazy(() => import('./components/Settings'));
 const UserGuide = lazy(() => import('./components/UserGuide'));
-const AssistiveTouch = lazy(() => import('./components/AssistiveTouch.tsx'));
-const AuthPage = lazy(() => import('./components/AuthPage.tsx'));
-const RoleSelectionPage = lazy(() => import('./components/RoleSelectionPage.tsx'));
+const AssistiveTouch = lazy(() => import('./components/AssistiveTouch'));
+const AuthPage = lazy(() => import('./components/AuthPage'));
+const RoleSelectionPage = lazy(() => import('./components/RoleSelectionPage'));
 
 // Keep Loading component as regular import since it's needed immediately
-import Loading from './components/Loading.tsx';
+import Loading from './components/Loading';
 import ErrorBoundary from './components/ErrorBoundary';
 
 // Loading fallback component for Suspense

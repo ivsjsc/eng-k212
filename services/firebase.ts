@@ -7,6 +7,7 @@ import {
   signOut,
   updateProfile,
   GoogleAuthProvider,
+  getRedirectResult,
   signInWithRedirect,
   RecaptchaVerifier,
   signInWithPhoneNumber,
@@ -91,6 +92,9 @@ export {
   db,
   analytics,
   firebaseInitError,
+  // backwards compatible export name
+  // export the live binding as 'firebaseError' so consumers reading it at runtime see updates
+  // (see: export { firebaseInitError as firebaseError } below)
   googleProvider,
   functionsClient,
 
@@ -98,6 +102,7 @@ export {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  getRedirectResult,
   signOut,
   updateProfile,
   RecaptchaVerifier,
@@ -108,3 +113,6 @@ export {
   // Firestore helpers
   doc, getDoc, setDoc, updateDoc
 };
+
+// Provide a named alias for compatibility with older imports
+export { firebaseInitError as firebaseError };

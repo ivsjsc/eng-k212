@@ -16,9 +16,9 @@ import {
   getDoc,
   doc,
   updateProfile
-} from '../services/firebase.ts';
-import { MOCK_USER } from '../constants.ts';
-import type { User } from '../types.ts';
+} from '../services/firebase';
+import { MOCK_USER } from '../constants';
+import type { User } from '../types';
 
 // Extend window for phone auth helpers
 declare global {
