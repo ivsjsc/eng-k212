@@ -242,3 +242,15 @@ export interface ClassData {
 }
 
 export type Classes = Record<string, ClassData>;
+// types.ts (chỉ trích đoạn cần đảm bảo)
+export type View =
+  | 'home'
+  | 'curriculum'
+  | 'teacher-dashboard'
+  | 'teacher-analytics'
+  | 'ai-content-generator'
+  | 'writing-grader'
+  | 'speaking-partner'
+  | 'settings'
+  | 'user-guide'
+  | 'admin';
