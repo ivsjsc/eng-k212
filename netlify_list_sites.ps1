@@ -1,5 +1,9 @@
 # List Netlify sites accessible by token
-$token = 'nfp_3Ud36VpRWAh1pbBFAwCLvPicoaDuX5DM090b'
+$token = $env:NETLIFY_TOKEN
+if (-not $token) {
+  Write-Host "Error: NETLIFY_TOKEN environment variable is not set."
+  exit 1
+}
 try {
   $sites = Invoke-RestMethod -Method Get -Uri 'https://api.netlify.com/api/v1/sites' -Headers @{ Authorization = "Bearer $token" }
 } catch {
