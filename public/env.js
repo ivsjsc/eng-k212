@@ -1,12 +1,14 @@
 // Runtime Firebase config - upload this file to your site's public folder
 // if you need to provide Firebase config without rebuilding
+// NOTE: Replace the placeholder values below with your actual Firebase config at build or deployment time.
+// It is recommended to inject these values using environment variables or a secure configuration management process.
 window.__FIREBASE_CONFIG__ = {
-  apiKey: "AIzaSyB9lCtWV3f5pbGQJ6gvFeGbuAtF3Dl1fPs",
-  authDomain: "arctic-outpost-472823-r2.firebaseapp.com",
-  databaseURL: "https://arctic-outpost-472823-r2-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "arctic-outpost-472823-r2",
-  storageBucket: "arctic-outpost-472823-r2.firebasestorage.app",
-  messagingSenderId: "125352513706",
-  appId: "1:125352513706:web:0bdd068ff703ff569680d3",
-  measurementId: "G-T492DDR4DZ"
+  apiKey: "__FIREBASE_API_KEY__",
+  authDomain: "__FIREBASE_AUTH_DOMAIN__",
+  databaseURL: "__FIREBASE_DATABASE_URL__",
+  projectId: "__FIREBASE_PROJECT_ID__",
+  storageBucket: "__FIREBASE_STORAGE_BUCKET__",
+  messagingSenderId: "__FIREBASE_MESSAGING_SENDER_ID__",
+  appId: "__FIREBASE_APP_ID__",
+  measurementId: "__FIREBASE_MEASUREMENT_ID__"
 };
