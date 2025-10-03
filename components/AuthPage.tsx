@@ -147,13 +147,10 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
             <li>Google Cloud Console → OAuth client → thêm JavaScript origin: <strong>{displayOrigin}</strong>.</li>
             <li>Google Cloud Console → OAuth client → thêm Redirect URI: <strong>{redirectUri}</strong>.</li>
           </ul>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <a className="text-sm text-blue-700 underline" target="_blank" rel="noreferrer" href={`https://console.firebase.google.com/project/${projectIdForConsole}/authentication/settings`}>
-              Mở Firebase Authentication settings
-            </a>
-            <button className="text-sm px-2 py-1 bg-gray-100 rounded" onClick={() => { navigator.clipboard?.writeText(clipboardText); }}>
-              Sao chép hướng dẫn
-            </button>
+          <div className="text-center mb-6">
+              <img src="/images/logo/logo.png" alt="IVS English Logo" className="w-20 h-20 mx-auto mb-4" />
+              <h2 className="text-3xl font-extrabold text-sky-700">{isLoginView ? `${t.loginTitle}` : `${t.signupTitle}`}</h2>
+              <p className="text-sm text-slate-600 mt-1">{isLoginView ? 'Chào mừng trở lại' : 'Tạo tài khoản mới'}</p>
           </div>
         </div>
       );
