@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import type { View, User, Course, Classes } from './types';
+import { View, User, Course, Classes } from './types';
 import { MOCK_CLASSES, MOCK_USER } from './constants.ts';
 import { auth, db, ... } from './services/firebase.ts'
 import { logger } from './utils/logger';
