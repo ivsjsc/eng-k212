@@ -62,7 +62,12 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
     buttonColor: string;
   }) => (
     <div
-      className={`card-glass w-full max-w-sm text-center p-8 transition-all duration-300 flex flex-col border-t-4 ${color}`}
+      className={`w-full max-w-sm text-center p-8 transition-all duration-300 flex flex-col border-t-4 ${color} rounded-2xl shadow-lg`
+      }
+      style={{
+        background: 'linear-gradient(180deg, rgba(15,23,42,0.88), rgba(2,6,23,0.95))',
+        backdropFilter: 'blur(6px)'
+      }}
     >
       <div className="flex-grow">
         <div
@@ -78,21 +83,22 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             )}`}
           ></i>
         </div>
-        <h3 className="text-2xl font-bold mb-2">{title}</h3>
-        <p className="text-base text-slate-600 dark:text-slate-400 mb-6">
+        <h3 className="text-2xl font-bold mb-2 text-white">{title}</h3>
+        <p className="text-base text-slate-300 mb-6">
           {description}
         </p>
       </div>
       <div className="space-y-3">
         <button
           onClick={() => onGuestLogin(role)}
-          className="btn bg-slate-200 text-slate-700 hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600 w-full"
+          className="btn bg-slate-700/80 text-slate-100 hover:bg-slate-700 w-full"
         >
           {t.guest}
         </button>
         <button
           onClick={() => onSelectRole(role)}
           className={`btn ${buttonColor} text-white w-full`}
+          style={{ boxShadow: '0 8px 24px rgba(2,6,23,0.35)' }}
         >
           {t.login}
         </button>
