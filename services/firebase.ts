@@ -46,7 +46,7 @@ const firebaseConfig = {
 
 let auth: Auth | null = null;
 let db: Firestore | null = null;
-let firebaseError: string | null = null; // Standardized error variable name
+let firebaseInitError: string | null = null; // Standardized error variable name
 let googleProvider: GoogleAuthProvider | null = null;
 let functionsClient: ReturnType<typeof getFunctions> | null = null;
 let analyticsClient: Analytics | null = null; // Standardized analytics variable name
@@ -81,12 +81,12 @@ try {
         }
         googleProvider = new GoogleAuthProvider();
     } else {
-        firebaseError = "Firebase configuration is missing or invalid. Please check your environment variables (.env.local file).";
-        logger.error(firebaseError);
+    firebaseInitError = "Firebase configuration is missing or invalid. Please check your environment variables (.env.local file).";
+    logger.error(firebaseInitError);
     }
 } catch (e: any) {
-    firebaseError = `Firebase initialization failed: ${e.message}`;
-    logger.error(firebaseError, e);
+    firebaseInitError = `Firebase initialization failed: ${e.message}`;
+    logger.error(firebaseInitError, e);
 }
 
 // Note: server-side admin logic has been moved to Netlify Functions under netlify/functions/
@@ -95,7 +95,7 @@ try {
 export { 
     auth, 
     db, 
-    firebaseError,
+    firebaseInitError,
     googleProvider,
     functionsClient,
     analyticsClient,
