@@ -66,43 +66,73 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse 
   };
 
   return (
-    <div className="p-8 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4 text-white">{language === 'vi' ? 'Chương trình học' : 'Learning Programs'}</h1>
-      <p className="text-slate-300 mb-6">{language === 'vi' ? 'Chọn một chương trình để xem chi tiết.' : 'Choose a program to view details.'}</p>
+    <div className="p-8 max-w-7xl mx-auto">
+      <h1 className="text-3xl font-bold mb-2 text-white">{language === 'vi' ? 'Chương trình học' : 'Learning Programs'}</h1>
+      <p className="text-slate-300 mb-8">{language === 'vi' ? 'Chọn khóa học để bắt đầu học tập' : 'Select a course to start learning'}</p>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredData.map((cat, idx) => {
-          const colorClasses = [
-            'from-sky-500/20 to-blue-600/20 border-sky-400/30',
-            'from-emerald-500/20 to-green-600/20 border-emerald-400/30',
-            'from-purple-500/20 to-pink-600/20 border-purple-400/30',
-            'from-amber-500/20 to-orange-600/20 border-amber-400/30',
-            'from-indigo-500/20 to-violet-600/20 border-indigo-400/30',
-          ];
-          const colorClass = colorClasses[idx % colorClasses.length];
+      {/* Show all courses grouped by category */}
+      {filteredData.map((cat, catIdx) => (
+        <div key={catIdx} className="mb-12">
+          <h2 className="text-2xl font-bold mb-4 text-white flex items-center gap-3">
+            <span className="h-1 w-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"></span>
+            {cat.category[language]}
+            <span className="text-sm font-normal text-slate-400">({cat.levels.length} {language === 'vi' ? 'khóa học' : 'courses'})</span>
+          </h2>
+          
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {cat.levels.map((level, levelIdx) => {
+              const course = allCourses.find(c => c.rawLevel === level);
+              if (!course) return null;
 
-          const buttonText = user.role === 'teacher' 
-            ? (language === 'vi' ? 'Xem chương trình' : 'View Program')
-            : (language === 'vi' ? 'Bắt đầu học' : 'Start Learning');
+              const colorClasses = [
+                'from-sky-500/20 to-blue-600/20 border-sky-400/30',
+                'from-emerald-500/20 to-green-600/20 border-emerald-400/30',
+                'from-purple-500/20 to-pink-600/20 border-purple-400/30',
+                'from-amber-500/20 to-orange-600/20 border-amber-400/30',
+                'from-indigo-500/20 to-violet-600/20 border-indigo-400/30',
+                'from-rose-500/20 to-pink-600/20 border-rose-400/30',
+              ];
+              const colorClass = colorClasses[levelIdx % colorClasses.length];
 
-          return (
-            <div
-              key={idx}
-              className={`p-6 rounded-2xl bg-gradient-to-br ${colorClass} border backdrop-blur hover:scale-[1.02] transition cursor-pointer`}
-              onClick={() => handleCategoryClick(idx)}
-            >
-              <h3 className="font-bold text-xl text-white mb-2">{cat.category[language]}</h3>
-              <p className="text-sm text-slate-200 mb-4">{cat.levels?.[0]?.subtitle?.[language] || ''}</p>
-              <button className="btn bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-lg text-sm font-semibold">
-                {buttonText}
-              </button>
-            </div>
-          );
-        })}
-      </div>
+              const buttonText = user.role === 'teacher' 
+                ? (language === 'vi' ? 'Xem chi tiết' : 'View Details')
+                : (language === 'vi' ? 'Bắt đầu học' : 'Start Learning');
+
+              return (
+                <div
+                  key={levelIdx}
+                  className={`p-6 rounded-2xl bg-gradient-to-br ${colorClass} border backdrop-blur hover:scale-[1.02] transition cursor-pointer group`}
+                  onClick={() => onSelectCourse(course)}
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="px-3 py-1 bg-white/20 backdrop-blur rounded-full text-xs font-semibold text-white">
+                      {language === 'vi' ? `Lớp ${level.level}` : `Grade ${level.level}`}
+                    </span>
+                    <i className="fa-solid fa-arrow-right text-white opacity-0 group-hover:opacity-100 transition"></i>
+                  </div>
+                  
+                  <h3 className="font-bold text-lg text-white mb-2 line-clamp-2">{course.title}</h3>
+                  <p className="text-sm text-slate-200 mb-4 line-clamp-1">{course.description}</p>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="text-xs text-slate-300">
+                      <i className="fa-solid fa-book mr-1"></i>
+                      {level.units?.length || 0} {language === 'vi' ? 'bài' : 'units'}
+                    </div>
+                    <button className="btn bg-white/20 hover:bg-white/30 text-white py-1 px-3 rounded-lg text-xs font-semibold">
+                      {buttonText}
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
 
       {filteredData.length === 0 && (
         <div className="text-center text-slate-400 mt-12">
+          <i className="fa-solid fa-book text-4xl mb-4"></i>
           <p>{language === 'vi' ? 'Không tìm thấy chương trình phù hợp. Vui lòng cập nhật thông tin cá nhân.' : 'No programs found. Please update your profile.'}</p>
         </div>
       )}
