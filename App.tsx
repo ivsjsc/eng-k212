@@ -515,7 +515,7 @@ function App() {
               <div className="relative z-20">
                 <Suspense fallback={<LoadingFallback />}>
                   <ErrorBoundary>
-                    <AssistiveTouch setView={handleSetView} language={language} />
+                    <AssistiveTouch user={user!} language={language} />
                   </ErrorBoundary>
                 </Suspense>
               </div>
