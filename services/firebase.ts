@@ -1,110 +1,116 @@
-import { initializeApp, getApps, type FirebaseApp } from 'firebase/app';
-import {
-  getAuth, type Auth,
-  onAuthStateChanged,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  updateProfile,
-  GoogleAuthProvider,
-  signInWithRedirect,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  sendEmailVerification,
-  sendPasswordResetEmail
-} from 'firebase/auth';
-import {
-  getFirestore, type Firestore,
-  doc, getDoc, setDoc, updateDoc
-} from 'firebase/firestore';
-import { getAnalytics, type Analytics } from 'firebase/analytics';
+import { initializeApp, getApps, type FirebaseApp } from "firebase/app";
+import { getAnalytics, type Analytics } from "firebase/analytics";
+import { 
+    getAuth, 
+    onAuthStateChanged, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signOut,
+    updateProfile,
+    GoogleAuthProvider,
+    signInWithPopup,
+    signInWithRedirect,
+    getRedirectResult,
+    RecaptchaVerifier,
+    signInWithPhoneNumber,
+    type Auth
+} from "firebase/auth";
+import { 
+    getFirestore, 
+    doc, 
+    getDoc, 
+    setDoc, 
+    updateDoc,
+    type Firestore
+} from "firebase/firestore";
 import { getFunctions } from 'firebase/functions';
+import { logger } from '../utils/logger';
 
-// Centralized firebase configuration (no hard-coded fallback)
+// Firebase configuration: prefer build-time VITE_ envs, but allow a runtime fallback
+// by exposing a `window.__FIREBASE_CONFIG__` object (for example via a public/env.js uploaded
+// to the site or served by the host). This lets you fix or rotate keys without rebuilding.
+const runtimeConfig = typeof window !== 'undefined' ? (window as any).__FIREBASE_CONFIG__ : undefined;
+
+const _env = (import.meta as any).env || {};
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
+  apiKey: _env.VITE_FIREBASE_API_KEY || runtimeConfig?.apiKey,
+  authDomain: _env.VITE_FIREBASE_AUTH_DOMAIN || runtimeConfig?.authDomain,
+  databaseURL: _env.VITE_FIREBASE_DATABASE_URL || runtimeConfig?.databaseURL,
+  projectId: _env.VITE_FIREBASE_PROJECT_ID || runtimeConfig?.projectId,
+  storageBucket: _env.VITE_FIREBASE_STORAGE_BUCKET || runtimeConfig?.storageBucket,
+  messagingSenderId: _env.VITE_FIREBASE_MESSAGING_SENDER_ID || runtimeConfig?.messagingSenderId,
+  appId: _env.VITE_FIREBASE_APP_ID || runtimeConfig?.appId,
+  measurementId: _env.VITE_FIREBASE_MEASUREMENT_ID || runtimeConfig?.measurementId
 };
 
-// Lightweight validation & visibility
-console.debug('[FIREBASE CONFIG CHECK]', {
-  apiKey: (firebaseConfig.apiKey || '').slice(0, 8),
-  projectId: firebaseConfig.projectId,
-  authDomain: firebaseConfig.authDomain,
-  appId: firebaseConfig.appId,
-  storageBucket: firebaseConfig.storageBucket
-});
 
-if (
-  firebaseConfig.projectId &&
-  firebaseConfig.authDomain &&
-  !firebaseConfig.authDomain.includes(firebaseConfig.projectId)
-) {
-  console.warn('[FIREBASE CONFIG MISMATCH]', {
-    expectedInAuthDomain: firebaseConfig.projectId,
-    authDomain: firebaseConfig.authDomain
-  });
-}
-
-let app: FirebaseApp | null = null;
 let auth: Auth | null = null;
 let db: Firestore | null = null;
-let analytics: Analytics | null = null;
-let functionsClient: ReturnType<typeof getFunctions> | null = null;
+let firebaseError: string | null = null;
 let googleProvider: GoogleAuthProvider | null = null;
-let firebaseInitError: string | null = null;
+let functionsClient: ReturnType<typeof getFunctions> | null = null;
+let analyticsClient: Analytics | null = null;
 
 try {
-  if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
-    throw new Error('Missing required Firebase environment variables.');
+  if (firebaseConfig && firebaseConfig.apiKey) {
+  // Avoid double-initialization during HMR or if this module is evaluated multiple times
+  const app: FirebaseApp = getApps().length ? (getApps()[0] as FirebaseApp) : initializeApp(firebaseConfig);
+      // Helpful debug log so client-side initialisation is visible in the browser console
+      try {
+        // app.options is present on successful initialization
+        logger.debug('Firebase initialized (client). Project ID:', app.options?.projectId || '(unknown)');
+      } catch (e) {
+        // ignore logging errors in unusual environments
+      }
+      auth = getAuth(app);
+      db = getFirestore(app);
+        // export client Functions instance for callable functions
+        try {
+          functionsClient = getFunctions(app);
+        } catch (e) {
+          // ignore if functions can't initialize in current environment
+        }
+        // Initialize Analytics only in browser environments when measurementId is present
+        try {
+          // getAnalytics requires a browser environment; guard with typeof window
+          if (typeof window !== 'undefined' && (app.options?.measurementId || firebaseConfig.measurementId)) {
+            analyticsClient = getAnalytics(app);
+          }
+        } catch (e) {
+          // ignore analytics initialization failures (e.g., in tests or SSR)
+        }
+      googleProvider = new GoogleAuthProvider();
+  } else {
+      firebaseError = "Firebase configuration is missing or invalid. Please check your environment variables (.env.local file).";
+      logger.error(firebaseError);
   }
-
-  app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-  auth = getAuth(app);
-  db = getFirestore(app);
-  googleProvider = new GoogleAuthProvider();
-
-  try { functionsClient = getFunctions(app); } catch {}
-
-  try {
-    if (typeof window !== 'undefined' && firebaseConfig.measurementId) {
-      analytics = getAnalytics(app);
-    }
-  } catch {
-    // Analytics optional
-  }
-
-  console.debug('[FIREBASE] Initialized OK');
 } catch (e: any) {
-  firebaseInitError = e?.message || 'Unknown init error';
-  console.error('[FIREBASE INIT FAILED]', e);
+  firebaseError = `Firebase initialization failed: ${e.message}`;
+  logger.error(firebaseError, e);
 }
 
-export {
-  auth,
-  db,
-  analytics,
-  firebaseInitError,
-  googleProvider,
+// Note: server-side admin logic has been moved to Netlify Functions under netlify/functions/
+// This file is client-only and must not import `firebase-admin` (server SDK).
+
+export { 
+    auth, 
+    db, 
+    firebaseError,
+    googleProvider,
   functionsClient,
-
-  // Auth helpers
-  onAuthStateChanged,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  updateProfile,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-  sendEmailVerification,
-  sendPasswordResetEmail,
-
-  // Firestore helpers
-  doc, getDoc, setDoc, updateDoc
+    analyticsClient,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    signInWithRedirect,
+    getRedirectResult,
+    signOut,
+    updateProfile,
+    RecaptchaVerifier,
+    signInWithPhoneNumber,
+    doc,
+    getDoc,
+    setDoc,
+    updateDoc
 };
