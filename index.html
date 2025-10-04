@@ -10,12 +10,25 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://aistudiocdn.com" crossorigin>
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
-
+  <!-- Google Fonts: Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
 </head>
 <body class="h-full bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 antialiased">
-  <div id="root"></div>
+  <!-- Aurora Background -->
+  <div class="aurora-background"></div>
+
+  <!-- Root app container -->
+  <div id="root" class="h-full relative z-10">
+    <!-- Optimized Initial Loader with Tailwind CSS -->
+    <div class="initial-loader flex flex-col items-center justify-center h-full w-full bg-slate-50 dark:bg-slate-900 transition-opacity duration-300" role="status" aria-live="polite">
+      <div class="spinner h-12 w-12 animate-spin rounded-full border-4 border-slate-200 dark:border-slate-700 border-t-blue-600 dark:border-t-blue-500" aria-hidden="true"></div>
+      <p class="mt-4 text-lg font-medium text-slate-600 dark:text-slate-300 tracking-wide">
+        Đang tải IVS English...
+      </p>
+    </div>
+  </div>
+
   <div id="recaptcha-container" style="display:none"></div>
   <script type="importmap">
   {

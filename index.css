@@ -5,6 +5,8 @@
 	consider wrapping your rules in @layer components inside `src/styles/custom.css`.
 */
 @import "./src/styles/custom.css";
+/* Enhanced UI/UX styles */
+@import "./src/styles/enhancements.css";
 
 @tailwind base;
 @tailwind components;

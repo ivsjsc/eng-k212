@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import type { Classes, Student, ClassData, ClassScheduleItem, Grade } from '../types';
+import type { Classes, Student, ClassData, ClassScheduleItem, Grade, Assignment, Announcement, AttendanceRecord } from '../types';
 import { exportToExcel, readExcelFile, type ExcelData } from '../utils/excelHelper';
 import { logger } from '../utils/logger';
 import StudentCard from './StudentCard';
@@ -10,6 +10,8 @@ import AssignHomeworkModal from './AssignHomeworkModal';
 import AddClassModal from './AddClassModal';
 import AddStudentModal from './AddStudentModal';
 import DeleteClassModal from './DeleteClassModal';
+import AttendanceModal from './AttendanceModal';
+import AnnouncementModal from './AnnouncementModal';
 
 interface TeacherDashboardProps {
   classes: Classes;
@@ -31,9 +33,12 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ classes, setClasses
   const [isAddStudentModalOpen, setIsAddStudentModalOpen] = useState(false);
   const [isDeleteClassModalOpen, setIsDeleteClassModalOpen] = useState(false);
   const [isActionMenuOpen, setIsActionMenuOpen] = useState(false);
+  const [isAttendanceModalOpen, setIsAttendanceModalOpen] = useState(false);
+  const [isAnnouncementModalOpen, setIsAnnouncementModalOpen] = useState(false);
 
   const [classToEdit, setClassToEdit] = useState<{ id: string; data: ClassData } | null>(null);
   const [classToDelete, setClassToDelete] = useState<{ id: string; data: ClassData } | null>(null);
+  const [classForAttendance, setClassForAttendance] = useState<string | null>(null);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [uploadMessage, setUploadMessage] = useState<{classId: string, type: 'success' | 'error', text: string} | null>(null);
@@ -50,6 +55,8 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ classes, setClasses
       searchPlaceholder: "Search by class or student name...",
       assign: "Assign",
       createTest: "Create Test",
+      attendance: "Attendance",
+      announcement: "Announcement",
       addClass: "Add Class",
       addStudent: "Add Student",
       students: "Students",
@@ -60,6 +67,7 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ classes, setClasses
       collapse: "Collapse",
       editClass: "Edit Class",
       deleteClass: "Delete Class",
+      takeAttendance: "Take Attendance",
       manageStudentsTitle: "Manage Students",
       addStudentManually: "Add Manually",
       addStudentManuallyDesc: "Add students one by one by entering their name.",
@@ -105,6 +113,8 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ classes, setClasses
       searchPlaceholder: "Tìm theo tên lớp hoặc học sinh...",
       assign: "Giao bài",
       createTest: "Tạo Bài kiểm tra",
+      attendance: "Điểm danh",
+      announcement: "Thông báo",
       addClass: "Thêm Lớp",
       addStudent: "Thêm Học sinh",
       students: "Học sinh",
@@ -115,6 +125,7 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ classes, setClasses
       collapse: "Thu gọn",
       editClass: "Sửa Lớp",
       deleteClass: "Xóa Lớp",
+      takeAttendance: "Điểm danh",
       manageStudentsTitle: "Quản lý Học sinh",
       addStudentManually: "Thêm thủ công",
       addStudentManuallyDesc: "Thêm từng học sinh một bằng cách nhập tên.",
@@ -205,6 +216,69 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ classes, setClasses
     setClasses(updatedClasses);
     setIsAddStudentModalOpen(false);
     setClassForNewStudent(null);
+  };
+
+  const handleAssignHomework = (assignment: Assignment) => {
+    const updatedClasses = { ...classes };
+    const classData = updatedClasses[assignment.classId];
+    if (classData) {
+      if (!classData.assignments) {
+        classData.assignments = [];
+      }
+      classData.assignments.push(assignment);
+      
+      // Also add assignment to each assigned student
+      assignment.assignedTo.forEach(studentId => {
+        const student = classData.students.find(s => s.id === studentId);
+        if (student) {
+          student.assignments.push(assignment);
+        }
+      });
+      
+      setClasses(updatedClasses);
+    }
+  };
+
+  const handleCreateTest = (testData: any) => {
+    logger.info('Test created:', testData);
+    // In a real implementation, this would save the test data
+  };
+
+  const handleSaveAttendance = (attendance: Record<string, AttendanceRecord>) => {
+    if (!classForAttendance) return;
+    
+    const updatedClasses = { ...classes };
+    const classData = updatedClasses[classForAttendance];
+    
+    if (classData) {
+      Object.entries(attendance).forEach(([studentId, record]) => {
+        const student = classData.students.find(s => s.id === studentId);
+        if (student) {
+          if (!student.attendance) {
+            student.attendance = [];
+          }
+          student.attendance.push(record);
+        }
+      });
+      
+      setClasses(updatedClasses);
+    }
+    
+    setIsAttendanceModalOpen(false);
+    setClassForAttendance(null);
+  };
+
+  const handleBroadcastAnnouncement = (announcement: Announcement) => {
+    const updatedClasses = { ...classes };
+    
+    Object.keys(updatedClasses).forEach(classId => {
+      if (!updatedClasses[classId].announcements) {
+        updatedClasses[classId].announcements = [];
+      }
+      updatedClasses[classId].announcements!.push(announcement);
+    });
+    
+    setClasses(updatedClasses);
   };
 
   const handleDownloadTemplate = async () => {
@@ -375,6 +449,7 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ classes, setClasses
           </div>
           {/* Desktop Buttons */}
           <div className="hidden sm:flex items-center gap-2">
+            <button onClick={() => setIsAnnouncementModalOpen(true)} className="btn btn-secondary-outline"><i className="fa-solid fa-bullhorn mr-2"></i> {t.announcement}</button>
             <button onClick={() => setIsHomeworkModalOpen(true)} className="btn btn-secondary"><i className="fa-solid fa-file-pen mr-2"></i> {t.assign}</button>
             <button onClick={() => setIsTestModalOpen(true)} className="btn btn-primary"><i className="fa-solid fa-vial-circle-check mr-2"></i> {t.createTest}</button>
           </div>
@@ -385,7 +460,8 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ classes, setClasses
             </button>
             {isActionMenuOpen && (
               <div className="absolute top-full right-0 mt-2 w-48 bg-white dark:bg-slate-700 rounded-lg shadow-xl z-10 animate-fade-in">
-                  <button onClick={() => { setIsHomeworkModalOpen(true); setIsActionMenuOpen(false); }} className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-t-lg"><i className="fa-solid fa-file-pen mr-2 w-4"></i> {t.assign}</button>
+                  <button onClick={() => { setIsAnnouncementModalOpen(true); setIsActionMenuOpen(false); }} className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-t-lg"><i className="fa-solid fa-bullhorn mr-2 w-4"></i> {t.announcement}</button>
+                  <button onClick={() => { setIsHomeworkModalOpen(true); setIsActionMenuOpen(false); }} className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600"><i className="fa-solid fa-file-pen mr-2 w-4"></i> {t.assign}</button>
                   <button onClick={() => { setIsTestModalOpen(true); setIsActionMenuOpen(false); }} className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-600 rounded-b-lg"><i className="fa-solid fa-vial-circle-check mr-2 w-4"></i> {t.createTest}</button>
               </div>
             )}
@@ -428,6 +504,7 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ classes, setClasses
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
+                    <button onClick={() => { setClassForAttendance(classId); setIsAttendanceModalOpen(true); }} className="btn btn-icon text-green-500" title={t.takeAttendance}><i className="fa-solid fa-calendar-check"></i></button>
                     <button onClick={() => { setClassToEdit({ id: classId, data: classData }); setIsAddEditClassModalOpen(true); }} className="btn btn-icon text-blue-500" title={t.editClass}><i className="fa-solid fa-pencil"></i></button>
                     <button onClick={() => { setClassToDelete({ id: classId, data: classData }); setIsDeleteClassModalOpen(true); }} className="btn btn-icon text-red-500" title={t.deleteClass}><i className="fa-solid fa-trash"></i></button>
                     <button onClick={() => setExpandedClassId(isExpanded ? null : classId)} className="btn btn-icon text-slate-500" title={isExpanded ? t.collapse : t.expand}>
@@ -509,9 +586,33 @@ const TeacherDashboard: React.FC<TeacherDashboardProps> = ({ classes, setClasses
       {isReportModalOpen && selectedStudent && (
         <StudentReportModal student={selectedStudent} onClose={() => {setIsReportModalOpen(false); setSelectedStudent(null);}} classes={classes} setClasses={setClasses} classId={expandedClassId!} language={language}/>
       )}
-      {isTestModalOpen && <CreateTestModal onClose={() => setIsTestModalOpen(false)} language={language} />}
+      {isTestModalOpen && <CreateTestModal onClose={() => setIsTestModalOpen(false)} onCreateTest={handleCreateTest} language={language} />}
       {/* FIX: Cast result of Object.values to ClassData[] to prevent 'property does not exist on type unknown' error. */}
-      {isHomeworkModalOpen && <AssignHomeworkModal students={(Object.values(classes) as ClassData[]).flatMap(c => c.students)} onClose={() => setIsHomeworkModalOpen(false)} language={language} />}
+      {isHomeworkModalOpen && expandedClassId && (
+        <AssignHomeworkModal 
+          students={classes[expandedClassId]?.students || []} 
+          classId={expandedClassId}
+          onClose={() => setIsHomeworkModalOpen(false)} 
+          onAssign={handleAssignHomework}
+          language={language} 
+        />
+      )}
+      {isAttendanceModalOpen && classForAttendance && (
+        <AttendanceModal
+          students={classes[classForAttendance]?.students || []}
+          classId={classForAttendance}
+          onClose={() => { setIsAttendanceModalOpen(false); setClassForAttendance(null); }}
+          onSaveAttendance={handleSaveAttendance}
+          language={language}
+        />
+      )}
+      {isAnnouncementModalOpen && (
+        <AnnouncementModal
+          onClose={() => setIsAnnouncementModalOpen(false)}
+          onSave={handleBroadcastAnnouncement}
+          language={language}
+        />
+      )}
       {isAddEditClassModalOpen && <AddClassModal onClose={() => { setIsAddEditClassModalOpen(false); setClassToEdit(null); }} onSave={handleSaveClass} language={language} classToEdit={classToEdit}/>}
       {isAddStudentModalOpen && <AddStudentModal onClose={() => { setIsAddStudentModalOpen(false); setClassForNewStudent(null); }} onAddStudent={handleAddStudent} language={language} />}
       {isDeleteClassModalOpen && classToDelete && <DeleteClassModal className={classToDelete.data.name} onClose={() => { setIsDeleteClassModalOpen(false); setClassToDelete(null); }} onConfirm={handleDeleteClass} language={language}/>}
