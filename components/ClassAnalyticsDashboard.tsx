@@ -9,115 +9,71 @@ interface ClassAnalyticsDashboardProps {
 const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ classes, language }) => {
   const t = {
     en: {
-      title: "Analytics & Insights",
-      subtitle: "Comprehensive overview of class performance and engagement",
-      overviewTitle: "Overview",
-      totalStudents: "Total Students",
-      totalClasses: "Total Classes",
-      averageGrade: "Average Grade",
-      attendanceRate: "Attendance Rate",
-      classPerformance: "Class Performance",
-      classHeader: "Class",
-      studentsHeader: "Students",
-      avgGradeHeader: "Avg Grade",
-      topPerformers: "Top Performers",
-      needsAttention: "Needs Attention",
-      engagementMetrics: "Engagement Metrics",
-      assignmentCompletion: "Assignment Completion",
-      activeStudents: "Active Students",
-      trend: "Trend",
-      improving: "Improving",
-      stable: "Stable",
-      declining: "Declining",
-      noData: "No data available yet",
-      viewDetails: "View Details"
+      title: 'Analytics & Insights',
+      subtitle: 'Comprehensive overview of class performance and engagement',
+      totalStudents: 'Total Students',
+      totalClasses: 'Total Classes',
+      averageGrade: 'Average Grade',
+      attendanceRate: 'Attendance Rate',
+      classPerformance: 'Class Performance',
+      classHeader: 'Class',
+      studentsHeader: 'Students',
+      avgGradeHeader: 'Avg Grade',
+      topPerformers: 'Top Performers',
+      needsAttention: 'Needs Attention',
+      noData: 'No data available yet'
     },
     vi: {
-      title: "Phân tích & Thống kê",
-      subtitle: "Tổng quan toàn diện về hiệu suất và tương tác của lớp",
-      overviewTitle: "Tổng quan",
-      totalStudents: "Tổng số Học sinh",
-      totalClasses: "Tổng số Lớp",
-      averageGrade: "Điểm Trung bình",
-      attendanceRate: "Tỷ lệ Điểm danh",
-      classPerformance: "Hiệu suất Lớp học",
-      classHeader: "Lớp",
-      studentsHeader: "Học sinh",
-      avgGradeHeader: "Điểm TB",
-      topPerformers: "Học sinh Xuất sắc",
-      needsAttention: "Cần Chú ý",
-      engagementMetrics: "Chỉ số Tương tác",
-      assignmentCompletion: "Hoàn thành Bài tập",
-      activeStudents: "Học sinh Tích cực",
-      trend: "xu hướng",
-      improving: "Cải thiện",
-      stable: "Ổn định",
-      declining: "Giảm sút",
-      noData: "Chưa có dữ liệu",
-      viewDetails: "Xem Chi tiết"
+      title: 'Phân tích & Thống kê',
+      subtitle: 'Tổng quan toàn diện về hiệu suất và tương tác của lớp',
+      totalStudents: 'Tổng số Học sinh',
+      totalClasses: 'Tổng số Lớp',
+      averageGrade: 'Điểm Trung bình',
+      attendanceRate: 'Tỷ lệ Điểm danh',
+      classPerformance: 'Hiệu suất Lớp học',
+      classHeader: 'Lớp',
+      studentsHeader: 'Học sinh',
+      avgGradeHeader: 'Điểm TB',
+      topPerformers: 'Học sinh Xuất sắc',
+      needsAttention: 'Cần Chú ý',
+      noData: 'Chưa có dữ liệu'
     }
   }[language];
 
   const analytics = useMemo(() => {
     const classDataArray = Object.values(classes) as ClassData[];
-    const totalStudents = classDataArray.reduce((sum, c) => sum + c.students.length, 0);
+    const totalStudents = classDataArray.reduce((sum, c) => sum + (c.students?.length || 0), 0);
     const totalClasses = classDataArray.length;
-    
-    // Calculate average grade across all students
+
     let totalGrade = 0;
     let studentCount = 0;
     classDataArray.forEach(classData => {
-      classData.students.forEach(student => {
-        totalGrade += student.averageScore;
+      (classData.students || []).forEach(student => {
+        totalGrade += (student as any).averageScore || 0;
         studentCount++;
       });
     });
     const averageGrade = studentCount > 0 ? (totalGrade / studentCount).toFixed(1) : 'N/A';
 
-    // Mock attendance rate (in a real system, this would be calculated from actual attendance data)
     const attendanceRate = '94.5%';
 
-    // Get top performers (students with highest grades)
     const allStudents: (Student & { className: string })[] = [];
     Object.entries(classes).forEach(([classId, classData]) => {
-      (classData as ClassData).students.forEach(student => {
-        allStudents.push({ ...student, className: (classData as ClassData).name });
+      (classData as ClassData).students?.forEach(student => {
+        allStudents.push({ ...(student as Student), className: (classData as ClassData).name });
       });
     });
-    
-    const topPerformers = allStudents
-      .sort((a, b) => b.averageScore - a.averageScore)
-      .slice(0, 5);
 
-    const needsAttention = allStudents
-      .filter(s => s.isStruggling)
-      .sort((a, b) => a.averageScore - b.averageScore)
-      .slice(0, 5);
+    const topPerformers = allStudents.sort((a, b) => (b.averageScore || 0) - (a.averageScore || 0)).slice(0, 5);
+    const needsAttention = allStudents.filter(s => s.isStruggling).sort((a, b) => (a.averageScore || 0) - (b.averageScore || 0)).slice(0, 5);
 
-    // Class-level performance
     const classPerformance = classDataArray.map(classData => {
-      const students = classData.students;
-      const avgGrade = students.length > 0
-        ? (students.reduce((sum, s) => sum + s.averageScore, 0) / students.length).toFixed(1)
-        : 'N/A';
-      
-      return {
-        name: classData.name,
-        studentCount: students.length,
-        avgGrade,
-        struggling: students.filter(s => s.isStruggling).length
-      };
+      const students = classData.students || [];
+      const avgGrade = students.length > 0 ? (students.reduce((sum, s) => sum + ((s as any).averageScore || 0), 0) / students.length).toFixed(1) : 'N/A';
+      return { name: classData.name, studentCount: students.length, avgGrade, struggling: students.filter(s => s.isStruggling).length };
     });
 
-    return {
-      totalStudents,
-      totalClasses,
-      averageGrade,
-      attendanceRate,
-      topPerformers,
-      needsAttention,
-      classPerformance
-    };
+    return { totalStudents, totalClasses, averageGrade, attendanceRate, topPerformers, needsAttention, classPerformance };
   }, [classes]);
 
   if (Object.keys(classes).length === 0) {
@@ -139,7 +95,6 @@ const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ class
         <p className="mt-1 text-lg text-slate-600 dark:text-slate-400">{t.subtitle}</p>
       </header>
 
-      {/* Overview Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div className="card-glass p-6">
           <div className="flex items-center justify-between">
@@ -191,12 +146,8 @@ const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ class
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        {/* Class Performance */}
         <div className="card-glass p-6">
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
-            <i className="fa-solid fa-chart-bar mr-2 text-blue-500"></i>
-            {t.classPerformance}
-          </h2>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4"><i className="fa-solid fa-chart-bar mr-2 text-blue-500"></i>{t.classPerformance}</h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -214,20 +165,16 @@ const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ class
                     <td className="p-2 text-center">{cp.studentCount}</td>
                     <td className="p-2 text-center">
                       <span className={`font-bold ${
-                        parseFloat(cp.avgGrade) >= 8 ? 'text-green-500' :
-                        parseFloat(cp.avgGrade) >= 6 ? 'text-amber-500' :
+                        parseFloat(cp.avgGrade as string) >= 8 ? 'text-green-500' :
+                        parseFloat(cp.avgGrade as string) >= 6 ? 'text-amber-500' :
                         'text-red-500'
                       }`}>
                         {cp.avgGrade}
                       </span>
                     </td>
-                    <td className="p-2 text-center">
-                      {cp.struggling > 0 && (
-                        <span className="px-2 py-1 bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 rounded-full text-xs font-medium">
-                          {cp.struggling}
-                        </span>
-                      )}
-                    </td>
+                    <td className="p-2 text-center">{cp.struggling > 0 && (
+                      <span className="px-2 py-1 bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 rounded-full text-xs font-medium">{cp.struggling}</span>
+                    )}</td>
                   </tr>
                 ))}
               </tbody>
@@ -235,38 +182,28 @@ const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ class
           </div>
         </div>
 
-        {/* Top Performers */}
         <div className="card-glass p-6">
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
-            <i className="fa-solid fa-trophy mr-2 text-amber-500"></i>
-            {t.topPerformers}
-          </h2>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4"><i className="fa-solid fa-trophy mr-2 text-amber-500"></i>{t.topPerformers}</h2>
           <div className="space-y-3">
             {analytics.topPerformers.map((student, index) => (
               <div key={student.id} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
                 <div className="flex items-center">
-                  <span className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-bold text-sm mr-3">
-                    {index + 1}
-                  </span>
+                  <span className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-bold text-sm mr-3">{index + 1}</span>
                   <div>
                     <p className="font-medium">{student.name}</p>
                     <p className="text-xs text-slate-500">{student.className}</p>
                   </div>
                 </div>
-                <span className="text-lg font-bold text-green-500">{student.averageScore.toFixed(1)}</span>
+                <span className="text-lg font-bold text-green-500">{(student.averageScore || 0).toFixed(1)}</span>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Students Needing Attention */}
       {analytics.needsAttention.length > 0 && (
         <div className="card-glass p-6">
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
-            <i className="fa-solid fa-triangle-exclamation mr-2 text-red-500"></i>
-            {t.needsAttention}
-          </h2>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4"><i className="fa-solid fa-triangle-exclamation mr-2 text-red-500"></i>{t.needsAttention}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {analytics.needsAttention.map(student => (
               <div key={student.id} className="p-4 border border-red-200 dark:border-red-800 rounded-lg bg-red-50 dark:bg-red-900/10">
@@ -279,7 +216,7 @@ const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ class
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-slate-600 dark:text-slate-400">{t.avgGradeHeader}:</span>
-                  <span className="font-bold text-red-500">{student.averageScore.toFixed(1)}</span>
+                  <span className="font-bold text-red-500">{(student.averageScore || 0).toFixed(1)}</span>
                 </div>
               </div>
             ))}
@@ -291,3 +228,4 @@ const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ class
 };
 
 export default ClassAnalyticsDashboard;
+
