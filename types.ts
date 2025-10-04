@@ -32,6 +32,10 @@ export interface User {
   subject?: string; // For teachers, e.g., "English, Literature"
   phone?: string;
   profileCompleted?: boolean; // Flag to indicate if user completed initial profile setup
+  subscription?: {
+    tier: 'free' | 'student' | 'teacher' | 'enterprise';
+    expiresAt?: Date;
+  };
 }
 
 export interface Lesson {

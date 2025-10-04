@@ -59,11 +59,11 @@ const Sidebar: React.FC<SidebarProps> = ({ user, currentView, setView, language,
     { view: 'curriculum', icon: 'fa-book-open', label: 'curriculum' },
   ];
 
-  const commonNavItems: { view: View; icon: string; label: keyof typeof t.en }[] = [
-    { view: 'writing-grader', icon: 'fa-pen-ruler', label: 'writingGrader' },
-    { view: 'speaking-partner', icon: 'fa-comments', label: 'speakingPartner' },
-    { view: 'ai-tutor', icon: 'fa-robot', label: 'aiTutor' },
-    { view: 'learning-path', icon: 'fa-map', label: 'learningPath' },
+  const commonNavItems: { view: View; icon: string; label: keyof typeof t.en; badge?: 'free' | 'premium' }[] = [
+    { view: 'writing-grader', icon: 'fa-pen-ruler', label: 'writingGrader', badge: 'free' },
+    { view: 'speaking-partner', icon: 'fa-comments', label: 'speakingPartner', badge: 'premium' },
+    { view: 'ai-tutor', icon: 'fa-robot', label: 'aiTutor', badge: 'premium' },
+    { view: 'learning-path', icon: 'fa-map', label: 'learningPath', badge: 'premium' },
   ];
   
   const bottomNavItems: { view: View; icon: string; label: keyof typeof t.en }[] = [
@@ -74,7 +74,7 @@ const Sidebar: React.FC<SidebarProps> = ({ user, currentView, setView, language,
   const navItems = user.role === 'teacher' ? teacherNavItems : studentNavItems;
   const adminNavItem = { view: 'admin' as View, icon: 'fa-shield-halved', label: 'admin' as keyof typeof t.en };
 
-  const NavLink: React.FC<{ item: { view: View; icon: string; label: keyof typeof t.en } }> = ({ item }) => {
+  const NavLink: React.FC<{ item: { view: View; icon: string; label: keyof typeof t.en; badge?: 'free' | 'premium' } }> = ({ item }) => {
     const isActive = currentView === item.view;
     return (
       <li>
@@ -95,7 +95,18 @@ const Sidebar: React.FC<SidebarProps> = ({ user, currentView, setView, language,
           >
             <i className={`fa-solid ${item.icon}`}></i>
           </span>
-          <span className="truncate">{t[language][item.label]}</span>
+          <span className="flex-1 truncate">{t[language][item.label]}</span>
+          {item.badge && (
+            <span 
+              className={`px-2 py-0.5 text-xs font-bold rounded-full ${
+                item.badge === 'premium'
+                  ? 'bg-gradient-to-r from-yellow-400 to-amber-500 text-slate-900'
+                  : 'bg-blue-500/30 text-blue-200 border border-blue-400/30'
+              }`}
+            >
+              {item.badge === 'premium' ? '💎' : 'FREE'}
+            </span>
+          )}
         </button>
       </li>
     );

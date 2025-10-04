@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import type { User } from '../types';
+import { demoAIResponses } from '../data/demo-ai-responses';
+import { checkAITutorLimit, trackAITutorUsage, getRemainingRequests } from '../utils/usageTracker';
+import PricingModal from './PricingModal';
 
 interface Message {
   id: string;
@@ -19,6 +22,9 @@ const AITutorChat: React.FC<Props> = ({ user, language }) => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [showPricingModal, setShowPricingModal] = useState(false);
+  const isFreeTier = !user.subscription || user.subscription.tier === 'free';
+  const remaining = getRemainingRequests();
 
   const t = {
     en: {
@@ -36,6 +42,13 @@ const AITutorChat: React.FC<Props> = ({ user, language }) => {
         'Explain phrasal verbs with examples',
       ],
       examplesTitle: 'Try asking:',
+      freeTierBadge: '🆓 Free Tier',
+      premiumBadge: '💎 Premium',
+      limitReached: 'Daily limit reached!',
+      limitReachedDesc: 'You\'ve used your free AI tutor questions for today. Upgrade to Premium for unlimited questions.',
+      upgradeButton: 'Upgrade to Premium',
+      remainingUses: `${remaining.aiTutor} free question${remaining.aiTutor !== 1 ? 's' : ''} remaining today`,
+      demoNotice: '💡 This is a sample answer. Upgrade to Premium for personalized AI tutoring.',
     },
     vi: {
       title: 'Gia sư AI tiếng Anh',
@@ -52,6 +65,13 @@ const AITutorChat: React.FC<Props> = ({ user, language }) => {
         'Giải thích phrasal verb với ví dụ',
       ],
       examplesTitle: 'Thử hỏi:',
+      freeTierBadge: '🆓 Miễn phí',
+      premiumBadge: '💎 Premium',
+      limitReached: 'Đã hết lượt hỏi hôm nay!',
+      limitReachedDesc: 'Bạn đã hết lượt hỏi AI tutor miễn phí trong ngày. Nâng cấp lên Premium để hỏi không giới hạn.',
+      upgradeButton: 'Nâng cấp lên Premium',
+      remainingUses: `Còn ${remaining.aiTutor} câu hỏi miễn phí hôm nay`,
+      demoNotice: '💡 Đây là câu trả lời mẫu. Nâng cấp lên Premium để được gia sư AI cá nhân hóa.',
     }
   }[language];
 
@@ -75,6 +95,13 @@ const AITutorChat: React.FC<Props> = ({ user, language }) => {
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
 
+    // Check if free tier and has reached limit
+    if (isFreeTier && !checkAITutorLimit()) {
+      // Show upgrade prompt
+      setShowPricingModal(true);
+      return;
+    }
+
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
@@ -87,28 +114,44 @@ const AITutorChat: React.FC<Props> = ({ user, language }) => {
     setIsLoading(true);
 
     try {
-      if (!import.meta.env.VITE_GEMINI_API_KEY) {
-        throw new Error('AI service not configured');
-      }
+      let responseContent = '';
 
-      const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
-      const systemPrompt = `You are an expert English language tutor helping ${user.name}, a ${user.role === 'student' ? `${user.gradeLevel || 'student'}` : 'teacher'}. Provide clear, encouraging, and educational responses about English learning. Use examples and be patient. Respond in ${language === 'vi' ? 'Vietnamese' : 'English'}.`;
-      
-      const conversationHistory = messages.map(m => `${m.role === 'user' ? 'Student' : 'Tutor'}: ${m.content}`).join('\n');
-      const prompt = `${systemPrompt}\n\nConversation:\n${conversationHistory}\nStudent: ${userMessage.content}\nTutor:`;
-
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: prompt,
-        config: {
-          temperature: 0.7,
+      if (isFreeTier) {
+        // Use demo responses for free tier - randomly select one
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate delay
+        const demoQA = demoAIResponses.aiTutor[language];
+        const randomIndex = Math.floor(Math.random() * demoQA.length);
+        const selectedDemo = demoQA[randomIndex];
+        
+        responseContent = `${selectedDemo.answer}\n\n${t.demoNotice}`;
+        trackAITutorUsage();
+      } else {
+        // Premium users get real AI responses
+        if (!import.meta.env.VITE_GEMINI_API_KEY) {
+          throw new Error('AI service not configured');
         }
-      });
+
+        const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
+        const systemPrompt = `You are an expert English language tutor helping ${user.name}, a ${user.role === 'student' ? `${user.gradeLevel || 'student'}` : 'teacher'}. Provide clear, encouraging, and educational responses about English learning. Use examples and be patient. Respond in ${language === 'vi' ? 'Vietnamese' : 'English'}.`;
+        
+        const conversationHistory = messages.map(m => `${m.role === 'user' ? 'Student' : 'Tutor'}: ${m.content}`).join('\n');
+        const prompt = `${systemPrompt}\n\nConversation:\n${conversationHistory}\nStudent: ${userMessage.content}\nTutor:`;
+
+        const response = await ai.models.generateContent({
+          model: 'gemini-2.5-flash',
+          contents: prompt,
+          config: {
+            temperature: 0.7,
+          }
+        });
+
+        responseContent = response.text.trim();
+      }
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: response.text.trim(),
+        content: responseContent,
         timestamp: new Date(),
       };
 
@@ -137,7 +180,42 @@ const AITutorChat: React.FC<Props> = ({ user, language }) => {
         <i className="fa-solid fa-robot text-5xl text-blue-500 mb-4"></i>
         <h1 className="text-4xl font-bold">{t.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{t.subtitle}</p>
+        
+        {/* Free Tier Badge */}
+        {isFreeTier && (
+          <div className="mt-4 inline-block">
+            <span className="px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-semibold">
+              {t.freeTierBadge} • {t.remainingUses}
+            </span>
+          </div>
+        )}
+        {!isFreeTier && (
+          <div className="mt-4 inline-block">
+            <span className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-sm font-semibold">
+              {t.premiumBadge}
+            </span>
+          </div>
+        )}
       </div>
+
+      {/* Limit Reached Warning */}
+      {isFreeTier && !checkAITutorLimit() && (
+        <div className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 border-l-4 border-purple-500 p-4 rounded-r-lg mb-6 animate-fade-in">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <h4 className="font-bold text-purple-800 dark:text-purple-200">{t.limitReached}</h4>
+              <p className="text-sm text-purple-700 dark:text-purple-300">{t.limitReachedDesc}</p>
+            </div>
+            <button 
+              onClick={() => setShowPricingModal(true)} 
+              className="btn bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white flex-shrink-0"
+            >
+              <i className="fa-solid fa-crown mr-2"></i>
+              {t.upgradeButton}
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="card-glass flex flex-col h-[600px]">
         {/* Messages container */}
@@ -220,6 +298,14 @@ const AITutorChat: React.FC<Props> = ({ user, language }) => {
           </form>
         </div>
       </div>
+
+      {/* Pricing Modal */}
+      <PricingModal 
+        isOpen={showPricingModal}
+        onClose={() => setShowPricingModal(false)}
+        language={language}
+        userRole={user.role}
+      />
     </div>
   );
 };
