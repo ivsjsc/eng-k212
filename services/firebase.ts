@@ -1,34 +1,26 @@
-import { initializeApp, getApps, type FirebaseApp } from "firebase/app";
-import { getAnalytics, type Analytics } from "firebase/analytics";
-import { 
-    getAuth, 
-    onAuthStateChanged, 
-    createUserWithEmailAndPassword, 
-    signInWithEmailAndPassword, 
-    signOut,
-    updateProfile,
-    GoogleAuthProvider,
-    signInWithPopup,
-    signInWithRedirect,
-    getRedirectResult,
-    RecaptchaVerifier,
-    signInWithPhoneNumber,
-    sendEmailVerification,
-    sendPasswordResetEmail,
-    type Auth
-} from "firebase/auth";
-import { 
-    getFirestore, 
-    doc, 
-    getDoc, 
-    setDoc, 
-    updateDoc,
-    type Firestore
-} from "firebase/firestore";
+import { initializeApp, getApps, type FirebaseApp } from 'firebase/app';
+import {
+  getAuth, type Auth,
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+  GoogleAuthProvider,
+  signInWithRedirect,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  sendEmailVerification,
+  sendPasswordResetEmail
+} from 'firebase/auth';
+import {
+  getFirestore, type Firestore,
+  doc, getDoc, setDoc, updateDoc
+} from 'firebase/firestore';
+import { getAnalytics, type Analytics } from 'firebase/analytics';
 import { getFunctions } from 'firebase/functions';
-import { logger } from '../utils/logger';
 
-// Firebase configuration from environment variables
+// Centralized firebase configuration (no hard-coded fallback)
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -40,76 +32,79 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
+// Lightweight validation & visibility
+console.debug('[FIREBASE CONFIG CHECK]', {
+  apiKey: (firebaseConfig.apiKey || '').slice(0, 8),
+  projectId: firebaseConfig.projectId,
+  authDomain: firebaseConfig.authDomain,
+  appId: firebaseConfig.appId,
+  storageBucket: firebaseConfig.storageBucket
+});
 
-let auth: Auth | null = null;
-let db: Firestore | null = null;
-let firebaseError: string | null = null;
-let googleProvider: GoogleAuthProvider | null = null;
-let functionsClient: ReturnType<typeof getFunctions> | null = null;
-let analyticsClient: Analytics | null = null;
-
-try {
-  if (firebaseConfig && firebaseConfig.apiKey) {
-  // Avoid double-initialization during HMR or if this module is evaluated multiple times
-  const app: FirebaseApp = getApps().length ? (getApps()[0] as FirebaseApp) : initializeApp(firebaseConfig);
-      // Helpful debug log so client-side initialisation is visible in the browser console
-      try {
-        // app.options is present on successful initialization
-        logger.debug('Firebase initialized (client). Project ID:', app.options?.projectId || '(unknown)');
-      } catch (e) {
-        // ignore logging errors in unusual environments
-      }
-      auth = getAuth(app);
-      db = getFirestore(app);
-        // export client Functions instance for callable functions
-        try {
-          functionsClient = getFunctions(app);
-        } catch (e) {
-          // ignore if functions can't initialize in current environment
-        }
-        // Initialize Analytics only in browser environments when measurementId is present
-        try {
-          // getAnalytics requires a browser environment; guard with typeof window
-          if (typeof window !== 'undefined' && (app.options?.measurementId || firebaseConfig.measurementId)) {
-            analyticsClient = getAnalytics(app);
-          }
-        } catch (e) {
-          // ignore analytics initialization failures (e.g., in tests or SSR)
-        }
-      googleProvider = new GoogleAuthProvider();
-  } else {
-      firebaseError = "Firebase configuration is missing or invalid. Please check your environment variables (.env.local file).";
-      logger.error(firebaseError);
-  }
-} catch (e: any) {
-  firebaseError = `Firebase initialization failed: ${e.message}`;
-  logger.error(firebaseError, e);
+if (
+  firebaseConfig.projectId &&
+  firebaseConfig.authDomain &&
+  !firebaseConfig.authDomain.includes(firebaseConfig.projectId)
+) {
+  console.warn('[FIREBASE CONFIG MISMATCH]', {
+    expectedInAuthDomain: firebaseConfig.projectId,
+    authDomain: firebaseConfig.authDomain
+  });
 }
 
-// Note: server-side admin logic has been moved to Netlify Functions under netlify/functions/
-// This file is client-only and must not import `firebase-admin` (server SDK).
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
+let db: Firestore | null = null;
+let analytics: Analytics | null = null;
+let functionsClient: ReturnType<typeof getFunctions> | null = null;
+let googleProvider: GoogleAuthProvider | null = null;
+let firebaseInitError: string | null = null;
 
-export { 
-    auth, 
-    db, 
-    firebaseError,
-    googleProvider,
+try {
+  if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
+    throw new Error('Missing required Firebase environment variables.');
+  }
+
+  app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  googleProvider = new GoogleAuthProvider();
+
+  try { functionsClient = getFunctions(app); } catch {}
+
+  try {
+    if (typeof window !== 'undefined' && firebaseConfig.measurementId) {
+      analytics = getAnalytics(app);
+    }
+  } catch {
+    // Analytics optional
+  }
+
+  console.debug('[FIREBASE] Initialized OK');
+} catch (e: any) {
+  firebaseInitError = e?.message || 'Unknown init error';
+  console.error('[FIREBASE INIT FAILED]', e);
+}
+
+export {
+  auth,
+  db,
+  analytics,
+  firebaseInitError,
+  googleProvider,
   functionsClient,
-    analyticsClient,
-    onAuthStateChanged,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    signInWithPopup,
-    signInWithRedirect,
-    getRedirectResult,
-    signOut,
-    updateProfile,
-    RecaptchaVerifier,
-    signInWithPhoneNumber,
-    sendEmailVerification,
-    sendPasswordResetEmail,
-    doc,
-    getDoc,
-    setDoc,
-    updateDoc
+
+  // Auth helpers
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+
+  // Firestore helpers
+  doc, getDoc, setDoc, updateDoc
 };
