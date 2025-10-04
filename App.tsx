@@ -24,6 +24,8 @@ const AuthPage = lazy(() => import('./components/AuthPage'));
 const RoleSelectionPage = lazy(() => import('./components/RoleSelectionPage'));
 import Curriculum from './components/Curriculum';
 import FirstUseOverlay from './components/FirstUseOverlay';
+import ProfileSetupModal from './components/ProfileSetupModal';
+import LinkPasswordModal from './components/LinkPasswordModal';
 
 // Keep Loading component as regular import since it's needed immediately
 import Loading from './components/Loading';
@@ -51,6 +53,8 @@ function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showFirstUseOverlay, setShowFirstUseOverlay] = useState(false);
+  const [showProfileSetup, setShowProfileSetup] = useState(false);
+  const [showLinkPassword, setShowLinkPassword] = useState(false);
 
   // Appearance states
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -189,9 +193,24 @@ function App() {
           }
 
           console.info('Resolved user set:', resolvedUser);
-          // Trigger first-use overlay for new or returning users if not shown yet
-          const shown = localStorage.getItem('ivs-first-use-shown');
-          if (!shown) setShowFirstUseOverlay(true);
+          
+          // Check if user needs to complete profile setup
+          if (!resolvedUser.profileCompleted) {
+            setShowProfileSetup(true);
+          } else {
+            // Check if Google user needs to link password
+            const hasGoogleProvider = firebaseUser.providerData.some(p => p.providerId === 'google.com');
+            const hasPasswordProvider = firebaseUser.providerData.some(p => p.providerId === 'password');
+            const linkPasswordShown = localStorage.getItem('ivs-link-password-shown');
+            
+            if (hasGoogleProvider && !hasPasswordProvider && !linkPasswordShown) {
+              setShowLinkPassword(true);
+            } else {
+              // Trigger first-use overlay for new or returning users if not shown yet
+              const shown = localStorage.getItem('ivs-first-use-shown');
+              if (!shown) setShowFirstUseOverlay(true);
+            }
+          }
         } else {
           setUser(null);
           setClasses({});
@@ -310,7 +329,7 @@ function App() {
       case 'home':
         return <Home user={user!} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes} />;
       case 'curriculum':
-        return <Curriculum language={language} onExplore={() => setCurrentView('home')} />;
+        return <Curriculum language={language} user={user!} onSelectCategory={(idx) => setCurrentView('home')} />;
       case 'teacher-dashboard':
         return <TeacherDashboard classes={classes} setClasses={handleUpdateClasses} language={language} />;
       case 'teacher-analytics':
@@ -447,6 +466,39 @@ function App() {
                     setIsSidebarOpen(true);
                     setShowFirstUseOverlay(false);
                     localStorage.setItem('ivs-first-use-shown', '1');
+                  }}
+                />
+              )}
+
+              {showLinkPassword && (
+                <LinkPasswordModal
+                  language={language}
+                  onComplete={() => {
+                    setShowLinkPassword(false);
+                    localStorage.setItem('ivs-link-password-shown', '1');
+                    // Show first-use overlay after password is set
+                    const shown = localStorage.getItem('ivs-first-use-shown');
+                    if (!shown) setShowFirstUseOverlay(true);
+                  }}
+                  onSkip={() => {
+                    setShowLinkPassword(false);
+                    localStorage.setItem('ivs-link-password-shown', '1');
+                    // Show first-use overlay after skipping
+                    const shown = localStorage.getItem('ivs-first-use-shown');
+                    if (!shown) setShowFirstUseOverlay(true);
+                  }}
+                />
+              )}
+
+              {showProfileSetup && user && (
+                <ProfileSetupModal
+                  user={user}
+                  language={language}
+                  onComplete={async (updates) => {
+                    await handleUpdateUser({ ...user, ...updates });
+                    setShowProfileSetup(false);
+                    const shown = localStorage.getItem('ivs-first-use-shown');
+                    if (!shown) setShowFirstUseOverlay(true);
                   }}
                 />
               )}
