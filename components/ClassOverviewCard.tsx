@@ -38,37 +38,52 @@ const ClassOverviewCard: React.FC<ClassOverviewCardProps> = ({ classes, language
 
   return (
     <section className="card-glass p-6">
-      <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-4">
+      <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-6">
         <i className="fa-solid fa-chalkboard mr-2 text-purple-500"></i>
         {t.title}
       </h2>
 
-      <div className="grid grid-cols-3 gap-4 my-4 text-center">
-        <div>
-          <p className="text-2xl font-bold">{stats.totalClasses}</p>
-          <p className="text-xs text-slate-500">{t.classes}</p>
+      <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="group relative bg-gradient-to-br from-purple-400 to-indigo-500 rounded-2xl p-4 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer overflow-hidden">
+          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="relative z-10 text-center">
+            <p className="text-3xl font-black text-white drop-shadow-md mb-1">{stats.totalClasses}</p>
+            <p className="text-xs font-bold text-white/95 uppercase tracking-wide">{t.classes}</p>
+          </div>
+          <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-white/15 rounded-full blur-2xl"></div>
         </div>
-        <div>
-          <p className="text-2xl font-bold">{stats.totalStudents}</p>
-          <p className="text-xs text-slate-500">{t.students}</p>
+        
+        <div className="group relative bg-gradient-to-br from-blue-400 to-cyan-500 rounded-2xl p-4 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer overflow-hidden">
+          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="relative z-10 text-center">
+            <p className="text-3xl font-black text-white drop-shadow-md mb-1">{stats.totalStudents}</p>
+            <p className="text-xs font-bold text-white/95 uppercase tracking-wide">{t.students}</p>
+          </div>
+          <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-white/15 rounded-full blur-2xl"></div>
         </div>
-        <div>
-          <p className="text-2xl font-bold text-amber-500">{stats.totalStruggling}</p>
-          <p className="text-xs text-slate-500">{t.struggling}</p>
+        
+        <div className="group relative bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl p-4 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer overflow-hidden">
+          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className="relative z-10 text-center">
+            <p className="text-3xl font-black text-white drop-shadow-md mb-1">{stats.totalStruggling}</p>
+            <p className="text-xs font-bold text-white/95 uppercase tracking-wide">{t.struggling}</p>
+          </div>
+          <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-white/15 rounded-full blur-2xl"></div>
         </div>
       </div>
       
-      <ul className="space-y-2 text-sm mb-4">
+      <ul className="space-y-3 text-sm mb-6">
         {/* FIX: Cast Object.values(classes) to ClassData[] to prevent type errors during mapping. */}
         {(Object.values(classes) as ClassData[]).map((classData, index) => (
-          <li key={index} className="flex justify-between items-center p-2 rounded-md bg-slate-50 dark:bg-slate-700/30">
-            <span className="font-medium">{classData.name}</span>
-            <span className="text-slate-500 dark:text-slate-400 text-xs">{t.studentCount(classData.students.length)}</span>
+          <li key={index} className="flex justify-between items-center p-3 rounded-xl bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-700/50 dark:to-slate-600/50 hover:shadow-md transition-all duration-200 border border-slate-200 dark:border-slate-600">
+            <span className="font-bold text-slate-800 dark:text-slate-100">{classData.name}</span>
+            <span className="text-slate-600 dark:text-slate-300 text-xs font-semibold bg-white/70 dark:bg-slate-800/70 px-3 py-1 rounded-full">{t.studentCount(classData.students.length)}</span>
           </li>
         ))}
       </ul>
 
-      <button onClick={() => setView('teacher-dashboard')} className="btn btn-primary w-full">
+      <button onClick={() => setView('teacher-dashboard')} className="w-full px-6 py-4 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300">
+        <i className="fa-solid fa-chart-line mr-2"></i>
         {t.viewDashboard}
       </button>
     </section>
