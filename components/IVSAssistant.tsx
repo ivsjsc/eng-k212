@@ -22,32 +22,32 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
   const t = {
     en: {
       title: 'IVS Assistant',
-      subtitle: 'Your free AI learning companion',
-      placeholder: 'Ask me anything about English learning...',
+      subtitle: 'Your AI learning companion',
+      placeholder: 'Ask me anything about English learning or the app...',
       send: 'Send',
-      freeBadge: 'FREE for all users',
-      welcomeMessage: 'Hi! I\'m your IVS Assistant. I can help you with:\n• English grammar questions\n• Vocabulary explanations\n• Study tips and techniques\n• General learning advice\n\nWhat would you like to know?',
+      // freeBadge removed - we will show a small icon badge instead
+      welcomeMessage: 'Hi! I\'m your IVS Assistant. I can help you with:\n• English grammar questions\n• Vocabulary explanations\n• Study tips and techniques\n• App support, upgrades & membership questions\n\nWhat would you like to know?',
       sampleQuestions: 'Sample Questions:',
       samples: [
         'How can I improve my English pronunciation?',
         'What\'s the difference between "make" and "do"?',
-        'Tips for learning vocabulary effectively?',
-        'How to practice speaking alone?'
+        'How do I upgrade to Premium and what are the benefits?',
+        'How do I contact support for billing issues?'
       ]
     },
     vi: {
       title: 'Trợ lý IVS',
-      subtitle: 'Trợ lý AI học tập miễn phí',
+      subtitle: 'Trợ lý AI học tập',
       placeholder: 'Hỏi tôi bất cứ điều gì về học tiếng Anh...',
       send: 'Gửi',
-      freeBadge: 'MIỄN PHÍ cho tất cả',
-      welcomeMessage: 'Xin chào! Tôi là Trợ lý IVS. Tôi có thể giúp bạn:\n• Câu hỏi về ngữ pháp tiếng Anh\n• Giải thích từ vựng\n• Mẹo và kỹ thuật học tập\n• Lời khuyên học tập chung\n\nBạn muốn biết điều gì?',
+      // freeBadge removed
+      welcomeMessage: 'Xin chào! Tôi là Trợ lý IVS. Tôi có thể giúp bạn:\n• Câu hỏi về ngữ pháp tiếng Anh\n• Giải thích từ vựng\n• Mẹo và kỹ thuật học tập\n• Hỗ trợ ứng dụng, nâng cấp & quyền lợi thành viên\n\nBạn muốn biết điều gì?',
       sampleQuestions: 'Câu hỏi mẫu:',
       samples: [
         'Làm thế nào để cải thiện phát âm tiếng Anh?',
         'Sự khác biệt giữa "make" và "do" là gì?',
-        'Mẹo học từ vựng hiệu quả?',
-        'Cách luyện nói một mình?'
+        'Làm sao để nâng cấp lên Premium và quyền lợi như thế nào?',
+        'Làm sao liên hệ bộ phận hỗ trợ về thanh toán?'
       ]
     }
   };
@@ -79,6 +79,26 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
         ? '🔄 **Make vs Do - Key Differences:**\n\n**MAKE** = Creating/Producing something:\n• make a cake, make coffee\n• make a decision, make a mistake\n• make money, make friends\n• make noise, make an effort\n\n**DO** = Actions/Activities:\n• do homework, do exercise\n• do the dishes, do laundry\n• do your best, do a favor\n• do business, do research\n\n💡 **Easy Rule**: MAKE = producing a result, DO = performing an action!\n\n🎯 Common phrases:\n• make breakfast ✓ | do breakfast ✗\n• do housework ✓ | make housework ✗'
         : '🔄 **Make vs Do - Điểm Khác biệt:**\n\n**MAKE** = Tạo ra/Sản xuất cái gì đó:\n• make a cake, make coffee (làm bánh, pha cà phê)\n• make a decision, make a mistake (đưa ra quyết định, mắc lỗi)\n• make money, make friends (kiếm tiền, kết bạn)\n• make noise, make an effort (gây ồn, nỗ lực)\n\n**DO** = Hành động/Hoạt động:\n• do homework, do exercise (làm bài tập, tập thể dục)\n• do the dishes, do laundry (rửa bát, giặt giũ)\n• do your best, do a favor (cố gắng hết sức, giúp đỡ)\n• do business, do research (kinh doanh, nghiên cứu)\n\n💡 **Quy tắc Dễ**: MAKE = tạo ra kết quả, DO = thực hiện hành động!\n\n🎯 Cụm từ thông dụng:\n• make breakfast ✓ | do breakfast ✗\n• do housework ✓ | make housework ✗'
     ]
+    ,
+    support: [
+      language === 'en'
+        ? '📞 **App Support & Billing Help**:\n\n1. For account or billing questions, go to Settings → Billing to view your current plan and invoices.\n2. To contact support, email support@ivs.edu or use the in-app Contact form.\n3. Payment methods supported: bank transfer, Momo, ZaloPay (local), and card (coming soon).\n4. Provide your user ID and a screenshot for faster help.\n\nIf you have a refund or charge inquiry, include the transaction ID and date.'
+        : '📞 **Hỗ trợ Ứng dụng & Thanh toán**:\n\n1. Vào Cài đặt → Thanh toán để xem gói và hoá đơn.\n2. Liên hệ hỗ trợ: support@ivs.edu hoặc dùng form Liên hệ trong app.\n3. Phương thức: chuyển khoản, Momo, ZaloPay (địa phương), thẻ (sắp có).\n4. Gửi ID người dùng và ảnh chụp màn hình để xử lý nhanh hơn.\n\nVới yêu cầu hoàn tiền, gửi kèm mã giao dịch và ngày.'
+    ],
+    upgrade: [
+      language === 'en'
+        ? '💎 **Upgrade to Premium - What you get**:\n\n• Unlimited AI requests for tutors and graders\n• Real-time voice conversation practice\n• Personalized learning paths updated weekly\n• Priority support and early access to new features\n\nTo upgrade, open the Pricing modal from the sidebar or Settings → Billing. We accept local payment methods and will add card payments soon.'
+        : '💎 **Nâng cấp lên Premium - Quyền lợi**:\n\n• Hỏi AI không giới hạn cho gia sư và chấm bài\n• Luyện nói thời gian thực có phản hồi giọng nói\n• Lộ trình học cá nhân hoá cập nhật hàng tuần\n• Hỗ trợ ưu tiên và truy cập sớm tính năng mới\n\nĐể nâng cấp, mở modal Giá hoặc vào Cài đặt → Thanh toán. Chấp nhận phương thức thanh toán địa phương; thẻ sẽ sớm có.'
+        ,
+      language === 'en'
+        ? 'ℹ️ **Membership Tiers**:\n\n- Free: Basic demo responses, limited daily uses.\n- Student (monthly): Most features, reasonable limits for classrooms.\n- Teacher / Enterprise: Classroom management, analytics, team seats and centralized billing.\n\nCheck Settings → Billing for plan details and promo codes.'
+        : 'ℹ️ **Các gói thành viên**:\n\n- Miễn phí: Phản hồi mẫu, giới hạn lượt dùng hàng ngày.\n- Học sinh (tháng): Hầu hết tính năng, giới hạn phù hợp lớp học.\n- Giáo viên / Doanh nghiệp: Quản lý lớp, phân tích, nhiều tài khoản và hoá đơn tập trung.\n\nXem Cài đặt → Thanh toán để biết chi tiết gói và mã khuyến mãi.'
+    ],
+    appUsage: [
+      language === 'en'
+        ? '🛠️ **How to use the app & IVS Assistant**:\n\n• Access AI features from the sidebar (AI Tutor, Writing Grader, Speaking Partner).\n• Use IVS Assistant (bottom-right) for quick help, sample questions, or support.\n• If an AI feature shows "AI not configured", ask your admin to add the API key under Settings → AI Keys.\n• For classroom usage, teachers can invite students via Class settings.'
+        : '🛠️ **Cách sử dụng app & Trợ lý IVS**:\n\n• Truy cập tính năng AI từ thanh bên (Chat AI, Chấm bài, Luyện nói).\n• Dùng Trợ lý IVS (góc dưới phải) để hỏi nhanh, xem câu hỏi mẫu hoặc yêu cầu hỗ trợ.\n• Nếu tính năng AI báo "AI chưa được cấu hình", yêu cầu quản trị viên thêm API key tại Cài đặt → AI Keys.\n• Giáo viên mời học sinh qua cài đặt Lớp.'
+    ]
   };
 
   const getSmartResponse = (question: string): string => {
@@ -109,10 +129,10 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
       return demoResponses.makeVsDo[0];
     }
     
-    // Default helpful response
+    // Default helpful response with shortcuts to support/upgrade
     return language === 'en'
-      ? '🤖 **I\'m here to help!**\n\nI can assist you with:\n• Grammar explanations\n• Vocabulary tips\n• Pronunciation advice\n• Study techniques\n• Learning strategies\n\nCould you be more specific about what you\'d like to learn?\n\n💡 *Try asking about pronunciation, vocabulary, speaking practice, or grammar!*'
-      : '🤖 **Tôi sẵn sàng giúp bạn!**\n\nTôi có thể hỗ trợ bạn về:\n• Giải thích ngữ pháp\n• Mẹo từ vựng\n• Lời khuyên phát âm\n• Kỹ thuật học tập\n• Chiến lược học tập\n\nBạn có thể cụ thể hơn về những gì bạn muốn học không?\n\n💡 *Thử hỏi về phát âm, từ vựng, luyện nói, hoặc ngữ pháp!*';
+      ? '🤖 **I\'m here to help!**\n\nI can assist you with:\n• Grammar explanations\n• Vocabulary tips\n• Pronunciation advice\n• Study techniques\n• App support, upgrades & membership questions\n\nYou can also ask:\n• "How do I upgrade to Premium?"\n• "How do I contact support for billing?"\n\n💡 *Try asking about pronunciation, vocabulary, speaking practice, grammar or app support.*'
+      : '🤖 **Tôi sẵn sàng giúp bạn!**\n\nTôi có thể hỗ trợ bạn về:\n• Giải thích ngữ pháp\n• Mẹo từ vựng\n• Lời khuyên phát âm\n• Kỹ thuật học tập\n• Hỗ trợ ứng dụng, nâng cấp & quyền lợi thành viên\n\nBạn cũng có thể hỏi:\n• "Làm sao để nâng cấp lên Premium?"\n• "Làm sao liên hệ hỗ trợ về thanh toán?"\n\n💡 *Thử hỏi về phát âm, từ vựng, luyện nói, ngữ pháp hoặc hỗ trợ ứng dụng.*';
   };
 
   useEffect(() => {

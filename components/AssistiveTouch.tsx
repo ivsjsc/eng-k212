@@ -32,9 +32,9 @@ const AssistiveTouch: React.FC<AssistiveTouchProps> = ({ user, language }) => {
           className="relative w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-blue-500/50 active:scale-95 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 animate-pulse-glow"
           title={t[language].toggleAssistant}
         >
-          {/* FREE Badge */}
-          <span className="absolute -top-2 -right-2 px-2 py-0.5 bg-green-500 text-white text-xs font-bold rounded-full shadow-lg animate-bounce">
-            {t[language].free}
+          {/* Small info badge (icon only) */}
+          <span className="absolute -top-2 -right-2 w-7 h-7 bg-green-500 text-white rounded-full shadow-lg flex items-center justify-center">
+            <i className="fa-solid fa-info text-xs" aria-hidden></i>
           </span>
           
           <i
