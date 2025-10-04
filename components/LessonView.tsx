@@ -34,6 +34,11 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFr
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
   const [revealedAnswers, setRevealedAnswers] = useState<Record<number, boolean>>({});
+  
+  // Premium Tool Modals State
+  const [showQuizModal, setShowQuizModal] = useState(false);
+  const [showConversationModal, setShowConversationModal] = useState(false);
+  const [showAssistantModal, setShowAssistantModal] = useState(false);
 
   useEffect(() => {
     setAiConfigured(isAiConfigured());
@@ -140,6 +145,25 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFr
     </div>
   );
   
+  // Helper component for compact premium tool buttons
+  const PremiumToolButton: React.FC<{ icon: string, label: string, color: string, onClick: () => void }> = ({ icon, label, color, onClick }) => {
+    const colorMap: Record<string, string> = {
+      purple: 'hover:bg-purple-50 dark:hover:bg-purple-900/30 text-purple-600 dark:text-purple-400',
+      green: 'hover:bg-green-50 dark:hover:bg-green-900/30 text-green-600 dark:text-green-400',
+      indigo: 'hover:bg-indigo-50 dark:hover:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
+    };
+    return (
+      <button 
+        onClick={onClick}
+        className={`w-full flex items-center gap-3 px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl transition-all hover:shadow-md hover:-translate-y-0.5 ${colorMap[color]}`}
+      >
+        <i className={`fa-solid ${icon} text-xl`}></i>
+        <span className="font-semibold text-sm">{label}</span>
+        <i className="fa-solid fa-chevron-right ml-auto text-xs opacity-50"></i>
+      </button>
+    );
+  };
+
   // FIX: Explicitly type TabButton as React.FC to resolve issue where TypeScript incorrectly treats the 'key' prop as a standard prop.
   const TabButton: React.FC<{ id: string, icon: string, label: string }> = ({ id, icon, label }) => (
     <button
@@ -355,36 +379,99 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFr
           </div>
         </div>
 
-        {/* Right column: ebook preview + AI lesson tools */}
+        {/* Right column: ebook preview + compact AI tool buttons */}
         <aside className="space-y-4">
           <div className="card-glass p-4">
-            <h4 className="font-semibold mb-2">{language === 'vi' ? 'Sách điện tử' : 'E-book'}</h4>
-            <div className="h-48 overflow-auto bg-white dark:bg-slate-900 rounded-md p-3 text-sm text-slate-700 dark:text-slate-300">
-              {/* Simple lesson content preview; replaced by embedded ebook viewer elsewhere in future */}
+            <h4 className="font-semibold mb-2 flex items-center gap-2">
+              <i className="fa-solid fa-book-open text-blue-500"></i>
+              {language === 'vi' ? 'Sách điện tử' : 'E-book'}
+            </h4>
+            <div className="h-64 overflow-auto bg-white dark:bg-slate-900 rounded-md p-3 text-sm text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
               <p className="whitespace-pre-line">{lesson.rawLesson.bookExcerpt?.[language] ?? lesson.rawLesson.intro?.[language] ?? 'No preview available.'}</p>
             </div>
           </div>
 
+          {/* Compact Premium Tools - click to expand */}
           <div className="card-glass p-4">
-            <h4 className="font-semibold mb-3">{language === 'vi' ? 'Công cụ AI (Demo)' : 'AI Tools (Demo)'}</h4>
-
-            {/* Quick Quiz */}
-            <div className="mb-4">
-              <LessonQuickQuiz language={language} isFreeTier={isFreeTier} lessonTitle={lesson.title} />
-            </div>
-
-            {/* Conversation Practice */}
-            <div className="mb-4">
-              <LessonConversationPractice language={language} isFreeTier={isFreeTier} lessonTitle={lesson.title} />
-            </div>
-
-            {/* AI Lesson Assistant */}
-            <div>
-              <LessonAIAssistant language={language} isFreeTier={isFreeTier} lessonTitle={lesson.title} lessonContent={lesson.rawLesson.intro?.[language] ?? ''} />
+            <h4 className="font-semibold mb-3 flex items-center gap-2">
+              <i className="fa-solid fa-sparkles text-purple-500"></i>
+              {language === 'vi' ? 'Tiện ích Premium' : 'Premium Tools'}
+            </h4>
+            <div className="space-y-2">
+              {/* Quick Quiz Button */}
+              <PremiumToolButton
+                icon="fa-clipboard-question"
+                label={language === 'vi' ? 'Quiz Nhanh' : 'Quick Quiz'}
+                color="purple"
+                onClick={() => setShowQuizModal(true)}
+              />
+              {/* Conversation Practice Button */}
+              <PremiumToolButton
+                icon="fa-comments"
+                label={language === 'vi' ? 'Luyện Hội thoại' : 'Conversation Practice'}
+                color="green"
+                onClick={() => setShowConversationModal(true)}
+              />
+              {/* AI Assistant Button */}
+              <PremiumToolButton
+                icon="fa-robot"
+                label={language === 'vi' ? 'Trợ lý AI Bài học' : 'Lesson AI Assistant'}
+                color="indigo"
+                onClick={() => setShowAssistantModal(true)}
+              />
             </div>
           </div>
         </aside>
       </div>
+
+      {/* Premium Tool Modals */}
+      {showQuizModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+          <div className="relative w-full max-w-4xl max-h-[90vh] overflow-auto bg-white dark:bg-slate-900 rounded-2xl shadow-2xl">
+            <button
+              onClick={() => setShowQuizModal(false)}
+              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-700/80 hover:bg-slate-600 text-white flex items-center justify-center transition-all hover:scale-110 z-10"
+            >
+              <i className="fa-solid fa-times"></i>
+            </button>
+            <div className="p-6">
+              <LessonQuickQuiz language={language} isFreeTier={isFreeTier} lessonTitle={lesson.title} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showConversationModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+          <div className="relative w-full max-w-4xl max-h-[90vh] overflow-auto bg-white dark:bg-slate-900 rounded-2xl shadow-2xl">
+            <button
+              onClick={() => setShowConversationModal(false)}
+              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-700/80 hover:bg-slate-600 text-white flex items-center justify-center transition-all hover:scale-110 z-10"
+            >
+              <i className="fa-solid fa-times"></i>
+            </button>
+            <div className="p-6">
+              <LessonConversationPractice language={language} isFreeTier={isFreeTier} lessonTitle={lesson.title} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showAssistantModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+          <div className="relative w-full max-w-4xl max-h-[90vh] overflow-auto bg-white dark:bg-slate-900 rounded-2xl shadow-2xl">
+            <button
+              onClick={() => setShowAssistantModal(false)}
+              className="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-700/80 hover:bg-slate-600 text-white flex items-center justify-center transition-all hover:scale-110 z-10"
+            >
+              <i className="fa-solid fa-times"></i>
+            </button>
+            <div className="p-6">
+              <LessonAIAssistant language={language} isFreeTier={isFreeTier} lessonTitle={lesson.title} lessonContent={lesson.rawLesson.intro?.[language] ?? ''} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
