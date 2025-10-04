@@ -1,5 +1,23 @@
 /* Enhanced UI/UX Styles for IVS English Learning App */
 
+:root {
+  --aurora-top: radial-gradient(60% 60% at 20% 20%, rgba(56, 189, 248, 0.25), transparent 60%);
+  --aurora-bottom: radial-gradient(55% 70% at 80% 80%, rgba(79, 70, 229, 0.2), transparent 65%);
+}
+
+.aurora-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    var(--aurora-top),
+    var(--aurora-bottom),
+    linear-gradient(120deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.85));
+  mix-blend-mode: screen;
+  opacity: 0.6;
+  z-index: 0;
+}
+
 /* Global enhancements */
 .btn {
   @apply transition-all duration-200 ease-in-out;
