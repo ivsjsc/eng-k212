@@ -103,40 +103,84 @@ function App() {
     handleRedirectResult();
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        try {
-          const idTokenResult = await firebaseUser.getIdTokenResult();
-          setIsAdmin(!!idTokenResult?.claims?.admin);
-        } catch (e) {
-          logger.warn('Failed to read idTokenResult for claims', e);
-          setIsAdmin(false);
-        }
-        const userDocRef = doc(db!, "users", firebaseUser.uid);
-        const userDoc = await getDoc(userDocRef);
-        if (userDoc.exists()) {
-          const userData = { id: userDoc.id, ...userDoc.data() } as User;
-          setUser(userData);
-          if (userData.role === 'teacher') {
-            const classesDocRef = doc(db!, "classes", firebaseUser.uid);
-            const classesDoc = await getDoc(classesDocRef);
-            if (classesDoc.exists()) {
-              setClasses(classesDoc.data() as Classes);
+      try {
+        if (firebaseUser) {
+          try {
+            const idTokenResult = await firebaseUser.getIdTokenResult();
+            setIsAdmin(!!idTokenResult?.claims?.admin);
+          } catch (e) {
+            logger.warn('Failed to read idTokenResult for claims', e);
+            setIsAdmin(false);
+          }
+
+          let resolvedUser: User | null = null;
+          const userDocRef = doc(db!, "users", firebaseUser.uid);
+          const userDoc = await getDoc(userDocRef);
+
+          if (userDoc.exists()) {
+            resolvedUser = { id: userDoc.id, ...userDoc.data() } as User;
+          } else {
+            logger.warn("User document not found for UID:", firebaseUser.uid);
+            const storedRole = sessionStorage.getItem('authRole') as 'student' | 'teacher' | null;
+            const fallbackRole: 'student' | 'teacher' = storedRole || 'student';
+            const fallbackName =
+              firebaseUser.displayName || firebaseUser.email?.split('@')[0] || (fallbackRole === 'teacher' ? 'New Teacher' : 'New Student');
+
+            const fallbackUser: User = {
+              ...MOCK_USER,
+              id: firebaseUser.uid,
+              name: fallbackName,
+              email: firebaseUser.email || undefined,
+              role: fallbackRole,
+              avatar: MOCK_USER.avatar,
+              phone: firebaseUser.phoneNumber || undefined,
+            };
+
+            await setDoc(
+              userDocRef,
+              {
+                ...fallbackUser,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+              },
+              { merge: true }
+            );
+
+            sessionStorage.removeItem('authRole');
+            resolvedUser = fallbackUser;
+          }
+
+          if (resolvedUser) {
+            setUser(resolvedUser);
+
+            if (resolvedUser.role === 'teacher') {
+              const classesDocRef = doc(db!, 'classes', firebaseUser.uid);
+              const classesDoc = await getDoc(classesDocRef);
+
+              if (classesDoc.exists()) {
+                setClasses(classesDoc.data() as Classes);
+              } else {
+                await setDoc(classesDocRef, MOCK_CLASSES);
+                setClasses(MOCK_CLASSES);
+              }
             } else {
-              const teacherClassesDoc = doc(db!, 'classes', firebaseUser.uid);
-              await setDoc(teacherClassesDoc, MOCK_CLASSES);
-              setClasses(MOCK_CLASSES);
+              setClasses({});
             }
           }
         } else {
-          logger.warn("User document not found for UID:", firebaseUser.uid);
+          setUser(null);
+          setClasses({});
+          setAuthStep('roleSelection');
+          setIsAdmin(false);
         }
-      } else {
+      } catch (error) {
+        logger.error('Error resolving authenticated user', error);
         setUser(null);
         setClasses({});
-        setAuthStep('roleSelection');
         setIsAdmin(false);
+      } finally {
+        setIsAuthLoading(false);
       }
-      setIsAuthLoading(false);
     });
 
     return () => unsubscribe();
