@@ -244,12 +244,15 @@ const StudentHome: React.FC<StudentHomeProps> = ({ user, onSelectCourse, languag
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-12 card-glass">
-                  <i className="fa-solid fa-thumbtack text-4xl text-slate-400 mb-4"></i>
-                  <h3 className="text-xl font-semibold mb-2">{t.noPinned}</h3>
-                  <p className="text-slate-500 mb-6">{t.pinPrompt}</p>
-                  <button onClick={() => setView('curriculum')} className="btn btn-primary">
-                      {t.explore}
+                <div className="text-center py-16 card-glass">
+                  <div className="bg-gradient-to-br from-blue-100 to-indigo-200 dark:from-blue-900/30 dark:to-indigo-800/30 w-24 h-24 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+                    <i className="fa-solid fa-thumbtack text-5xl text-blue-600 dark:text-blue-400"></i>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3 text-slate-800 dark:text-slate-100">{t.noPinned}</h3>
+                  <p className="text-slate-600 dark:text-slate-300 mb-8 font-semibold">{t.pinPrompt}</p>
+                  <button onClick={() => setView('curriculum')} className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                    <i className="fa-solid fa-compass mr-2"></i>
+                    {t.explore}
                   </button>
                 </div>
               )}
