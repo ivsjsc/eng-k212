@@ -35,7 +35,7 @@ export const handler: Handler = async (event) => {
     });
 
     const rawSub = decoded.sub; // e.g. "github|1234567"
-    const firebaseUid = rawSub.replace('|','_');
+    const firebaseUid = rawSub.replace(/\|/g,'_');
 
     const customToken = await admin.auth().createCustomToken(firebaseUid, {
       auth0Provider: rawSub.split('|')[0]
