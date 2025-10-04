@@ -1,11 +1,11 @@
 window.__FIREBASE_CONFIG__ = {
-  // Optional runtime override for Firebase credentials.
-  // Replace these values with a safe, client-side configuration or remove this file
-  // if you prefer using only build-time environment variables.
-  apiKey: "YOUR_FIREBASE_API_KEY",
-  authDomain: "your-project-id.firebaseapp.com",
-  projectId: "your-project-id",
-  // messagingSenderId: "YOUR_SENDER_ID",
-  // appId: "YOUR_APP_ID",
-  // measurementId: "G-XXXXXXX"
+  // Runtime Firebase configuration - loaded from deployed env.js
+  // This allows updating Firebase config without rebuilding
+  apiKey: "AIzaSyB-SwBnsXJ9n2pXqp-CTlQaPffnF01wE-I",
+  authDomain: "english-c0f9d.firebaseapp.com",
+  projectId: "english-c0f9d",
+  storageBucket: "english-c0f9d.firebasestorage.app",
+  messagingSenderId: "1007733924723",
+  appId: "1:1007733924723:web:d3ae42984480e6d326db06",
+  measurementId: "G-T1RSW11LGN"
 };
