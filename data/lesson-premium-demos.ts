@@ -367,5 +367,218 @@ export const lessonPremiumDemos = {
         '⚡ Phản hồi AI tức thì'
       ]
     }
+  },
+  // Grade-specific quiz demos
+  gradeSpecificQuizzes: {
+    elementary: {
+      en: {
+        title: '🎯 Elementary Quiz',
+        subtitle: 'Simple questions for young learners!',
+        questions: [
+          {
+            question: 'What color is the sun?',
+            options: ['Blue', 'Yellow', 'Green', 'Red'],
+            correctAnswer: 1,
+            explanation: 'The sun looks yellow in the sky during the day!'
+          },
+          {
+            question: 'How many days are in a week?',
+            options: ['5', '6', '7', '8'],
+            correctAnswer: 2,
+            explanation: 'A week has 7 days: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, and Sunday.'
+          },
+          {
+            question: 'Complete: "I ___ a student."',
+            options: ['is', 'am', 'are', 'be'],
+            correctAnswer: 1,
+            explanation: 'We use "am" with "I". I am a student. ✓'
+          }
+        ]
+      },
+      vi: {
+        title: '🎯 Quiz Tiểu Học',
+        subtitle: 'Câu hỏi đơn giản cho các em nhỏ!',
+        questions: [
+          {
+            question: 'Mặt trời có màu gì?',
+            options: ['Xanh dương', 'Vàng', 'Xanh lá', 'Đỏ'],
+            correctAnswer: 1,
+            explanation: 'Mặt trời có màu vàng trên bầu trời vào ban ngày!'
+          },
+          {
+            question: 'Một tuần có bao nhiêu ngày?',
+            options: ['5', '6', '7', '8'],
+            correctAnswer: 2,
+            explanation: 'Một tuần có 7 ngày: Thứ Hai, Ba, Tư, Năm, Sáu, Bảy và Chủ Nhật.'
+          },
+          {
+            question: 'Hoàn thành: "I ___ a student."',
+            options: ['is', 'am', 'are', 'be'],
+            correctAnswer: 1,
+            explanation: 'Chúng ta dùng "am" với "I". I am a student. ✓'
+          }
+        ]
+      }
+    },
+    middleSchool: {
+      en: {
+        title: '🎯 Middle School Quiz',
+        subtitle: 'Intermediate level questions',
+        questions: [
+          {
+            question: 'Which sentence uses the present perfect correctly?',
+            options: [
+              'I have saw that movie',
+              'I have seen that movie',
+              'I has seen that movie',
+              'I am seen that movie'
+            ],
+            correctAnswer: 1,
+            explanation: 'Present perfect: have/has + past participle. "Seen" is the past participle of "see".'
+          },
+          {
+            question: 'Choose the correct comparative form:',
+            options: [
+              'This test is more easy than the last one',
+              'This test is easier than the last one',
+              'This test is more easier than the last one',
+              'This test is easyer than the last one'
+            ],
+            correctAnswer: 1,
+            explanation: 'Short adjectives (1-2 syllables) add -er for comparative. Easy → easier.'
+          },
+          {
+            question: 'What does "break a leg" mean?',
+            options: [
+              'To hurt yourself',
+              'Good luck',
+              'To be clumsy',
+              'To run fast'
+            ],
+            correctAnswer: 1,
+            explanation: '"Break a leg" is an idiom meaning "good luck", especially used before performances!'
+          }
+        ]
+      },
+      vi: {
+        title: '🎯 Quiz THCS',
+        subtitle: 'Câu hỏi trình độ trung bình',
+        questions: [
+          {
+            question: 'Câu nào dùng thì hiện tại hoàn thành đúng?',
+            options: [
+              'I have saw that movie',
+              'I have seen that movie',
+              'I has seen that movie',
+              'I am seen that movie'
+            ],
+            correctAnswer: 1,
+            explanation: 'Hiện tại hoàn thành: have/has + quá khứ phân từ. "Seen" là quá khứ phân từ của "see".'
+          },
+          {
+            question: 'Chọn dạng so sánh hơn đúng:',
+            options: [
+              'This test is more easy than the last one',
+              'This test is easier than the last one',
+              'This test is more easier than the last one',
+              'This test is easyer than the last one'
+            ],
+            correctAnswer: 1,
+            explanation: 'Tính từ ngắn (1-2 âm tiết) thêm -er cho so sánh hơn. Easy → easier.'
+          },
+          {
+            question: '"Break a leg" có nghĩa là gì?',
+            options: [
+              'Bị thương',
+              'Chúc may mắn',
+              'Vụng về',
+              'Chạy nhanh'
+            ],
+            correctAnswer: 1,
+            explanation: '"Break a leg" là thành ngữ có nghĩa "chúc may mắn", đặc biệt dùng trước buổi biểu diễn!'
+          }
+        ]
+      }
+    },
+    highSchool: {
+      en: {
+        title: '🎯 High School Quiz',
+        subtitle: 'Advanced level challenges',
+        questions: [
+          {
+            question: 'Identify the literary device: "The wind whispered through the trees."',
+            options: [
+              'Metaphor',
+              'Personification',
+              'Simile',
+              'Hyperbole'
+            ],
+            correctAnswer: 1,
+            explanation: 'Personification gives human qualities (whispering) to non-human things (wind).'
+          },
+          {
+            question: 'Which sentence demonstrates correct use of subjunctive mood?',
+            options: [
+              'If I was you, I would study more',
+              'If I were you, I would study more',
+              'If I am you, I would study more',
+              'If I be you, I would study more'
+            ],
+            correctAnswer: 1,
+            explanation: 'Subjunctive mood uses "were" for all subjects in hypothetical situations.'
+          },
+          {
+            question: 'What is the meaning of "eschew obfuscation"?',
+            options: [
+              'Embrace complexity',
+              'Avoid being unclear',
+              'Seek confusion',
+              'Accept mystery'
+            ],
+            correctAnswer: 1,
+            explanation: '"Eschew" means avoid, "obfuscation" means making something unclear. The phrase ironically means "don\'t be confusing" using complex words!'
+          }
+        ]
+      },
+      vi: {
+        title: '🎯 Quiz THPT',
+        subtitle: 'Thử thách trình độ nâng cao',
+        questions: [
+          {
+            question: 'Xác định biện pháp tu từ: "The wind whispered through the trees."',
+            options: [
+              'Ẩn dụ',
+              'Nhân hóa',
+              'So sánh',
+              'Cường điệu'
+            ],
+            correctAnswer: 1,
+            explanation: 'Nhân hóa gán phẩm chất con người (thì thầm) cho vật vô tri (gió).'
+          },
+          {
+            question: 'Câu nào dùng đúng thức giả định?',
+            options: [
+              'If I was you, I would study more',
+              'If I were you, I would study more',
+              'If I am you, I would study more',
+              'If I be you, I would study more'
+            ],
+            correctAnswer: 1,
+            explanation: 'Thức giả định dùng "were" cho tất cả chủ ngữ trong tình huống giả định.'
+          },
+          {
+            question: '"Eschew obfuscation" có nghĩa là gì?',
+            options: [
+              'Ôm lấy sự phức tạp',
+              'Tránh không rõ ràng',
+              'Tìm kiếm sự rối bời',
+              'Chấp nhận bí ẩn'
+            ],
+            correctAnswer: 1,
+            explanation: '"Eschew" nghĩa là tránh, "obfuscation" nghĩa là làm điều gì đó không rõ. Cụm từ này mỉa mai có nghĩa "đừng gây khó hiểu" nhưng lại dùng từ phức tạp!'
+          }
+        ]
+      }
+    }
   }
 };

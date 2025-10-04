@@ -98,41 +98,146 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
       language === 'en'
         ? '🛠️ **How to use the app & IVS Assistant**:\n\n• Access AI features from the sidebar (AI Tutor, Writing Grader, Speaking Partner).\n• Use IVS Assistant (bottom-right) for quick help, sample questions, or support.\n• If an AI feature shows "AI not configured", ask your admin to add the API key under Settings → AI Keys.\n• For classroom usage, teachers can invite students via Class settings.'
         : '🛠️ **Cách sử dụng app & Trợ lý IVS**:\n\n• Truy cập tính năng AI từ thanh bên (Chat AI, Chấm bài, Luyện nói).\n• Dùng Trợ lý IVS (góc dưới phải) để hỏi nhanh, xem câu hỏi mẫu hoặc yêu cầu hỗ trợ.\n• Nếu tính năng AI báo "AI chưa được cấu hình", yêu cầu quản trị viên thêm API key tại Cài đặt → AI Keys.\n• Giáo viên mời học sinh qua cài đặt Lớp.'
+    ],
+    listening: [
+      language === 'en'
+        ? '👂 **Improve Listening Skills:**\n\n1. **Active Listening**: Focus fully, don\'t multitask\n2. **Podcasts & Audiobooks**: Start with slow English podcasts\n3. **Subtitles Strategy**: English audio → English subs → No subs\n4. **Note-Taking**: Write key points while listening\n5. **Predict & Guess**: Try to anticipate what comes next\n6. **Repeat Content**: Listen to same material 2-3 times\n\n🎧 *Recommended: BBC Learning English, TED-Ed, VOA Learning English*'
+        : '👂 **Cải thiện Kỹ năng Nghe:**\n\n1. **Nghe Chủ động**: Tập trung hoàn toàn, không làm nhiều việc cùng lúc\n2. **Podcast & Sách nói**: Bắt đầu với podcast tiếng Anh chậm\n3. **Chiến lược Phụ đề**: Âm Anh → Phụ đề Anh → Không phụ đề\n4. **Ghi Chép**: Viết điểm chính khi nghe\n5. **Dự đoán & Đoán**: Cố đoán điều gì sẽ đến tiếp theo\n6. **Nghe Lại**: Nghe cùng nội dung 2-3 lần\n\n🎧 *Gợi ý: BBC Learning English, TED-Ed, VOA Learning English*'
+    ],
+    reading: [
+      language === 'en'
+        ? '📖 **Reading Comprehension Tips:**\n\n1. **Choose Right Level**: Not too easy, not too hard (90% comprehension)\n2. **Skim First**: Get general idea before deep reading\n3. **Guess from Context**: Don\'t stop for every unknown word\n4. **Read Daily**: 20-30 minutes minimum\n5. **Variety**: Mix fiction, news, blogs, academic texts\n6. **Take Notes**: Summarize paragraphs in your own words\n\n📚 *Start with graded readers, move to authentic materials gradually*'
+        : '📖 **Mẹo Đọc Hiểu:**\n\n1. **Chọn Đúng Trình độ**: Không quá dễ, không quá khó (hiểu 90%)\n2. **Đọc Lướt Trước**: Nắm ý chính trước khi đọc sâu\n3. **Đoán từ Ngữ cảnh**: Đừng dừng ở mỗi từ không biết\n4. **Đọc Hàng ngày**: Tối thiểu 20-30 phút\n5. **Đa dạng**: Kết hợp tiểu thuyết, tin tức, blog, văn bản học thuật\n6. **Ghi Chép**: Tóm tắt đoạn văn bằng từ của bạn\n\n📚 *Bắt đầu với sách phân cấp, dần chuyển sang tài liệu thật*'
+    ],
+    writing: [
+      language === 'en'
+        ? '✍️ **Writing Better Essays:**\n\n1. **Plan Before Writing**: Outline your ideas first\n2. **Clear Structure**: Intro → Body paragraphs → Conclusion\n3. **Topic Sentences**: Start each paragraph with main idea\n4. **Linking Words**: Use however, therefore, furthermore, etc.\n5. **Vary Sentences**: Mix short and long sentences\n6. **Proofread**: Check grammar, spelling, punctuation\n\n📝 *Practice writing 150-200 words daily on different topics*'
+        : '✍️ **Viết Bài Luận Tốt Hơn:**\n\n1. **Lên Kế hoạch Trước**: Phác thảo ý tưởng trước\n2. **Cấu trúc Rõ ràng**: Mở bài → Thân bài → Kết luận\n3. **Câu Chủ đề**: Bắt đầu mỗi đoạn với ý chính\n4. **Từ Nối**: Dùng however, therefore, furthermore, v.v.\n5. **Đa dạng Câu**: Kết hợp câu ngắn và dài\n6. **Kiểm tra Lại**: Kiểm tra ngữ pháp, chính tả, dấu câu\n\n📝 *Luyện viết 150-200 từ mỗi ngày về các chủ đề khác nhau*'
+    ],
+    culture: [
+      language === 'en'
+        ? '🌍 **English-Speaking Culture Tips:**\n\n1. **Small Talk**: Weather, weekend plans are common openers\n2. **Personal Space**: Keep arm\'s length distance\n3. **Politeness**: Use "please", "thank you", "sorry" often\n4. **Directness**: English speakers tend to be more direct\n5. **Humor**: Self-deprecating humor is common\n6. **Punctuality**: Being on time shows respect\n\n🎭 *Watch sitcoms (Friends, The Office) to learn cultural nuances!*'
+        : '🌍 **Văn hóa Nước Nói tiếng Anh:**\n\n1. **Trò chuyện Phào**: Thời tiết, kế hoạch cuối tuần là chủ đề mở đầu phổ biến\n2. **Khoảng cách Cá nhân**: Giữ khoảng cách một cánh tay\n3. **Lịch sự**: Dùng "please", "thank you", "sorry" thường xuyên\n4. **Trực tiếp**: Người nói tiếng Anh thường trực tiếp hơn\n5. **Hài hước**: Hài hước tự giễu phổ biến\n6. **Đúng giờ**: Đến đúng giờ thể hiện sự tôn trọng\n\n🎭 *Xem sitcom (Friends, The Office) để học sắc thái văn hóa!*'
+    ],
+    examTips: [
+      language === 'en'
+        ? '📝 **Exam Preparation Strategies:**\n\n1. **Start Early**: Don\'t cram, study consistently\n2. **Practice Tests**: Do past papers under timed conditions\n3. **Identify Weak Areas**: Focus on what you struggle with\n4. **Study Groups**: Teach others to reinforce learning\n5. **Break Time**: Take 10-min breaks every 50 minutes\n6. **Sleep Well**: 7-8 hours before exam day\n\n🎯 *IELTS/TOEFL tip: Practice all 4 skills equally!*'
+        : '📝 **Chiến lược Chuẩn bị Thi:**\n\n1. **Bắt đầu Sớm**: Đừng nhồi nhét, học đều đặn\n2. **Làm Đề Thử**: Làm đề cũ trong điều kiện giới hạn thời gian\n3. **Xác định Điểm yếu**: Tập trung vào những gì bạn gặp khó khăn\n4. **Nhóm Học tập**: Dạy người khác để củng cố kiến thức\n5. **Thời gian Nghỉ**: Nghỉ 10 phút sau mỗi 50 phút\n6. **Ngủ Đủ**: 7-8 tiếng trước ngày thi\n\n🎯 *Mẹo IELTS/TOEFL: Luyện đều 4 kỹ năng!*'
+    ],
+    motivation: [
+      language === 'en'
+        ? '💪 **Stay Motivated Learning English:**\n\n1. **Set Clear Goals**: "I want to score 7.0 in IELTS by June"\n2. **Track Progress**: Keep a learning journal\n3. **Celebrate Small Wins**: Reward yourself for milestones\n4. **Find a Study Buddy**: Accountability partner helps\n5. **Make it Fun**: Games, songs, movies in English\n6. **Remember Your Why**: Career? Travel? Education?\n\n🌟 *Progress, not perfection! Every mistake is a lesson.*'
+        : '💪 **Duy trì Động lực Học tiếng Anh:**\n\n1. **Đặt Mục tiêu Rõ ràng**: "Tôi muốn đạt 7.0 IELTS vào tháng 6"\n2. **Theo dõi Tiến độ**: Giữ nhật ký học tập\n3. **Kỷ niệm Chiến thắng Nhỏ**: Thưởng cho bản thân khi đạt cột mốc\n4. **Tìm Bạn Học**: Đối tác trách nhiệm giúp bạn\n5. **Làm cho Vui**: Trò chơi, bài hát, phim bằng tiếng Anh\n6. **Nhớ Lý do**: Nghề nghiệp? Du lịch? Giáo dục?\n\n🌟 *Tiến bộ, không phải hoàn hảo! Mỗi lỗi là một bài học.*'
+    ],
+    idioms: [
+      language === 'en'
+        ? '🎭 **Common English Idioms:**\n\n• **Piece of cake** = Very easy\n• **Break the ice** = Start a conversation\n• **Hit the books** = Study hard\n• **Under the weather** = Feeling sick\n• **Cost an arm and a leg** = Very expensive\n• **Spill the beans** = Reveal a secret\n• **Once in a blue moon** = Very rarely\n\n💡 *Don\'t translate idioms literally - learn their meanings!*'
+        : '🎭 **Thành ngữ tiếng Anh Phổ biến:**\n\n• **Piece of cake** = Rất dễ\n• **Break the ice** = Bắt đầu cuộc trò chuyện\n• **Hit the books** = Học chăm chỉ\n• **Under the weather** = Cảm thấy ốm\n• **Cost an arm and a leg** = Rất đắt\n• **Spill the beans** = Tiết lộ bí mật\n• **Once in a blue moon** = Rất hiếm khi\n\n💡 *Đừng dịch thành ngữ theo nghĩa đen - học ý nghĩa của chúng!*'
+    ],
+    tenses: [
+      language === 'en'
+        ? '⏰ **English Tenses Quick Guide:**\n\n**Present Simple**: Habits, facts → *I study every day*\n**Present Continuous**: Now → *I am studying now*\n**Present Perfect**: Past action, present result → *I have studied*\n**Past Simple**: Finished past action → *I studied yesterday*\n**Future Simple**: Predictions → *I will study tomorrow*\n\n📌 *Master these 5 first, then learn the rest!*'
+        : '⏰ **Hướng dẫn Nhanh Thì tiếng Anh:**\n\n**Hiện tại đơn**: Thói quen, sự thật → *I study every day*\n**Hiện tại tiếp diễn**: Bây giờ → *I am studying now*\n**Hiện tại hoàn thành**: Hành động quá khứ, kết quả hiện tại → *I have studied*\n**Quá khứ đơn**: Hành động quá khứ đã hoàn thành → *I studied yesterday*\n**Tương lai đơn**: Dự đoán → *I will study tomorrow*\n\n📌 *Thành thạo 5 thì này trước, rồi học phần còn lại!*'
+    ],
+    confusedWords: [
+      language === 'en'
+        ? '🔀 **Commonly Confused Words:**\n\n• **Their/There/They\'re**: Possession / Place / They are\n• **Your/You\'re**: Possession / You are\n• **Its/It\'s**: Possession / It is\n• **Affect/Effect**: Verb (influence) / Noun (result)\n• **Accept/Except**: Receive / Exclude\n• **Lose/Loose**: Misplace / Not tight\n\n🎯 *Write example sentences to remember the differences!*'
+        : '🔀 **Từ Dễ Nhầm Lẫn:**\n\n• **Their/There/They\'re**: Sở hữu / Địa điểm / They are\n• **Your/You\'re**: Sở hữu / You are\n• **Its/It\'s**: Sở hữu / It is\n• **Affect/Effect**: Động từ (ảnh hưởng) / Danh từ (kết quả)\n• **Accept/Except**: Chấp nhận / Ngoại trừ\n• **Lose/Loose**: Mất / Lỏng\n\n🎯 *Viết câu ví dụ để nhớ sự khác biệt!*'
     ]
   };
 
   const getSmartResponse = (question: string): string => {
     const q = question.toLowerCase();
     
-    // Pronunciation related
-    if (q.includes('pronunciation') || q.includes('phát âm') || q.includes('pronounce')) {
+    // Support & Billing
+    if (q.includes('support') || q.includes('hỗ trợ') || q.includes('billing') || q.includes('thanh toán') || q.includes('refund') || q.includes('hoàn tiền') || q.includes('contact')) {
+      return demoResponses.support[0];
+    }
+    
+    // Upgrade & Membership
+    if (q.includes('upgrade') || q.includes('nâng cấp') || q.includes('premium') || q.includes('membership') || q.includes('gói') || q.includes('plan') || q.includes('tier')) {
+      return demoResponses.upgrade[Math.floor(Math.random() * demoResponses.upgrade.length)];
+    }
+    
+    // App Usage
+    if (q.includes('how to use') || q.includes('cách dùng') || q.includes('app') || q.includes('ứng dụng') || q.includes('feature') || q.includes('tính năng')) {
+      return demoResponses.appUsage[0];
+    }
+    
+    // Listening
+    if (q.includes('listen') || q.includes('nghe') || q.includes('hearing') || q.includes('podcast') || q.includes('audio')) {
+      return demoResponses.listening[0];
+    }
+    
+    // Reading
+    if (q.includes('read') || q.includes('đọc') || q.includes('comprehension') || q.includes('book') || q.includes('sách')) {
+      return demoResponses.reading[0];
+    }
+    
+    // Writing
+    if (q.includes('writ') || q.includes('viết') || q.includes('essay') || q.includes('bài luận') || q.includes('composition')) {
+      return demoResponses.writing[0];
+    }
+    
+    // Culture
+    if (q.includes('culture') || q.includes('văn hóa') || q.includes('custom') || q.includes('tradition') || q.includes('etiquette')) {
+      return demoResponses.culture[0];
+    }
+    
+    // Exam Tips
+    if (q.includes('exam') || q.includes('thi') || q.includes('test') || q.includes('ielts') || q.includes('toefl') || q.includes('toeic')) {
+      return demoResponses.examTips[0];
+    }
+    
+    // Motivation
+    if (q.includes('motivat') || q.includes('động lực') || q.includes('give up') || q.includes('tired') || q.includes('boring') || q.includes('chán')) {
+      return demoResponses.motivation[0];
+    }
+    
+    // Idioms
+    if (q.includes('idiom') || q.includes('thành ngữ') || q.includes('phrase') || q.includes('expression') || q.includes('cụm từ')) {
+      return demoResponses.idioms[0];
+    }
+    
+    // Tenses
+    if (q.includes('tense') || q.includes('thì') || q.includes('present perfect') || q.includes('past simple') || q.includes('future')) {
+      return demoResponses.tenses[0];
+    }
+    
+    // Confused Words
+    if (q.includes('confused') || q.includes('nhầm lẫn') || q.includes('their') || q.includes('your') || q.includes('affect') || q.includes('its')) {
+      return demoResponses.confusedWords[0];
+    }
+    
+    // Pronunciation
+    if (q.includes('pronunciation') || q.includes('phát âm') || q.includes('pronounce') || q.includes('accent')) {
       return demoResponses.pronunciation[0];
     }
     
-    // Vocabulary related
-    if (q.includes('vocabulary') || q.includes('từ vựng') || q.includes('word') || q.includes('từ')) {
+    // Vocabulary
+    if (q.includes('vocabulary') || q.includes('từ vựng') || q.includes('word') || q.includes('từ') || q.includes('memorize')) {
       return demoResponses.vocabulary[0];
     }
     
-    // Speaking related
-    if (q.includes('speaking') || q.includes('nói') || q.includes('speak') || q.includes('practice alone') || q.includes('luyện nói')) {
+    // Speaking
+    if (q.includes('speaking') || q.includes('nói') || q.includes('speak') || q.includes('practice alone') || q.includes('luyện nói') || q.includes('conversation')) {
       return demoResponses.speaking[0];
     }
     
-    // Grammar related
-    if (q.includes('grammar') || q.includes('ngữ pháp')) {
+    // Grammar
+    if (q.includes('grammar') || q.includes('ngữ pháp') || q.includes('rule') || q.includes('quy tắc')) {
       return demoResponses.grammar[0];
     }
     
     // Make vs Do
-    if ((q.includes('make') && q.includes('do')) || q.includes('difference between')) {
+    if ((q.includes('make') && q.includes('do')) || (q.includes('difference between') && (q.includes('make') || q.includes('do')))) {
       return demoResponses.makeVsDo[0];
     }
     
-    // Default helpful response with shortcuts to support/upgrade
+    // Default helpful response with all categories
     return language === 'en'
-      ? '🤖 **I\'m here to help!**\n\nI can assist you with:\n• Grammar explanations\n• Vocabulary tips\n• Pronunciation advice\n• Study techniques\n• App support, upgrades & membership questions\n\nYou can also ask:\n• "How do I upgrade to Premium?"\n• "How do I contact support for billing?"\n\n💡 *Try asking about pronunciation, vocabulary, speaking practice, grammar or app support.*'
-      : '🤖 **Tôi sẵn sàng giúp bạn!**\n\nTôi có thể hỗ trợ bạn về:\n• Giải thích ngữ pháp\n• Mẹo từ vựng\n• Lời khuyên phát âm\n• Kỹ thuật học tập\n• Hỗ trợ ứng dụng, nâng cấp & quyền lợi thành viên\n\nBạn cũng có thể hỏi:\n• "Làm sao để nâng cấp lên Premium?"\n• "Làm sao liên hệ hỗ trợ về thanh toán?"\n\n💡 *Thử hỏi về phát âm, từ vựng, luyện nói, ngữ pháp hoặc hỗ trợ ứng dụng.*';
+      ? '🤖 **I\'m here to help!**\n\nI can assist you with:\n• 📚 Grammar, vocabulary, tenses\n• 🗣️ Speaking, pronunciation\n• 👂 Listening & reading skills\n• ✍️ Writing tips & essay structure\n• 🌍 Culture & idioms\n• 📝 Exam preparation (IELTS, TOEFL)\n• 💪 Study motivation & techniques\n• 💎 App support & Premium upgrades\n\n💡 *Ask me anything specific, like:\n"How to improve listening?"\n"What are common idioms?"\n"IELTS exam tips?"\n"How to upgrade to Premium?"*'
+      : '🤖 **Tôi sẵn sàng giúp bạn!**\n\nTôi có thể hỗ trợ bạn về:\n• 📚 Ngữ pháp, từ vựng, các thì\n• 🗣️ Nói, phát âm\n• 👂 Kỹ năng nghe & đọc\n• ✍️ Mẹo viết & cấu trúc bài luận\n• 🌍 Văn hóa & thành ngữ\n• 📝 Chuẩn bị thi (IELTS, TOEFL)\n• 💪 Động lực & kỹ thuật học tập\n• 💎 Hỗ trợ ứng dụng & nâng cấp Premium\n\n💡 *Hỏi tôi cụ thể, như:\n"Làm sao cải thiện nghe?"\n"Thành ngữ phổ biến là gì?"\n"Mẹo thi IELTS?"\n"Làm sao nâng cấp lên Premium?"*';
   };
 
   useEffect(() => {
