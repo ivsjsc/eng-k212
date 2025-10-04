@@ -7,6 +7,8 @@
 @import "./src/styles/custom.css";
 /* Enhanced UI/UX styles */
 @import "./src/styles/enhancements.css";
+/* Modern UI improvements */
+@import "./src/styles/modern-ui.css";
 
 @tailwind base;
 @tailwind components;

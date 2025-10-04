@@ -128,72 +128,41 @@ const StudentHome: React.FC<StudentHomeProps> = ({ user, onSelectCourse, languag
   }[language];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-950 p-4 sm:p-6 lg:p-8 animate-fade-in">
-      <header className="mb-12 relative">
-        <div className="absolute -top-20 -left-20 w-72 h-72 bg-gradient-to-br from-blue-400/30 to-purple-400/30 rounded-full blur-3xl animate-pulse-glow"></div>
-        <div className="absolute top-10 -right-20 w-96 h-96 bg-gradient-to-br from-pink-400/20 to-orange-400/20 rounded-full blur-3xl animate-pulse-glow" style={{animationDelay: '1s'}}></div>
-        <div className="relative z-10">
-          <h1 className="text-5xl md:text-6xl font-black text-gradient-blue mb-4 leading-tight drop-shadow-sm">{t.welcome}</h1>
-          <p className="text-xl md:text-2xl font-bold text-slate-700 dark:text-slate-200">{t.subtitle}</p>
-        </div>
+    <div className="p-4 sm:p-6 lg:p-8 animate-fade-in">
+      <header className="mb-8">
+        <h1 className="text-4xl font-bold text-slate-900 dark:text-white">{t.welcome}</h1>
+        <p className="mt-1 text-lg text-slate-600 dark:text-slate-400">{t.subtitle}</p>
       </header>
 
-      {/* Stats Cards - Redesigned with Gradients */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        <div className="group relative bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden">
-          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative z-10 flex items-center gap-4">
-            <div className="bg-white/25 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
-              <i className="fa-solid fa-star text-5xl text-white drop-shadow-lg"></i>
-            </div>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="card-glass p-6 flex items-center gap-4 hover:shadow-lg transition-shadow cursor-pointer">
+            <i className="fa-solid fa-star text-4xl text-amber-400"></i>
             <div>
-              <p className="text-4xl font-black text-white drop-shadow-md mb-1">{user.points}</p>
-              <p className="text-sm font-bold text-white/95 uppercase tracking-wide">{t.points}</p>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{user.points}</p>
+                <p className="text-sm text-slate-500">{t.points}</p>
             </div>
-          </div>
-          <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-white/15 rounded-full blur-3xl"></div>
         </div>
-        
-        <div className="group relative bg-gradient-to-br from-orange-500 via-red-500 to-pink-600 rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden">
-          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative z-10 flex items-center gap-4">
-            <div className="bg-white/25 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
-              <i className="fa-solid fa-fire text-5xl text-white drop-shadow-lg"></i>
-            </div>
+        <div className="card-glass p-6 flex items-center gap-4 hover:shadow-lg transition-shadow cursor-pointer">
+            <i className="fa-solid fa-fire-flame-curved text-4xl text-red-500"></i>
             <div>
-              <p className="text-4xl font-black text-white drop-shadow-md mb-1">{user.streak || 0}</p>
-              <p className="text-sm font-bold text-white/95 uppercase tracking-wide">{t.streak}</p>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{user.streak}</p>
+                <p className="text-sm text-slate-500">{t.streak}</p>
             </div>
-          </div>
-          <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-white/15 rounded-full blur-3xl"></div>
         </div>
-        
-        <div className="group relative bg-gradient-to-br from-yellow-400 via-amber-500 to-orange-600 rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden" onClick={() => setActiveTab('achievements')}>
-          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative z-10 flex items-center gap-4">
-            <div className="bg-white/25 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
-              <i className="fa-solid fa-trophy text-5xl text-white drop-shadow-lg"></i>
-            </div>
+        <div className="card-glass p-6 flex items-center gap-4 hover:shadow-lg transition-shadow cursor-pointer" onClick={() => setActiveTab('achievements')}>
+            <i className="fa-solid fa-trophy text-4xl text-yellow-500"></i>
             <div>
-              <p className="text-4xl font-black text-white drop-shadow-md mb-1">{mockBadges.filter(b => b.earned).length}</p>
-              <p className="text-sm font-bold text-white/95 uppercase tracking-wide">{t.badges}</p>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{mockBadges.filter(b => b.earned).length}</p>
+                <p className="text-sm text-slate-500">{t.badges}</p>
             </div>
-          </div>
-          <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-white/15 rounded-full blur-3xl"></div>
         </div>
-        
-        <div className="group relative bg-gradient-to-br from-blue-500 via-indigo-600 to-purple-700 rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105 cursor-pointer overflow-hidden">
-          <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div className="relative z-10 flex items-center gap-4">
-            <div className="bg-white/25 backdrop-blur-sm rounded-2xl p-4 shadow-lg">
-              <i className="fa-solid fa-clock text-5xl text-white drop-shadow-lg"></i>
-            </div>
+        <div className="card-glass p-6 flex items-center gap-4 hover:shadow-lg transition-shadow cursor-pointer">
+            <i className="fa-solid fa-clock text-4xl text-blue-500"></i>
             <div>
-              <p className="text-4xl font-black text-white drop-shadow-md mb-1">2h 30m</p>
-              <p className="text-sm font-bold text-white/95 uppercase tracking-wide">{t.timeSpent}</p>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">2h 30m</p>
+                <p className="text-sm text-slate-500">{t.timeSpent}</p>
             </div>
-          </div>
-          <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-white/15 rounded-full blur-3xl"></div>
         </div>
       </div>
 
