@@ -1,0 +1,152 @@
+/* Enhanced UI/UX Styles for IVS English Learning App */
+
+/* Global enhancements */
+.btn {
+  @apply transition-all duration-200 ease-in-out;
+  @apply active:scale-95;
+}
+
+.btn:hover {
+  @apply transform -translate-y-0.5 shadow-lg;
+}
+
+/* Form improvements */
+.form-input {
+  @apply transition-all duration-200;
+  @apply focus:ring-2 focus:ring-sky-300 focus:border-sky-400;
+  @apply border-2 border-gray-200;
+}
+
+.form-input:focus {
+  @apply transform scale-[1.01];
+}
+
+/* Card enhancements */
+.card {
+  @apply transition-all duration-300 ease-out;
+  @apply hover:shadow-xl hover:-translate-y-1;
+}
+
+/* Modal backdrop blur effect */
+.modal-backdrop {
+  @apply backdrop-blur-sm bg-black/40;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(-20px) scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+/* Loading spinner improvements */
+.loading-spinner {
+  @apply animate-spin border-2 border-current border-t-transparent rounded-full;
+  animation-duration: 0.8s;
+}
+
+/* Success/error message animations */
+.message-slide {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Button loading state */
+.btn-loading {
+  @apply relative overflow-hidden;
+}
+
+.btn-loading::after {
+  content: '';
+  @apply absolute inset-0 bg-white/20;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Course card hover effects */
+.course-card {
+  @apply relative overflow-hidden;
+  @apply transition-all duration-300 ease-out;
+  @apply hover:shadow-2xl hover:-translate-y-2;
+  @apply border border-transparent hover:border-sky-200;
+}
+
+.course-card::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent;
+  @apply -translate-x-full hover:translate-x-full transition-transform duration-700;
+}
+
+/* Responsive improvements */
+@media (max-width: 640px) {
+  .modal-content {
+    @apply mx-4 max-w-sm;
+  }
+  
+  .btn {
+    @apply py-3 text-base;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .form-input {
+    @apply bg-gray-800 border-gray-600 text-white;
+    @apply focus:border-sky-400 focus:ring-sky-300/50;
+  }
+  
+  .modal-backdrop {
+    @apply bg-black/60;
+  }
+}
+
+/* Accessibility improvements */
+.btn:focus-visible {
+  @apply outline-2 outline-offset-2 outline-sky-500;
+}
+
+.form-input:focus-visible {
+  @apply outline-2 outline-offset-2 outline-sky-500;
+}
+
+/* Performance optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Micro-interactions */
+.interactive-scale {
+  @apply transition-transform duration-150 ease-out;
+  @apply hover:scale-105 active:scale-95;
+}
+
+.interactive-glow {
+  @apply transition-shadow duration-200;
+  @apply hover:shadow-lg hover:shadow-sky-200/50;
+}
