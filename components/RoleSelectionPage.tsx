@@ -113,7 +113,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
 
       <div className="w-full">
         <img
-          src="/images/logo/logo.png"
+          src="/images/logo/logo.svg"
           alt="IVS English Logo"
           className="w-24 h-24 mx-auto mb-4"
         />
