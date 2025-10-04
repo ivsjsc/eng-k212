@@ -1,13 +1,7 @@
 
-/* Import small local custom styles (kept as a fallback for component-specific rules)
-	NOTE: PostCSS requires @import to come before other at-rules. Move this import
-	to the top so PostCSS doesn't error. If you rely on overriding Tailwind rules,
-	consider wrapping your rules in @layer components inside `src/styles/custom.css`.
-*/
+/* Import custom styles FIRST - PostCSS requires @import before @tailwind */
 @import "./src/styles/custom.css";
-/* Enhanced UI/UX styles */
 @import "./src/styles/enhancements.css";
-/* Modern UI improvements */
 @import "./src/styles/modern-ui.css";
 
 @tailwind base;
