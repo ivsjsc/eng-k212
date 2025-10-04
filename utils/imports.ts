@@ -7,7 +7,7 @@
 export {
   auth,
   db,
-  firebaseError,
+  firebaseInitError,
   onAuthStateChanged,
   signOut,
   doc,
