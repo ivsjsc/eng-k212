@@ -8,6 +8,9 @@ export type View =
   | 'ai-content-generator'
   | 'writing-grader'
   | 'speaking-partner'
+  | 'ai-tutor'
+  | 'learning-path'
+  | 'ivs-assistant'
   | 'settings'
   | 'user-guide'
   | 'admin';
@@ -22,13 +25,18 @@ export interface User {
   badges: string[];
   role: 'student' | 'teacher';
   age?: string | number;
-  gradeLevel?: string;
+  gradeLevel?: string; // 'kindergarten' | 'primary' | 'secondary' | 'high-school'
   gender?: string;
   streak: number;
   pinnedCourses?: string[];
   title?: string; // For teachers, e.g., "English Teacher"
   subject?: string; // For teachers, e.g., "English, Literature"
   phone?: string;
+  profileCompleted?: boolean; // Flag to indicate if user completed initial profile setup
+  subscription?: {
+    tier: 'free' | 'student' | 'teacher' | 'enterprise';
+    expiresAt?: Date;
+  };
 }
 
 export interface Lesson {
@@ -323,7 +331,7 @@ export interface ResourceItem {
 }
 
 // Curriculum Templates
-export interface LessonPlan {
+export interface TemplateLessonPlan {
   id: string;
   title: string;
   objectives: string[];
@@ -340,7 +348,7 @@ export interface CurriculumTemplate {
   name: string;
   level: string;
   description: string;
-  lessons: LessonPlan[];
+  lessons: TemplateLessonPlan[];
   createdBy: string;
   createdDate: string;
   isPublic: boolean;

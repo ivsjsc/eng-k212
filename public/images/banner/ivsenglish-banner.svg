@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0%" stop-color="#1ea7f1"/>
+      <stop offset="100%" stop-color="#6c5ce7"/>
+    </linearGradient>
+    <style>
+      .title { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; fill: #fff; font-size: 48px; font-weight: 700 }
+      .subtitle { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto; fill: #f0f6ff; font-size: 18px }
+    </style>
+  </defs>
+  <rect width="1200" height="300" fill="url(#g)" rx="12"/>
+  <g transform="translate(48,48)">
+    <text x="0" y="48" class="title">IVS English</text>
+    <text x="0" y="84" class="subtitle">Nền tảng học tiếng Anh dành cho Người Việt</text>
+  </g>
+  <g transform="translate(960,40)" opacity="0.12">
+    <circle cx="0" cy="0" r="60" fill="#fff"/>
+  </g>
+</svg>

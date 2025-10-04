@@ -6,6 +6,7 @@ import {
     onAuthStateChanged,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
+    signInWithPopup,
     signInWithRedirect,
     RecaptchaVerifier,
     signInWithPhoneNumber,
@@ -492,25 +493,71 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
         }
     };
 
+    // Primary Google sign-in using popup (more reliable than redirect)
     const handleGoogleSignIn = async () => {
         setIsLoading(true);
         setError(null);
-        if (!auth || !db || !googleProvider) {
-            setError(t.authError);
-            setIsLoading(false);
-            return;
-        }
-
         try {
-            // Save the selected role before redirecting
+            if (!auth || !db || !googleProvider) {
+                setError(t.authError);
+                setIsLoading(false);
+                return;
+            }
+
             sessionStorage.setItem('authRole', selectedRole);
-            // Use redirect method to avoid referrer issues
-            await signInWithRedirect(auth, googleProvider);
+            console.info('Google popup sign-in', { origin: currentOrigin, host: currentHost, role: selectedRole });
+
+            const result = await signInWithPopup(auth, googleProvider as any);
+            const u = result?.user;
+            if (u) {
+                setSuccessMessage(`${t.loginSuccess} (${u.email || u.uid})`);
+                console.info('Sign-in success:', result);
+
+                // Ensure Firestore user document exists
+                try {
+                    const userDocRef = doc(db, 'users', u.uid);
+                    const userDoc = await getDoc(userDocRef);
+                    if (!userDoc.exists()) {
+                        const fallbackName = u.displayName || u.email?.split('@')[0] || (selectedRole === 'teacher' ? 'New Teacher' : 'New Student');
+                        const newUser = {
+                            ...MOCK_USER,
+                            id: u.uid,
+                            name: fallbackName,
+                            email: u.email || undefined,
+                            role: selectedRole,
+                            avatar: MOCK_USER.avatar,
+                        } as any;
+                        await setDoc(userDocRef, { ...newUser, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() });
+                        sessionStorage.removeItem('authRole');
+                    }
+                } catch (e) {
+                    console.warn('Failed to ensure user doc', e);
+                }
+
+                window.location.href = '/';
+                return;
+            } else {
+                setError('Sign-in failed.');
+                console.warn('No user returned');
+            }
         } catch (err: any) {
-            setError(err.message.replace('Firebase: ', ''));
-            setIsLoading(false); // Only set loading to false on error, as redirect will navigate away
+            const code = err?.code || 'unknown';
+            const raw = (err?.message || String(err)).replace('Firebase: ', '');
+            console.error('Google sign-in error', { code, raw, err });
+
+            if (code === 'auth/popup-closed-by-user') {
+                setError(language === 'vi' ? 'Đã đóng cửa sổ đăng nhập.' : 'Popup closed.');
+            } else if (code === 'auth/unauthorized-domain' || raw.includes('requests-from-referrer')) {
+                setError(language === 'vi' ? 'Domain chưa được ủy quyền.' : 'Domain not authorized.');
+            } else {
+                setError(raw);
+            }
+        } finally {
+            setIsLoading(false);
         }
     };
+
+
 
     const renderEmailForm = () => (
         <form onSubmit={handleEmailAuth} className="space-y-4">
@@ -639,12 +686,18 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                             </div>
                             <div className="space-y-8 px-6 py-10 sm:px-10">
                                 <div className="space-y-4 text-center">
-                                    <img
-                                        src="https://ivs.edu.vn/wp-content/uploads/2023/11/logo-ivs-no-bg-e1700125959147.png"
-                                        alt="IVS English Logo"
-                                        className="mx-auto h-16 w-auto"
-                                    />
+                                                                    <div className="mx-auto h-40 w-full overflow-hidden rounded-md hidden lg:block">
+                                                                        <div className="w-full h-full bg-center bg-cover rounded-md" style={{ backgroundImage: `url('/images/banner/ivsenglish-banner.svg')` }} aria-hidden="true" />
+                                                                    </div>
+                                                                    {/* small screens: inline svg for crispness */}
+                                                                    <img src="/images/banner/ivsenglish-banner.svg" alt="IVS English Banner" className="mx-auto h-16 w-auto lg:hidden" />
                                     <div className="space-y-2">
+                                        <img
+                                            src="/images/logo/logo-lighting.png"
+                                            onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/logo/logo.svg'; }}
+                                            alt="IVS Logo"
+                                            className="mx-auto h-20 w-auto mb-2"
+                                        />
                                         <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
                                             {isLoginView ? t.loginTitle : t.signupTitle}
                                         </h2>
@@ -712,14 +765,6 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                                             {t.emailBtn}
                                         </button>
                                     )}
-
-                                    <button
-                                        onClick={() => setAuthModalOpen(true)}
-                                        className="flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 py-3 font-semibold text-white shadow-[0_15px_30px_-15px_rgba(251,191,36,0.8)] transition hover:shadow-[0_20px_40px_-20px_rgba(249,115,22,0.9)]"
-                                    >
-                                        <i className="fa-solid fa-user-circle"></i>
-                                        {t.quickLogin}
-                                    </button>
                                 </div>
 
                                 <p className="text-center text-sm text-slate-500 dark:text-slate-400">

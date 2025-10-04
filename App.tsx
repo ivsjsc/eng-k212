@@ -17,11 +17,18 @@ const ClassAnalyticsDashboard = lazy(() => import('./components/ClassAnalyticsDa
 const AIContentGenerator = lazy(() => import('./components/AIContentGenerator'));
 const WritingGrader = lazy(() => import('./components/WritingGrader'));
 const SpeakingPartner = lazy(() => import('./components/SpeakingPartner'));
+const AITutorChat = lazy(() => import('./components/AITutorChat'));
+const PersonalizedLearningPath = lazy(() => import('./components/PersonalizedLearningPath'));
+const IVSAssistant = lazy(() => import('./components/IVSAssistant'));
 const Settings = lazy(() => import('./components/Settings'));
 const UserGuide = lazy(() => import('./components/UserGuide'));
 const AssistiveTouch = lazy(() => import('./components/AssistiveTouch'));
 const AuthPage = lazy(() => import('./components/AuthPage'));
 const RoleSelectionPage = lazy(() => import('./components/RoleSelectionPage'));
+import Curriculum from './components/Curriculum';
+import FirstUseOverlay from './components/FirstUseOverlay';
+import ProfileSetupModal from './components/ProfileSetupModal';
+import LinkPasswordModal from './components/LinkPasswordModal';
 
 // Keep Loading component as regular import since it's needed immediately
 import Loading from './components/Loading';
@@ -48,6 +55,9 @@ function App() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [showFirstUseOverlay, setShowFirstUseOverlay] = useState(false);
+  const [showProfileSetup, setShowProfileSetup] = useState(false);
+  const [showLinkPassword, setShowLinkPassword] = useState(false);
 
   // Appearance states
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -103,7 +113,23 @@ function App() {
     handleRedirectResult();
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
+      // Wrapped try/catch to capture unexpected errors during auth resolution
+      try {
+        console.info('onAuthStateChanged fired. firebaseUser:', firebaseUser);
+
+        if (!firebaseUser) {
+          // Not signed in
+          setUser(null);
+          setClasses({});
+          setAuthStep('roleSelection');
+          setIsAdmin(false);
+          setIsAuthLoading(false);
+          return;
+        }
+
+        // expose a few debug helpers on window for quick inspection
+        try { (window as any).__DEBUG_AUTH__ = { uid: firebaseUser.uid, email: firebaseUser.email, phone: firebaseUser.phoneNumber }; } catch (e) {}
+
         try {
           const idTokenResult = await firebaseUser.getIdTokenResult();
           setIsAdmin(!!idTokenResult?.claims?.admin);
@@ -111,32 +137,98 @@ function App() {
           logger.warn('Failed to read idTokenResult for claims', e);
           setIsAdmin(false);
         }
+
+        let resolvedUser: User | null = null;
         const userDocRef = doc(db!, "users", firebaseUser.uid);
         const userDoc = await getDoc(userDocRef);
+
         if (userDoc.exists()) {
-          const userData = { id: userDoc.id, ...userDoc.data() } as User;
-          setUser(userData);
-          if (userData.role === 'teacher') {
-            const classesDocRef = doc(db!, "classes", firebaseUser.uid);
+          resolvedUser = { id: userDoc.id, ...userDoc.data() } as User;
+        } else {
+          logger.warn("User document not found for UID:", firebaseUser.uid);
+          const storedRole = sessionStorage.getItem('authRole') as 'student' | 'teacher' | null;
+          const fallbackRole: 'student' | 'teacher' = storedRole || 'student';
+          const fallbackName = firebaseUser.displayName || firebaseUser.email?.split('@')[0] || (fallbackRole === 'teacher' ? 'New Teacher' : 'New Student');
+
+          const fallbackUser: User = {
+            ...MOCK_USER,
+            id: firebaseUser.uid,
+            name: fallbackName,
+            email: firebaseUser.email || undefined,
+            role: fallbackRole,
+            avatar: MOCK_USER.avatar,
+            phone: firebaseUser.phoneNumber || undefined,
+          };
+
+          await setDoc(userDocRef, { ...fallbackUser, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }, { merge: true });
+          sessionStorage.removeItem('authRole');
+          resolvedUser = fallbackUser;
+        }
+
+        if (resolvedUser) {
+          setUser(resolvedUser);
+
+          // Improve discoverability: open sidebar on first sign-in and steer students
+          // without enrolled courses to the curriculum page so they can explore content.
+          setIsSidebarOpen(true);
+
+          if (resolvedUser.role === 'teacher') {
+            const classesDocRef = doc(db!, 'classes', firebaseUser.uid);
             const classesDoc = await getDoc(classesDocRef);
             if (classesDoc.exists()) {
               setClasses(classesDoc.data() as Classes);
             } else {
-              const teacherClassesDoc = doc(db!, 'classes', firebaseUser.uid);
-              await setDoc(teacherClassesDoc, MOCK_CLASSES);
+              await setDoc(classesDocRef, MOCK_CLASSES);
               setClasses(MOCK_CLASSES);
+            }
+            setCurrentView('teacher-dashboard');
+          } else {
+            // Students: if no classes/content available, send them to curriculum so they can
+            // discover and enroll in courses. Otherwise go to home/dashboard.
+            setClasses({});
+            // If the student has no classes yet, show the curriculum page for discovery
+            const hasClasses = false; // student classes are stored elsewhere; default to false to promote discovery
+            if (!hasClasses) {
+              setCurrentView('curriculum');
+            } else {
+              setCurrentView('home');
+            }
+          }
+
+          console.info('Resolved user set:', resolvedUser);
+          
+          // Check if user needs to complete profile setup
+          if (!resolvedUser.profileCompleted) {
+            setShowProfileSetup(true);
+          } else {
+            // Check if Google user needs to link password
+            const hasGoogleProvider = firebaseUser.providerData.some(p => p.providerId === 'google.com');
+            const hasPasswordProvider = firebaseUser.providerData.some(p => p.providerId === 'password');
+            const linkPasswordShown = localStorage.getItem('ivs-link-password-shown');
+            
+            if (hasGoogleProvider && !hasPasswordProvider && !linkPasswordShown) {
+              setShowLinkPassword(true);
+            } else {
+              // Trigger first-use overlay for new or returning users if not shown yet
+              const shown = localStorage.getItem('ivs-first-use-shown');
+              if (!shown) setShowFirstUseOverlay(true);
             }
           }
         } else {
-          logger.warn("User document not found for UID:", firebaseUser.uid);
+          setUser(null);
+          setClasses({});
+          setAuthStep('roleSelection');
+          setIsAdmin(false);
         }
-      } else {
+
+      } catch (error) {
+        logger.error('Error resolving authenticated user', error);
         setUser(null);
         setClasses({});
-        setAuthStep('roleSelection');
         setIsAdmin(false);
+      } finally {
+        setIsAuthLoading(false);
       }
-      setIsAuthLoading(false);
     });
 
     return () => unsubscribe();
@@ -240,7 +332,7 @@ function App() {
       case 'home':
         return <Home user={user!} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes} />;
       case 'curriculum':
-        return <Dashboard onSelectCourse={handleSelectCourse} user={user!} onUpdateUser={handleUpdateUser} language={language} />;
+        return <Curriculum language={language} user={user!} onSelectCourse={handleSelectCourse} />;
       case 'teacher-dashboard':
         return <TeacherDashboard classes={classes} setClasses={handleUpdateClasses} language={language} />;
       case 'teacher-analytics':
@@ -248,9 +340,15 @@ function App() {
       case 'ai-content-generator':
         return <AIContentGenerator language={language} />;
       case 'writing-grader':
-        return <WritingGrader language={language} setView={handleSetView} />;
+        return <WritingGrader language={language} setView={handleSetView} user={user} />;
       case 'speaking-partner':
-        return <SpeakingPartner language={language} setView={handleSetView} />;
+        return <SpeakingPartner language={language} setView={handleSetView} user={user} />;
+      case 'ai-tutor':
+        return <AITutorChat user={user!} language={language} />;
+      case 'learning-path':
+        return <PersonalizedLearningPath user={user!} language={language} />;
+      case 'ivs-assistant':
+        return <IVSAssistant user={user!} language={language} />;
       case 'settings':
         return (
           <Settings
@@ -368,10 +466,56 @@ function App() {
                 </Suspense>
               </div>
 
+              {showFirstUseOverlay && (
+                <FirstUseOverlay
+                  language={language}
+                  onClose={() => setShowFirstUseOverlay(false)}
+                  onGoToCurriculum={() => {
+                    setCurrentView('curriculum');
+                    setIsSidebarOpen(true);
+                    setShowFirstUseOverlay(false);
+                    localStorage.setItem('ivs-first-use-shown', '1');
+                  }}
+                />
+              )}
+
+              {showLinkPassword && (
+                <LinkPasswordModal
+                  language={language}
+                  onComplete={() => {
+                    setShowLinkPassword(false);
+                    localStorage.setItem('ivs-link-password-shown', '1');
+                    // Show first-use overlay after password is set
+                    const shown = localStorage.getItem('ivs-first-use-shown');
+                    if (!shown) setShowFirstUseOverlay(true);
+                  }}
+                  onSkip={() => {
+                    setShowLinkPassword(false);
+                    localStorage.setItem('ivs-link-password-shown', '1');
+                    // Show first-use overlay after skipping
+                    const shown = localStorage.getItem('ivs-first-use-shown');
+                    if (!shown) setShowFirstUseOverlay(true);
+                  }}
+                />
+              )}
+
+              {showProfileSetup && user && (
+                <ProfileSetupModal
+                  user={user}
+                  language={language}
+                  onComplete={async (updates) => {
+                    await handleUpdateUser({ ...user, ...updates });
+                    setShowProfileSetup(false);
+                    const shown = localStorage.getItem('ivs-first-use-shown');
+                    if (!shown) setShowFirstUseOverlay(true);
+                  }}
+                />
+              )}
+
               <div className="relative z-20">
                 <Suspense fallback={<LoadingFallback />}>
                   <ErrorBoundary>
-                    <AssistiveTouch setView={handleSetView} language={language} />
+                    <AssistiveTouch user={user!} language={language} />
                   </ErrorBoundary>
                 </Suspense>
               </div>

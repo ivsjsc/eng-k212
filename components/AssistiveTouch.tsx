@@ -1,74 +1,76 @@
 import React, { useState } from 'react';
-import type { View } from '../types';
+import IVSAssistant from './IVSAssistant';
+import type { User } from '../types';
 
 interface AssistiveTouchProps {
-  setView: (view: View) => void;
+  user: User;
   language: 'en' | 'vi';
 }
 
-const AssistiveTouch: React.FC<AssistiveTouchProps> = ({ setView, language }) => {
+const AssistiveTouch: React.FC<AssistiveTouchProps> = ({ user, language }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // FIX: Defined the full translations object first to allow TypeScript to correctly infer types for keys.
-  const translations = {
+  const t = {
     en: {
-      home: 'Home',
-      writingGrader: 'Writing Grader',
-      speakingPartner: 'Speaking Partner',
-      toggleMenu: 'Toggle Menu'
+      toggleAssistant: 'IVS Assistant - Click for help!',
+      close: 'Close',
+      free: 'FREE'
     },
     vi: {
-      home: 'Trang chủ',
-      writingGrader: 'Chấm bài viết',
-      speakingPartner: 'Luyện nói',
-      toggleMenu: 'Mở/Đóng Menu'
+      toggleAssistant: 'Trợ lý IVS - Click để được trợ giúp!',
+      close: 'Đóng',
+      free: 'MIỄN PHÍ'
     }
   };
 
-  const t = translations[language];
-
-  const menuItems: { view: View; icon: string; label: keyof typeof translations.en }[] = [
-    { view: 'home', icon: 'fa-home', label: 'home' },
-    { view: 'writing-grader', icon: 'fa-pen-ruler', label: 'writingGrader' },
-    { view: 'speaking-partner', icon: 'fa-comments', label: 'speakingPartner' },
-  ];
-
-  const handleNavigation = (view: View) => {
-    setView(view);
-    setIsOpen(false);
-  };
-
   return (
-    <div className="fixed bottom-6 right-6 z-50">
-      {/* Menu items, shown when open */}
-      <div
-        className={`transition-all duration-300 ease-in-out flex flex-col items-center gap-4 mb-4 ${
-          isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
-        }`}
-      >
-        {menuItems.map((item) => (
-          <button
-            key={item.view}
-            onClick={() => handleNavigation(item.view)}
-            className="w-14 h-14 rounded-full bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-200 shadow-lg flex items-center justify-center transition-transform hover:scale-110"
-            title={t[item.label]}
-          >
-            <i className={`fa-solid ${item.icon} text-xl`}></i>
-          </button>
-        ))}
+    <>
+      {/* Floating IVS Assistant Button */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="relative w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-blue-500/50 active:scale-95 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 animate-pulse-glow"
+          title={t[language].toggleAssistant}
+        >
+          {/* Small info badge (icon only) */}
+          <span className="absolute -top-2 -right-2 w-7 h-7 bg-green-500 text-white rounded-full shadow-lg flex items-center justify-center">
+            <i className="fa-solid fa-info text-xs" aria-hidden></i>
+          </span>
+          
+          <i
+            className={`fa-solid ${isOpen ? 'fa-times' : 'fa-robot'} text-2xl transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+          ></i>
+        </button>
       </div>
 
-      {/* Main toggle button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-16 h-16 rounded-full bg-blue-500 text-white shadow-xl flex items-center justify-center transition-transform duration-300 hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-        title={t.toggleMenu}
-      >
-        <i
-          className={`fa-solid ${isOpen ? 'fa-times' : 'fa-wand-magic-sparkles'} text-2xl transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-        ></i>
-      </button>
-    </div>
+      {/* IVS Assistant Modal */}
+      {isOpen && (
+        <div className="fixed inset-0 z-40 flex items-end md:items-center justify-center md:p-4">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm"
+            onClick={() => setIsOpen(false)}
+          ></div>
+
+          {/* Modal Content */}
+          <div className="relative w-full h-[80vh] md:h-[85vh] md:max-w-4xl md:rounded-2xl overflow-hidden shadow-2xl animate-fade-in">
+            {/* Close Button */}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-slate-700/80 hover:bg-slate-600 text-white flex items-center justify-center transition-all hover:scale-110"
+              title={t[language].close}
+            >
+              <i className="fa-solid fa-times"></i>
+            </button>
+
+            {/* IVS Assistant Component */}
+            <div className="w-full h-full">
+              <IVSAssistant user={user} language={language} />
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

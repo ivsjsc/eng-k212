@@ -3,6 +3,8 @@ import type { User, Classes } from '../types';
 import ProfileEditModal from './ProfileEditModal';
 // FIX: Removed setApiKey and clearApiKey as per API guidelines.
 import { isAiConfigured } from '../services/geminiService';
+import { auth } from '../services/firebase';
+import { EmailAuthProvider, reauthenticateWithCredential, updatePassword, linkWithCredential } from 'firebase/auth';
 
 interface SettingsProps {
   user: User;
@@ -22,12 +24,25 @@ interface SettingsProps {
 const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpdateClasses, theme, setTheme, language, setLanguage, fontSize, setFontSize, fontWeight, setFontWeight }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [aiStatus, setAiStatus] = useState(false);
-  // FIX: Removed state for API key input as it's against guidelines.
-  // const [apiKeyInput, setApiKeyInput] = useState('');
-  // const [showKey, setShowKey] = useState(false);
+  const [activeTab, setActiveTab] = useState<'profile' | 'account' | 'appearance' | 'data' | 'ai'>('profile');
+  
+  // Account tab states
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [passwordSuccess, setPasswordSuccess] = useState<string | null>(null);
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [hasPassword, setHasPassword] = useState(false);
 
   useEffect(() => {
     setAiStatus(isAiConfigured());
+    // Check if user has password provider
+    const currentUser = auth?.currentUser;
+    if (currentUser) {
+      const hasEmailProvider = currentUser.providerData.some(p => p.providerId === 'password');
+      setHasPassword(hasEmailProvider);
+    }
   }, []);
   
   // FIX: Updated translations to remove user-facing API key management text.
@@ -35,6 +50,11 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
     en: {
         title: "Settings",
         subtitle: "Manage your profile and application preferences.",
+        tabProfile: "Profile",
+        tabAccount: "Account",
+        tabAppearance: "Appearance",
+        tabData: "Data",
+        tabAI: "AI Settings",
         profileTitle: "Profile",
         role: "Role",
         student: "Student",
@@ -45,6 +65,21 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
         roleTitle: "Role",
         roleDesc: "Switching your role will change the app's layout and available features to better suit your needs.",
         roleConfirm: (role: string) => `Are you sure you want to switch to the ${role} role? This will change your dashboard and available features.`,
+        accountTitle: "Account Security",
+        accountEmail: "Email",
+        accountProvider: "Sign-in method",
+        changePassword: "Change Password",
+        setPassword: "Set Password",
+        currentPassword: "Current password",
+        newPassword: "New password",
+        confirmPassword: "Confirm password",
+        passwordUpdated: "Password updated successfully!",
+        passwordSet: "Password set successfully! You can now sign in with email and password.",
+        passwordMismatch: "Passwords do not match",
+        passwordTooShort: "Password must be at least 6 characters",
+        passwordWeak: "Password is too weak",
+        wrongPassword: "Current password is incorrect",
+        savingPassword: "Saving...",
         appearanceTitle: "Appearance & Language",
         themeTitle: "Theme",
         light: "Light",
@@ -74,6 +109,11 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
     vi: {
         title: "Cài đặt",
         subtitle: "Quản lý hồ sơ và tùy chọn ứng dụng của bạn.",
+        tabProfile: "Hồ sơ",
+        tabAccount: "Tài khoản",
+        tabAppearance: "Giao diện",
+        tabData: "Dữ liệu",
+        tabAI: "Cài đặt AI",
         profileTitle: "Hồ sơ",
         role: "Vai trò",
         student: "Học sinh",
@@ -84,6 +124,21 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
         roleTitle: "Vai trò",
         roleDesc: "Chuyển đổi vai trò sẽ thay đổi giao diện và các tính năng có sẵn của ứng dụng để phù hợp hơn với nhu cầu của bạn.",
         roleConfirm: (role: string) => `Bạn có chắc chắn muốn chuyển sang vai trò ${role} không? Điều này sẽ thay đổi bảng điều khiển và các tính năng có sẵn của bạn.`,
+        accountTitle: "Bảo mật Tài khoản",
+        accountEmail: "Email",
+        accountProvider: "Phương thức đăng nhập",
+        changePassword: "Đổi mật khẩu",
+        setPassword: "Đặt mật khẩu",
+        currentPassword: "Mật khẩu hiện tại",
+        newPassword: "Mật khẩu mới",
+        confirmPassword: "Xác nhận mật khẩu",
+        passwordUpdated: "Đã cập nhật mật khẩu thành công!",
+        passwordSet: "Đã đặt mật khẩu thành công! Bây giờ bạn có thể đăng nhập bằng email và mật khẩu.",
+        passwordMismatch: "Mật khẩu không khớp",
+        passwordTooShort: "Mật khẩu phải có ít nhất 6 ký tự",
+        passwordWeak: "Mật khẩu quá yếu",
+        wrongPassword: "Mật khẩu hiện tại không đúng",
+        savingPassword: "Đang lưu...",
         appearanceTitle: "Giao diện & Ngôn ngữ",
         themeTitle: "Chủ đề",
         light: "Sáng",
@@ -213,6 +268,60 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
     reader.readAsText(file);
   };
 
+  const handlePasswordChange = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPasswordError(null);
+    setPasswordSuccess(null);
+
+    if (newPassword !== confirmPassword) {
+      setPasswordError(t.passwordMismatch);
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      setPasswordError(t.passwordTooShort);
+      return;
+    }
+
+    setIsChangingPassword(true);
+
+    try {
+      const currentUser = auth?.currentUser;
+      if (!currentUser || !currentUser.email) {
+        throw new Error('No authenticated user');
+      }
+
+      if (hasPassword) {
+        // User already has password - change it
+        const credential = EmailAuthProvider.credential(currentUser.email, currentPassword);
+        await reauthenticateWithCredential(currentUser, credential);
+        await updatePassword(currentUser, newPassword);
+        setPasswordSuccess(t.passwordUpdated);
+      } else {
+        // User signed in with Google - link password
+        const credential = EmailAuthProvider.credential(currentUser.email, newPassword);
+        await linkWithCredential(currentUser, credential);
+        setHasPassword(true);
+        setPasswordSuccess(t.passwordSet);
+      }
+
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+    } catch (err: any) {
+      console.error('Password change error:', err);
+      if (err.code === 'auth/wrong-password') {
+        setPasswordError(t.wrongPassword);
+      } else if (err.code === 'auth/weak-password') {
+        setPasswordError(t.passwordWeak);
+      } else {
+        setPasswordError(err.message?.replace('Firebase: ', '') || 'Failed to update password');
+      }
+    } finally {
+      setIsChangingPassword(false);
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 animate-fade-in">
         <div className="text-center mb-8">
@@ -221,87 +330,224 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
             <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{t.subtitle}</p>
         </div>
 
+        {/* Tab Navigation */}
+        <div className="flex gap-2 mb-6 overflow-x-auto">
+          <button
+            onClick={() => setActiveTab('profile')}
+            className={`px-4 py-2 rounded-lg font-medium transition-all ${activeTab === 'profile' ? 'bg-blue-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'}`}
+          >
+            <i className="fa-solid fa-user mr-2"></i>{t.tabProfile}
+          </button>
+          <button
+            onClick={() => setActiveTab('account')}
+            className={`px-4 py-2 rounded-lg font-medium transition-all ${activeTab === 'account' ? 'bg-blue-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'}`}
+          >
+            <i className="fa-solid fa-shield-halved mr-2"></i>{t.tabAccount}
+          </button>
+          <button
+            onClick={() => setActiveTab('appearance')}
+            className={`px-4 py-2 rounded-lg font-medium transition-all ${activeTab === 'appearance' ? 'bg-blue-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'}`}
+          >
+            <i className="fa-solid fa-palette mr-2"></i>{t.tabAppearance}
+          </button>
+          <button
+            onClick={() => setActiveTab('data')}
+            className={`px-4 py-2 rounded-lg font-medium transition-all ${activeTab === 'data' ? 'bg-blue-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'}`}
+          >
+            <i className="fa-solid fa-database mr-2"></i>{t.tabData}
+          </button>
+          <button
+            onClick={() => setActiveTab('ai')}
+            className={`px-4 py-2 rounded-lg font-medium transition-all ${activeTab === 'ai' ? 'bg-blue-500 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300'}`}
+          >
+            <i className="fa-solid fa-robot mr-2"></i>{t.tabAI}
+          </button>
+        </div>
+
         <div className="space-y-8">
-            <section className="card-glass p-6">
-                <h2 className="text-2xl font-bold mb-4">{t.profileTitle}</h2>
-                <div className="flex items-center gap-6">
-                    <i className={`${user.avatar} text-6xl text-blue-500`}></i>
-                    <div className="flex-grow">
-                        <p className="text-xl font-bold">{user.name}</p>
-                        <p className="text-slate-500 dark:text-slate-400 capitalize">{user.role === 'student' ? t.student : t.teacher}</p>
-                        <p className="text-sm text-slate-500 dark:text-slate-400">
-                          {user.role === 'student' ? `${t.grade}: ${user.gradeLevel || 'N/A'}` : `${t.subject}: ${user.subject || 'N/A'}`}
-                        </p>
-                    </div>
-                    <button onClick={() => setIsEditModalOpen(true)} className="btn btn-secondary">
-                        <i className="fa-solid fa-pen-to-square mr-2"></i> {t.editProfile}
-                    </button>
-                </div>
-            </section>
-            
-            <section className="card-glass p-6">
-                <h2 className="text-2xl font-bold mb-4">{t.roleTitle}</h2>
-                <p className="text-slate-600 dark:text-slate-400 mb-4 text-sm">{t.roleDesc}</p>
-                <div className="flex gap-2">
-                    <button onClick={() => handleRoleChange('student')} className={`btn flex-1 ${user.role === 'student' ? 'btn-primary' : 'btn-secondary-outline'}`}>
-                        <i className="fa-solid fa-user-graduate mr-2"></i> {t.student}
-                    </button>
-                    <button onClick={() => handleRoleChange('teacher')} className={`btn flex-1 ${user.role === 'teacher' ? 'btn-primary' : 'btn-secondary-outline'}`}>
-                        <i className="fa-solid fa-chalkboard-user mr-2"></i> {t.teacher}
-                    </button>
-                </div>
-            </section>
+            {activeTab === 'profile' && (
+              <>
+                <section className="card-glass p-6">
+                  <h2 className="text-2xl font-bold mb-4">{t.profileTitle}</h2>
+                  <div className="flex items-center gap-6">
+                      <i className={`${user.avatar} text-6xl text-blue-500`}></i>
+                      <div className="flex-grow">
+                          <p className="text-xl font-bold">{user.name}</p>
+                          <p className="text-slate-500 dark:text-slate-400 capitalize">{user.role === 'student' ? t.student : t.teacher}</p>
+                          <p className="text-sm text-slate-500 dark:text-slate-400">
+                            {user.role === 'student' ? `${t.grade}: ${user.gradeLevel || 'N/A'}` : `${t.subject}: ${user.subject || 'N/A'}`}
+                          </p>
+                      </div>
+                      <button onClick={() => setIsEditModalOpen(true)} className="btn btn-secondary">
+                          <i className="fa-solid fa-pen-to-square mr-2"></i> {t.editProfile}
+                      </button>
+                  </div>
+                </section>
+                
+                <section className="card-glass p-6">
+                  <h2 className="text-2xl font-bold mb-4">{t.roleTitle}</h2>
+                  <p className="text-slate-600 dark:text-slate-400 mb-4 text-sm">{t.roleDesc}</p>
+                  <div className="flex gap-2">
+                      <button onClick={() => handleRoleChange('student')} className={`btn flex-1 ${user.role === 'student' ? 'btn-primary' : 'btn-secondary-outline'}`}>
+                          <i className="fa-solid fa-user-graduate mr-2"></i> {t.student}
+                      </button>
+                      <button onClick={() => handleRoleChange('teacher')} className={`btn flex-1 ${user.role === 'teacher' ? 'btn-primary' : 'btn-secondary-outline'}`}>
+                          <i className="fa-solid fa-chalkboard-user mr-2"></i> {t.teacher}
+                      </button>
+                  </div>
+                </section>
+              </>
+            )}
 
-            <section className="card-glass p-6">
-                <h2 className="text-2xl font-bold mb-4">{t.appearanceTitle}</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {activeTab === 'account' && (
+              <section className="card-glass p-6">
+                <h2 className="text-2xl font-bold mb-4">{t.accountTitle}</h2>
+                <div className="space-y-4 mb-6">
+                  <div>
+                    <label className="block text-sm font-semibold mb-1">{t.accountEmail}</label>
+                    <p className="text-slate-600 dark:text-slate-400">{auth?.currentUser?.email || 'N/A'}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold mb-1">{t.accountProvider}</label>
+                    <div className="flex gap-2 flex-wrap">
+                      {auth?.currentUser?.providerData.map((provider, idx) => (
+                        <span key={idx} className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">
+                          {provider.providerId === 'google.com' && <><i className="fa-brands fa-google mr-1"></i>Google</>}
+                          {provider.providerId === 'password' && <><i className="fa-solid fa-key mr-1"></i>Email/Password</>}
+                          {provider.providerId === 'phone' && <><i className="fa-solid fa-phone mr-1"></i>Phone</>}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <form onSubmit={handlePasswordChange} className="space-y-4">
+                  <h3 className="text-xl font-bold">{hasPassword ? t.changePassword : t.setPassword}</h3>
+                  
+                  {hasPassword && (
                     <div>
-                        <h3 className="text-lg font-semibold mb-2">{t.themeTitle}</h3>
-                        <div className="flex gap-2">
-                            <button onClick={() => handleThemeChange('light')} className={`btn flex-1 ${theme === 'light' ? 'btn-primary' : 'btn-secondary-outline'}`}>
-                                <i className="fa-solid fa-sun mr-2"></i> {t.light}
-                            </button>
-                            <button onClick={() => handleThemeChange('dark')} className={`btn flex-1 ${theme === 'dark' ? 'btn-primary' : 'btn-secondary-outline'}`}>
-                                <i className="fa-solid fa-moon mr-2"></i> {t.dark}
-                            </button>
-                        </div>
+                      <label className="form-label">{t.currentPassword}</label>
+                      <input
+                        type="password"
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                        className="form-input"
+                        required
+                      />
                     </div>
-                     <div>
-                        <h3 className="text-lg font-semibold mb-2">{t.languageTitle}</h3>
-                        <div className="flex gap-2">
-                             <button onClick={() => setLanguage('en')} className={`btn flex-1 ${language === 'en' ? 'btn-primary' : 'btn-secondary-outline'}`}>
-                                English
-                            </button>
-                             <button onClick={() => setLanguage('vi')} className={`btn flex-1 ${language === 'vi' ? 'btn-primary' : 'btn-secondary-outline'}`}>
-                                Tiếng Việt
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                  )}
 
-            <section className="card-glass p-6">
-                <h2 className="text-2xl font-bold mb-4">{t.fontSettingsTitle}</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                     <div>
-                        <h3 className="text-lg font-semibold mb-2">{t.fontSize}</h3>
-                        <div className="flex gap-2">
-                            <button onClick={() => setFontSize('14px')} className={`btn flex-1 ${fontSize === '14px' ? 'btn-primary' : 'btn-secondary-outline'}`}>{t.fontSmall}</button>
-                            <button onClick={() => setFontSize('16px')} className={`btn flex-1 ${fontSize === '16px' ? 'btn-primary' : 'btn-secondary-outline'}`}>{t.fontNormal}</button>
-                            <button onClick={() => setFontSize('18px')} className={`btn flex-1 ${fontSize === '18px' ? 'btn-primary' : 'btn-secondary-outline'}`}>{t.fontLarge}</button>
-                        </div>
-                    </div>
-                     <div>
-                        <h3 className="text-lg font-semibold mb-2">{t.fontWeight}</h3>
-                        <div className="flex gap-2">
-                            <button onClick={() => setFontWeight(300)} className={`btn flex-1 ${fontWeight === 300 ? 'btn-primary' : 'btn-secondary-outline'}`}>{t.fontLight}</button>
-                            <button onClick={() => setFontWeight(400)} className={`btn flex-1 ${fontWeight === 400 ? 'btn-primary' : 'btn-secondary-outline'}`}>{t.fontRegular}</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                  <div>
+                    <label className="form-label">{t.newPassword}</label>
+                    <input
+                      type="password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      className="form-input"
+                      required
+                      minLength={6}
+                    />
+                  </div>
 
-             <section className="card-glass p-6">
+                  <div>
+                    <label className="form-label">{t.confirmPassword}</label>
+                    <input
+                      type="password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      className="form-input"
+                      required
+                      minLength={6}
+                    />
+                  </div>
+
+                  {passwordError && <p className="text-sm text-red-600">{passwordError}</p>}
+                  {passwordSuccess && <p className="text-sm text-green-600">{passwordSuccess}</p>}
+
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={isChangingPassword}
+                  >
+                    {isChangingPassword ? t.savingPassword : (hasPassword ? t.changePassword : t.setPassword)}
+                  </button>
+                </form>
+              </section>
+            )}
+
+            {activeTab === 'appearance' && (
+              <>
+                <section className="card-glass p-6">
+                  <h2 className="text-2xl font-bold mb-4">{t.appearanceTitle}</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                          <h3 className="text-lg font-semibold mb-2">{t.themeTitle}</h3>
+                          <div className="flex gap-2">
+                              <button onClick={() => handleThemeChange('light')} className={`btn flex-1 ${theme === 'light' ? 'btn-primary' : 'btn-secondary-outline'}`}>
+                                  <i className="fa-solid fa-sun mr-2"></i> {t.light}
+                              </button>
+                              <button onClick={() => handleThemeChange('dark')} className={`btn flex-1 ${theme === 'dark' ? 'btn-primary' : 'btn-secondary-outline'}`}>
+                                  <i className="fa-solid fa-moon mr-2"></i> {t.dark}
+                              </button>
+                          </div>
+                      </div>
+                       <div>
+                          <h3 className="text-lg font-semibold mb-2">{t.languageTitle}</h3>
+                          <div className="flex gap-2">
+                               <button onClick={() => setLanguage('en')} className={`btn flex-1 ${language === 'en' ? 'btn-primary' : 'btn-secondary-outline'}`}>
+                                  English
+                              </button>
+                               <button onClick={() => setLanguage('vi')} className={`btn flex-1 ${language === 'vi' ? 'btn-primary' : 'btn-secondary-outline'}`}>
+                                  Tiếng Việt
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+                </section>
+
+                <section className="card-glass p-6">
+                  <h2 className="text-2xl font-bold mb-4">{t.fontSettingsTitle}</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                       <div>
+                          <h3 className="text-lg font-semibold mb-2">{t.fontSize}</h3>
+                          <div className="flex gap-2">
+                              <button onClick={() => setFontSize('14px')} className={`btn flex-1 ${fontSize === '14px' ? 'btn-primary' : 'btn-secondary-outline'}`}>{t.fontSmall}</button>
+                              <button onClick={() => setFontSize('16px')} className={`btn flex-1 ${fontSize === '16px' ? 'btn-primary' : 'btn-secondary-outline'}`}>{t.fontNormal}</button>
+                              <button onClick={() => setFontSize('18px')} className={`btn flex-1 ${fontSize === '18px' ? 'btn-primary' : 'btn-secondary-outline'}`}>{t.fontLarge}</button>
+                          </div>
+                      </div>
+                       <div>
+                          <h3 className="text-lg font-semibold mb-2">{t.fontWeight}</h3>
+                          <div className="flex gap-2">
+                              <button onClick={() => setFontWeight(300)} className={`btn flex-1 ${fontWeight === 300 ? 'btn-primary' : 'btn-secondary-outline'}`}>{t.fontLight}</button>
+                              <button onClick={() => setFontWeight(400)} className={`btn flex-1 ${fontWeight === 400 ? 'btn-primary' : 'btn-secondary-outline'}`}>{t.fontRegular}</button>
+                          </div>
+                      </div>
+                  </div>
+                </section>
+              </>
+            )}
+
+            {activeTab === 'data' && (
+              <section className="card-glass p-6">
+                <h2 className="text-2xl font-bold mb-4">{t.dataTitle}</h2>
+                <div className="flex flex-col sm:flex-row gap-4 items-center">
+                    <button onClick={handleBackup} className="btn btn-primary w-full sm:w-auto">
+                        <i className="fa-solid fa-download mr-2"></i> {t.backup}
+                    </button>
+                    <label className="btn btn-secondary w-full sm:w-auto cursor-pointer">
+                        <i className="fa-solid fa-upload mr-2"></i> {t.restore}
+                        <input type="file" accept=".json" onChange={handleRestore} className="hidden" />
+                    </label>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 sm:mt-0 sm:ml-4">
+                        {t.dataDesc}
+                    </p>
+                </div>
+              </section>
+            )}
+
+            {activeTab === 'ai' && (
+              <section className="card-glass p-6">
                 <h2 className="text-2xl font-bold mb-4">{t.aiSettingsTitle}</h2>
                  <div className="flex items-center gap-3 mb-3">
                     <span className="font-semibold">{t.aiStatusLabel}</span>
@@ -318,23 +564,8 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
                     )}
                 </div>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">{t.aiDesc}</p>
-            </section>
-
-            <section className="card-glass p-6">
-                <h2 className="text-2xl font-bold mb-4">{t.dataTitle}</h2>
-                <div className="flex flex-col sm:flex-row gap-4 items-center">
-                    <button onClick={handleBackup} className="btn btn-primary w-full sm:w-auto">
-                        <i className="fa-solid fa-download mr-2"></i> {t.backup}
-                    </button>
-                    <label className="btn btn-secondary w-full sm:w-auto cursor-pointer">
-                        <i className="fa-solid fa-upload mr-2"></i> {t.restore}
-                        <input type="file" accept=".json" onChange={handleRestore} className="hidden" />
-                    </label>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 sm:mt-0 sm:ml-4">
-                        {t.dataDesc}
-                    </p>
-                </div>
-            </section>
+              </section>
+            )}
         </div>
 
         {isEditModalOpen && (

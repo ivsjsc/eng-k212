@@ -16,6 +16,7 @@ import {
     sendEmailVerification, // Included from 'chore/firebase-reset'
     sendPasswordResetEmail // Included from 'chore/firebase-reset'
 } from "firebase/auth";
+import { setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { 
     getFirestore, type Firestore,
     doc, 
@@ -63,6 +64,16 @@ try {
             // ignore logging errors in unusual environments
         }
         auth = getAuth(app);
+        // Ensure auth state persists in browser across page reloads and redirects
+        try {
+            // setPersistence returns a Promise; best-effort (non-blocking) handling
+            setPersistence(auth, browserLocalPersistence).catch((e) => {
+                // Log but don't prevent app from initializing
+                logger.warn('Failed to set auth persistence to local:', e?.message || e);
+            });
+        } catch (e) {
+            logger.warn('Auth persistence setup skipped:', e);
+        }
         db = getFirestore(app);
         // export client Functions instance for callable functions
         try {

@@ -2,23 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { gradeWriting, isAiConfigured } from '../services/geminiService';
 import type { WritingFeedback, View } from '../types';
 import FeedbackSkeleton from './FeedbackSkeleton';
+import { demoAIResponses } from '../data/demo-ai-responses';
+import { checkWritingGraderLimit, trackWritingGraderUsage, getRemainingRequests } from '../utils/usageTracker';
+import PricingModal from './PricingModal';
 
 interface WritingGraderProps {
   language: 'en' | 'vi';
   setView: (view: View) => void;
+  user: { subscription?: { tier: 'free' | 'student' | 'teacher' | 'enterprise'; expiresAt?: Date } };
 }
 
-const WritingGrader: React.FC<WritingGraderProps> = ({ language, setView }) => {
+const WritingGrader: React.FC<WritingGraderProps> = ({ language, setView, user }) => {
   const [topic, setTopic] = useState('');
   const [text, setText] = useState('');
   const [feedback, setFeedback] = useState<WritingFeedback | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [aiConfigured, setAiConfigured] = useState(true);
+  const [showPricingModal, setShowPricingModal] = useState(false);
+  const isFreeTier = !user.subscription || user.subscription.tier === 'free';
+  const [usedDemoResponse, setUsedDemoResponse] = useState(false);
 
   useEffect(() => {
     setAiConfigured(isAiConfigured());
   }, []);
+
+  const remaining = getRemainingRequests();
 
   // FIX: Updated translations to reflect new API key policy.
   const t = {
@@ -42,6 +51,13 @@ const WritingGrader: React.FC<WritingGraderProps> = ({ language, setView }) => {
       errorEmpty: "Please enter both a topic and your text.",
       aiWarningTitle: "AI Service Inactive",
       aiWarningBody: "AI features are not available because an API key has not been configured by the administrator.",
+      freeTierBadge: "🆓 Free Tier",
+      premiumBadge: "💎 Premium",
+      limitReached: "Daily limit reached!",
+      limitReachedDesc: "You've used your free writing grader request for today. Upgrade to Premium for unlimited access.",
+      upgradeButton: "Upgrade to Premium",
+      remainingUses: `${remaining.writingGrader} free use${remaining.writingGrader !== 1 ? 's' : ''} remaining today`,
+      demoNotice: "This is a demo response. Upgrade to Premium for personalized AI feedback.",
     },
     vi: {
       title: "AI Chấm bài viết",
@@ -63,6 +79,13 @@ const WritingGrader: React.FC<WritingGraderProps> = ({ language, setView }) => {
       errorEmpty: "Vui lòng nhập cả chủ đề và bài viết.",
       aiWarningTitle: "Dịch vụ AI không hoạt động",
       aiWarningBody: "Các tính năng AI không khả dụng vì khóa API chưa được quản trị viên định cấu hình.",
+      freeTierBadge: "🆓 Miễn phí",
+      premiumBadge: "💎 Premium",
+      limitReached: "Đã hết lượt dùng hôm nay!",
+      limitReachedDesc: "Bạn đã dùng hết lượt chấm bài miễn phí trong ngày. Nâng cấp lên Premium để dùng không giới hạn.",
+      upgradeButton: "Nâng cấp lên Premium",
+      remainingUses: `Còn ${remaining.writingGrader} lượt dùng miễn phí hôm nay`,
+      demoNotice: "Đây là phản hồi mẫu. Nâng cấp lên Premium để nhận phản hồi AI cá nhân hóa.",
     }
   }[language];
 
@@ -72,12 +95,38 @@ const WritingGrader: React.FC<WritingGraderProps> = ({ language, setView }) => {
       setError(t.errorEmpty);
       return;
     }
+
+    // Check if free tier and has reached limit
+    if (isFreeTier && !checkWritingGraderLimit()) {
+      setError(t.limitReached);
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
     setFeedback(null);
+    setUsedDemoResponse(false);
+
     try {
-      const result = await gradeWriting(topic, text);
-      setFeedback(result);
+      // Use demo response for free tier users
+      if (isFreeTier) {
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        const demoData = demoAIResponses.writingGrader[language];
+        setFeedback({
+          overall: demoData.overall,
+          grammar: demoData.feedback.find(f => f.category === (language === 'en' ? 'Grammar' : 'Ngữ pháp'))?.comment || '',
+          vocabulary: demoData.feedback.find(f => f.category === (language === 'en' ? 'Vocabulary' : 'Từ vựng'))?.comment || '',
+          coherence: demoData.feedback.find(f => f.category === (language === 'en' ? 'Structure & Coherence' : 'Cấu trúc & Mạch lạc'))?.comment || '',
+          score: demoData.score,
+        });
+        trackWritingGraderUsage();
+        setUsedDemoResponse(true);
+      } else {
+        // Premium users get real AI feedback
+        const result = await gradeWriting(topic, text);
+        setFeedback(result);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unknown error occurred.');
     } finally {
@@ -97,6 +146,22 @@ const WritingGrader: React.FC<WritingGraderProps> = ({ language, setView }) => {
         <i className="fa-solid fa-pen-ruler text-5xl text-blue-500 mb-4"></i>
         <h1 className="text-4xl font-bold">{t.title}</h1>
         <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{t.subtitle}</p>
+        
+        {/* Free Tier Badge */}
+        {isFreeTier && (
+          <div className="mt-4 inline-block">
+            <span className="px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-semibold">
+              {t.freeTierBadge} • {t.remainingUses}
+            </span>
+          </div>
+        )}
+        {!isFreeTier && (
+          <div className="mt-4 inline-block">
+            <span className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-sm font-semibold">
+              {t.premiumBadge}
+            </span>
+          </div>
+        )}
       </div>
 
       {!aiConfigured && (
@@ -109,6 +174,25 @@ const WritingGrader: React.FC<WritingGraderProps> = ({ language, setView }) => {
             <i className="fa-solid fa-cogs mr-2"></i>
             {t.goToAiSettings}
           </button>
+        </div>
+      )}
+
+      {/* Limit Reached Warning */}
+      {isFreeTier && !checkWritingGraderLimit() && (
+        <div className="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 border-l-4 border-purple-500 p-4 rounded-r-lg mb-6 animate-fade-in">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <h4 className="font-bold text-purple-800 dark:text-purple-200">{t.limitReached}</h4>
+              <p className="text-sm text-purple-700 dark:text-purple-300">{t.limitReachedDesc}</p>
+            </div>
+            <button 
+              onClick={() => setShowPricingModal(true)} 
+              className="btn bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white flex-shrink-0"
+            >
+              <i className="fa-solid fa-crown mr-2"></i>
+              {t.upgradeButton}
+            </button>
+          </div>
         </div>
       )}
 
@@ -161,6 +245,24 @@ const WritingGrader: React.FC<WritingGraderProps> = ({ language, setView }) => {
             {isLoading && <FeedbackSkeleton />}
             {feedback && (
               <div className="space-y-6 animate-fade-in">
+                {/* Demo Notice */}
+                {usedDemoResponse && (
+                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-3 mb-4">
+                    <div className="flex items-start gap-2">
+                      <i className="fa-solid fa-info-circle text-blue-500 mt-0.5"></i>
+                      <div className="flex-1">
+                        <p className="text-sm text-blue-800 dark:text-blue-200">{t.demoNotice}</p>
+                        <button 
+                          onClick={() => setShowPricingModal(true)}
+                          className="text-sm text-purple-600 dark:text-purple-400 font-semibold hover:underline mt-1"
+                        >
+                          {t.upgradeButton} →
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <div className="text-center p-4 rounded-lg bg-slate-100 dark:bg-slate-700/50">
                     <p className="text-sm text-slate-500 dark:text-slate-400">{t.scoreLabel}</p>
                     <p className={`text-6xl font-bold ${getScoreColor(feedback.score)}`}>{feedback.score}<span className="text-3xl">/100</span></p>
@@ -192,6 +294,14 @@ const WritingGrader: React.FC<WritingGraderProps> = ({ language, setView }) => {
           </div>
         </div>
       </div>
+
+      {/* Pricing Modal */}
+      <PricingModal 
+        isOpen={showPricingModal}
+        onClose={() => setShowPricingModal(false)}
+        language={language}
+        userRole="student" // TODO: Get from user profile
+      />
     </div>
   );
 };
