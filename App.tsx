@@ -22,6 +22,8 @@ const UserGuide = lazy(() => import('./components/UserGuide'));
 const AssistiveTouch = lazy(() => import('./components/AssistiveTouch'));
 const AuthPage = lazy(() => import('./components/AuthPage'));
 const RoleSelectionPage = lazy(() => import('./components/RoleSelectionPage'));
+import Curriculum from './components/Curriculum';
+import FirstUseOverlay from './components/FirstUseOverlay';
 
 // Keep Loading component as regular import since it's needed immediately
 import Loading from './components/Loading';
@@ -48,6 +50,7 @@ function App() {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [showFirstUseOverlay, setShowFirstUseOverlay] = useState(false);
 
   // Appearance states
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -103,81 +106,99 @@ function App() {
     handleRedirectResult();
 
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      // Wrapped try/catch to capture unexpected errors during auth resolution
       try {
-        if (firebaseUser) {
-          try {
-            const idTokenResult = await firebaseUser.getIdTokenResult();
-            setIsAdmin(!!idTokenResult?.claims?.admin);
-          } catch (e) {
-            logger.warn('Failed to read idTokenResult for claims', e);
-            setIsAdmin(false);
-          }
+        console.info('onAuthStateChanged fired. firebaseUser:', firebaseUser);
 
-          let resolvedUser: User | null = null;
-          const userDocRef = doc(db!, "users", firebaseUser.uid);
-          const userDoc = await getDoc(userDocRef);
+        if (!firebaseUser) {
+          // Not signed in
+          setUser(null);
+          setClasses({});
+          setAuthStep('roleSelection');
+          setIsAdmin(false);
+          setIsAuthLoading(false);
+          return;
+        }
 
-          if (userDoc.exists()) {
-            resolvedUser = { id: userDoc.id, ...userDoc.data() } as User;
-          } else {
-            logger.warn("User document not found for UID:", firebaseUser.uid);
-            const storedRole = sessionStorage.getItem('authRole') as 'student' | 'teacher' | null;
-            const fallbackRole: 'student' | 'teacher' = storedRole || 'student';
-            const fallbackName =
-              firebaseUser.displayName || firebaseUser.email?.split('@')[0] || (fallbackRole === 'teacher' ? 'New Teacher' : 'New Student');
+        // expose a few debug helpers on window for quick inspection
+        try { (window as any).__DEBUG_AUTH__ = { uid: firebaseUser.uid, email: firebaseUser.email, phone: firebaseUser.phoneNumber }; } catch (e) {}
 
-            const fallbackUser: User = {
-              ...MOCK_USER,
-              id: firebaseUser.uid,
-              name: fallbackName,
-              email: firebaseUser.email || undefined,
-              role: fallbackRole,
-              avatar: MOCK_USER.avatar,
-              phone: firebaseUser.phoneNumber || undefined,
-            };
+        try {
+          const idTokenResult = await firebaseUser.getIdTokenResult();
+          setIsAdmin(!!idTokenResult?.claims?.admin);
+        } catch (e) {
+          logger.warn('Failed to read idTokenResult for claims', e);
+          setIsAdmin(false);
+        }
 
-            await setDoc(
-              userDocRef,
-              {
-                ...fallbackUser,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-              },
-              { merge: true }
-            );
+        let resolvedUser: User | null = null;
+        const userDocRef = doc(db!, "users", firebaseUser.uid);
+        const userDoc = await getDoc(userDocRef);
 
-            sessionStorage.removeItem('authRole');
-            resolvedUser = fallbackUser;
-          }
+        if (userDoc.exists()) {
+          resolvedUser = { id: userDoc.id, ...userDoc.data() } as User;
+        } else {
+          logger.warn("User document not found for UID:", firebaseUser.uid);
+          const storedRole = sessionStorage.getItem('authRole') as 'student' | 'teacher' | null;
+          const fallbackRole: 'student' | 'teacher' = storedRole || 'student';
+          const fallbackName = firebaseUser.displayName || firebaseUser.email?.split('@')[0] || (fallbackRole === 'teacher' ? 'New Teacher' : 'New Student');
 
-          if (resolvedUser) {
-            setUser(resolvedUser);
+          const fallbackUser: User = {
+            ...MOCK_USER,
+            id: firebaseUser.uid,
+            name: fallbackName,
+            email: firebaseUser.email || undefined,
+            role: fallbackRole,
+            avatar: MOCK_USER.avatar,
+            phone: firebaseUser.phoneNumber || undefined,
+          };
 
-            // Ensure the app navigates users to the expected post-login view
-            if (resolvedUser.role === 'teacher') {
-              const classesDocRef = doc(db!, 'classes', firebaseUser.uid);
-              const classesDoc = await getDoc(classesDocRef);
+          await setDoc(userDocRef, { ...fallbackUser, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }, { merge: true });
+          sessionStorage.removeItem('authRole');
+          resolvedUser = fallbackUser;
+        }
 
-              if (classesDoc.exists()) {
-                setClasses(classesDoc.data() as Classes);
-              } else {
-                await setDoc(classesDocRef, MOCK_CLASSES);
-                setClasses(MOCK_CLASSES);
-              }
-              // Teachers should land on the teacher dashboard after login
-              setCurrentView('teacher-dashboard');
+        if (resolvedUser) {
+          setUser(resolvedUser);
+
+          // Improve discoverability: open sidebar on first sign-in and steer students
+          // without enrolled courses to the curriculum page so they can explore content.
+          setIsSidebarOpen(true);
+
+          if (resolvedUser.role === 'teacher') {
+            const classesDocRef = doc(db!, 'classes', firebaseUser.uid);
+            const classesDoc = await getDoc(classesDocRef);
+            if (classesDoc.exists()) {
+              setClasses(classesDoc.data() as Classes);
             } else {
-              setClasses({});
-              // Students land on the home/student home
+              await setDoc(classesDocRef, MOCK_CLASSES);
+              setClasses(MOCK_CLASSES);
+            }
+            setCurrentView('teacher-dashboard');
+          } else {
+            // Students: if no classes/content available, send them to curriculum so they can
+            // discover and enroll in courses. Otherwise go to home/dashboard.
+            setClasses({});
+            // If the student has no classes yet, show the curriculum page for discovery
+            const hasClasses = false; // student classes are stored elsewhere; default to false to promote discovery
+            if (!hasClasses) {
+              setCurrentView('curriculum');
+            } else {
               setCurrentView('home');
             }
           }
+
+          console.info('Resolved user set:', resolvedUser);
+          // Trigger first-use overlay for new or returning users if not shown yet
+          const shown = localStorage.getItem('ivs-first-use-shown');
+          if (!shown) setShowFirstUseOverlay(true);
         } else {
           setUser(null);
           setClasses({});
           setAuthStep('roleSelection');
           setIsAdmin(false);
         }
+
       } catch (error) {
         logger.error('Error resolving authenticated user', error);
         setUser(null);
@@ -289,7 +310,7 @@ function App() {
       case 'home':
         return <Home user={user!} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes} />;
       case 'curriculum':
-        return <Dashboard onSelectCourse={handleSelectCourse} user={user!} onUpdateUser={handleUpdateUser} language={language} />;
+        return <Curriculum language={language} onExplore={() => setCurrentView('home')} />;
       case 'teacher-dashboard':
         return <TeacherDashboard classes={classes} setClasses={handleUpdateClasses} language={language} />;
       case 'teacher-analytics':
@@ -416,6 +437,19 @@ function App() {
                   <ErrorBoundary>{renderView()}</ErrorBoundary>
                 </Suspense>
               </div>
+
+              {showFirstUseOverlay && (
+                <FirstUseOverlay
+                  language={language}
+                  onClose={() => setShowFirstUseOverlay(false)}
+                  onGoToCurriculum={() => {
+                    setCurrentView('curriculum');
+                    setIsSidebarOpen(true);
+                    setShowFirstUseOverlay(false);
+                    localStorage.setItem('ivs-first-use-shown', '1');
+                  }}
+                />
+              )}
 
               <div className="relative z-20">
                 <Suspense fallback={<LoadingFallback />}>
