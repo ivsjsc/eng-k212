@@ -692,6 +692,12 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                                                                     {/* small screens: inline svg for crispness */}
                                                                     <img src="/images/banner/ivsenglish-banner.svg" alt="IVS English Banner" className="mx-auto h-16 w-auto lg:hidden" />
                                     <div className="space-y-2">
+                                        <img
+                                            src="/images/logo/logo-lighting.png"
+                                            onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/logo/logo.svg'; }}
+                                            alt="IVS Logo"
+                                            className="mx-auto h-20 w-auto mb-2"
+                                        />
                                         <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
                                             {isLoginView ? t.loginTitle : t.signupTitle}
                                         </h2>
