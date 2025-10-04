@@ -8,6 +8,8 @@ export type View =
   | 'ai-content-generator'
   | 'writing-grader'
   | 'speaking-partner'
+  | 'ai-tutor'
+  | 'learning-path'
   | 'settings'
   | 'user-guide'
   | 'admin';
