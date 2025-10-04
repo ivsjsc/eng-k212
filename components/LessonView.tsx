@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import type { Lesson, VocabularyItem, QuizQuestion, GeneratedSentence, View } from '../types';
-import { translateToVietnamese, isAiConfigured, generateQuiz, generateSampleSentences, generateStoryStarter } from '../services/geminiService';
+import { 
+  translateToVietnamese, 
+  isAiConfigured 
+} from '../services/aiContentService';
+import {
+  generateQuizCached as generateQuiz,
+  generateSampleSentencesCached as generateSampleSentences,
+  generateStoryStarterCached as generateStoryStarter
+} from '../services/aiContentService';
 
 interface LessonViewProps {
   lesson: Lesson;
@@ -60,7 +68,11 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView }) =>
     setIsAiLoading(true);
     setAiError(null);
     try {
-      const questions = await generateQuiz(lesson.rawLesson, language);
+      const questions = await generateQuiz(lesson.rawLesson, language, {
+        numQuestions: 5,
+        difficulty: 'Intermediate',
+        questionTypes: ['multiple-choice']
+      });
       setAiData(questions);
     } catch (err) {
       setAiError(err instanceof Error ? err.message : 'Unknown error');
