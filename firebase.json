@@ -9,7 +9,7 @@
   "hosting": [
     {
       "target": "app",
-      "public": "public",
+      "public": "dist",
       "ignore": [
         "firebase.json",
         "**/.*",
