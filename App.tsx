@@ -153,6 +153,7 @@ function App() {
           if (resolvedUser) {
             setUser(resolvedUser);
 
+            // Ensure the app navigates users to the expected post-login view
             if (resolvedUser.role === 'teacher') {
               const classesDocRef = doc(db!, 'classes', firebaseUser.uid);
               const classesDoc = await getDoc(classesDocRef);
@@ -163,8 +164,12 @@ function App() {
                 await setDoc(classesDocRef, MOCK_CLASSES);
                 setClasses(MOCK_CLASSES);
               }
+              // Teachers should land on the teacher dashboard after login
+              setCurrentView('teacher-dashboard');
             } else {
               setClasses({});
+              // Students land on the home/student home
+              setCurrentView('home');
             }
           }
         } else {
