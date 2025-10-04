@@ -639,11 +639,11 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                             </div>
                             <div className="space-y-8 px-6 py-10 sm:px-10">
                                 <div className="space-y-4 text-center">
-                                                    <img
-                                                        src="/images/banner/ivsenglish-banner.jpg"
-                                                        alt="IVS English Banner"
-                                                        className="mx-auto h-20 w-auto object-cover rounded-md"
-                                                    />
+                                                                    <div className="mx-auto h-40 w-full overflow-hidden rounded-md hidden lg:block">
+                                                                        <div className="w-full h-full bg-center bg-cover rounded-md" style={{ backgroundImage: `url('/images/banner/ivsenglish-banner.svg')` }} aria-hidden="true" />
+                                                                    </div>
+                                                                    {/* small screens: inline svg for crispness */}
+                                                                    <img src="/images/banner/ivsenglish-banner.svg" alt="IVS English Banner" className="mx-auto h-16 w-auto lg:hidden" />
                                     <div className="space-y-2">
                                         <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
                                             {isLoginView ? t.loginTitle : t.signupTitle}
