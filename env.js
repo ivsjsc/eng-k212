@@ -1,6 +1,6 @@
 window.__FIREBASE_CONFIG__ = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyB-SwBnsXJ9n2pXqp-CTlQaPffnF01wE-I",
   authDomain: "english-c0f9d.firebaseapp.com",
-  projectId: "...",
+  projectId: "english-c0f9d",
   // etc
 };
