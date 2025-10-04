@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { ClassData } from '../../types';
+import { auth } from '../../services/firebase';
+import { getClassFromTeacher } from '../../services/analytics';
 import { fetchClassAnalyticsDemo } from '../../data/demo-analytics';
 
 export function useClassAnalytics(classId?: string, refreshToken = 0) {
@@ -9,17 +11,34 @@ export function useClassAnalytics(classId?: string, refreshToken = 0) {
 
   useEffect(() => {
     if (!classId) return;
-    setLoading(true);
-    setError(null);
-    // For now use demo data; later replace with Firestore fetch
-    try {
-      const d = fetchClassAnalyticsDemo(classId);
-      setData(d || null);
-    } catch (e: any) {
-      setError(e?.message || 'Failed to load analytics');
-    } finally {
-      setLoading(false);
+    let cancelled = false;
+    async function load() {
+      setLoading(true);
+      setError(null);
+      try {
+        // Try to fetch using current authenticated teacher UID
+        const teacherUid = auth?.currentUser?.uid ?? null;
+        if (teacherUid) {
+          const c = await getClassFromTeacher(teacherUid, classId);
+          if (!cancelled) setData(c);
+          setLoading(false);
+          return;
+        }
+
+        // Fall back to demo data in dev / unauthenticated scenarios
+        const d = fetchClassAnalyticsDemo(classId);
+        if (!cancelled) setData(d || null);
+      } catch (e: any) {
+        if (!cancelled) setError(e?.message || 'Failed to load analytics');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     }
+
+    load();
+    return () => {
+      cancelled = true;
+    };
   }, [classId, refreshToken]);
 
   return { data, loading, error } as const;
