@@ -339,9 +339,9 @@ function App() {
       case 'ai-content-generator':
         return <AIContentGenerator language={language} />;
       case 'writing-grader':
-        return <WritingGrader language={language} setView={handleSetView} />;
+        return <WritingGrader language={language} setView={handleSetView} user={user} />;
       case 'speaking-partner':
-        return <SpeakingPartner language={language} setView={handleSetView} />;
+        return <SpeakingPartner language={language} setView={handleSetView} user={user} />;
       case 'ai-tutor':
         return <AITutorChat user={user!} language={language} />;
       case 'learning-path':

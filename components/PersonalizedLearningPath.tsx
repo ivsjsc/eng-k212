@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleGenAI, Type } from "@google/genai";
 import type { User } from '../types';
+import { demoAIResponses } from '../data/demo-ai-responses';
+import PricingModal from './PricingModal';
 
 interface LearningGoal {
   id: string;
@@ -21,6 +23,8 @@ const PersonalizedLearningPath: React.FC<Props> = ({ user, language }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedGoal, setSelectedGoal] = useState<LearningGoal | null>(null);
+  const [showPricingModal, setShowPricingModal] = useState(false);
+  const isFreeTier = !user.subscription || user.subscription.tier === 'free';
 
   const t = {
     en: {
@@ -36,6 +40,12 @@ const PersonalizedLearningPath: React.FC<Props> = ({ user, language }) => {
       viewDetails: 'View details',
       backToGoals: 'Back to goals',
       noGoals: 'No goals available yet',
+      freeTierBadge: '🆓 Free Tier',
+      premiumBadge: '💎 Premium',
+      demoTitle: '📚 Sample Learning Path (Free Tier)',
+      demoSubtitle: 'This is a sample 3-week learning path. Upgrade to Premium for AI-personalized paths based on your progress.',
+      upgradeButton: 'Upgrade to Premium',
+      week: 'Week',
     },
     vi: {
       title: 'Lộ trình học tập cá nhân',
@@ -50,12 +60,23 @@ const PersonalizedLearningPath: React.FC<Props> = ({ user, language }) => {
       viewDetails: 'Xem chi tiết',
       backToGoals: 'Quay lại mục tiêu',
       noGoals: 'Chưa có mục tiêu nào',
+      freeTierBadge: '🆓 Miễn phí',
+      premiumBadge: '💎 Premium',
+      demoTitle: '📚 Lộ trình học mẫu (Miễn phí)',
+      demoSubtitle: 'Đây là lộ trình học mẫu 3 tuần. Nâng cấp lên Premium để có lộ trình AI cá nhân hóa dựa trên tiến độ của bạn.',
+      upgradeButton: 'Nâng cấp lên Premium',
+      week: 'Tuần',
     }
   }[language];
 
   useEffect(() => {
-    generateLearningPath();
-  }, [user, language]);
+    if (!isFreeTier) {
+      generateLearningPath();
+    } else {
+      // For free tier, use demo data
+      setIsLoading(false);
+    }
+  }, [user, language, isFreeTier]);
 
   const generateLearningPath = async () => {
     setIsLoading(true);
@@ -125,6 +146,80 @@ const PersonalizedLearningPath: React.FC<Props> = ({ user, language }) => {
           <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-500 mx-auto mb-4"></div>
           <p className="text-lg text-slate-600 dark:text-slate-400">{t.loading}</p>
         </div>
+      </div>
+    );
+  }
+
+  // Show demo path for free tier
+  if (isFreeTier) {
+    const demoPath = demoAIResponses.learningPath[language];
+    
+    return (
+      <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 animate-fade-in">
+        <div className="text-center mb-6">
+          <i className="fa-solid fa-route text-5xl text-blue-500 mb-4"></i>
+          <h1 className="text-4xl font-bold">{t.title}</h1>
+          <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">{t.subtitle}</p>
+          
+          {/* Free Tier Badge */}
+          <div className="mt-4 inline-block">
+            <span className="px-4 py-2 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-semibold">
+              {t.freeTierBadge}
+            </span>
+          </div>
+        </div>
+
+        <div className="card-glass p-6 mb-6">
+          <div className="flex items-start gap-4 mb-4">
+            <i className="fa-solid fa-info-circle text-3xl text-blue-500"></i>
+            <div>
+              <h2 className="text-2xl font-bold mb-2">{t.demoTitle}</h2>
+              <p className="text-slate-600 dark:text-slate-400">{t.demoSubtitle}</p>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            {demoPath.weeks.map((week, index) => (
+              <div key={index} className="stat-card stat-card-purple p-6">
+                <h3 className="text-xl font-bold mb-3">
+                  {t.week} {week.week}: {week.topic}
+                </h3>
+                <ul className="space-y-2">
+                  {week.exercises.map((exercise, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <i className="fa-solid fa-check-circle mt-1"></i>
+                      <span>{exercise}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border border-purple-200 dark:border-purple-700 rounded-lg p-6">
+            <p className="text-center text-purple-800 dark:text-purple-200 mb-4 text-lg">
+              <i className="fa-solid fa-star mr-2"></i>
+              {language === 'en' 
+                ? 'Unlock AI-personalized learning paths that adapt to your progress!' 
+                : 'Mở khóa lộ trình học AI cá nhân hóa thích ứng với tiến độ của bạn!'}
+            </p>
+            <button 
+              onClick={() => setShowPricingModal(true)}
+              className="btn bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white w-full"
+            >
+              <i className="fa-solid fa-crown mr-2"></i>
+              {t.upgradeButton}
+            </button>
+          </div>
+        </div>
+
+        {/* Pricing Modal */}
+        <PricingModal 
+          isOpen={showPricingModal}
+          onClose={() => setShowPricingModal(false)}
+          language={language}
+          userRole={user.role}
+        />
       </div>
     );
   }

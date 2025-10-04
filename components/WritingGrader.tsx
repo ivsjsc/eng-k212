@@ -9,9 +9,10 @@ import PricingModal from './PricingModal';
 interface WritingGraderProps {
   language: 'en' | 'vi';
   setView: (view: View) => void;
+  user: { subscription?: { tier: 'free' | 'student' | 'teacher' | 'enterprise'; expiresAt?: Date } };
 }
 
-const WritingGrader: React.FC<WritingGraderProps> = ({ language, setView }) => {
+const WritingGrader: React.FC<WritingGraderProps> = ({ language, setView, user }) => {
   const [topic, setTopic] = useState('');
   const [text, setText] = useState('');
   const [feedback, setFeedback] = useState<WritingFeedback | null>(null);
@@ -19,7 +20,7 @@ const WritingGrader: React.FC<WritingGraderProps> = ({ language, setView }) => {
   const [error, setError] = useState<string | null>(null);
   const [aiConfigured, setAiConfigured] = useState(true);
   const [showPricingModal, setShowPricingModal] = useState(false);
-  const [isFreeTier, setIsFreeTier] = useState(true); // TODO: Get from user profile/Firebase
+  const isFreeTier = !user.subscription || user.subscription.tier === 'free';
   const [usedDemoResponse, setUsedDemoResponse] = useState(false);
 
   useEffect(() => {
