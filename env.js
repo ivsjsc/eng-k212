@@ -2,7 +2,7 @@ window.__FIREBASE_CONFIG__ = {
   // Runtime Firebase configuration - loaded from deployed env.js
   // This allows updating Firebase config without rebuilding
   apiKey: "AIzaSyB-SwBnsXJ9n2pXqp-CTlQaPffnF01wE-I",
-  authDomain: "english-c0f9d.firebaseapp.com",
+  authDomain: "english.ivsacademy.edu.vn",
   projectId: "english-c0f9d",
   storageBucket: "english-c0f9d.firebasestorage.app",
   messagingSenderId: "1007733924723",
