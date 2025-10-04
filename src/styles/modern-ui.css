@@ -1,250 +1,383 @@
 /* 
- * MODERN UI ENHANCEMENTS
+ * MODERN UI ENHANCEMENTS - Pure CSS (No @apply)
  * Professional, high-contrast, beautiful design
  */
 
-/* Improved Card Glass Effect */
+/* =========================
+   CSS Variables
+   ========================= */
+:root {
+  --gradient-blue: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-green: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  --gradient-orange: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  --gradient-purple: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  --gradient-amber: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+}
+
+/* =========================
+   Glass Card Effect
+   ========================= */
 .card-glass {
-  @apply bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-200/50 dark:border-slate-700/50;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 1.5rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(226, 232, 240, 0.5);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.card-glass:hover {
-  @apply shadow-3xl scale-[1.02];
-  transform: translateY(-4px);
+.dark .card-glass {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(71, 85, 105, 0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(71, 85, 105, 0.5);
 }
 
-/* Enhanced Gradient Buttons */
+.card-glass:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+}
+
+/* =========================
+   Gradient Buttons
+   ========================= */
 .btn-gradient {
-  @apply relative overflow-hidden font-bold text-white rounded-2xl px-8 py-4 shadow-lg transition-all duration-300;
+  position: relative;
+  overflow: hidden;
+  font-weight: 700;
+  color: white;
+  border-radius: 1rem;
+  padding: 1rem 2rem;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  cursor: pointer;
 }
 
 .btn-gradient:hover {
-  @apply shadow-2xl scale-105;
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+  transform: scale(1.05) translateY(-2px);
   background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
 }
 
 .btn-gradient:before {
   content: '';
-  @apply absolute inset-0 bg-white/20 opacity-0 transition-opacity duration-300;
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s;
 }
 
 .btn-gradient:hover:before {
-  @apply opacity-100;
+  opacity: 1;
 }
 
-/* Stat Cards with Gradient */
+/* =========================
+   Stat Cards with Gradients
+   ========================= */
 .stat-card {
-  @apply relative overflow-hidden rounded-3xl p-6 shadow-xl transition-all duration-300 cursor-pointer;
-  background: linear-gradient(135deg, var(--gradient-from), var(--gradient-to));
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
 .stat-card:hover {
-  @apply shadow-2xl scale-105;
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
 }
 
-.stat-card::before {
+/* Stat Card Variants */
+.stat-card-blue {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.stat-card-green {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+}
+
+.stat-card-orange {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  color: white;
+}
+
+.stat-card-purple {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  color: #1e293b;
+}
+
+.stat-card-amber {
+  background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+  color: #1e293b;
+}
+
+.stat-card-emerald {
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+  color: white;
+}
+
+.stat-card-yellow {
+  background: linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%);
+  color: #1e293b;
+}
+
+/* Stat Card Glow Effect */
+.stat-card:before {
   content: '';
-  @apply absolute inset-0 bg-white/10 opacity-0 transition-opacity duration-300;
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
 }
 
-.stat-card:hover::before {
-  @apply opacity-100;
+.stat-card:hover:before {
+  opacity: 1;
 }
 
-.stat-card::after {
-  content: '';
-  @apply absolute -bottom-6 -right-6 w-32 h-32 bg-white/10 rounded-full blur-2xl;
-}
-
-/* Typography Improvements */
-.heading-gradient {
-  @apply font-black bg-gradient-to-r bg-clip-text text-transparent;
-  background-image: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-}
-
-.heading-primary {
-  @apply text-5xl md:text-6xl font-black text-slate-900 dark:text-white drop-shadow-sm;
-}
-
-.heading-secondary {
-  @apply text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100;
-}
-
-.text-body {
-  @apply text-base md:text-lg text-slate-700 dark:text-slate-300 leading-relaxed;
-}
-
-/* Enhanced Tab Navigation */
-.tab-button {
-  @apply px-6 py-3 rounded-2xl font-semibold transition-all duration-300 whitespace-nowrap;
-}
-
-.tab-button-active {
-  @apply bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg scale-105;
-}
-
-.tab-button-inactive {
-  @apply bg-white/80 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:scale-105;
-}
-
-/* Progress Bars */
-.progress-bar {
-  @apply w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3 overflow-hidden;
-}
-
-.progress-bar-fill {
-  @apply h-full rounded-full transition-all duration-500;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-}
-
-/* Badge Styles */
-.badge {
-  @apply inline-flex items-center gap-2 px-4 py-2 rounded-full font-semibold text-sm shadow-md;
-}
-
-.badge-primary {
-  @apply bg-gradient-to-r from-blue-500 to-indigo-600 text-white;
-}
-
-.badge-success {
-  @apply bg-gradient-to-r from-green-500 to-emerald-600 text-white;
-}
-
-.badge-warning {
-  @apply bg-gradient-to-r from-yellow-500 to-orange-600 text-white;
-}
-
-.badge-danger {
-  @apply bg-gradient-to-r from-red-500 to-pink-600 text-white;
-}
-
-/* Form Inputs */
-.form-input {
-  @apply w-full px-6 py-4 rounded-2xl border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-medium focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 placeholder:text-slate-400;
-}
-
-.form-label {
-  @apply block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2;
-}
-
-/* Floating Action Button */
-.fab {
-  @apply fixed bottom-8 right-8 w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-white text-2xl transition-all duration-300 hover:scale-110 z-50;
+/* =========================
+   Gradient Backgrounds
+   ========================= */
+.gradient-bg-blue {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-.fab:hover {
-  @apply shadow-3xl;
+.gradient-bg-green {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
 }
 
-/* Loading Spinner */
-.spinner {
-  @apply animate-spin rounded-full border-4 border-slate-200 border-t-blue-500;
+.gradient-bg-orange {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
 }
 
-/* Glassmorphism Background */
-.glass-bg {
-  @apply bg-white/30 dark:bg-slate-900/30 backdrop-blur-2xl;
+.gradient-bg-purple {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
 }
 
-/* Empty State */
-.empty-state {
-  @apply text-center py-16 px-6;
+/* =========================
+   Floating Orbs Animation
+   ========================= */
+.floating-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.5;
+  animation: float 20s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 0;
 }
 
-.empty-state-icon {
-  @apply text-6xl text-slate-300 dark:text-slate-600 mb-6;
-}
-
-.empty-state-title {
-  @apply text-2xl font-bold text-slate-700 dark:text-slate-300 mb-3;
-}
-
-.empty-state-text {
-  @apply text-lg text-slate-500 dark:text-slate-400 mb-8;
-}
-
-/* Course Card Improvements */
-.course-card {
-  @apply relative overflow-hidden rounded-3xl shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105;
-  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
-}
-
-.dark .course-card {
-  background: linear-gradient(135deg, rgba(30,41,59,0.95) 0%, rgba(15,23,42,0.9) 100%);
-}
-
-.course-card::before {
-  content: '';
-  @apply absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 transition-opacity duration-300;
-}
-
-.course-card:hover::before {
-  @apply opacity-100;
-}
-
-/* Shadow Utilities */
-.shadow-3xl {
-  box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
-}
-
-/* Animations */
 @keyframes float {
   0%, 100% {
-    transform: translateY(0px);
+    transform: translate(0, 0) scale(1);
   }
-  50% {
-    transform: translateY(-20px);
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
   }
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+.floating-orb-1 {
+  top: 10%;
+  left: 10%;
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  animation-delay: 0s;
 }
 
+.floating-orb-2 {
+  bottom: 20%;
+  right: 15%;
+  width: 250px;
+  height: 250px;
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  animation-delay: 5s;
+}
+
+.floating-orb-3 {
+  top: 60%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  animation-delay: 10s;
+}
+
+/* =========================
+   Enhanced Typography
+   ========================= */
+.text-gradient {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+
+.heading-glow {
+  text-shadow: 0 0 20px rgba(102, 126, 234, 0.5),
+               0 0 40px rgba(118, 75, 162, 0.3);
+}
+
+/* =========================
+   Pulse Glow Animation
+   ========================= */
 @keyframes pulse-glow {
   0%, 100% {
-    opacity: 0.5;
-    transform: scale(1);
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
   }
   50% {
+    box-shadow: 0 0 40px rgba(102, 126, 234, 0.8);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+/* =========================
+   Enhanced Form Inputs
+   ========================= */
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 2px solid #e2e8f0;
+  background: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.dark .form-input {
+  background: #1e293b;
+  border-color: #475569;
+  color: white;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 2px solid #e2e8f0;
+  background: white;
+  font-size: 1rem;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+.dark .form-textarea {
+  background: #1e293b;
+  border-color: #475569;
+  color: white;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* =========================
+   Enhanced Tabs
+   ========================= */
+.tab-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.tab-button:hover {
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.tab-button-active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* =========================
+   Shimmer Loading Effect
+   ========================= */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    rgba(255, 255, 255, 0) 100%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* =========================
+   Fade In Animation
+   ========================= */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
     opacity: 1;
-    transform: scale(1.05);
+    transform: translateY(0);
   }
 }
 
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
 }
 
-/* Gradient Text */
-.text-gradient-blue {
-  @apply bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent;
+/* =========================
+   Enhanced Badges
+   ========================= */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
-.text-gradient-green {
-  @apply bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent;
+.badge-premium {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
-.text-gradient-orange {
-  @apply bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 bg-clip-text text-transparent;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .heading-primary {
-    @apply text-4xl;
-  }
-  
-  .heading-secondary {
-    @apply text-2xl;
-  }
-  
-  .card-glass {
-    @apply rounded-2xl;
-  }
+.badge-free {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
 }
