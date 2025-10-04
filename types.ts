@@ -22,13 +22,14 @@ export interface User {
   badges: string[];
   role: 'student' | 'teacher';
   age?: string | number;
-  gradeLevel?: string;
+  gradeLevel?: string; // 'kindergarten' | 'primary' | 'secondary' | 'high-school'
   gender?: string;
   streak: number;
   pinnedCourses?: string[];
   title?: string; // For teachers, e.g., "English Teacher"
   subject?: string; // For teachers, e.g., "English, Literature"
   phone?: string;
+  profileCompleted?: boolean; // Flag to indicate if user completed initial profile setup
 }
 
 export interface Lesson {

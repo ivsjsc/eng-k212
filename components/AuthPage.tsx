@@ -493,43 +493,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
         }
     };
 
+    // Primary Google sign-in using popup (more reliable than redirect)
     const handleGoogleSignIn = async () => {
-        setIsLoading(true);
-        setError(null);
-        if (!auth || !db || !googleProvider) {
-            setError(t.authError);
-            setIsLoading(false);
-            return;
-        }
-
-        try {
-            // Save the selected role before redirecting
-            sessionStorage.setItem('authRole', selectedRole);
-            // Use redirect method to avoid referrer issues
-            console.info('Initiating Google redirect sign-in', { origin: currentOrigin, host: currentHost, role: selectedRole });
-            await signInWithRedirect(auth, googleProvider);
-            // In normal cases, the page will navigate away. If we reach here, something prevented the redirect.
-            console.warn('signInWithRedirect completed without navigation. This likely means the environment blocked navigation.');
-            setIsLoading(false);
-        } catch (err: any) {
-            const code = err?.code || 'unknown';
-            const raw = (err?.message || String(err)).replace('Firebase: ', '');
-            console.error('Google redirect sign-in error', { code, raw, err });
-
-            // Map a couple of known conditions to friendlier messages
-            if (code === 'auth/unauthorized-domain' || raw.includes('requests-from-referrer')) {
-                setError('Domain not authorized. Please add this domain to Firebase Authorized domains and update OAuth client origins.');
-            } else if (code === 'auth/operation-not-supported-in-this-environment' || /disallowed_useragent/i.test(raw)) {
-                setError('Google blocked the sign-in because the browser appears to be an unsupported embedded webview. Try using Chrome or open the app in your system browser.');
-            } else {
-                setError(raw);
-            }
-            setIsLoading(false);
-        }
-    };
-
-    // Debug helper: try popup sign-in (useful to distinguish redirect vs OAuth config issues)
-    const handleGooglePopupSignIn = async () => {
         setIsLoading(true);
         setError(null);
         try {
@@ -539,17 +504,16 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                 return;
             }
 
-            // Save selected role so App can pick it up after auth
             sessionStorage.setItem('authRole', selectedRole);
+            console.info('Google popup sign-in', { origin: currentOrigin, host: currentHost, role: selectedRole });
 
             const result = await signInWithPopup(auth, googleProvider as any);
-            // result.user should be available on success
             const u = result?.user;
             if (u) {
                 setSuccessMessage(`${t.loginSuccess} (${u.email || u.uid})`);
-                console.info('Popup sign-in result:', result);
+                console.info('Sign-in success:', result);
 
-                // Ensure Firestore has a user document so the app doesn't redirect back to role selection
+                // Ensure Firestore user document exists
                 try {
                     const userDocRef = doc(db, 'users', u.uid);
                     const userDoc = await getDoc(userDocRef);
@@ -567,26 +531,24 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                         sessionStorage.removeItem('authRole');
                     }
                 } catch (e) {
-                    console.warn('Failed to ensure user doc after popup sign-in', e);
+                    console.warn('Failed to ensure user doc', e);
                 }
 
-                // Explicitly navigate to root so the main app loads and onAuthStateChanged can populate user/classes.
-                // This avoids staying on the login screen when popup sign-in succeeds but the app's auth listener hasn't reconciled yet.
                 window.location.href = '/';
                 return;
             } else {
-                setError('Popup sign-in returned no user object.');
-                console.warn('Popup sign-in result missing user:', result);
+                setError('Sign-in failed.');
+                console.warn('No user returned');
             }
         } catch (err: any) {
             const code = err?.code || 'unknown';
             const raw = (err?.message || String(err)).replace('Firebase: ', '');
-            console.error('Popup sign-in error', { code, raw, err });
+            console.error('Google sign-in error', { code, raw, err });
 
-            if (code === 'auth/operation-not-supported-in-this-environment' || /disallowed_useragent/i.test(raw)) {
-                setError('Popup sign-in blocked: the browser or webview is not supported by Google OAuth (disallowed_useragent). Please open the site in Chrome or a regular browser and try again.');
+            if (code === 'auth/popup-closed-by-user') {
+                setError(language === 'vi' ? 'Đã đóng cửa sổ đăng nhập.' : 'Popup closed.');
             } else if (code === 'auth/unauthorized-domain' || raw.includes('requests-from-referrer')) {
-                setError('Domain not authorized. Please add this domain to Firebase Authorized domains and update OAuth client origins.');
+                setError(language === 'vi' ? 'Domain chưa được ủy quyền.' : 'Domain not authorized.');
             } else {
                 setError(raw);
             }
@@ -595,21 +557,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
         }
     };
 
-    // Helper to copy useful debug info to clipboard
-    const copyDebugInfo = async () => {
-        try {
-            const debug = {
-                __DEBUG_AUTH__: (window as any).__DEBUG_AUTH__ || null,
-                origin: currentOrigin,
-                host: currentHost,
-                sessionAuthRole: sessionStorage.getItem('authRole')
-            };
-            await navigator.clipboard.writeText(JSON.stringify(debug, null, 2));
-            setSuccessMessage('Copied debug info to clipboard');
-        } catch (e) {
-            setError('Unable to copy debug info');
-        }
-    };
+
 
     const renderEmailForm = () => (
         <form onSubmit={handleEmailAuth} className="space-y-4">
@@ -783,26 +731,14 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                                 </div>
 
                                 <div className="flex flex-col gap-3">
-                                    <div className="flex flex-col sm:flex-row gap-3">
-                                        <button
-                                            onClick={handleGoogleSignIn}
-                                            className="flex items-center justify-center gap-3 rounded-2xl border border-slate-200/70 bg-white/70 py-3 text-slate-700 transition hover:-translate-y-[1px] hover:border-sky-400/60 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100"
-                                            disabled={isLoading}
-                                        >
-                                            <img src="/google-icon.svg" alt="Google" className="h-5 w-5" />
-                                            <span>{t.googleBtn}</span>
-                                        </button>
-
-                                        <button
-                                            onClick={handleGooglePopupSignIn}
-                                            className="flex items-center justify-center gap-3 rounded-2xl border border-slate-200/40 bg-slate-50/90 py-3 text-slate-700 transition hover:-translate-y-[1px] hover:border-sky-400/40 hover:bg-white/80 dark:bg-slate-800/70 dark:text-slate-100"
-                                            disabled={isLoading}
-                                            title="Debug: try popup sign-in (useful for diagnosing redirect/OAuth issues)"
-                                        >
-                                            <img src="/google-icon.svg" alt="Google popup" className="h-4 w-4" />
-                                            <span className="text-sm">Popup (debug)</span>
-                                        </button>
-                                    </div>
+                                    <button
+                                        onClick={handleGoogleSignIn}
+                                        className="flex items-center justify-center gap-3 rounded-2xl border border-slate-200/70 bg-white/70 py-3 text-slate-700 transition hover:-translate-y-[1px] hover:border-sky-400/60 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100"
+                                        disabled={isLoading}
+                                    >
+                                        <img src="/google-icon.svg" alt="Google" className="h-5 w-5" />
+                                        <span>{t.googleBtn}</span>
+                                    </button>
 
                                     {authMethod === 'email' ? (
                                         <button
@@ -823,24 +759,6 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                                             {t.emailBtn}
                                         </button>
                                     )}
-
-                                    <div className="flex items-center gap-3">
-                                        <button
-                                            onClick={() => setAuthModalOpen(true)}
-                                            className="flex-1 flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 py-3 font-semibold text-white shadow-[0_15px_30px_-15px_rgba(251,191,36,0.8)] transition hover:shadow-[0_20px_40px_-20px_rgba(249,115,22,0.9)]"
-                                        >
-                                            <i className="fa-solid fa-user-circle"></i>
-                                            {t.quickLogin}
-                                        </button>
-
-                                        <button
-                                            onClick={copyDebugInfo}
-                                            className="px-3 py-2 rounded-lg border border-slate-200/60 bg-white/80 text-sm text-slate-700 hover:bg-white/90 dark:bg-slate-800/70 dark:text-slate-100"
-                                            title="Copy debug info to clipboard"
-                                        >
-                                            Copy debug info
-                                        </button>
-                                    </div>
                                 </div>
 
                                 <p className="text-center text-sm text-slate-500 dark:text-slate-400">

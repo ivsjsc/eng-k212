@@ -1,32 +1,72 @@
 import React from 'react';
 import { curriculumData } from '../data/curriculum';
-import type { Curriculum } from '../types';
+import type { Curriculum, User } from '../types';
 
 interface CurriculumProps {
   language: 'en' | 'vi';
-  onExplore: () => void;
+  user: User;
+  onSelectCategory: (categoryIndex: number) => void;
 }
 
-const Curriculum: React.FC<CurriculumProps> = ({ language, onExplore }) => {
+const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCategory }) => {
   const data: Curriculum = curriculumData;
+
+  // Filter curriculum based on user's gradeLevel
+  const getFilteredCurriculum = () => {
+    if (!user.gradeLevel) return data; // Show all if no gradeLevel set
+    
+    const gradeMap: Record<string, string[]> = {
+      'kindergarten': ['Kindergarten', 'Mầm non'],
+      'primary': ['Primary', 'Tiểu học', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5'],
+      'secondary': ['Secondary', 'THCS', 'Grade 6', 'Grade 7', 'Grade 8', 'Grade 9'],
+      'high-school': ['High School', 'THPT', 'Grade 10', 'Grade 11', 'Grade 12'],
+    };
+
+    const keywords = gradeMap[user.gradeLevel] || [];
+    return data.filter(cat => 
+      keywords.some(kw => cat.category.en.includes(kw) || cat.category.vi.includes(kw))
+    );
+  };
+
+  const filteredData = getFilteredCurriculum();
 
   return (
     <div className="p-8 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">{language === 'vi' ? 'Khám phá chương trình' : 'Explore the curriculum'}</h1>
-      <p className="text-slate-400 mb-6">{language === 'vi' ? 'Chọn một chương trình để bắt đầu học hoặc xem chi tiết từng cấp.' : 'Choose a program to begin or view details for each level.'}</p>
+      <h1 className="text-3xl font-bold mb-4 text-white">{language === 'vi' ? 'Chương trình học' : 'Learning Programs'}</h1>
+      <p className="text-slate-300 mb-6">{language === 'vi' ? 'Chọn một chương trình để bắt đầu học.' : 'Choose a program to begin.'}</p>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {data.slice(0, 9).map((cat, idx) => (
-          <div key={idx} className="p-4 rounded-2xl bg-white/5 border border-white/8 hover:scale-[1.01] transition">
-            <h3 className="font-semibold text-lg text-white">{cat.category[language]}</h3>
-            <p className="text-sm text-slate-300 mt-2">{cat.levels?.[0]?.subtitle?.[language] || ''}</p>
-            <div className="mt-4 flex items-center gap-2">
-              <button onClick={onExplore} className="btn bg-sky-500 text-white py-2 px-3 rounded">{language === 'vi' ? 'Bắt đầu tại đây' : 'Start here'}</button>
-              <span className="text-xs text-slate-400">{language === 'vi' ? 'Xem toàn bộ chương trình' : 'Browse full program'}</span>
+        {filteredData.map((cat, idx) => {
+          const colorClasses = [
+            'from-sky-500/20 to-blue-600/20 border-sky-400/30',
+            'from-emerald-500/20 to-green-600/20 border-emerald-400/30',
+            'from-purple-500/20 to-pink-600/20 border-purple-400/30',
+            'from-amber-500/20 to-orange-600/20 border-amber-400/30',
+            'from-indigo-500/20 to-violet-600/20 border-indigo-400/30',
+          ];
+          const colorClass = colorClasses[idx % colorClasses.length];
+
+          return (
+            <div
+              key={idx}
+              className={`p-6 rounded-2xl bg-gradient-to-br ${colorClass} border backdrop-blur hover:scale-[1.02] transition cursor-pointer`}
+              onClick={() => onSelectCategory(idx)}
+            >
+              <h3 className="font-bold text-xl text-white mb-2">{cat.category[language]}</h3>
+              <p className="text-sm text-slate-200 mb-4">{cat.levels?.[0]?.subtitle?.[language] || ''}</p>
+              <button className="btn bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-lg text-sm font-semibold">
+                {language === 'vi' ? 'Bắt đầu học' : 'Start learning'}
+              </button>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+
+      {filteredData.length === 0 && (
+        <div className="text-center text-slate-400 mt-12">
+          <p>{language === 'vi' ? 'Không tìm thấy chương trình phù hợp. Vui lòng cập nhật thông tin cá nhân.' : 'No programs found. Please update your profile.'}</p>
+        </div>
+      )}
     </div>
   );
 };
