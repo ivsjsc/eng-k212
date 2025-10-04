@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { View, User, Course, Classes } from './types';
 import { MOCK_CLASSES, MOCK_USER } from './constants';
-import { auth, db, ... } from './services/firebase'
+import { auth, db } from './services/firebase'
 import { logger } from './utils/logger';
 
 // Lazy load heavy components
