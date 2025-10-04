@@ -68,72 +68,92 @@ const Sidebar: React.FC<SidebarProps> = ({ user, currentView, setView, language,
   const navItems = user.role === 'teacher' ? teacherNavItems : studentNavItems;
   const adminNavItem = { view: 'admin' as View, icon: 'fa-shield-halved', label: 'admin' as keyof typeof t.en };
 
-  const NavLink: React.FC<{ item: { view: View; icon: string; label: keyof typeof t.en } }> = ({ item }) => (
-    <li>
-      <button
-        onClick={() => setView(item.view)}
-        className={`flex items-center w-full px-4 py-3 rounded-lg transition-colors duration-200 ${
-          currentView === item.view
-            ? 'bg-blue-500 text-white font-semibold'
-            : 'text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
-        }`}
-      >
-        <i className={`fa-solid ${item.icon} w-6 text-center text-lg`}></i>
-        <span className="ml-4">{t[language][item.label]}</span>
-      </button>
-    </li>
-  );
+  const NavLink: React.FC<{ item: { view: View; icon: string; label: keyof typeof t.en } }> = ({ item }) => {
+    const isActive = currentView === item.view;
+    return (
+      <li>
+        <button
+          onClick={() => setView(item.view)}
+          className={`group flex w-full items-center gap-4 rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
+            isActive
+              ? 'bg-gradient-to-r from-sky-500 to-indigo-600 text-white shadow-lg shadow-sky-500/30'
+              : 'text-slate-300 hover:text-white hover:bg-white/10'
+          }`}
+        >
+          <span
+            className={`flex h-9 w-9 items-center justify-center rounded-xl border text-base transition ${
+              isActive
+                ? 'border-white/40 bg-white/20 text-white'
+                : 'border-white/10 bg-white/5 text-slate-200 group-hover:border-white/30 group-hover:bg-white/10'
+            }`}
+          >
+            <i className={`fa-solid ${item.icon}`}></i>
+          </span>
+          <span className="truncate">{t[language][item.label]}</span>
+        </button>
+      </li>
+    );
+  };
 
   return (
     <>
       {/* Backdrop (mobile) */}
       <div
-        className={`fixed inset-0 bg-black bg-opacity-50 z-30 transition-opacity md:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-30 bg-slate-900/80 backdrop-blur-sm transition-opacity md:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         onClick={onClose}
       ></div>
       
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 z-40 transform transition-transform md:relative md:translate-x-0 ${
+        className={`fixed top-0 left-0 z-40 flex h-full w-72 flex-col border-r border-white/10 bg-white/80 backdrop-blur-xl transition-transform duration-300 dark:border-slate-800/60 dark:bg-slate-900/70 md:relative md:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-        } flex flex-col`}
+        }`}
       >
-        <div className="p-4 border-b border-slate-200 dark:border-slate-700 h-[var(--header-height)] flex items-center">
-          <i className="fa-solid fa-graduation-cap text-3xl text-blue-500"></i>
-          <h1 className="text-xl font-bold ml-3">IVS English</h1>
+        <div className="h-[var(--header-height)] border-b border-white/10 px-6 py-4">
+          <div className="flex items-center gap-3">
+            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-500 to-indigo-600 text-white shadow-lg">
+              <i className="fa-solid fa-graduation-cap text-xl"></i>
+            </span>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-400">IVS</p>
+              <h1 className="text-xl font-bold text-white">English</h1>
+            </div>
+          </div>
         </div>
         
-        <div className="p-4 border-b border-slate-200 dark:border-slate-700">
-          <div className="flex items-center">
-            <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
-              <i className={`fa-solid ${user.avatar} text-2xl text-blue-500`}></i>
-            </div>
-            <div className="ml-3">
-              <p className="font-semibold text-slate-800 dark:text-slate-200">{user.name}</p>
-              <p className="text-sm text-slate-500 capitalize">{user.role}</p>
+        <div className="border-b border-white/10 px-6 py-5">
+          <div className="flex items-center gap-3 rounded-2xl bg-white/5 p-4 text-sm text-white shadow-inner shadow-white/10">
+            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500/30 text-white">
+              <i className={`fa-solid ${user.avatar} text-2xl`}></i>
+            </span>
+            <div className="truncate">
+              <p className="text-base font-semibold leading-tight text-white">{user.name}</p>
+              <p className="text-xs uppercase tracking-[0.25em] text-slate-300">{user.role}</p>
             </div>
           </div>
         </div>
 
-        <nav className="flex-1 p-4 overflow-y-auto">
+        <nav className="flex-1 overflow-y-auto px-4 py-5">
           <ul className="space-y-2">
             {navItems.map(item => <NavLink key={item.view} item={item} />)}
-            <hr className="my-4 border-slate-200 dark:border-slate-700" />
+            <hr className="my-4 border-white/10" />
             {commonNavItems.map(item => <NavLink key={item.view} item={item} />)}
             {isAdmin ? <NavLink key={adminNavItem.view} item={adminNavItem} /> : null}
           </ul>
         </nav>
         
-        <div className="p-4 border-t border-slate-200 dark:border-slate-700">
+        <div className="border-t border-white/10 px-4 py-5">
           <ul className="space-y-2">
             {bottomNavItems.map(item => <NavLink key={item.view} item={item} />)}
             <li>
               <button
                 onClick={onLogout}
-                className="flex items-center w-full px-4 py-3 rounded-lg transition-colors duration-200 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+                className="group flex w-full items-center gap-4 rounded-2xl px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-rose-500/10 hover:text-white"
               >
-                <i className="fa-solid fa-right-from-bracket w-6 text-center text-lg"></i>
-                <span className="ml-4">{t[language].logout}</span>
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-rose-500/30 bg-rose-500/20 text-rose-200 transition group-hover:border-rose-400 group-hover:bg-rose-500/40 group-hover:text-white">
+                  <i className="fa-solid fa-right-from-bracket"></i>
+                </span>
+                <span className="truncate">{t[language].logout}</span>
               </button>
             </li>
           </ul>

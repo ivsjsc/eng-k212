@@ -327,37 +327,56 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <div className="flex h-screen bg-slate-100 dark:bg-slate-900 font-sans text-slate-800 dark:text-slate-200">
-        <Suspense fallback={<LoadingFallback />}>
-          <ErrorBoundary>
-            <Sidebar
-              user={user}
-              currentView={currentView}
-              setView={handleSetView}
-              language={language}
-              isOpen={isSidebarOpen}
-              onClose={() => setIsSidebarOpen(false)}
-              onLogout={handleLogout}
-              isAdmin={isAdmin}
-            />
-          </ErrorBoundary>
-        </Suspense>
-        <div className="flex-1 flex flex-col h-screen">
+      <div className="relative h-screen overflow-hidden bg-slate-950 font-sans text-slate-100">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-950/80 to-black" />
+          <div className="pointer-events-none absolute -top-24 -left-32 h-[520px] w-[520px] rounded-full bg-sky-500/25 blur-3xl" />
+          <div className="pointer-events-none absolute bottom-0 right-[-160px] h-[560px] w-[560px] rounded-full bg-indigo-500/20 blur-3xl" />
+          <div className="pointer-events-none absolute inset-x-0 top-1/3 h-96 bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.12),transparent_55%)]" />
+        </div>
+
+        <div className="relative z-10 flex h-full w-full">
           <Suspense fallback={<LoadingFallback />}>
             <ErrorBoundary>
-              <Header currentView={currentView} language={language} onMenuClick={() => setIsSidebarOpen(true)} />
+              <Sidebar
+                user={user}
+                currentView={currentView}
+                setView={handleSetView}
+                language={language}
+                isOpen={isSidebarOpen}
+                onClose={() => setIsSidebarOpen(false)}
+                onLogout={handleLogout}
+                isAdmin={isAdmin}
+              />
             </ErrorBoundary>
           </Suspense>
-          <main className="flex-1 overflow-y-auto custom-scrollbar relative">
-            <Suspense fallback={<LoadingFallback />}>
-              <ErrorBoundary>{renderView()}</ErrorBoundary>
-            </Suspense>
+
+          <div className="flex min-w-0 flex-1 flex-col">
             <Suspense fallback={<LoadingFallback />}>
               <ErrorBoundary>
-                <AssistiveTouch setView={handleSetView} language={language} />
+                <Header currentView={currentView} language={language} onMenuClick={() => setIsSidebarOpen(true)} />
               </ErrorBoundary>
             </Suspense>
-          </main>
+
+            <main className="relative flex-1 overflow-y-auto custom-scrollbar px-4 py-6 sm:px-6 lg:px-10">
+              <div className="pointer-events-none absolute inset-x-12 top-6 h-48 rounded-full bg-sky-500/15 blur-3xl" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-slate-950 via-slate-950/10 to-transparent" />
+
+              <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-6 pb-12">
+                <Suspense fallback={<LoadingFallback />}>
+                  <ErrorBoundary>{renderView()}</ErrorBoundary>
+                </Suspense>
+              </div>
+
+              <div className="relative z-20">
+                <Suspense fallback={<LoadingFallback />}>
+                  <ErrorBoundary>
+                    <AssistiveTouch setView={handleSetView} language={language} />
+                  </ErrorBoundary>
+                </Suspense>
+              </div>
+            </main>
+          </div>
         </div>
       </div>
     </ErrorBoundary>
