@@ -12,8 +12,8 @@ const Home = lazy(() => import('./components/Home'));
 const Dashboard = lazy(() => import('./components/Dashboard'));
 const CourseDetail = lazy(() => import('./components/CourseDetail'));
 const TeacherDashboard = lazy(() => import('./components/TeacherDashboard'));
-const ClassAnalyticsDashboard = lazy(() => import('./components/ClassAnalyticsDashboard')); // (mới)
-const AIContentGenerator = lazy(() => import('./components/AIContentGenerator'));          // (giữ từ main)
+const ClassAnalyticsDashboard = lazy(() => import('./components/ClassAnalyticsDashboard'));
+const AIContentGenerator = lazy(() => import('./components/AIContentGenerator'));
 const WritingGrader = lazy(() => import('./components/WritingGrader'));
 const SpeakingPartner = lazy(() => import('./components/SpeakingPartner'));
 const Settings = lazy(() => import('./components/Settings'));

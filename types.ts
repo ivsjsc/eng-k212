@@ -1,6 +1,16 @@
 // types.ts
 
-export type View = 'home' | 'curriculum' | 'teacher-dashboard' | 'writing-grader' | 'speaking-partner' | 'settings' | 'user-guide' | 'admin' | 'ai-content-generator';
+export type View =
+  | 'home'
+  | 'curriculum'
+  | 'teacher-dashboard'
+  | 'teacher-analytics'
+  | 'ai-content-generator'
+  | 'writing-grader'
+  | 'speaking-partner'
+  | 'settings'
+  | 'user-guide'
+  | 'admin';
 
 export interface User {
   id: string;
@@ -198,8 +208,23 @@ export interface OtherProgram {
 export interface Assignment {
     id: string;
     title: string;
+    description?: string;
     dueDate: string;
+    assignedDate: string;
     status: 'Completed' | 'Pending' | 'Overdue';
+    assignedTo: string[]; // Student IDs
+    submissions?: AssignmentSubmission[];
+    attachments?: string[];
+    classId: string;
+}
+
+export interface AssignmentSubmission {
+    studentId: string;
+    submittedDate?: string;
+    content?: string;
+    attachments?: string[];
+    grade?: number;
+    feedback?: string;
 }
 
 export interface Grade {
@@ -225,6 +250,12 @@ export interface Student {
     notes?: string;
     dob?: string; // Date of Birth
     gender?: string;
+    email?: string;
+    phone?: string;
+    parentEmail?: string;
+    parentPhone?: string;
+    attendance?: AttendanceRecord[];
+    skillLevel?: string;
 }
 
 export interface ClassScheduleItem {
@@ -239,18 +270,104 @@ export interface ClassData {
     name: string;
     students: Student[];
     schedule?: ClassScheduleItem[];
+    curriculum?: string; // Curriculum ID
+    assignments?: Assignment[];
+    announcements?: Announcement[];
+    resources?: ResourceItem[];
+    teacherId: string;
+    school?: string;
 }
 
 export type Classes = Record<string, ClassData>;
-// types.ts (chỉ trích đoạn cần đảm bảo)
-export type View =
-  | 'home'
-  | 'curriculum'
-  | 'teacher-dashboard'
-  | 'teacher-analytics'
-  | 'ai-content-generator'
-  | 'writing-grader'
-  | 'speaking-partner'
-  | 'settings'
-  | 'user-guide'
-  | 'admin';
+
+// Attendance Management
+export interface AttendanceRecord {
+  id: string;
+  date: string;
+  status: 'Present' | 'Absent' | 'Late' | 'Excused';
+  notes?: string;
+}
+
+// Communication & Announcements
+export interface Announcement {
+  id: string;
+  title: string;
+  content: string;
+  date: string;
+  author: string;
+  priority: 'Low' | 'Medium' | 'High';
+  targetAudience: 'Students' | 'Parents' | 'Both';
+}
+
+export interface Message {
+  id: string;
+  senderId: string;
+  receiverId: string;
+  content: string;
+  timestamp: string;
+  read: boolean;
+  attachments?: string[];
+}
+
+// Resource Management
+export interface ResourceItem {
+  id: string;
+  title: string;
+  description?: string;
+  type: 'Document' | 'Video' | 'Audio' | 'Image' | 'Link' | 'Other';
+  url: string;
+  uploadDate: string;
+  uploadedBy: string;
+  tags?: string[];
+  shared: boolean;
+}
+
+// Curriculum Templates
+export interface LessonPlan {
+  id: string;
+  title: string;
+  objectives: string[];
+  duration: number; // in minutes
+  materials: string[];
+  activities: string[];
+  assessment: string;
+  resources: string[];
+  order: number;
+}
+
+export interface CurriculumTemplate {
+  id: string;
+  name: string;
+  level: string;
+  description: string;
+  lessons: LessonPlan[];
+  createdBy: string;
+  createdDate: string;
+  isPublic: boolean;
+}
+
+// Analytics & Reporting
+export interface ClassAnalytics {
+  classId: string;
+  averageGrade: number;
+  attendanceRate: number;
+  assignmentCompletionRate: number;
+  engagementScore: number;
+  performanceTrend: 'Improving' | 'Stable' | 'Declining';
+  lastUpdated: string;
+}
+
+export interface StudentAnalytics {
+  studentId: string;
+  classId: string;
+  gradeAverage: number;
+  attendanceRate: number;
+  assignmentCompletionRate: number;
+  participationScore: number;
+  timeOnTask: number; // in minutes
+  strengths: string[];
+  weaknesses: string[];
+  lastUpdated: string;
+}
+
+// (View is declared at top of the file)
