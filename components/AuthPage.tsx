@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
     auth, 
     db, 
@@ -47,14 +47,25 @@ const ResetPasswordDialog: React.FC<ResetPasswordDialogProps> = ({
     const [email, setEmail] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState<string | null>(null);
+    const closeTimerRef = useRef<number | null>(null);
 
     useEffect(() => {
         if (!open) {
             setEmail('');
             setError(null);
             setSuccess(null);
+            if (closeTimerRef.current) {
+                window.clearTimeout(closeTimerRef.current);
+                closeTimerRef.current = null;
+            }
         }
     }, [open]);
+
+    useEffect(() => () => {
+        if (closeTimerRef.current) {
+            window.clearTimeout(closeTimerRef.current);
+        }
+    }, []);
 
     if (!open) return null;
 
@@ -68,7 +79,10 @@ const ResetPasswordDialog: React.FC<ResetPasswordDialogProps> = ({
         try {
             await onSubmit(email);
             setSuccess(translations.success);
-            setTimeout(() => {
+            if (closeTimerRef.current) {
+                window.clearTimeout(closeTimerRef.current);
+            }
+            closeTimerRef.current = window.setTimeout(() => {
                 onClose();
             }, 2400);
         } catch (err: any) {
