@@ -17,6 +17,8 @@ const ClassAnalyticsDashboard = lazy(() => import('./components/ClassAnalyticsDa
 const AIContentGenerator = lazy(() => import('./components/AIContentGenerator'));
 const WritingGrader = lazy(() => import('./components/WritingGrader'));
 const SpeakingPartner = lazy(() => import('./components/SpeakingPartner'));
+const AITutorChat = lazy(() => import('./components/AITutorChat'));
+const PersonalizedLearningPath = lazy(() => import('./components/PersonalizedLearningPath'));
 const Settings = lazy(() => import('./components/Settings'));
 const UserGuide = lazy(() => import('./components/UserGuide'));
 const AssistiveTouch = lazy(() => import('./components/AssistiveTouch'));
@@ -340,6 +342,10 @@ function App() {
         return <WritingGrader language={language} setView={handleSetView} />;
       case 'speaking-partner':
         return <SpeakingPartner language={language} setView={handleSetView} />;
+      case 'ai-tutor':
+        return <AITutorChat user={user!} language={language} />;
+      case 'learning-path':
+        return <PersonalizedLearningPath user={user!} language={language} />;
       case 'settings':
         return (
           <Settings
