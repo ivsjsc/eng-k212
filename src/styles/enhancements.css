@@ -42,7 +42,9 @@
 /* Card enhancements */
 .card {
   @apply transition-all duration-300 ease-out;
-  @apply hover:shadow-xl hover:-translate-y-1;
+  /* stronger lift on hover for better affordance */
+  @apply hover:shadow-2xl;
+  will-change: transform, box-shadow;
 }
 
 /* Modal backdrop blur effect */
@@ -165,6 +167,28 @@
 }
 
 .interactive-glow {
+  position: relative; /* allow pseudo-element glow */
   @apply transition-shadow duration-200;
-  @apply hover:shadow-lg hover:shadow-sky-200/50;
+}
+
+.interactive-glow:hover {
+  /* layered colored glow + depth */
+  box-shadow: 0 14px 40px rgba(56,189,248,0.14), 0 6px 18px rgba(99,102,241,0.08), 0 2px 6px rgba(2,6,23,0.12);
+}
+
+.interactive-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: 0 30px 80px rgba(56,189,248,0.08);
+  opacity: 0;
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+  transform: translateY(6px) scale(0.98);
+}
+
+.interactive-glow:hover::after {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }

@@ -639,11 +639,11 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                             </div>
                             <div className="space-y-8 px-6 py-10 sm:px-10">
                                 <div className="space-y-4 text-center">
-                                    <img
-                                        src="https://ivs.edu.vn/wp-content/uploads/2023/11/logo-ivs-no-bg-e1700125959147.png"
-                                        alt="IVS English Logo"
-                                        className="mx-auto h-16 w-auto"
-                                    />
+                                                    <img
+                                                        src="/images/banner/ivsenglish-banner.jpg"
+                                                        alt="IVS English Banner"
+                                                        className="mx-auto h-20 w-auto object-cover rounded-md"
+                                                    />
                                     <div className="space-y-2">
                                         <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
                                             {isLoginView ? t.loginTitle : t.signupTitle}
