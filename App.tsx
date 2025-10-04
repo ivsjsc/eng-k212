@@ -1,7 +1,8 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { View, User, Course, Classes } from './types';
 import { MOCK_CLASSES, MOCK_USER } from './constants';
-import { auth, db, ... } from './services/firebase'
+import { auth, db, firebaseInitError, onAuthStateChanged, signOut, doc, getDoc, setDoc, updateDoc } from './services/firebase';
+import { getRedirectResult } from 'firebase/auth';
 import { logger } from './utils/logger';
 
 // Lazy load heavy components
@@ -276,7 +277,7 @@ function App() {
     }
   };
 
-  if (firebaseError) {
+  if (firebaseInitError) {
     return (
       <div className="h-screen flex items-center justify-center p-4 bg-red-50 dark:bg-red-900/50">
         <div className="card-glass text-center p-8 max-w-lg border-2 border-red-200 dark:border-red-800">
@@ -287,7 +288,7 @@ function App() {
           </p>
           <div className="mt-4 p-3 bg-red-100 dark:bg-red-800/50 rounded-md text-xs text-red-900 dark:text-red-200 text-left font-mono">
             <strong>Error Details:</strong>
-            <p>{firebaseError}</p>
+            <p>{firebaseInitError}</p>
           </div>
         </div>
       </div>

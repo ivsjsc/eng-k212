@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type { ClassData } from '../../types';
 import { fetchClassAnalyticsDemo } from '../../data/demo-analytics';
 
-export function useClassAnalytics(classId?: string) {
+export function useClassAnalytics(classId?: string, refreshToken = 0) {
   const [data, setData] = useState<ClassData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +20,7 @@ export function useClassAnalytics(classId?: string) {
     } finally {
       setLoading(false);
     }
-  }, [classId]);
+  }, [classId, refreshToken]);
 
   return { data, loading, error } as const;
 }
