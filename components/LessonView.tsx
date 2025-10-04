@@ -435,7 +435,12 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFr
               <i className="fa-solid fa-times"></i>
             </button>
             <div className="p-6">
-              <LessonQuickQuiz language={language} isFreeTier={isFreeTier} lessonTitle={lesson.title} />
+              <LessonQuickQuiz 
+                language={language} 
+                isFreeTier={isFreeTier} 
+                lessonTitle={lesson.title}
+                grade={lesson.grade}
+              />
             </div>
           </div>
         </div>

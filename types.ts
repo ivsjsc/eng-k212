@@ -45,6 +45,7 @@ export interface Lesson {
   type: 'ebook' | 'video' | 'quiz';
   content: string;
   rawLesson: CurriculumLesson;
+  grade?: 'elementary' | 'middleSchool' | 'highSchool'; // For grade-specific content
 }
 
 export interface Course {

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { User } from '../types';
+import { chatWithOpenAI, isOpenAIConfigured, buildConversationHistory } from '../services/openaiService';
 
 interface Message {
   id: string;
@@ -17,7 +18,13 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [useRealAI, setUseRealAI] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Check if OpenAI is configured on mount
+  useEffect(() => {
+    setUseRealAI(isOpenAIConfigured());
+  }, []);
 
   const t = {
     en: {
@@ -268,12 +275,25 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const userInput = input;
     setInput('');
     setIsLoading(true);
 
-    // Simulate AI thinking time
-    setTimeout(() => {
-      const response = getSmartResponse(input);
+    try {
+      let response: string;
+
+      if (useRealAI) {
+        // Use OpenAI for real intelligent responses
+        const history = buildConversationHistory(
+          messages.map(m => ({ role: m.role, content: m.content }))
+        );
+        response = await chatWithOpenAI(userInput, language, history);
+      } else {
+        // Fallback to demo responses
+        await new Promise(resolve => setTimeout(resolve, 800));
+        response = getSmartResponse(userInput);
+      }
+
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
@@ -282,8 +302,20 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
       };
 
       setMessages(prev => [...prev, assistantMessage]);
+    } catch (error) {
+      console.error('Error getting AI response:', error);
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: language === 'en' 
+          ? '❌ Sorry, I encountered an error. Please try again or contact support if the issue persists.'
+          : '❌ Xin lỗi, đã xảy ra lỗi. Vui lòng thử lại hoặc liên hệ hỗ trợ nếu vấn đề vẫn tiếp diễn.',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsLoading(false);
-    }, 800);
+    }
   };
 
   const handleSampleClick = (sample: string) => {
@@ -303,7 +335,14 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 {t[language].title}
               </h1>
-              <p className="text-sm text-slate-600 dark:text-slate-400">{t[language].subtitle}</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                {t[language].subtitle}
+                {useRealAI && (
+                  <span className="ml-2 px-2 py-0.5 text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full">
+                    ✨ AI Powered
+                  </span>
+                )}
+              </p>
             </div>
           </div>
           <span className="badge-free px-4 py-2 text-sm font-bold">

@@ -6,15 +6,19 @@ interface Props {
   language: 'en' | 'vi';
   isFreeTier: boolean;
   lessonTitle: string;
+  grade?: 'elementary' | 'middleSchool' | 'highSchool'; // Optional grade for specific quiz
 }
 
-const LessonQuickQuiz: React.FC<Props> = ({ language, isFreeTier, lessonTitle }) => {
+const LessonQuickQuiz: React.FC<Props> = ({ language, isFreeTier, lessonTitle, grade }) => {
   const [showPricingModal, setShowPricingModal] = useState(false);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
   const [showExplanations, setShowExplanations] = useState<Record<number, boolean>>({});
   const [quizCompleted, setQuizCompleted] = useState(false);
 
-  const demo = lessonPremiumDemos[language].quickQuiz;
+  // Select quiz based on grade if provided, otherwise use default
+  const demo = grade && lessonPremiumDemos.gradeSpecificQuizzes[grade]?.[language]
+    ? lessonPremiumDemos.gradeSpecificQuizzes[grade][language]
+    : lessonPremiumDemos[language].quickQuiz;
 
   const handleAnswerSelect = (questionIndex: number, optionIndex: number) => {
     if (isFreeTier) {
