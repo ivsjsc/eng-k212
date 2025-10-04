@@ -10,6 +10,7 @@ export type View =
   | 'speaking-partner'
   | 'ai-tutor'
   | 'learning-path'
+  | 'ivs-assistant'
   | 'settings'
   | 'user-guide'
   | 'admin';
