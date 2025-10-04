@@ -62,7 +62,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
     buttonColor: string;
   }) => (
     <div
-      className={`w-full max-w-sm text-center p-8 transition-all duration-300 flex flex-col border-t-4 ${color} rounded-2xl shadow-lg`
+      className={`w-full max-w-sm text-center p-6 sm:p-8 transition-all duration-300 flex flex-col border-t-4 ${color} rounded-2xl shadow-lg card interactive-scale interactive-glow`
       }
       style={{
         background: 'linear-gradient(180deg, rgba(15,23,42,0.88), rgba(2,6,23,0.95))',
@@ -91,13 +91,13 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
       <div className="space-y-3">
         <button
           onClick={() => onGuestLogin(role)}
-          className="btn bg-slate-700/80 text-slate-100 hover:bg-slate-700 w-full"
+          className="btn bg-slate-700/80 text-slate-100 hover:bg-slate-700 w-full py-3 sm:py-2"
         >
           {t.guest}
         </button>
         <button
           onClick={() => onSelectRole(role)}
-          className={`btn ${buttonColor} text-white w-full`}
+          className={`btn ${buttonColor} text-white w-full py-3 sm:py-2`}
           style={{ boxShadow: '0 8px 24px rgba(2,6,23,0.35)' }}
         >
           {t.login}

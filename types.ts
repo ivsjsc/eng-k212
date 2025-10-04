@@ -323,7 +323,7 @@ export interface ResourceItem {
 }
 
 // Curriculum Templates
-export interface LessonPlan {
+export interface TemplateLessonPlan {
   id: string;
   title: string;
   objectives: string[];
@@ -340,7 +340,7 @@ export interface CurriculumTemplate {
   name: string;
   level: string;
   description: string;
-  lessons: LessonPlan[];
+  lessons: TemplateLessonPlan[];
   createdBy: string;
   createdDate: string;
   isPublic: boolean;

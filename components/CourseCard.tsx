@@ -31,12 +31,15 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onSelect, isPinned, onP
 
   return (
     <div 
-      className="card-glass flex flex-col cursor-pointer transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
+      className="card-glass flex flex-col cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-3 interactive-glow will-change-transform"
       onClick={onSelect}
+      style={{
+        background: `linear-gradient(135deg, ${course.color} 0%, rgba(0,0,0,0.03) 40%)`
+      }}
     >
       <div className="relative">
-        <img className="w-full h-40 object-cover rounded-t-lg" src={course.imageUrl} alt={course.title} />
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/60 to-transparent"></div>
+  <img className="w-full h-40 object-cover rounded-t-lg" src={course.imageUrl} alt={course.title} />
+  <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/40 to-transparent"></div>
         <button 
           onClick={handlePinClick}
           className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-colors duration-200 ${
@@ -51,7 +54,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course, onSelect, isPinned, onP
         </div>
       </div>
 
-      <div className="p-4 flex flex-col flex-grow">
+  <div className="p-4 flex flex-col flex-grow" style={{ background: 'transparent' }}>
         <h3 className="font-bold text-lg mb-1 leading-tight">{course.title}</h3>
         <p className="text-sm text-slate-600 dark:text-slate-400 mb-3 flex-grow">{course.description}</p>
         
