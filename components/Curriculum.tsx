@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { curriculumData } from '../data/curriculum';
-import type { Curriculum, User } from '../types';
+import type { Curriculum, User, Course } from '../types';
 
 interface CurriculumProps {
   language: 'en' | 'vi';
   user: User;
-  onSelectCategory: (categoryIndex: number) => void;
+  onSelectCourse: (course: Course) => void;
 }
 
-const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCategory }) => {
+const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse }) => {
   const data: Curriculum = curriculumData;
 
   // Filter curriculum based on user's gradeLevel
@@ -30,10 +30,45 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCategor
 
   const filteredData = getFilteredCurriculum();
 
+  const allCourses = useMemo(() => {
+    const colorPalette = ['#4A90E2', '#50E3C2', '#F5A623', '#BD10E0', '#9013FE', '#D0021B', '#F8E71C', '#7ED321'];
+    let colorIndex = 0;
+    const slug = (str: string) => str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+    return filteredData.flatMap(category =>
+      category.levels.map(level => {
+        const courseId = `course-${slug(level.title.en)}`;
+        return {
+          id: courseId,
+          title: language === 'vi' ? level.title.vi : level.title.en,
+          series: language === 'vi' ? category.category.vi : category.category.en,
+          level: (level.subtitle.en.split(' - ')[0]) as Course['level'],
+          imageUrl: `https://picsum.photos/seed/${level.level}/400/225`,
+          description: language === 'vi' ? level.subtitle.vi : level.subtitle.en,
+          lessons: [],
+          color: colorPalette[colorIndex++ % colorPalette.length],
+          progress: 0,
+          rawLevel: level,
+        } as Course;
+      })
+    );
+  }, [filteredData, language]);
+
+  const handleCategoryClick = (categoryIndex: number) => {
+    const category = filteredData[categoryIndex];
+    if (category && category.levels.length > 0) {
+      // Find the first course for this category
+      const firstCourse = allCourses.find(course => course.series === (language === 'vi' ? category.category.vi : category.category.en));
+      if (firstCourse) {
+        onSelectCourse(firstCourse);
+      }
+    }
+  };
+
   return (
     <div className="p-8 max-w-6xl mx-auto">
       <h1 className="text-3xl font-bold mb-4 text-white">{language === 'vi' ? 'Chương trình học' : 'Learning Programs'}</h1>
-      <p className="text-slate-300 mb-6">{language === 'vi' ? 'Chọn một chương trình để bắt đầu học.' : 'Choose a program to begin.'}</p>
+      <p className="text-slate-300 mb-6">{language === 'vi' ? 'Chọn một chương trình để xem chi tiết.' : 'Choose a program to view details.'}</p>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filteredData.map((cat, idx) => {
@@ -46,16 +81,20 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCategor
           ];
           const colorClass = colorClasses[idx % colorClasses.length];
 
+          const buttonText = user.role === 'teacher' 
+            ? (language === 'vi' ? 'Xem chương trình' : 'View Program')
+            : (language === 'vi' ? 'Bắt đầu học' : 'Start Learning');
+
           return (
             <div
               key={idx}
               className={`p-6 rounded-2xl bg-gradient-to-br ${colorClass} border backdrop-blur hover:scale-[1.02] transition cursor-pointer`}
-              onClick={() => onSelectCategory(idx)}
+              onClick={() => handleCategoryClick(idx)}
             >
               <h3 className="font-bold text-xl text-white mb-2">{cat.category[language]}</h3>
               <p className="text-sm text-slate-200 mb-4">{cat.levels?.[0]?.subtitle?.[language] || ''}</p>
               <button className="btn bg-white/20 hover:bg-white/30 text-white py-2 px-4 rounded-lg text-sm font-semibold">
-                {language === 'vi' ? 'Bắt đầu học' : 'Start learning'}
+                {buttonText}
               </button>
             </div>
           );

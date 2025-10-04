@@ -331,7 +331,7 @@ function App() {
       case 'home':
         return <Home user={user!} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes} />;
       case 'curriculum':
-        return <Curriculum language={language} user={user!} onSelectCategory={(idx) => setCurrentView('home')} />;
+        return <Curriculum language={language} user={user!} onSelectCourse={handleSelectCourse} />;
       case 'teacher-dashboard':
         return <TeacherDashboard classes={classes} setClasses={handleUpdateClasses} language={language} />;
       case 'teacher-analytics':
