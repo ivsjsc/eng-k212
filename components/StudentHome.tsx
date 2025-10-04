@@ -197,8 +197,8 @@ const StudentHome: React.FC<StudentHomeProps> = ({ user, onSelectCourse, languag
         </div>
       </div>
 
-      {/* Navigation Tabs */}
-      <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+      {/* Navigation Tabs - Enhanced with Gradient */}
+      <div className="flex gap-3 mb-8 overflow-x-auto pb-2">
         {[
           { id: 'overview', label: t.overview, icon: 'fa-home' },
           { id: 'progress', label: t.progress, icon: 'fa-chart-line' },
@@ -207,14 +207,14 @@ const StudentHome: React.FC<StudentHomeProps> = ({ user, onSelectCourse, languag
         ].map(tab => (
           <button
             key={tab.id}
-            className={`px-6 py-3 rounded-lg font-medium transition-all whitespace-nowrap ${
+            className={`px-8 py-4 rounded-2xl font-bold transition-all duration-300 whitespace-nowrap shadow-lg ${
               activeTab === tab.id
-                ? 'bg-blue-500 text-white shadow-lg'
-                : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
+                ? 'bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600 text-white shadow-2xl scale-105'
+                : 'bg-white/90 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:scale-105 hover:shadow-xl backdrop-blur-sm'
             }`}
             onClick={() => setActiveTab(tab.id as any)}
           >
-            <i className={`fa-solid ${tab.icon} mr-2`}></i>
+            <i className={`fa-solid ${tab.icon} mr-3 text-lg`}></i>
             {tab.label}
           </button>
         ))}
