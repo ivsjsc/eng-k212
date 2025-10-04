@@ -1,0 +1,250 @@
+/* 
+ * MODERN UI ENHANCEMENTS
+ * Professional, high-contrast, beautiful design
+ */
+
+/* Improved Card Glass Effect */
+.card-glass {
+  @apply bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-3xl shadow-2xl border border-slate-200/50 dark:border-slate-700/50;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-glass:hover {
+  @apply shadow-3xl scale-[1.02];
+  transform: translateY(-4px);
+}
+
+/* Enhanced Gradient Buttons */
+.btn-gradient {
+  @apply relative overflow-hidden font-bold text-white rounded-2xl px-8 py-4 shadow-lg transition-all duration-300;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.btn-gradient:hover {
+  @apply shadow-2xl scale-105;
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.btn-gradient:before {
+  content: '';
+  @apply absolute inset-0 bg-white/20 opacity-0 transition-opacity duration-300;
+}
+
+.btn-gradient:hover:before {
+  @apply opacity-100;
+}
+
+/* Stat Cards with Gradient */
+.stat-card {
+  @apply relative overflow-hidden rounded-3xl p-6 shadow-xl transition-all duration-300 cursor-pointer;
+  background: linear-gradient(135deg, var(--gradient-from), var(--gradient-to));
+}
+
+.stat-card:hover {
+  @apply shadow-2xl scale-105;
+}
+
+.stat-card::before {
+  content: '';
+  @apply absolute inset-0 bg-white/10 opacity-0 transition-opacity duration-300;
+}
+
+.stat-card:hover::before {
+  @apply opacity-100;
+}
+
+.stat-card::after {
+  content: '';
+  @apply absolute -bottom-6 -right-6 w-32 h-32 bg-white/10 rounded-full blur-2xl;
+}
+
+/* Typography Improvements */
+.heading-gradient {
+  @apply font-black bg-gradient-to-r bg-clip-text text-transparent;
+  background-image: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+.heading-primary {
+  @apply text-5xl md:text-6xl font-black text-slate-900 dark:text-white drop-shadow-sm;
+}
+
+.heading-secondary {
+  @apply text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100;
+}
+
+.text-body {
+  @apply text-base md:text-lg text-slate-700 dark:text-slate-300 leading-relaxed;
+}
+
+/* Enhanced Tab Navigation */
+.tab-button {
+  @apply px-6 py-3 rounded-2xl font-semibold transition-all duration-300 whitespace-nowrap;
+}
+
+.tab-button-active {
+  @apply bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg scale-105;
+}
+
+.tab-button-inactive {
+  @apply bg-white/80 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:scale-102;
+}
+
+/* Progress Bars */
+.progress-bar {
+  @apply w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3 overflow-hidden;
+}
+
+.progress-bar-fill {
+  @apply h-full rounded-full transition-all duration-500;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Badge Styles */
+.badge {
+  @apply inline-flex items-center gap-2 px-4 py-2 rounded-full font-semibold text-sm shadow-md;
+}
+
+.badge-primary {
+  @apply bg-gradient-to-r from-blue-500 to-indigo-600 text-white;
+}
+
+.badge-success {
+  @apply bg-gradient-to-r from-green-500 to-emerald-600 text-white;
+}
+
+.badge-warning {
+  @apply bg-gradient-to-r from-yellow-500 to-orange-600 text-white;
+}
+
+.badge-danger {
+  @apply bg-gradient-to-r from-red-500 to-pink-600 text-white;
+}
+
+/* Form Inputs */
+.form-input {
+  @apply w-full px-6 py-4 rounded-2xl border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-medium focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20 transition-all duration-200 placeholder:text-slate-400;
+}
+
+.form-label {
+  @apply block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2;
+}
+
+/* Floating Action Button */
+.fab {
+  @apply fixed bottom-8 right-8 w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-white text-2xl transition-all duration-300 hover:scale-110 z-50;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.fab:hover {
+  @apply shadow-3xl;
+}
+
+/* Loading Spinner */
+.spinner {
+  @apply animate-spin rounded-full border-4 border-slate-200 border-t-blue-500;
+}
+
+/* Glassmorphism Background */
+.glass-bg {
+  @apply bg-white/30 dark:bg-slate-900/30 backdrop-blur-2xl;
+}
+
+/* Empty State */
+.empty-state {
+  @apply text-center py-16 px-6;
+}
+
+.empty-state-icon {
+  @apply text-6xl text-slate-300 dark:text-slate-600 mb-6;
+}
+
+.empty-state-title {
+  @apply text-2xl font-bold text-slate-700 dark:text-slate-300 mb-3;
+}
+
+.empty-state-text {
+  @apply text-lg text-slate-500 dark:text-slate-400 mb-8;
+}
+
+/* Course Card Improvements */
+.course-card {
+  @apply relative overflow-hidden rounded-3xl shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-105;
+  background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+}
+
+.dark .course-card {
+  background: linear-gradient(135deg, rgba(30,41,59,0.95) 0%, rgba(15,23,42,0.9) 100%);
+}
+
+.course-card::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 transition-opacity duration-300;
+}
+
+.course-card:hover::before {
+  @apply opacity-100;
+}
+
+/* Shadow Utilities */
+.shadow-3xl {
+  box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Gradient Text */
+.text-gradient-blue {
+  @apply bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent;
+}
+
+.text-gradient-green {
+  @apply bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 bg-clip-text text-transparent;
+}
+
+.text-gradient-orange {
+  @apply bg-gradient-to-r from-orange-600 via-red-600 to-pink-600 bg-clip-text text-transparent;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .heading-primary {
+    @apply text-4xl;
+  }
+  
+  .heading-secondary {
+    @apply text-2xl;
+  }
+  
+  .card-glass {
+    @apply rounded-2xl;
+  }
+}
