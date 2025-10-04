@@ -32,14 +32,15 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
       subtitle: 'Your AI learning companion',
       placeholder: 'Ask me anything about English learning or the app...',
       send: 'Send',
-      // freeBadge removed - we will show a small icon badge instead
       welcomeMessage: 'Hi! I\'m your IVS Assistant. I can help you with:\n• English grammar questions\n• Vocabulary explanations\n• Study tips and techniques\n• App support, upgrades & membership questions\n\nWhat would you like to know?',
       sampleQuestions: 'Sample Questions:',
       samples: [
         'How can I improve my English pronunciation?',
         'What\'s the difference between "make" and "do"?',
         'How do I upgrade to Premium and what are the benefits?',
-        'How do I contact support for billing issues?'
+        'How do I contact support for billing issues?',
+        'What perks do Premium members get?',
+        'Can I change or cancel my subscription?'
       ]
     },
     vi: {
@@ -47,14 +48,15 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
       subtitle: 'Trợ lý AI học tập',
       placeholder: 'Hỏi tôi bất cứ điều gì về học tiếng Anh...',
       send: 'Gửi',
-      // freeBadge removed
       welcomeMessage: 'Xin chào! Tôi là Trợ lý IVS. Tôi có thể giúp bạn:\n• Câu hỏi về ngữ pháp tiếng Anh\n• Giải thích từ vựng\n• Mẹo và kỹ thuật học tập\n• Hỗ trợ ứng dụng, nâng cấp & quyền lợi thành viên\n\nBạn muốn biết điều gì?',
       sampleQuestions: 'Câu hỏi mẫu:',
       samples: [
         'Làm thế nào để cải thiện phát âm tiếng Anh?',
         'Sự khác biệt giữa "make" và "do" là gì?',
         'Làm sao để nâng cấp lên Premium và quyền lợi như thế nào?',
-        'Làm sao liên hệ bộ phận hỗ trợ về thanh toán?'
+        'Làm sao liên hệ bộ phận hỗ trợ về thanh toán?',
+        'Quyền lợi của gói Premium gồm những gì?',
+        'Nếu muốn đổi hoặc hủy gói thì phải làm sao?'
       ]
     }
   };
@@ -90,16 +92,43 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
     support: [
       language === 'en'
         ? '📞 **App Support & Billing Help**:\n\n1. For account or billing questions, go to Settings → Billing to view your current plan and invoices.\n2. To contact support, email support@ivs.edu or use the in-app Contact form.\n3. Payment methods supported: bank transfer, Momo, ZaloPay (local), and card (coming soon).\n4. Provide your user ID and a screenshot for faster help.\n\nIf you have a refund or charge inquiry, include the transaction ID and date.'
-        : '📞 **Hỗ trợ Ứng dụng & Thanh toán**:\n\n1. Vào Cài đặt → Thanh toán để xem gói và hoá đơn.\n2. Liên hệ hỗ trợ: support@ivs.edu hoặc dùng form Liên hệ trong app.\n3. Phương thức: chuyển khoản, Momo, ZaloPay (địa phương), thẻ (sắp có).\n4. Gửi ID người dùng và ảnh chụp màn hình để xử lý nhanh hơn.\n\nVới yêu cầu hoàn tiền, gửi kèm mã giao dịch và ngày.'
+        : '📞 **Hỗ trợ Ứng dụng & Thanh toán**:\n\n1. Vào Cài đặt → Thanh toán để xem gói và hoá đơn.\n2. Liên hệ hỗ trợ: support@ivs.edu hoặc dùng form Liên hệ trong app.\n3. Phương thức: chuyển khoản, Momo, ZaloPay (địa phương), thẻ (sắp có).\n4. Gửi ID người dùng và ảnh chụp màn hình để xử lý nhanh hơn.\n\nVới yêu cầu hoàn tiền, gửi kèm mã giao dịch và ngày.',
+      language === 'en'
+        ? '🛠️ **Need technical help?**\n\n• Check the Status Center in Settings → Support for real-time service updates.\n• Try logging out/in and clearing browser cache if a feature is stuck.\n• For classroom sync issues, refresh the roster in the Class settings panel.\n• Still stuck? Send us a short screen recording so engineers can reproduce the bug faster.'
+        : '🛠️ **Cần hỗ trợ kỹ thuật?**\n\n• Kiểm tra Trung tâm Trạng thái tại Cài đặt → Hỗ trợ để xem thông báo dịch vụ.\n• Đăng xuất/đăng nhập lại và xoá cache trình duyệt nếu tính năng bị treo.\n• Với vấn đề đồng bộ lớp học, hãy nhấn làm mới danh sách lớp trong phần Cài đặt Lớp.\n• Nếu vẫn lỗi, gửi cho chúng tôi video màn hình ngắn để kỹ sư xử lý nhanh hơn.',
+      language === 'en'
+        ? '🤝 **Connect with human support**\n\n• Live chat (Mon–Fri 8:00–20:00 GMT+7) is available from the bottom-right Help bubble.\n• Hotline: 1900-123-456 (Vietnam only).\n• Average first response time: under 2 hours for Premium, 6 hours for Free/Student tiers.\n• Escalations are handled within 1 business day.'
+        : '🤝 **Liên hệ đội hỗ trợ**\n\n• Chat trực tuyến (Thứ 2–6, 8:00–20:00 GMT+7) có trong bong bóng Trợ giúp góc dưới phải.\n• Hotline: 1900-123-456 (chỉ Việt Nam).\n• Thời gian phản hồi đầu tiên trung bình: dưới 2 giờ cho Premium, 6 giờ cho gói Miễn phí/Học sinh.\n• Các yêu cầu cần xử lý nâng cao sẽ được phản hồi trong 1 ngày làm việc.'
     ],
     upgrade: [
       language === 'en'
         ? '💎 **Upgrade to Premium - What you get**:\n\n• Unlimited AI requests for tutors and graders\n• Real-time voice conversation practice\n• Personalized learning paths updated weekly\n• Priority support and early access to new features\n\nTo upgrade, open the Pricing modal from the sidebar or Settings → Billing. We accept local payment methods and will add card payments soon.'
-        : '💎 **Nâng cấp lên Premium - Quyền lợi**:\n\n• Hỏi AI không giới hạn cho gia sư và chấm bài\n• Luyện nói thời gian thực có phản hồi giọng nói\n• Lộ trình học cá nhân hoá cập nhật hàng tuần\n• Hỗ trợ ưu tiên và truy cập sớm tính năng mới\n\nĐể nâng cấp, mở modal Giá hoặc vào Cài đặt → Thanh toán. Chấp nhận phương thức thanh toán địa phương; thẻ sẽ sớm có.'
-        ,
+        : '💎 **Nâng cấp lên Premium - Quyền lợi**:\n\n• Hỏi AI không giới hạn cho gia sư và chấm bài\n• Luyện nói thời gian thực có phản hồi giọng nói\n• Lộ trình học cá nhân hoá cập nhật hàng tuần\n• Hỗ trợ ưu tiên và truy cập sớm tính năng mới\n\nĐể nâng cấp, mở modal Giá hoặc vào Cài đặt → Thanh toán. Chấp nhận phương thức thanh toán địa phương; thẻ sẽ sớm có.',
       language === 'en'
-        ? 'ℹ️ **Membership Tiers**:\n\n- Free: Basic demo responses, limited daily uses.\n- Student (monthly): Most features, reasonable limits for classrooms.\n- Teacher / Enterprise: Classroom management, analytics, team seats and centralized billing.\n\nCheck Settings → Billing for plan details and promo codes.'
-        : 'ℹ️ **Các gói thành viên**:\n\n- Miễn phí: Phản hồi mẫu, giới hạn lượt dùng hàng ngày.\n- Học sinh (tháng): Hầu hết tính năng, giới hạn phù hợp lớp học.\n- Giáo viên / Doanh nghiệp: Quản lý lớp, phân tích, nhiều tài khoản và hoá đơn tập trung.\n\nXem Cài đặt → Thanh toán để biết chi tiết gói và mã khuyến mãi.'
+        ? '🚀 **How to upgrade step-by-step**:\n\n1. Go to Settings → Billing → Plans.\n2. Pick Student, Teacher, or Enterprise, then press “Upgrade”.\n3. Choose payment method (bank, Momo, ZaloPay).\n4. Confirm payer info → complete checkout.\n\nYour new benefits activate instantly—no need to log out.'
+        : '🚀 **Các bước nâng cấp nhanh**:\n\n1. Vào Cài đặt → Thanh toán → Gói dịch vụ.\n2. Chọn Học sinh, Giáo viên hoặc Doanh nghiệp rồi nhấn “Nâng cấp”.\n3. Chọn phương thức thanh toán (ngân hàng, Momo, ZaloPay).\n4. Xác nhận thông tin thanh toán → hoàn tất.\n\nQuyền lợi kích hoạt ngay lập tức, không cần đăng xuất.',
+      language === 'en'
+        ? '🔄 **Switching plans or downgrading**:\n\n• You can change plans anytime from Settings → Billing.\n• Downgrades take effect at the end of your billing cycle—no extra fees.\n• Need to pause? Use the “Suspend subscription” option for up to 60 days.\n• Contact support if you need invoices for your company.'
+        : '🔄 **Đổi hoặc hạ cấp gói**:\n\n• Có thể đổi gói bất cứ lúc nào tại Cài đặt → Thanh toán.\n• Hạ cấp sẽ có hiệu lực khi chu kỳ thanh toán hiện tại kết thúc, không phí phát sinh.\n• Muốn tạm ngưng? Chọn “Tạm dừng đăng ký” tối đa 60 ngày.\n• Liên hệ hỗ trợ nếu bạn cần hoá đơn công ty.'
+    ],
+    membership: [
+      language === 'en'
+        ? '🌟 **Membership perks overview**:\n\n• Student: Lesson analytics, weekly AI quizzes, 50 AI messages/day.\n• Teacher: Classroom dashboards, homework auto-grading, 200 AI messages/day.\n• Enterprise: Central billing, SSO, dedicated success manager, unlimited seats.\n\nPremium tiers also unlock voice labs, writing rubrics, and early beta access.'
+        : '🌟 **Quyền lợi thành viên tổng quan**:\n\n• Học sinh: Phân tích bài học, bài kiểm tra AI hàng tuần, 50 tin nhắn AI/ngày.\n• Giáo viên: Dashboard lớp học, chấm bài tự động, 200 tin nhắn AI/ngày.\n• Doanh nghiệp: Hoá đơn tập trung, đăng nhập SSO, chuyên viên hỗ trợ riêng, số lượng tài khoản không giới hạn.\n\nCác gói Premium mở thêm phòng luyện giọng, rubric chấm bài viết và quyền thử nghiệm tính năng mới.',
+      language === 'en'
+        ? '🎁 **Exclusive rewards for members**:\n\n• Monthly badge drops for completing learning streaks.\n• 10% partner discounts on IELTS mock tests.\n• Early invitations to IVS webinars and educator meetups.\n• Premium-only Templates: lesson planners, parent reports, assessment banks.'
+        : '🎁 **Ưu đãi dành riêng cho thành viên**:\n\n• Huy hiệu mới mỗi tháng khi duy trì chuỗi học tập.\n• Giảm 10% khi thi thử IELTS với đối tác IVS.\n• Mời tham gia sớm hội thảo và buổi gặp gỡ giáo viên IVS.\n• Kho mẫu chỉ dành cho Premium: kế hoạch bài giảng, báo cáo phụ huynh, ngân hàng đánh giá.',
+      language === 'en'
+        ? '🧭 **Which plan fits me?**\n\n• Self-learners → Student plan (monthly/annual).\n• Private tutors → Teacher plan with up to 10 classes.\n• Schools → Enterprise with centralized admin controls.\n\nStill unsure? Book a free 15-min consultation call from the Billing page.'
+        : '🧭 **Nên chọn gói nào?**\n\n• Tự học → Gói Học sinh (tháng/năm).\n• Giáo viên dạy kèm → Gói Giáo viên với tối đa 10 lớp.\n• Trường học/doanh nghiệp → Gói Doanh nghiệp với quản trị tập trung.\n\nNếu vẫn phân vân, đặt lịch tư vấn miễn phí 15 phút tại trang Thanh toán.'
+    ],
+    pricing: [
+      language === 'en'
+        ? '💰 **Pricing & invoices**:\n\n• Student: 199.000₫ / month or 1.999.000₫ / year (2 months free).\n• Teacher: 499.000₫ / month, includes 5 teacher seats.\n• Enterprise: Custom quote based on number of campuses.\n\nInvoices download automatically from Settings → Billing → History.'
+        : '💰 **Giá gói & hoá đơn**:\n\n• Học sinh: 199.000₫ / tháng hoặc 1.999.000₫ / năm (tặng 2 tháng).\n• Giáo viên: 499.000₫ / tháng, bao gồm 5 tài khoản giáo viên.\n• Doanh nghiệp: Báo giá riêng tuỳ số lượng cơ sở.\n\nHoá đơn được tải tự động tại Cài đặt → Thanh toán → Lịch sử.',
+      language === 'en'
+        ? '🧾 **Payment & receipts FAQ**:\n\n• Supports VAT invoices—fill company info before paying.\n• Auto-renew is on by default; disable it anytime from Billing.\n• Failed payments retry 3 times before pausing benefits.\n• Need pro-forma invoice? Contact billing@ivs.edu.'
+        : '🧾 **Thanh toán & hoá đơn FAQ**:\n\n• Hỗ trợ xuất hoá đơn VAT—nhập thông tin công ty trước khi thanh toán.\n• Gia hạn tự động bật sẵn; bạn có thể tắt ở trang Thanh toán.\n• Giao dịch thất bại sẽ thử lại 3 lần trước khi tạm dừng quyền lợi.\n• Cần báo giá trước? Liên hệ billing@ivs.edu.'
     ],
     appUsage: [
       language === 'en'
@@ -153,98 +182,185 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
     ]
   };
 
+  const defaultHelpfulResponse = language === 'en'
+    ? '🤖 **I\'m here to help!**\n\nI can assist you with:\n• 📚 Grammar, vocabulary, tenses\n• 🗣️ Speaking, pronunciation\n• 👂 Listening & reading skills\n• ✍️ Writing tips & essay structure\n• 🌍 Culture & idioms\n• 📝 Exam preparation (IELTS, TOEFL)\n• 💪 Study motivation & techniques\n• 💎 App support & Premium upgrades\n\n💡 *Ask me anything specific, like:\n"How to improve listening?"\n"What are common idioms?"\n"IELTS exam tips?"\n"How to upgrade to Premium?"*'
+    : '🤖 **Tôi sẵn sàng giúp bạn!**\n\nTôi có thể hỗ trợ bạn về:\n• 📚 Ngữ pháp, từ vựng, các thì\n• 🗣️ Nói, phát âm\n• 👂 Kỹ năng nghe & đọc\n• ✍️ Mẹo viết & cấu trúc bài luận\n• 🌍 Văn hóa & thành ngữ\n• 📝 Chuẩn bị thi (IELTS, TOEFL)\n• 💪 Động lực & kỹ thuật học tập\n• 💎 Hỗ trợ ứng dụng & nâng cấp Premium\n\n💡 *Hỏi tôi cụ thể, như:\n"Làm sao cải thiện nghe?"\n"Thành ngữ phổ biến là gì?"\n"Mẹo thi IELTS?"\n"Làm sao nâng cấp lên Premium?"*';
+
+  const pickResponse = (key: keyof typeof demoResponses) => {
+    const responses = demoResponses[key];
+    if (!responses || responses.length === 0) {
+      return defaultHelpfulResponse;
+    }
+    return responses[Math.floor(Math.random() * responses.length)];
+  };
+
   const getSmartResponse = (question: string): string => {
     const q = question.toLowerCase();
-    
-    // Support & Billing
-    if (q.includes('support') || q.includes('hỗ trợ') || q.includes('billing') || q.includes('thanh toán') || q.includes('refund') || q.includes('hoàn tiền') || q.includes('contact')) {
-      return demoResponses.support[0];
+
+    // Membership benefits & perks
+    if (
+      q.includes('benefit') ||
+      q.includes('benefits') ||
+      q.includes('perk') ||
+      q.includes('perks') ||
+      q.includes('membership benefits') ||
+      q.includes('member perks') ||
+      q.includes('quyền lợi') ||
+      q.includes('ưu đãi') ||
+      q.includes('đặc quyền') ||
+      q.includes('thành viên')
+    ) {
+      return pickResponse('membership');
     }
-    
-    // Upgrade & Membership
-    if (q.includes('upgrade') || q.includes('nâng cấp') || q.includes('premium') || q.includes('membership') || q.includes('gói') || q.includes('plan') || q.includes('tier')) {
-      return demoResponses.upgrade[Math.floor(Math.random() * demoResponses.upgrade.length)];
+
+    // Pricing & invoices
+    if (
+      q.includes('price') ||
+      q.includes('pricing') ||
+      q.includes('cost') ||
+      q.includes('fee') ||
+      q.includes('bao nhiêu') ||
+      q.includes('giá') ||
+      q.includes('chi phí') ||
+      q.includes('invoice') ||
+      q.includes('receipt') ||
+      q.includes('vat') ||
+      q.includes('hoá đơn') ||
+      q.includes('hoadon') ||
+      q.includes('billing history')
+    ) {
+      return pickResponse('pricing');
     }
-    
-    // App Usage
-    if (q.includes('how to use') || q.includes('cách dùng') || q.includes('app') || q.includes('ứng dụng') || q.includes('feature') || q.includes('tính năng')) {
-      return demoResponses.appUsage[0];
+
+    // Support & troubleshooting
+    if (
+      q.includes('support') ||
+      q.includes('help') ||
+      q.includes('issue') ||
+      q.includes('error') ||
+      q.includes('problem') ||
+      q.includes('bug') ||
+      q.includes('trouble') ||
+      q.includes('hỗ trợ') ||
+      q.includes('lỗi') ||
+      q.includes('sự cố') ||
+      q.includes('trục trặc') ||
+      q.includes('billing') ||
+      q.includes('thanh toán') ||
+      q.includes('refund') ||
+      q.includes('hoàn tiền') ||
+      q.includes('contact') ||
+      q.includes('liên hệ')
+    ) {
+      return pickResponse('support');
     }
-    
+
+    // Upgrade & plan changes
+    if (
+      q.includes('upgrade') ||
+      q.includes('nâng cấp') ||
+      q.includes('premium') ||
+      q.includes('membership') ||
+      q.includes('gói') ||
+      q.includes('plan') ||
+      q.includes('tier') ||
+      q.includes('package') ||
+      q.includes('downgrade') ||
+      q.includes('cancel subscription') ||
+      q.includes('cancel plan') ||
+      q.includes('đổi gói') ||
+      q.includes('hạ cấp') ||
+      q.includes('hủy gói') ||
+      q.includes('dừng gói')
+    ) {
+      return pickResponse('upgrade');
+    }
+
+    // App usage
+    if (
+      q.includes('how to use') ||
+      q.includes('cách dùng') ||
+      q.includes('app') ||
+      q.includes('ứng dụng') ||
+      q.includes('feature') ||
+      q.includes('tính năng') ||
+      q.includes('hướng dẫn')
+    ) {
+      return pickResponse('appUsage');
+    }
+
     // Listening
     if (q.includes('listen') || q.includes('nghe') || q.includes('hearing') || q.includes('podcast') || q.includes('audio')) {
-      return demoResponses.listening[0];
+      return pickResponse('listening');
     }
-    
+
     // Reading
     if (q.includes('read') || q.includes('đọc') || q.includes('comprehension') || q.includes('book') || q.includes('sách')) {
-      return demoResponses.reading[0];
+      return pickResponse('reading');
     }
-    
+
     // Writing
     if (q.includes('writ') || q.includes('viết') || q.includes('essay') || q.includes('bài luận') || q.includes('composition')) {
-      return demoResponses.writing[0];
+      return pickResponse('writing');
     }
-    
+
     // Culture
     if (q.includes('culture') || q.includes('văn hóa') || q.includes('custom') || q.includes('tradition') || q.includes('etiquette')) {
-      return demoResponses.culture[0];
+      return pickResponse('culture');
     }
-    
+
     // Exam Tips
     if (q.includes('exam') || q.includes('thi') || q.includes('test') || q.includes('ielts') || q.includes('toefl') || q.includes('toeic')) {
-      return demoResponses.examTips[0];
+      return pickResponse('examTips');
     }
-    
+
     // Motivation
     if (q.includes('motivat') || q.includes('động lực') || q.includes('give up') || q.includes('tired') || q.includes('boring') || q.includes('chán')) {
-      return demoResponses.motivation[0];
+      return pickResponse('motivation');
     }
-    
+
     // Idioms
     if (q.includes('idiom') || q.includes('thành ngữ') || q.includes('phrase') || q.includes('expression') || q.includes('cụm từ')) {
-      return demoResponses.idioms[0];
+      return pickResponse('idioms');
     }
-    
+
     // Tenses
     if (q.includes('tense') || q.includes('thì') || q.includes('present perfect') || q.includes('past simple') || q.includes('future')) {
-      return demoResponses.tenses[0];
+      return pickResponse('tenses');
     }
-    
+
     // Confused Words
     if (q.includes('confused') || q.includes('nhầm lẫn') || q.includes('their') || q.includes('your') || q.includes('affect') || q.includes('its')) {
-      return demoResponses.confusedWords[0];
+      return pickResponse('confusedWords');
     }
-    
+
     // Pronunciation
     if (q.includes('pronunciation') || q.includes('phát âm') || q.includes('pronounce') || q.includes('accent')) {
-      return demoResponses.pronunciation[0];
+      return pickResponse('pronunciation');
     }
-    
+
     // Vocabulary
     if (q.includes('vocabulary') || q.includes('từ vựng') || q.includes('word') || q.includes('từ') || q.includes('memorize')) {
-      return demoResponses.vocabulary[0];
+      return pickResponse('vocabulary');
     }
-    
+
     // Speaking
     if (q.includes('speaking') || q.includes('nói') || q.includes('speak') || q.includes('practice alone') || q.includes('luyện nói') || q.includes('conversation')) {
-      return demoResponses.speaking[0];
+      return pickResponse('speaking');
     }
-    
+
     // Grammar
     if (q.includes('grammar') || q.includes('ngữ pháp') || q.includes('rule') || q.includes('quy tắc')) {
-      return demoResponses.grammar[0];
+      return pickResponse('grammar');
     }
-    
+
     // Make vs Do
     if ((q.includes('make') && q.includes('do')) || (q.includes('difference between') && (q.includes('make') || q.includes('do')))) {
-      return demoResponses.makeVsDo[0];
+      return pickResponse('makeVsDo');
     }
-    
+
     // Default helpful response with all categories
-    return language === 'en'
-      ? '🤖 **I\'m here to help!**\n\nI can assist you with:\n• 📚 Grammar, vocabulary, tenses\n• 🗣️ Speaking, pronunciation\n• 👂 Listening & reading skills\n• ✍️ Writing tips & essay structure\n• 🌍 Culture & idioms\n• 📝 Exam preparation (IELTS, TOEFL)\n• 💪 Study motivation & techniques\n• 💎 App support & Premium upgrades\n\n💡 *Ask me anything specific, like:\n"How to improve listening?"\n"What are common idioms?"\n"IELTS exam tips?"\n"How to upgrade to Premium?"*'
-      : '🤖 **Tôi sẵn sàng giúp bạn!**\n\nTôi có thể hỗ trợ bạn về:\n• 📚 Ngữ pháp, từ vựng, các thì\n• 🗣️ Nói, phát âm\n• 👂 Kỹ năng nghe & đọc\n• ✍️ Mẹo viết & cấu trúc bài luận\n• 🌍 Văn hóa & thành ngữ\n• 📝 Chuẩn bị thi (IELTS, TOEFL)\n• 💪 Động lực & kỹ thuật học tập\n• 💎 Hỗ trợ ứng dụng & nâng cấp Premium\n\n💡 *Hỏi tôi cụ thể, như:\n"Làm sao cải thiện nghe?"\n"Thành ngữ phổ biến là gì?"\n"Mẹo thi IELTS?"\n"Làm sao nâng cấp lên Premium?"*';
+    return defaultHelpfulResponse;
   };
 
   useEffect(() => {
@@ -345,10 +461,20 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
               </p>
             </div>
           </div>
-          <span className="badge-free px-4 py-2 text-sm font-bold">
-            <i className="fa-solid fa-gift mr-2"></i>
-            {t[language].freeBadge}
-          </span>
+          <div className="hidden sm:flex items-center gap-2">
+            <span className="flex items-center gap-2 rounded-xl bg-white/70 dark:bg-slate-800/70 px-3 py-1 text-xs font-medium text-slate-600 dark:text-slate-300 shadow-sm">
+              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-200">
+                <i className="fa-solid fa-life-ring"></i>
+              </span>
+              {language === 'en' ? 'Support helpdesk' : 'Hỗ trợ 24/7'}
+            </span>
+            <span className="flex items-center gap-2 rounded-xl bg-white/70 dark:bg-slate-800/70 px-3 py-1 text-xs font-medium text-slate-600 dark:text-slate-300 shadow-sm">
+              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-200">
+                <i className="fa-solid fa-gem"></i>
+              </span>
+              {language === 'en' ? 'Premium perks' : 'Ưu đãi Premium'}
+            </span>
+          </div>
         </div>
       </div>
 
