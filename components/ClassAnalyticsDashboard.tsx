@@ -5,8 +5,8 @@ import type { Classes, ClassData, Student } from '../types';
 import { demoClassOptions } from '../data/demo-analytics';
 
 interface ClassAnalyticsDashboardProps {
-  classes: Classes;
-  language: 'en' | 'vi';
+  classes?: Classes;
+  language?: 'en' | 'vi';
 }
 
 const translations = {
@@ -48,20 +48,19 @@ const translations = {
 
 const fallbackMap = new Map(demoClassOptions.map((option) => [option.id, option.classData] as const));
 
-const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ classes, language }) => {
+const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ classes = {}, language = 'vi' }) => {
   const t = translations[language];
 
   const classEntries = useMemo(() => Object.entries(classes || {}), [classes]);
 
   const classOptions = useMemo(() => {
     if (classEntries.length > 0) {
-      return classEntries.map(([id, classData]) => ({ id, name: classData.name || id }));
+      return classEntries.map(([id, classData]) => ({ id, name: (classData as ClassData).name || id }));
     }
     return demoClassOptions.map(({ id, name }) => ({ id, name }));
   }, [classEntries]);
 
-  const [selectedClassId, setSelectedClassId] = useState(() => classOptions[0]?.id ?? demoClassOptions[0]?.id ?? '');
-  const [refreshToken, setRefreshToken] = useState(0);
+  const [selectedClassId, setSelectedClassId] = useState<string>(() => classOptions[0]?.id ?? demoClassOptions[0]?.id ?? '');
 
   useEffect(() => {
     if (!selectedClassId && classOptions.length > 0) {
@@ -73,11 +72,9 @@ const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ class
     }
   }, [classOptions, selectedClassId]);
 
-  useEffect(() => {
-    setRefreshToken(0);
-  }, [selectedClassId]);
-
-  const { data: hookData, loading, error } = useClassAnalytics(selectedClassId, refreshToken);
+  // NOTE: useClassAnalytics currently accepts only classId — if you want "retry" without full reload,
+  // consider adding a second dependency parameter (e.g., refreshKey) to the hook.
+  const { data: hookData, loading, error } = useClassAnalytics(selectedClassId);
 
   const currentClassData = useMemo<ClassData | null>(() => {
     if (selectedClassId && classes[selectedClassId]) {
@@ -139,7 +136,7 @@ const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ class
 
       {classEntries.length === 0 && (
         <div className="flex items-start gap-3 p-4 rounded-md bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-slate-700 dark:text-slate-200">
-          <i className="fa-solid fa-circle-info mt-1"></i>
+          <i className="fa-solid fa-circle-info mt-1" />
           <span>{t.demoNotice}</span>
         </div>
       )}
@@ -149,7 +146,7 @@ const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ class
           <span>{t.error}</span>
           <button
             className="px-3 py-1 rounded-md bg-red-600 text-white text-sm font-medium hover:bg-red-500 transition-colors"
-            onClick={() => setRefreshToken((token) => token + 1)}
+            onClick={() => window.location.reload()}
           >
             {t.retry}
           </button>
@@ -179,7 +176,7 @@ const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ class
         <div className="lg:col-span-2 card-glass p-6">
           {loading ? (
             <div className="flex items-center justify-center h-40 text-slate-500 dark:text-slate-400">
-              <i className="fa-solid fa-circle-notch animate-spin mr-3"></i>
+              <i className="fa-solid fa-circle-notch animate-spin mr-3" />
               {t.loading}
             </div>
           ) : currentClassData ? (
@@ -193,7 +190,7 @@ const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ class
 
         <div className="card-glass p-6">
           <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
-            <i className="fa-solid fa-star mr-2 text-amber-500"></i>
+            <i className="fa-solid fa-star mr-2 text-amber-500" />
             {t.topStudents}
           </h2>
           {analytics.topStudents.length === 0 ? (
@@ -204,7 +201,7 @@ const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ class
                 <li key={student.id} className="flex items-center justify-between bg-slate-50 dark:bg-slate-800/60 px-3 py-2 rounded-lg">
                   <div>
                     <p className="font-medium text-slate-800 dark:text-slate-100">{student.name}</p>
-                    <p className="text-xs text-slate-500">{student.averageScore?.toFixed(1) ?? '0.0'}</p>
+                    <p className="text-xs text-slate-500">{(student.averageScore ?? 0).toFixed(1)}</p>
                   </div>
                   <span className="text-sm font-semibold text-green-500">{student.progress ?? 0}%</span>
                 </li>
@@ -218,4 +215,3 @@ const ClassAnalyticsDashboard: React.FC<ClassAnalyticsDashboardProps> = ({ class
 };
 
 export default ClassAnalyticsDashboard;
-
