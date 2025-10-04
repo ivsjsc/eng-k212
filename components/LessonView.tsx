@@ -14,9 +14,15 @@ interface LessonViewProps {
   lesson: Lesson;
   language: 'en' | 'vi';
   setView: (view: View) => void;
+  // optional prop to indicate if the current user is on the free tier
+  isFreeTier?: boolean;
 }
 
-const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView }) => {
+import LessonQuickQuiz from './LessonQuickQuiz';
+import LessonConversationPractice from './LessonConversationPractice';
+import LessonAIAssistant from './LessonAIAssistant';
+
+const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFreeTier = true }) => {
   const [activeTab, setActiveTab] = useState('aims');
   const [translation, setTranslation] = useState<Record<string, string>>({});
   const [isTranslating, setIsTranslating] = useState<Record<string, boolean>>({});
@@ -294,55 +300,90 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView }) =>
     <div className="p-4 sm:p-6 lg:p-8 animate-fade-in">
       <h1 className="text-3xl font-bold mb-6">{lesson.title}</h1>
 
-      <div className="card-glass p-0 mb-6">
-        <div className="flex flex-wrap sm:flex-nowrap border-b border-slate-200 dark:border-slate-700">
-          {t.map(tab => (
-            <TabButton key={tab.id} id={tab.id} icon={tab.icon} label={tab.label} />
-          ))}
-        </div>
-        
-        <div className="p-6 animate-fade-in min-h-[300px]">
-          {activeTab === 'aims' && (
-            <div className="prose prose-slate dark:prose-invert max-w-none">
-              <ul className="list-disc list-inside space-y-2">
-                {aims.map((aim, index) => <li key={index}>{aim}</li>)}
-              </ul>
-            </div>
-          )}
-
-          {activeTab === 'vocabulary' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {lesson.rawLesson.vocabulary.map(renderVocabulary)}
-            </div>
-          )}
-
-          {activeTab === 'grammar' && (
-            <div className="space-y-6">
-              {grammar.map((point, index) => (
-                <div key={index} className="bg-slate-100 dark:bg-slate-800/50 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold mb-3">{point.title[language]}</h3>
-                  <div className="prose prose-slate dark:prose-invert max-w-none">
-                      {point.explanation[language].map((line, i) => <p key={i}>{line}</p>)}
-                  </div>
-                </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Main lesson content - left two columns on large screens */}
+        <div className="lg:col-span-2">
+          <div className="card-glass p-0 mb-6">
+            <div className="flex flex-wrap sm:flex-nowrap border-b border-slate-200 dark:border-slate-700">
+              {t.map(tab => (
+                <TabButton key={tab.id} id={tab.id} icon={tab.icon} label={tab.label} />
               ))}
             </div>
-          )}
-          
-          {activeTab === 'activities' && (
-             <div className="space-y-6">
-              {activities.map((activity, index) => (
-                <div key={index} className="bg-slate-100 dark:bg-slate-800/50 p-6 rounded-lg">
-                  <h3 className="text-xl font-bold mb-3">{activity.type}</h3>
-                  <div className="prose prose-slate dark:prose-invert max-w-none">
-                      {activity.description[language].map((line, i) => <p key={i}>{line}</p>)}
-                  </div>
+            
+            <div className="p-6 animate-fade-in min-h-[300px]">
+              {activeTab === 'aims' && (
+                <div className="prose prose-slate dark:prose-invert max-w-none">
+                  <ul className="list-disc list-inside space-y-2">
+                    {aims.map((aim, index) => <li key={index}>{aim}</li>)}
+                  </ul>
                 </div>
-              ))}
+              )}
+
+              {activeTab === 'vocabulary' && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {lesson.rawLesson.vocabulary.map(renderVocabulary)}
+                </div>
+              )}
+
+              {activeTab === 'grammar' && (
+                <div className="space-y-6">
+                  {grammar.map((point, index) => (
+                    <div key={index} className="bg-slate-100 dark:bg-slate-800/50 p-6 rounded-lg">
+                      <h3 className="text-xl font-bold mb-3">{point.title[language]}</h3>
+                      <div className="prose prose-slate dark:prose-invert max-w-none">
+                          {point.explanation[language].map((line, i) => <p key={i}>{line}</p>)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {activeTab === 'activities' && (
+                 <div className="space-y-6">
+                  {activities.map((activity, index) => (
+                    <div key={index} className="bg-slate-100 dark:bg-slate-800/50 p-6 rounded-lg">
+                      <h3 className="text-xl font-bold mb-3">{activity.type}</h3>
+                      <div className="prose prose-slate dark:prose-invert max-w-none">
+                          {activity.description[language].map((line, i) => <p key={i}>{line}</p>)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {activeTab === 'ai-tools' && renderAiToolContent()}
             </div>
-          )}
-          {activeTab === 'ai-tools' && renderAiToolContent()}
+          </div>
         </div>
+
+        {/* Right column: ebook preview + AI lesson tools */}
+        <aside className="space-y-4">
+          <div className="card-glass p-4">
+            <h4 className="font-semibold mb-2">{language === 'vi' ? 'Sách điện tử' : 'E-book'}</h4>
+            <div className="h-48 overflow-auto bg-white dark:bg-slate-900 rounded-md p-3 text-sm text-slate-700 dark:text-slate-300">
+              {/* Simple lesson content preview; replaced by embedded ebook viewer elsewhere in future */}
+              <p className="whitespace-pre-line">{lesson.rawLesson.bookExcerpt?.[language] ?? lesson.rawLesson.intro?.[language] ?? 'No preview available.'}</p>
+            </div>
+          </div>
+
+          <div className="card-glass p-4">
+            <h4 className="font-semibold mb-3">{language === 'vi' ? 'Công cụ AI (Demo)' : 'AI Tools (Demo)'}</h4>
+
+            {/* Quick Quiz */}
+            <div className="mb-4">
+              <LessonQuickQuiz language={language} isFreeTier={isFreeTier} lessonTitle={lesson.title} />
+            </div>
+
+            {/* Conversation Practice */}
+            <div className="mb-4">
+              <LessonConversationPractice language={language} isFreeTier={isFreeTier} lessonTitle={lesson.title} />
+            </div>
+
+            {/* AI Lesson Assistant */}
+            <div>
+              <LessonAIAssistant language={language} isFreeTier={isFreeTier} lessonTitle={lesson.title} lessonContent={lesson.rawLesson.intro?.[language] ?? ''} />
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   );
