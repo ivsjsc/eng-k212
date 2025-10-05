@@ -1,5 +1,3 @@
-
-
 import { CurriculumLevel } from '../types';
 
 // Fix: Renamed sw7Data to sw8Data and updated content to reflect Grade 8.
@@ -7,7 +5,7 @@ export const sw8Data: CurriculumLevel = {
     level: 8,
     title: { en: 'i-Learn Smart World 8', vi: 'i-Learn Smart World 8' },
     subtitle: { en: 'Secondary School - Grade 8', vi: 'Trung học cơ sở - Lớp 8' },
-    ebookPdfUrl: 'https://drive.google.com/file/d/1gbl9bh_HnkYwHZeRkP6gGJ0dJ5wn0PUf/view?usp=drive_link', // Note: This URL might still be for SW7.
+    ebookPdfUrl: 'https://drive.google.com/file/d/1gbl9bh_HnkYwHZeRkP6gGJ0dJ5wn0PUf/view?usp=drive_link', // Note: Placeholder URL for SW8
     units: [
         {
             id: 801,
@@ -15,52 +13,61 @@ export const sw8Data: CurriculumLevel = {
             lessons: [
                 {
                     id: 80101,
-                    title: { en: 'Lesson 1: Hobbies', vi: 'Bài học 1: Sở thích' },
+                    title: { en: 'Lesson 1: Leisure Activities', vi: 'Bài học 1: Hoạt động giải trí' },
                     aims: {
-                        en: ['Ask and answer about hobbies', 'Use the Present Simple for habits'],
-                        vi: ['Hỏi và trả lời về sở thích', 'Sử dụng thì Hiện tại đơn cho thói quen'],
+                        en: ['Talk about leisure activities, likes, and dislikes', 'Use verbs of preference + gerund'],
+                        vi: ['Nói về các hoạt động giải trí, sở thích và không thích', 'Sử dụng động từ chỉ sở thích + danh động từ'],
                     },
                     vocabulary: [
-                        { term: 'collect soccer stickers', pronunciation: '/kəˈlekt ˈsɑːkər ˈstɪkərz/', vietnamese: 'sưu tầm nhãn dán bóng đá' },
-                        { term: 'build models', pronunciation: '/bɪld ˈmɑːdlz/', vietnamese: 'xây dựng mô hình' },
-                        { term: 'bake cakes', pronunciation: '/beɪk keɪks/', vietnamese: 'nướng bánh' },
-                        { term: 'make vlogs', pronunciation: '/meɪk vlɔːɡz/', vietnamese: 'làm vlog' },
-                        { term: 'read comics', pronunciation: '/riːd ˈkɑːmɪks/', vietnamese: 'đọc truyện tranh' },
-                        { term: 'play online games', pronunciation: '/pleɪ ˈɑːnlaɪn ɡeɪmz/', vietnamese: 'chơi game online' },
+                        { term: 'chat', pronunciation: '/tʃæt/', vietnamese: 'trò chuyện' },
+                        { term: 'fishing', pronunciation: '/ˈfɪʃɪŋ/', vietnamese: 'câu cá' },
+                        { term: 'hang out', pronunciation: '/hæŋ aʊt/', vietnamese: 'đi chơi' },
+                        { term: 'jogging', pronunciation: '/ˈdʒɑːɡɪŋ/', vietnamese: 'chạy bộ' },
+                        { term: 'jewelry', pronunciation: '/ˈdʒuːəlri/', vietnamese: 'trang sức' },
+                        { term: 'handball', pronunciation: '/ˈhændbɔːl/', vietnamese: 'bóng ném' },
+                        { term: 'rock climbing', pronunciation: '/rɑːk ˈklaɪmɪŋ/', vietnamese: 'leo núi đá' },
+                        { term: 'board games', pronunciation: '/bɔːrd ɡeɪmz/', vietnamese: 'trò chơi cờ bàn' },
                     ],
                     grammar: [
-                        { title: { en: 'Present Simple for habits', vi: 'Thì Hiện tại đơn cho thói quen' }, explanation: { en: ['We can use the Present Simple to talk about habits or things that happen regularly.', 'I/You/We/They play soccer.', 'He/She reads comics.', 'What do you do in your free time? - I play soccer on Tuesday evenings.'], vi: ['Chúng ta có thể sử dụng thì Hiện tại đơn để nói về thói quen hoặc những điều xảy ra thường xuyên.', 'Tôi/Bạn/Chúng tôi/Họ chơi bóng đá.', 'Anh ấy/Cô ấy đọc truyện tranh.', 'Bạn làm gì vào thời gian rảnh? - Tôi chơi bóng đá vào các buổi tối thứ Ba.'] } },
+                        { title: { en: 'Verbs (to express preference) + gerund', vi: 'Động từ chỉ sở thích + danh động từ' }, explanation: { en: ['We use verbs of preference (love, like, enjoy, prefer, don\'t like, hate) followed by a gerund (-ing form) to express what we like or dislike doing.', 'I **love playing** sports. He **hates reading** comics.'], vi: ['Chúng ta sử dụng động từ chỉ sở thích (yêu, thích, ghét, v.v.) theo sau là danh động từ (dạng V-ing) để bày tỏ điều chúng ta thích hoặc không thích làm.', 'Tôi **thích chơi** thể thao. Anh ấy **ghét đọc** truyện tranh.'] } },
                     ],
-                    activities: [],
+                    activities: [
+                        { type: 'Reading', description: { en: ['Read about the hobbies of Will, Jess, and Peter, then compare yourself to them.'], vi: ['Đọc về sở thích của Will, Jess và Peter, sau đó so sánh bản thân với các nhân vật.'] } },
+                        { type: 'Speaking', description: { en: ['Conduct a survey in groups to find the most suitable activity for a youth center.'], vi: ['Thực hiện khảo sát trong nhóm để tìm ra hoạt động giải trí ưa thích cho trung tâm thanh thiếu niên.'] } }
+                    ],
                 },
                 {
                     id: 80102,
                     title: { en: 'Lesson 2: Making Plans', vi: 'Bài học 2: Lên kế hoạch' },
                     aims: {
-                        en: ['Make future plans', 'Use the Present Continuous for future plans and prepositions of place', 'Start a friendly conversation'],
-                        vi: ['Lên kế hoạch tương lai', 'Sử dụng thì Hiện tại tiếp diễn cho kế hoạch tương lai và giới từ chỉ nơi chốn', 'Bắt đầu một cuộc trò chuyện thân mật'],
+                        en: ['Make plans for leisure activities with friends', 'Use the Present Simple for future meaning and prepositions of time'],
+                        vi: ['Lập kế hoạch hoạt động giải trí với bạn bè', 'Sử dụng thì Hiện tại đơn với ý nghĩa tương lai và giới từ chỉ thời gian'],
                     },
                     vocabulary: [
-                        { term: 'sports center', pronunciation: '/spɔːrts ˈsentər/', vietnamese: 'trung tâm thể thao' },
-                        { term: 'bowling alley', pronunciation: '/ˈboʊlɪŋ ˈæli/', vietnamese: 'sân chơi bowling' },
-                        { term: 'theater', pronunciation: '/ˈθiːətər/', vietnamese: 'nhà hát' },
-                        { term: 'ice rink', pronunciation: '/aɪs rɪŋk/', vietnamese: 'sân băng' },
-                        { term: 'water park', pronunciation: '/ˈwɔːtər pɑːrk/', vietnamese: 'công viên nước' },
-                        { term: 'market', pronunciation: '/ˈmɑːrkɪt/', vietnamese: 'chợ' },
-                        { term: 'fair', pronunciation: '/fer/', vietnamese: 'hội chợ' },
+                        { term: 'knitting', pronunciation: '/ˈnɪtɪŋ/', vietnamese: 'đan len' },
+                        { term: 'karate', pronunciation: '/kəˈrɑːti/', vietnamese: 'võ karate' },
+                        { term: 'roller skating', pronunciation: '/ˈroʊlər ˈskeɪtɪŋ/', vietnamese: 'trượt patin' },
+                        { term: 'sewing', pronunciation: '/ˈsoʊɪŋ/', vietnamese: 'may vá' },
+                        { term: 'practice', pronunciation: '/ˈpræktɪs/', vietnamese: 'luyện tập' },
+                        { term: 'shuttlecock', pronunciation: '/ˈʃʌtəlˌkɑːk/', vietnamese: 'quả cầu lông' },
+                        { term: 'cycling', pronunciation: '/ˈsaɪklɪŋ/', vietnamese: 'đạp xe' },
+                        { term: 'table tennis', pronunciation: '/ˈteɪbl ˈtɛnɪs/', vietnamese: 'bóng bàn' },
                     ],
                     grammar: [
-                        { title: { en: 'Present Continuous for future plans', vi: 'Thì Hiện tại tiếp diễn cho kế hoạch tương lai' }, explanation: { en: ['We can use the Present Continuous to talk about future plans.', 'I\'m going to the sports center tonight.', 'He/She is going to the bowling alley this evening.'], vi: ['Chúng ta có thể sử dụng thì Hiện tại tiếp diễn để nói về các kế hoạch trong tương lai.', 'Tôi sẽ đến trung tâm thể thao tối nay.', 'Anh ấy/Cô ấy sẽ đến sân chơi bowling tối nay.'] } },
-                        { title: { en: 'Prepositions of place', vi: 'Giới từ chỉ nơi chốn' }, explanation: { en: ['We use prepositions of place to talk about where something or someone is located.', 'in front of, behind, next to, opposite.'], vi: ['Chúng ta sử dụng giới từ chỉ nơi chốn để nói về vị trí của một cái gì đó hoặc ai đó.', 'ở phía trước, phía sau, bên cạnh, đối diện.'] } },
+                        { title: { en: 'Present Simple for future meaning', vi: 'Hiện tại đơn với ý nghĩa tương lai' }, explanation: { en: ['We use the Present Simple to talk about fixed future timetables or schedules.', 'I **have** soccer practice at 7 tonight. The concert **starts** at 8 p.m.'], vi: ['Chúng ta dùng thì Hiện tại đơn để nói về lịch trình cố định trong tương lai.', 'Tôi **có** buổi luyện tập bóng đá lúc 7 giờ tối nay. Buổi hòa nhạc **bắt đầu** lúc 8 giờ tối.'] } },
+                        { title: { en: 'Prepositions of time: from...to..., until', vi: 'Giới từ chỉ thời gian: từ...đến..., cho đến khi' }, explanation: { en: ['We use **from...to...** to show the start and end time of an event. We use **until** to show the ending point.', 'The class runs **from 9 a.m. to 11 a.m.** We will stay **until** midnight.'], vi: ['Chúng ta dùng **from...to...** để chỉ thời gian bắt đầu và kết thúc. Chúng ta dùng **until** để chỉ điểm kết thúc.', 'Lớp học diễn ra **từ 9 giờ sáng đến 11 giờ sáng**. Chúng ta sẽ ở lại **cho đến** nửa đêm.'] } },
                     ],
-                    activities: [],
+                    activities: [
+                        { type: 'Listening', description: { en: ['Listen to two friends making plans and complete their schedule.'], vi: ['Nghe hai người bạn lên kế hoạch và hoàn thành lịch trình của họ.'] } },
+                        { type: 'Role-play', description: { en: ['Role-play phone calls inviting friends to weekend activities based on a given schedule.'], vi: ['Đóng vai các cuộc gọi điện thoại mời bạn bè tham gia các hoạt động cuối tuần dựa trên lịch trình.'] } }
+                    ],
                 },
                 {
                     id: 80103,
-                    title: { en: 'Lesson 3: Extreme Sports', vi: 'Bài học 3: Thể thao mạo hiểm' },
+                    title: { en: 'Lesson 3: Hobbies', vi: 'Bài học 3: Sở thích' },
                     aims: {
-                        en: ['Talk about extreme sports', 'Write emails inviting people to join you in an activity'],
-                        vi: ['Nói về các môn thể thao mạo hiểm', 'Viết email mời mọi người tham gia một hoạt động'],
+                        en: ['Talk about your favorite hobby', 'Write a descriptive paragraph about a hobby'],
+                        vi: ['Nói về sở thích yêu thích của mình', 'Viết một đoạn văn mô tả về sở thích'],
                     },
                     vocabulary: [
                         { term: 'skateboarding', pronunciation: '/ˈskeɪtbɔːrdɪŋ/', vietnamese: 'trượt ván' },
@@ -69,555 +76,683 @@ export const sw8Data: CurriculumLevel = {
                         { term: 'zorbing', pronunciation: '/ˈzɔːrbɪŋ/', vietnamese: 'trượt bóng zorbing' },
                     ],
                     grammar: [],
-                    activities: [],
+                    activities: [
+                        { type: 'Reading & Analysis', description: { en: ['Read a descriptive paragraph about a hobby (e.g., baking) and analyze its structure (topic sentence, supporting details/Wh-questions, concluding sentence).'], vi: ['Đọc đoạn văn mô tả về một sở thích (ví dụ: làm bánh) và phân tích cấu trúc của nó (câu chủ đề, các câu hỗ trợ/câu hỏi Wh-, và câu kết luận).'] } },
+                        { type: 'Writing', description: { en: ['Write a descriptive paragraph (80-100 words) about your favorite hobby.'], vi: ['Viết một đoạn văn mô tả (80-100 từ) về sở thích yêu thích của bạn.'] } }
+                    ],
                 }
             ]
         },
         {
             id: 802,
-            title: { en: 'Unit 2: Health', vi: 'Bài 2: Sức khỏe' },
+            title: { en: 'Unit 2: Life in the Country', vi: 'Bài 2: Cuộc sống ở Nông thôn' },
             lessons: [
                  {
                     id: 80201,
-                    title: { en: 'Lesson 1: Healthy Lifestyle', vi: 'Bài học 1: Lối sống lành mạnh' },
+                    title: { en: 'Lesson 1: Country vs. City', vi: 'Bài học 1: Nông thôn và Thành thị' },
                     aims: {
-                        en: ['Talk about what makes a healthy lifestyle', 'Use indefinite quantifiers'],
-                        vi: ['Nói về điều gì tạo nên một lối sống lành mạnh', 'Sử dụng các lượng từ bất định']
+                        en: ['Discuss life in the country vs. the city', 'Use quantifiers with countable and uncountable nouns'],
+                        vi: ['Thảo luận về cuộc sống ở nông thôn và thành thị', 'Sử dụng danh từ đếm được và không đếm được với các lượng từ bất định']
                     },
                     vocabulary: [
-                        { term: 'get (some) sleep', pronunciation: '/ɡet (sʌm) sliːp/', vietnamese: 'ngủ một chút' },
-                        { term: 'eat fruit and vegetables', pronunciation: '/iːt fruːt ænd ˈvɛdʒtəbəlz/', vietnamese: 'ăn trái cây và rau củ' },
-                        { term: 'eat fast food', pronunciation: '/iːt fæst fuːd/', vietnamese: 'ăn đồ ăn nhanh' },
-                        { term: 'drink soda', pronunciation: '/drɪŋk ˈsoʊdə/', vietnamese: 'uống soda' },
-                        { term: 'healthy', pronunciation: '/ˈhɛlθi/', vietnamese: 'khỏe mạnh' },
-                        { term: 'unhealthy', pronunciation: '/ʌnˈhɛlθi/', vietnamese: 'không lành mạnh' },
+                        { term: 'entertainment', pronunciation: '/ˌɛntərˈteɪnmənt/', vietnamese: 'giải trí' },
+                        { term: 'nature', pronunciation: '/ˈneɪtʃər/', vietnamese: 'thiên nhiên' },
+                        { term: 'noise', pronunciation: '/nɔɪz/', vietnamese: 'tiếng ồn' },
+                        { term: 'peace', pronunciation: '/piːs/', vietnamese: 'sự yên bình' },
+                        { term: 'fresh', pronunciation: '/frɛʃ/', vietnamese: 'tươi (không khí, thực phẩm)' },
+                        { term: 'vehicle', pronunciation: '/ˈviːəkl/', vietnamese: 'phương tiện giao thông' },
+                        { term: 'room', pronunciation: '/ruːm/', vietnamese: 'không gian' },
+                        { term: 'facility', pronunciation: '/fəˈsɪləti/', vietnamese: 'cơ sở vật chất' },
                     ],
                     grammar: [{
-                        title: { en: 'Indefinite quantifiers', vi: 'Lượng từ bất định' },
-                        explanation: { en: ['We can use a little, not much, some, and lots of/a lot of to say how much we do something.', 'Use with uncountable nouns (e.g., junk food) and plural countable nouns (e.g., vegetables).'], vi: ['Chúng ta có thể sử dụng a little, not much, some, và lots of/a lot of để nói về mức độ chúng ta làm điều gì đó.', 'Sử dụng với danh từ không đếm được (VD: đồ ăn vặt) và danh từ đếm được số nhiều (VD: rau củ).'] }
+                        title: { en: 'Quantifiers with countable/uncountable nouns', vi: 'Lượng từ với danh từ đếm được/không đếm được' },
+                        explanation: { en: ['We use **too much** and **not enough** with uncountable nouns (e.g., noise, pollution). We use **too many** and **not enough** with plural countable nouns (e.g., vehicles, people). **Lots of** is used with both.', 'There is **too much** noise. There are **not enough** facilities.'], vi: ['Chúng ta dùng **too much** và **not enough** với danh từ không đếm được. Chúng ta dùng **too many** và **not enough** với danh từ đếm được số nhiều. **Lots of** dùng với cả hai.', 'Có **quá nhiều** tiếng ồn. Có **không đủ** cơ sở vật chất.'] }
                     }],
-                    activities: []
+                    activities: [
+                        { type: 'Speaking', description: { en: ['Discuss the pros and cons of city and country life using the quantifiers learned.'], vi: ['Thảo luận nhóm về những ưu và nhược điểm của cuộc sống ở thành thị và nông thôn, sử dụng các lượng từ đã học.'] } }
+                    ]
                 },
                 {
                     id: 80202,
-                    title: { en: 'Lesson 2: Advice', vi: 'Bài học 2: Lời khuyên' },
+                    title: { en: 'Lesson 2: Folk Games', vi: 'Bài học 2: Trò chơi dân gian' },
                     aims: {
-                        en: ['Give advice and persuade someone to have a healthy lifestyle', 'Use "should" and "shouldn\'t"'],
-                        vi: ['Đưa ra lời khuyên và thuyết phục ai đó có lối sống lành mạnh', 'Sử dụng "should" và "shouldn\'t"']
+                        en: ['Talk about folk games and country activities', 'Use verbs of preference + to-infinitive and adverbs of frequency'],
+                        vi: ['Nói về các trò chơi dân gian và hoạt động ở nông thôn', 'Sử dụng động từ chỉ sở thích + động từ nguyên mẫu có to và các trạng từ chỉ tần suất']
                     },
                     vocabulary: [
-                        { term: 'feel weak', pronunciation: '/fiːl wiːk/', vietnamese: 'cảm thấy yếu' },
-                        { term: 'have a sore throat', pronunciation: '/hæv ə sɔːr θroʊt/', vietnamese: 'bị đau họng' },
-                        { term: 'get some rest', pronunciation: '/ɡet sʌm rest/', vietnamese: 'nghỉ ngơi' },
-                        { term: 'take vitamins', pronunciation: '/teɪk ˈvaɪtəmɪnz/', vietnamese: 'uống vitamin' },
-                        { term: 'have a fever', pronunciation: '/hæv ə ˈfiːvər/', vietnamese: 'bị sốt' },
-                        { term: 'take medicine', pronunciation: '/teɪk ˈmɛdəsɪn/', vietnamese: 'uống thuốc' },
-                        { term: 'stay up late', pronunciation: '/steɪ ʌp leɪt/', vietnamese: 'thức khuya' },
-                        { term: 'keep warm', pronunciation: '/kiːp wɔːrm/', vietnamese: 'giữ ấm' },
+                        { term: 'hometown', pronunciation: '/ˈhoʊmtaʊn/', vietnamese: 'quê hương' },
+                        { term: 'folk', pronunciation: '/foʊk/', vietnamese: 'dân gian' },
+                        { term: 'tug of war', pronunciation: '/tʌɡ əv wɔːr/', vietnamese: 'kéo co' },
+                        { term: 'jump rope', pronunciation: '/dʒʌmp roʊp/', vietnamese: 'nhảy dây' },
+                        { term: 'pick (flowers)', pronunciation: '/pɪk/', vietnamese: 'hái (hoa)' },
+                        { term: 'spinning tops', pronunciation: '/ˈspɪnɪŋ tɑːps/', vietnamese: 'chơi quay' },
+                        { term: 'herd (buffalo)', pronunciation: '/hɜːrd/', vietnamese: 'chăn (trâu)' },
                     ],
-                    grammar: [{
-                        title: { en: 'should / shouldn\'t', vi: 'should / shouldn\'t' },
-                        explanation: { en: ['We can use should and shouldn\'t to give advice. We can use should to ask for advice.', 'You should eat fresh fruit. You shouldn\'t eat fast food.', 'What should I do? Should I take some medicine?'], vi: ['Chúng ta có thể dùng should và shouldn\'t để đưa ra lời khuyên. Chúng ta có thể dùng should để hỏi xin lời khuyên.', 'Bạn nên ăn trái cây tươi. Bạn không nên ăn đồ ăn nhanh.', 'Tôi nên làm gì? Tôi có nên uống thuốc không?'] }
-                    }],
-                    activities: []
+                    grammar: [
+                        { title: { en: 'Verbs (to express preference) + to-infinitive', vi: 'Động từ chỉ sở thích + động từ nguyên mẫu có to' }, explanation: { en: ['Some verbs of preference (e.g., **prefer**) can also be followed by a to-infinitive.', 'They **prefer to play** outdoors. I **prefer to read** books.'], vi: ['Một số động từ chỉ sở thích (ví dụ: **prefer**) cũng có thể theo sau là động từ nguyên mẫu có to.', 'Họ **thích chơi** ngoài trời hơn. Tôi **thích đọc** sách hơn.'] } },
+                        { title: { en: 'Adverbs of frequency', vi: 'Trạng từ chỉ tần suất' }, explanation: { en: ['Reviewing the use and position of adverbs of frequency (**never, rarely, sometimes, often, usually, always**).', 'She **always** goes to the park. They **rarely** play folk games.'], vi: ['Ôn tập cách dùng và vị trí của các trạng từ chỉ tần suất (**never, rarely, sometimes, often, usually, always**).', 'Cô ấy **luôn luôn** đi đến công viên. Họ **hiếm khi** chơi trò chơi dân gian.'] } }
+                    ],
+                    activities: [
+                        { type: 'Reading', description: { en: ['Read a blog about a visit to the country and the folk games/activities there.'], vi: ['Đọc blog của Vy về chuyến thăm quê và các hoạt động của trẻ em ở đó.'] } },
+                        { type: 'Speaking', description: { en: ['Ask and answer about activities young people like to do in different places.'], vi: ['Hỏi và trả lời về các hoạt động mà giới trẻ thích làm ở các địa điểm khác nhau.'] } }
+                    ]
                 },
                 {
                     id: 80203,
-                    title: { en: 'Lesson 3: Healthy Food', vi: 'Bài học 3: Thực phẩm lành mạnh' },
+                    title: { en: 'Lesson 3: Festivals in the Country', vi: 'Bài học 3: Lễ hội ở Nông thôn' },
                     aims: {
-                        en: ['Talk about healthy food', 'Write a request letter'],
-                        vi: ['Nói về thực phẩm lành mạnh', 'Viết một lá thư yêu cầu']
+                        en: ['Talk about festivals in the country', 'Write an announcement for a festival'],
+                        vi: ['Nói về các lễ hội ở vùng quê', 'Viết một thông báo cho một lễ hội']
                     },
-                    vocabulary: [],
+                    vocabulary: [
+                        { term: 'fireworks', pronunciation: '/ˈfaɪərwɜːrks/', vietnamese: 'pháo hoa' },
+                        { term: 'float', pronunciation: '/floʊt/', vietnamese: 'xe hoa/kiệu' },
+                        { term: 'parade', pronunciation: '/pəˈreɪd/', vietnamese: 'diễu hành' },
+                        { term: 'wrestling', pronunciation: '/ˈreslɪŋ/', vietnamese: 'đấu vật' },
+                        { term: 'announcement', pronunciation: '/əˈnaʊnsmənt/', vietnamese: 'thông báo' }
+                    ],
                     grammar: [],
-                    activities: []
+                    activities: [
+                        { type: 'Writing & Planning', description: { en: ['Plan a traditional festival (name, location, time, cost, activities, food) and write an official announcement (80-100 words) for the event.'], vi: ['Lên kế hoạch cho một lễ hội truyền thống (tên, địa điểm, thời gian, chi phí, hoạt động, ẩm thực) và viết một thông báo (80-100 từ) cho lễ hội đó.'] } }
+                    ]
                 }
             ]
         },
         {
             id: 803,
-            title: { en: 'Unit 3: Music and Arts', vi: 'Bài 3: Âm nhạc và Nghệ thuật' },
+            title: { en: 'Unit 3: Protecting the Environment', vi: 'Bài 3: Bảo vệ Môi trường' },
             lessons: [
                 {
                     id: 80301,
-                    title: {en: 'Lesson 1: Music Types', vi: 'Bài học 1: Các loại nhạc'},
+                    title: {en: 'Lesson 1: Effects of Pollution', vi: 'Bài học 1: Tác động của Ô nhiễm'},
                     aims: {
-                        en: ['Talk about music that you like', 'Use the Present Simple for facts'],
-                        vi: ['Nói về thể loại nhạc bạn thích', 'Sử dụng thì Hiện tại đơn cho các sự thật']
+                        en: ['Talk about the effects of pollution', 'Use the First Conditional with "if" or "unless"'],
+                        vi: ['Nói về các tác động của ô nhiễm', 'Sử dụng câu điều kiện loại 1 với "if" hoặc "unless"']
                     },
                     vocabulary: [
-                        {term: 'jazz', pronunciation: '/dʒæz/', vietnamese: 'nhạc jazz'},
-                        {term: 'pop', pronunciation: '/pɑːp/', vietnamese: 'nhạc pop'},
-                        {term: 'hip hop', pronunciation: '/ˈhɪp hɑːp/', vietnamese: 'nhạc hip hop'},
-                        {term: 'classical music', pronunciation: '/ˈklæsɪkl ˈmjuːzɪk/', vietnamese: 'nhạc cổ điển'},
-                        {term: 'rock', pronunciation: '/rɑːk/', vietnamese: 'nhạc rock'},
-                        {term: 'country (music)', pronunciation: '/ˈkʌntri ˈmjuːzɪk/', vietnamese: 'nhạc đồng quê'}
+                        {term: 'affect', pronunciation: '/əˈfɛkt/', vietnamese: 'ảnh hưởng'},
+                        {term: 'cause', pronunciation: '/kɔːz/', vietnamese: 'gây ra'},
+                        {term: 'pollute', pronunciation: '/pəˈluːt/', vietnamese: 'gây ô nhiễm'},
+                        {term: 'disease', pronunciation: '/dɪˈziːz/', vietnamese: 'bệnh tật'},
+                        {term: 'wildlife', pronunciation: '/ˈwaɪldlaɪf/', vietnamese: 'động vật hoang dã'},
+                        {term: 'tourism', pronunciation: '/ˈtʊrɪzəm/', vietnamese: 'du lịch'},
+                        {term: 'environment', pronunciation: '/ɪnˈvaɪrənmənt/', vietnamese: 'môi trường'},
+                        {term: 'damage', pronunciation: '/ˈdæmɪdʒ/', vietnamese: 'thiệt hại'}
                     ],
                     grammar: [{
-                        title: {en: 'Present Simple for facts', vi: 'Thì Hiện tại đơn cho sự thật'},
-                        explanation: {en: ['We can use the Present Simple to talk about things that we consider as facts (such as likes and dislikes).', 'I like jazz. Does he enjoy listening to rock?'], vi: ['Chúng ta có thể sử dụng thì Hiện tại đơn để nói về những điều chúng ta coi là sự thật (chẳng hạn như sở thích và không thích).', 'Tôi thích nhạc jazz. Anh ấy có thích nghe nhạc rock không?']}
+                        title: {en: 'First Conditional with if or unless', vi: 'Câu điều kiện loại 1 với if hoặc unless'},
+                        explanation: {en: ['We use the First Conditional to talk about possible future situations and their results. **If + Present Simple, will + V** or **Unless + Present Simple, will + V** (unless means if not).', 'If we **pollute** the air, we **will get** sick. Unless we **stop**, wildlife **will disappear**.'], vi: ['Chúng ta dùng Câu điều kiện loại 1 để nói về các tình huống có thể xảy ra trong tương lai và kết quả của chúng. **If + Hiện tại đơn, will + V** hoặc **Unless + Hiện tại đơn, will + V** (unless có nghĩa là nếu không).', 'Nếu chúng ta **gây ô nhiễm** không khí, chúng ta **sẽ bị** bệnh. Trừ khi chúng ta **ngừng lại**, động vật hoang dã **sẽ biến mất**.' ]}
                     }],
-                    activities: []
+                    activities: [
+                        { type: 'Speaking & Mind Map', description: { en: ['Create a mind map about the effects of different types of pollution (air, land, water) and present it using the First Conditional.'], vi: ['Lập sơ đồ tư duy về các tác động của ô nhiễm không khí, đất, sông ngòi và biển, sau đó trình bày bằng Câu điều kiện loại 1.'] } }
+                    ]
                 },
                 {
                     id: 80302,
-                    title: {en: 'Lesson 2: Music Events', vi: 'Bài học 2: Sự kiện âm nhạc'},
+                    title: {en: 'Lesson 2: Reducing Pollution', vi: 'Bài học 2: Giảm thiểu Ô nhiễm'},
                     aims: {
-                        en: ['Plan to go to a music event', 'Use prepositions of time and possessive adjectives'],
-                        vi: ['Lên kế hoạch đi xem một sự kiện âm nhạc', 'Sử dụng giới từ chỉ thời gian và tính từ sở hữu']
+                        en: ['Give advice on how to reduce pollution', 'Use conjunctions to make compound and complex sentences'],
+                        vi: ['Đưa ra lời khuyên về cách giảm thiểu ô nhiễm', 'Sử dụng các liên từ để tạo câu ghép và câu phức']
                     },
                     vocabulary: [
-                        {term: 'electronic', pronunciation: '/ɪˌlɛkˈtrɑːnɪk/', vietnamese: 'nhạc điện tử'},
-                        {term: 'heavy metal', pronunciation: '/ˈhɛvi ˈmɛtl/', vietnamese: 'nhạc heavy metal'},
-                        {term: 'reggae', pronunciation: '/ˈrɛɡeɪ/', vietnamese: 'nhạc reggae'},
-                        {term: 'blues', pronunciation: '/bluːz/', vietnamese: 'nhạc blues'},
-                        {term: 'folk (music)', pronunciation: '/foʊk ˈmjuːzɪk/', vietnamese: 'nhạc dân gian'},
-                        {term: 'RnB', pronunciation: '/ˌɑːr ən ˈbiː/', vietnamese: 'nhạc RnB'}
+                        {term: 'recycle', pronunciation: '/ˌriːˈsaɪkl/', vietnamese: 'tái chế'},
+                        {term: 'reuse', pronunciation: '/ˌriːˈjuːz/', vietnamese: 'tái sử dụng'},
+                        {term: 'reduce', pronunciation: '/rɪˈduːs/', vietnamese: 'giảm bớt'},
+                        {term: 'save', pronunciation: '/seɪv/', vietnamese: 'tiết kiệm'},
+                        {term: 'waste', pronunciation: '/weɪst/', vietnamese: 'lãng phí'},
+                        {term: 'clean up', pronunciation: '/kliːn ʌp/', vietnamese: 'dọn dẹp'},
+                        {term: 'electricity', pronunciation: '/ɪˌlɛkˈtrɪsəti/', vietnamese: 'điện'},
+                        {term: 'air conditioner', pronunciation: '/ˈɛr kənˌdɪʃənər/', vietnamese: 'máy điều hòa'}
                     ],
-                    grammar: [
-                        {title: {en: 'Prepositions of time', vi: 'Giới từ chỉ thời gian'}, explanation: {en: ['We use in with parts of the day, months, seasons, and years.', 'We use on with days and dates.', 'We use at with times of the day and meals.'], vi: ['Chúng ta dùng in với các buổi trong ngày, tháng, mùa và năm.', 'Chúng ta dùng on với các ngày và ngày tháng.', 'Chúng ta dùng at với thời gian trong ngày và các bữa ăn.']}},
-                        {title: {en: 'Possessive adjectives', vi: 'Tính từ sở hữu'}, explanation: {en: ['We use possessive adjectives to express possession.', 'my, your, his, her, its, our, their.'], vi: ['Chúng ta dùng tính từ sở hữu để diễn tả sự sở hữu.', 'my, your, his, her, its, our, their.']}}
-                    ],
-                    activities: []
+                    grammar: [{
+                        title: {en: 'Conjunctions: and, so (that)', vi: 'Liên từ: and, so (that)'},
+                        explanation: {en: ['We use **and** to join similar ideas. We use **so (that)** to express purpose or result.', 'We clean up the park **and** we plant trees. We turn off the lights **so that** we can save energy.'], vi: ['Chúng ta dùng **and** để nối các ý tương đồng. Chúng ta dùng **so (that)** để chỉ mục đích hoặc kết quả.', 'Chúng ta dọn dẹp công viên **và** trồng cây. Chúng ta tắt đèn **để** tiết kiệm năng lượng.']}
+                    }],
+                    activities: [
+                        { type: 'Speaking & Design', description: { en: ['Design a poster giving solutions to reduce pollution and present it to the class.'], vi: ['Thiết kế một poster đưa ra các giải pháp giảm thiểu ô nhiễm và trình bày trước lớp.'] } }
+                    ]
                 },
                 {
                     id: 80303,
-                    title: {en: 'Lesson 3: Movies', vi: 'Bài học 3: Phim ảnh'},
+                    title: {en: 'Lesson 3: A Greener School', vi: 'Bài học 3: Trường học Xanh hơn'},
                     aims: {
-                        en: ['Talk about a movie you like', 'Write a paragraph describing a movie'],
-                        vi: ['Nói về một bộ phim bạn thích', 'Viết một đoạn văn mô tả một bộ phim']
+                        en: ['Discuss ways to protect the environment', 'Write a short guide on making the school greener'],
+                        vi: ['Thảo luận các cách để bảo vệ môi trường', 'Viết một bản hướng dẫn ngắn để làm cho trường học xanh hơn']
                     },
                     vocabulary: [
-                        {term: 'conclusion', pronunciation: '/kənˈkluːʒən/', vietnamese: 'kết luận'},
-                        {term: 'plot', pronunciation: '/plɑːt/', vietnamese: 'cốt truyện'},
-                        {term: 'star', pronunciation: '/stɑːr/', vietnamese: 'ngôi sao (diễn viên chính)'},
-                        {term: 'setting', pronunciation: '/ˈsɛtɪŋ/', vietnamese: 'bối cảnh'}
+                        { term: 'bin', pronunciation: '/bɪn/', vietnamese: 'thùng rác' },
+                        { term: 'sign', pronunciation: '/saɪn/', vietnamese: 'biển báo' },
+                        { term: 'campaign', pronunciation: '/kæmˈpeɪn/', vietnamese: 'chiến dịch' },
+                        { term: 'switch off', pronunciation: '/swɪtʃ ɔːf/', vietnamese: 'tắt' }
                     ],
                     grammar: [],
-                    activities: []
+                    activities: [
+                        { type: 'Writing', description: { en: ['Discuss solutions and write a guide (80-100 words) on how to make your school more eco-friendly.'], vi: ['Thảo luận các giải pháp và viết một bản hướng dẫn (80-100 từ) về cách làm cho trường học của bạn trở nên thân thiện hơn với môi trường.'] } }
+                    ]
                 }
             ]
         },
         {
             id: 804,
-            title: { en: 'Unit 4: Community Services', vi: 'Bài 4: Dịch vụ Cộng đồng' },
+            title: { en: 'Unit 4: Disasters', vi: 'Bài 4: Thảm họa' },
             lessons: [
                 {
                     id: 80401,
-                    title: {en: 'Lesson 1: Charity Events', vi: 'Bài học 1: Sự kiện từ thiện'},
+                    title: {en: 'Lesson 1: Types of Disasters', vi: 'Bài học 1: Các loại Thảm họa'},
                     aims: {
-                        en: ['Suggest and plan a charity event', 'Use "should," "Let\'s," and "How about" to make suggestions'],
-                        vi: ['Đề xuất và lên kế hoạch cho một sự kiện từ thiện', 'Sử dụng "should," "Let\'s," và "How about" để đưa ra gợi ý']
+                        en: ['Talk about natural disasters', 'Use Wh-questions in the Past Simple'],
+                        vi: ['Nói về các thảm họa', 'Sử dụng câu hỏi Wh- trong thì Quá khứ đơn']
                     },
                     vocabulary: [
-                        {term: 'car wash', pronunciation: '/kɑːr wɑːʃ/', vietnamese: 'rửa xe'},
-                        {term: 'bake sale', pronunciation: '/beɪk seɪl/', vietnamese: 'bán bánh gây quỹ'},
-                        {term: 'craft fair', pronunciation: '/kræft fer/', vietnamese: 'hội chợ thủ công'},
-                        {term: 'talent show', pronunciation: '/ˈtælənt ʃoʊ/', vietnamese: 'buổi biểu diễn tài năng'},
-                        {term: 'fun run', pronunciation: '/fʌn rʌn/', vietnamese: 'cuộc chạy bộ vui vẻ'}
+                        {term: 'typhoon', pronunciation: '/taɪˈfuːn/', vietnamese: 'bão nhiệt đới'},
+                        {term: 'earthquake', pronunciation: '/ˈɜːrθkweɪk/', vietnamese: 'động đất'},
+                        {term: 'tsunami', pronunciation: '/tsuːˈnɑːmi/', vietnamese: 'sóng thần'},
+                        {term: 'flood', pronunciation: '/flʌd/', vietnamese: 'lũ lụt'},
+                        {term: 'wildfire', pronunciation: '/ˈwaɪldfaɪər/', vietnamese: 'cháy rừng'},
+                        {term: 'blizzard', pronunciation: '/ˈblɪzərd/', vietnamese: 'bão tuyết'},
+                        {term: 'heat wave', pronunciation: '/hiːt weɪv/', vietnamese: 'sóng nhiệt'},
+                        {term: 'drought', pronunciation: '/draʊt/', vietnamese: 'hạn hán'},
+                        {term: 'landslide', pronunciation: '/ˈlændslaɪd/', vietnamese: 'sạt lở đất'},
+                        {term: 'avalanche', pronunciation: '/ˈævəlæntʃ/', vietnamese: 'tuyết lở'}
                     ],
                     grammar: [{
-                        title: {en: 'Making suggestions', vi: 'Đưa ra gợi ý'},
-                        explanation: {en: ['We can make suggestions to offer ideas or plans for someone to think about.', 'should + bare infinitive', 'Let\'s + bare infinitive', 'How about + V-ing?'], vi: ['Chúng ta có thể đưa ra gợi ý để đề xuất ý tưởng hoặc kế hoạch cho ai đó suy nghĩ.', 'should + động từ nguyên mẫu', 'Let\'s + động từ nguyên mẫu', 'How about + V-ing?']}
+                        title: {en: 'Wh-questions in the Past Simple', vi: 'Câu hỏi Wh- trong thì Quá khứ đơn'},
+                        explanation: {en: ['We use Wh-questions (What, When, Where, Who) in the Past Simple to ask for specific information about past events.', 'What **was** the biggest typhoon? When **did** it **happen**?'], vi: ['Chúng ta dùng câu hỏi Wh- (Cái gì, Khi nào, Ở đâu, Ai) trong thì Quá khứ đơn để hỏi thông tin cụ thể về các sự kiện trong quá khứ.', 'Cơn bão lớn nhất **là gì**? Nó **xảy ra khi nào**?']}
                     }],
-                    activities: []
+                    activities: [
+                        { type: 'Reading', description: { en: ['Read information about a major disaster (e.g., Typhoon Tip) and answer comprehension questions.'], vi: ['Đọc thông tin về một thảm họa lớn (ví dụ: Typhoon Tip) và trả lời câu hỏi.'] } },
+                        { type: 'Speaking', description: { en: ['Play "Disasters Quiz Show," asking and answering Wh-questions about historical disasters.'], vi: ['Chơi trò "Disasters Quiz Show," đặt và trả lời câu hỏi Wh- về các thảm họa trong lịch sử.'] } }
+                    ]
                 },
                 {
                     id: 80402,
-                    title: {en: 'Lesson 2: Helping the Community', vi: 'Bài học 2: Giúp đỡ cộng đồng'},
+                    title: {en: 'Lesson 2: Disaster Safety', vi: 'Bài học 2: An toàn Thảm họa'},
                     aims: {
-                        en: ['Talk about things we did to help our community', 'Use the Past Simple with regular verbs'],
-                        vi: ['Nói về những việc chúng ta đã làm để giúp đỡ cộng đồng', 'Sử dụng thì Quá khứ đơn với động từ có quy tắc']
+                        en: ['Give advice on what to do during a disaster', 'Use prepositions of place and movement'],
+                        vi: ['Đưa ra lời khuyên về những việc cần làm khi có thảm họa', 'Sử dụng giới từ chỉ nơi chốn và sự di chuyển']
                     },
                     vocabulary: [
-                        {term: 'recycle', pronunciation: '/ˌriːˈsaɪkl/', vietnamese: 'tái chế'},
-                        {term: 'raise', pronunciation: '/reɪz/', vietnamese: 'quyên góp'},
-                        {term: 'plant', pronunciation: '/plænt/', vietnamese: 'trồng cây'},
-                        {term: 'donate', pronunciation: '/ˈdoʊneɪt/', vietnamese: 'hiến tặng'},
-                        {term: 'clean up', pronunciation: '/kliːn ʌp/', vietnamese: 'dọn dẹp'}
+                        {term: 'escape plan', pronunciation: '/ɪˈskeɪp plæn/', vietnamese: 'kế hoạch thoát hiểm'},
+                        {term: 'board up', pronunciation: '/bɔːrd ʌp/', vietnamese: 'che chắn (cửa sổ)'},
+                        {term: 'emergency services', pronunciation: '/ɪˈmɜːrdʒənsi ˈsɜːrvɪsɪz/', vietnamese: 'dịch vụ khẩn cấp'},
+                        {term: 'fire extinguisher', pronunciation: '/ˈfaɪər ɪkˈstɪŋɡwɪʃər/', vietnamese: 'bình chữa cháy'},
+                        {term: 'first aid kit', pronunciation: '/ˌfɜːrst ˈeɪd kɪt/', vietnamese: 'hộp sơ cứu'},
+                        {term: 'supplies', pronunciation: '/səˈplaɪz/', vietnamese: 'đồ tiếp tế'},
+                        {term: 'flashlight', pronunciation: '/ˈflæʃlaɪt/', vietnamese: 'đèn pin'},
+                        {term: 'batteries', pronunciation: '/ˈbætəriz/', vietnamese: 'pin'}
                     ],
                     grammar: [{
-                        title: {en: 'Past Simple with regular verbs', vi: 'Thì Quá khứ đơn với động từ có quy tắc'},
-                        explanation: {en: ['We use the Past Simple to talk about an action that started and finished in the past.', 'Last month, we raised money to help the local charity.'], vi: ['Chúng ta sử dụng thì Quá khứ đơn để nói về một hành động đã bắt đầu và kết thúc trong quá khứ.', 'Tháng trước, chúng tôi đã quyên góp tiền để giúp đỡ tổ chức từ thiện địa phương.']}
+                        title: {en: 'Prepositions of place (inside, under, near) and movement (to, into, outside)', vi: 'Giới từ chỉ nơi chốn (bên trong, dưới, gần) và sự di chuyển (đến, vào trong, bên ngoài)'},
+                        explanation: {en: ['We use prepositions of place to describe location (e.g., **inside**, **under** the table) and prepositions of movement to describe direction (e.g., run **to** the exit, move **into** the safe room).'], vi: ['Chúng ta dùng giới từ chỉ nơi chốn để mô tả vị trí (ví dụ: **bên trong**, **dưới** bàn) và giới từ chỉ sự di chuyển để mô tả hướng (ví dụ: chạy **đến** lối thoát, di chuyển **vào trong** phòng an toàn).'] }
                     }],
-                    activities: []
+                    activities: [
+                        { type: 'Speaking & Design', description: { en: ['Discuss and create a safety poster for a specific type of disaster (fire, flood, storm, etc.).'], vi: ['Thảo luận và tạo một poster về các mẹo an toàn cho một loại thảm họa cụ thể.'] } }
+                    ]
                 },
                 {
                     id: 80403,
-                    title: {en: 'Lesson 3: Environmental Clean-up', vi: 'Bài học 3: Dọn dẹp môi trường'},
+                    title: {en: 'Lesson 3: Emergency Announcements', vi: 'Bài học 3: Thông báo Khẩn cấp'},
                     aims: {
-                        en: ['Talk about how to help the environment', 'Write an email about an environmental clean-up'],
-                        vi: ['Nói về cách giúp đỡ môi trường', 'Viết một email về một cuộc dọn dẹp môi trường']
+                        en: ['Talk about the dangers of disasters and necessary actions', 'Write an emergency announcement'],
+                        vi: ['Nói về sự nguy hiểm của thảm họa và những việc nên làm', 'Viết một thông báo khẩn cấp']
                     },
-                    vocabulary: [],
+                    vocabulary: [
+                        { term: 'danger', pronunciation: '/ˈdeɪndʒər/', vietnamese: 'nguy hiểm' },
+                        { term: 'shelter', pronunciation: '/ˈʃɛltər/', vietnamese: 'nơi trú ẩn' },
+                        { term: 'warning', pronunciation: '/ˈwɔːrnɪŋ/', vietnamese: 'cảnh báo' },
+                        { term: 'evacuation', pronunciation: '/ɪˌvækjuˈeɪʃn/', vietnamese: 'sự sơ tán' }
+                    ],
                     grammar: [],
-                    activities: []
+                    activities: [
+                        { type: 'Writing', description: { en: ['Choose a disaster and write an emergency announcement (80-100 words) to warn your town, including essential information and safety instructions.'], vi: ['Chọn một thảm họa và viết một thông báo khẩn cấp (80-100 từ) để cảnh báo thị trấn của bạn, bao gồm các thông tin cần thiết và hướng dẫn an toàn.'] } }
+                    ]
                 }
             ]
         },
         {
             id: 805,
-            title: { en: 'Unit 5: Food and Drinks', vi: 'Bài 5: Đồ ăn và Thức uống' },
+            title: { en: 'Unit 5: Science and Technology', vi: 'Bài 5: Khoa học và Công nghệ' },
             lessons: [
                 {
                     id: 80501,
-                    title: {en: 'Lesson 1: Ingredients', vi: 'Bài học 1: Nguyên liệu'},
+                    title: {en: 'Lesson 1: Devices', vi: 'Bài học 1: Thiết bị'},
                     aims: {
-                        en: ['Talk about what food you need to buy', 'Use quantifiers and amounts'],
-                        vi: ['Nói về thực phẩm bạn cần mua', 'Sử dụng các từ chỉ số lượng và khối lượng']
+                        en: ['Ask and answer about devices', 'Use Wh- and Yes/No questions'],
+                        vi: ['Hỏi và trả lời về các thiết bị', 'Sử dụng câu hỏi Wh- và Yes/No']
                     },
                     vocabulary: [
-                        {term: 'spaghetti', pronunciation: '/spəˈɡɛti/', vietnamese: 'mì Ý'},
-                        {term: 'milliliters (ml)', pronunciation: '/ˈmɪlɪˌliːtərz/', vietnamese: 'mililit'},
-                        {term: 'lemon', pronunciation: '/ˈlɛmən/', vietnamese: 'chanh vàng'},
-                        {term: 'grams (g)', pronunciation: '/ɡræmz/', vietnamese: 'gam'},
-                        {term: 'tablespoon (tbsp)', pronunciation: '/ˈteɪblspuːn/', vietnamese: 'thìa canh'},
-                        {term: 'onion', pronunciation: '/ˈʌnjən/', vietnamese: 'hành tây'},
-                        {term: 'teaspoon (tsp)', pronunciation: '/ˈtiːspuːn/', vietnamese: 'thìa cà phê'},
-                        {term: 'tomato', pronunciation: '/təˈmeɪtoʊ/', vietnamese: 'cà chua'}
+                        {term: 'storage', pronunciation: '/ˈstɔːrɪdʒ/', vietnamese: 'dung lượng lưu trữ'},
+                        {term: 'weight', pronunciation: '/weɪt/', vietnamese: 'trọng lượng'},
+                        {term: 'screen', pronunciation: '/skriːn/', vietnamese: 'màn hình'},
+                        {term: 'inch', pronunciation: '/ɪntʃ/', vietnamese: 'inch'},
+                        {term: 'gigabyte (GB)', pronunciation: '/ˈɡɪɡəbaɪt/', vietnamese: 'gigabyte (GB)'},
+                        {term: 'tablet', pronunciation: '/ˈtæblət/', vietnamese: 'máy tính bảng'}
                     ],
                     grammar: [{
-                        title: {en: 'Much and Many', vi: 'Much và Many'},
-                        explanation: {en: ['We can use much for uncountable nouns and many for plural countable nouns.', 'How much sugar do we need?', 'How many eggs do we need?'], vi: ['Chúng ta có thể dùng much cho danh từ không đếm được và many cho danh từ đếm được số nhiều.', 'Chúng ta cần bao nhiêu đường?', 'Chúng ta cần bao nhiêu trứng?']}
+                        title: {en: 'Wh-questions and Yes/No questions', vi: 'Câu hỏi Wh- và Yes/No'},
+                        explanation: {en: ['Reviewing how to ask and answer questions about facts (Present Simple) and features/details (Wh-questions).', 'How much does it **weigh**? Does it **have** a large screen?'], vi: ['Ôn tập cách hỏi và trả lời câu hỏi về sự thật (Hiện tại đơn) và tính năng/chi tiết (câu hỏi Wh-).', 'Nó **nặng bao nhiêu**? Nó **có** màn hình lớn không?']}
                     }],
-                    activities: []
+                    activities: [
+                        { type: 'Reading', description: { en: ['Read and compare the features of two fictional tablets (e.g., Portal 6 and Portal 7).'], vi: ['Đọc và so sánh các tính năng của hai máy tính bảng giả định.'] } },
+                        { type: 'Role-play', description: { en: ['Role-play a conversation between a salesperson and a customer, asking about device features.'], vi: ['Đóng vai nhân viên bán hàng và khách hàng, hỏi và trả lời về các tính năng của thiết bị.'] } }
+                    ]
                 },
                 {
                     id: 80502,
-                    title: {en: 'Lesson 2: Containers', vi: 'Bài học 2: Đồ đựng'},
+                    title: {en: 'Lesson 2: Robots', vi: 'Bài học 2: Robot'},
                     aims: {
-                        en: ['Talk about containers and quantities of food and drinks', 'Use indefinite and definite articles'],
-                        vi: ['Nói về đồ đựng và số lượng đồ ăn, thức uống', 'Sử dụng mạo từ không xác định và xác định']
+                        en: ['Compare robots and their actions', 'Use comparative adverbs'],
+                        vi: ['So sánh các robot và hành động của chúng', 'Sử dụng trạng từ so sánh']
                     },
                     vocabulary: [
-                        {term: 'bag', pronunciation: '/bæɡ/', vietnamese: 'túi'},
-                        {term: 'bunch', pronunciation: '/bʌntʃ/', vietnamese: 'nải, chùm'},
-                        {term: 'can', pronunciation: '/kæn/', vietnamese: 'lon'},
-                        {term: 'bottle', pronunciation: '/ˈbɑːtl/', vietnamese: 'chai'},
-                        {term: 'stick', pronunciation: '/stɪk/', vietnamese: 'thỏi'},
-                        {term: 'carton (x2)', pronunciation: '/ˈkɑːrtn/', vietnamese: 'hộp (giấy)'},
-                        {term: 'box', pronunciation: '/bɑːks/', vietnamese: 'hộp'}
+                        {term: 'rescue', pronunciation: '/ˈreskjuː/', vietnamese: 'giải cứu'},
+                        {term: 'lift', pronunciation: '/lɪft/', vietnamese: 'nâng'},
+                        {term: 'complete', pronunciation: '/kəmˈpliːt/', vietnamese: 'hoàn thành'},
+                        {term: 'navigate', pronunciation: '/ˈnævɪɡeɪt/', vietnamese: 'điều hướng'},
+                        {term: 'carefully', pronunciation: '/ˈkerfəli/', vietnamese: 'cẩn thận'},
+                        {term: 'quietly', pronunciation: '/ˈkwaɪətli/', vietnamese: 'yên lặng'},
+                        {term: 'recognize', pronunciation: '/ˈrekəɡnaɪz/', vietnamese: 'nhận dạng'},
+                        {term: 'safely', pronunciation: '/ˈseɪfli/', vietnamese: 'an toàn'}
                     ],
                     grammar: [{
-                        title: {en: 'Indefinite and definite articles', vi: 'Mạo từ không xác định và xác định'},
-                        explanation: {en: ['We use a/an with singular nouns when we talk about something for the first time. After that, we use the.', 'I bought a can of beans. I put the can of beans in the cupboard.'], vi: ['Chúng ta dùng a/an với danh từ số ít khi nói về một cái gì đó lần đầu tiên. Sau đó, chúng ta dùng the.', 'Tôi đã mua một lon đậu. Tôi đã đặt lon đậu vào tủ.']}
+                        title: {en: 'Comparative adverbs (more slowly than, faster than, better than)', vi: 'Trạng từ so sánh hơn (chậm hơn, nhanh hơn, tốt hơn)'},
+                        explanation: {en: ['We use comparative adverbs to compare two actions. For short adverbs, add -er (e.g., faster). For long adverbs, use **more/less + adverb + than** (e.g., more carefully than).', 'Robot A works **more slowly than** Robot B.'], vi: ['Chúng ta dùng trạng từ so sánh hơn để so sánh hai hành động. Với trạng từ ngắn, thêm -er (ví dụ: faster). Với trạng từ dài, dùng **more/less + trạng từ + than** (ví dụ: more carefully than).', 'Robot A hoạt động **chậm hơn** Robot B.'] }
                     }],
-                    activities: []
+                    activities: [
+                        { type: 'Speaking', description: { en: ['Discuss and select the most suitable robot for different tasks (cleaning, building, rescue, etc.) based on their abilities.'], vi: ['Thảo luận và chọn robot phù hợp nhất cho các công việc khác nhau dựa trên khả năng của chúng.'] } }
+                    ]
                 },
                 {
                     id: 80503,
-                    title: {en: 'Lesson 3: Unusual Food', vi: 'Bài học 3: Món ăn lạ'},
+                    title: {en: 'Lesson 3: Smartphones', vi: 'Bài học 3: Điện thoại thông minh'},
                     aims: {
-                        en: ['Talk about unusual food posts in Vietnam', 'Write a food blog post'],
-                        vi: ['Nói về các bài đăng món ăn lạ ở Việt Nam', 'Viết một bài blog về ẩm thực']
+                        en: ['Talk about smartphones', 'Write an email about a new smartphone'],
+                        vi: ['Nói về điện thoại thông minh', 'Viết email về một chiếc điện thoại thông minh mới']
                     },
-                    vocabulary: [],
-                    grammar: [],
-                    activities: []
+                    vocabulary: [
+                        { term: 'camera', pronunciation: '/ˈkæmrə/', vietnamese: 'máy ảnh' },
+                        { term: 'battery life', pronunciation: '/ˈbætəri laɪf/', vietnamese: 'thời lượng pin' },
+                        { term: 'screen resolution', pronunciation: '/skriːn ˌrezəˈluːʃn/', vietnamese: 'độ phân giải màn hình' },
+                        { term: 'processor', pronunciation: '/ˈprɑːsesər/', vietnamese: 'bộ vi xử lý' },
+                    ],
+                    grammar: [
+                        { title: {en: 'Conjunctions (and, also, but, however, so)', vi: 'Liên từ (and, also, but, however, so)'}, explanation: {en: ['Reviewing the use of conjunctions and connecters to make longer, more complex sentences in writing.'], vi: ['Ôn tập cách sử dụng liên từ và từ nối để tạo ra các câu dài hơn, phức tạp hơn trong bài viết.']} }
+                    ],
+                    activities: [
+                        { type: 'Writing', description: { en: ['Discuss the pros and cons of a chosen smartphone and write an email (80-100 words) to a friend about it.'], vi: ['Thảo luận về ưu và nhược điểm của một chiếc điện thoại thông minh đã chọn và viết một email (80-100 từ) cho bạn bè về nó.'] } }
+                    ]
                 }
             ]
         },
         {
             id: 806,
-            title: { en: 'Unit 6: Education', vi: 'Bài 6: Giáo dục' },
+            title: { en: 'Unit 6: Life on Other Planets', vi: 'Bài 6: Cuộc sống trên các Hành tinh khác' },
             lessons: [
                 {
                     id: 80601,
-                    title: {en: 'Lesson 1: School Work', vi: 'Bài học 1: Việc học ở trường'},
+                    title: {en: 'Lesson 1: Future Homes', vi: 'Bài học 1: Ngôi nhà Tương lai'},
                     aims: {
-                        en: ['Decline invitations and express obligations', 'Use Present Simple and "have to"'],
-                        vi: ['Từ chối lời mời và bày tỏ nghĩa vụ', 'Sử dụng thì Hiện tại đơn và "have to"']
+                        en: ['Make predictions about where humans will live in the future', 'Use the Future Simple'],
+                        vi: ['Đưa ra dự đoán về nơi con người sẽ sống trong tương lai', 'Sử dụng thì Tương lai đơn']
                     },
                     vocabulary: [
-                        {term: 'essay', pronunciation: '/ˈɛseɪ/', vietnamese: 'bài luận'},
-                        {term: 'project', pronunciation: '/ˈprɑːdʒɛkt/', vietnamese: 'dự án'},
-                        {term: 'homework', pronunciation: '/ˈhoʊmwɜːrk/', vietnamese: 'bài tập về nhà'},
-                        {term: 'book report', pronunciation: '/bʊk rɪˈpɔːrt/', vietnamese: 'bài báo cáo sách'},
-                        {term: 'test', pronunciation: '/tɛst/', vietnamese: 'bài kiểm tra'},
-                        {term: 'presentation', pronunciation: '/ˌpriːzɛnˈteɪʃən/', vietnamese: 'bài thuyết trình'}
+                        {term: 'Earth', pronunciation: '/ɜːrθ/', vietnamese: 'Trái Đất'},
+                        {term: 'Mars', pronunciation: '/mɑːrz/', vietnamese: 'Sao Hỏa'},
+                        {term: 'Venus', pronunciation: '/ˈviːnəs/', vietnamese: 'Sao Kim'},
+                        {term: 'space station', pronunciation: '/speɪs ˈsteɪʃn/', vietnamese: 'trạm không gian'},
+                        {term: 'oxygen', pronunciation: '/ˈɑːksɪdʒən/', vietnamese: 'oxy'},
+                        {term: 'gravity', pronunciation: '/ˈɡrævəti/', vietnamese: 'trọng lực'},
+                        {term: 'temperature', pronunciation: '/ˈtemprətʃər/', vietnamese: 'nhiệt độ'}
                     ],
                     grammar: [{
-                        title: {en: 'have to', vi: 'have to'},
-                        explanation: {en: ['We use have to + infinitive to talk about an action we can choose to do if we want to.', 'I have to study for a test. He has to do homework.'], vi: ['Chúng ta dùng have to + động từ nguyên mẫu để nói về một hành động mà chúng ta có thể chọn làm nếu muốn.', 'Tôi phải học cho bài kiểm tra. Anh ấy phải làm bài tập về nhà.']}
+                        title: {en: 'Future Simple (will/won\'t)', vi: 'Thì Tương lai đơn (will/won\'t)'},
+                        explanation: {en: ['We use the Future Simple with **will/won\'t** to make predictions about the future.', 'I think people **will live** on Mars. We **won\'t need** cars.'], vi: ['Chúng ta sử dụng thì Tương lai đơn với **will/won\'t** để đưa ra dự đoán về tương lai.', 'Tôi nghĩ con người **sẽ sống** trên Sao Hỏa. Chúng ta **sẽ không cần** ô tô.']}
                     }],
-                    activities: []
+                    activities: [
+                        { type: 'Speaking', description: { en: ['Discuss and predict where humans will live in the year 2100 (Mars, Venus, space stations, etc.) and explain the reasons.'], vi: ['Thảo luận và dự đoán nơi con người sẽ sống vào năm 2100 (Sao Hỏa, Sao Kim, trạm vũ trụ, v.v.) và giải thích lý do.'] } }
+                    ]
                 },
                 {
                     id: 80602,
-                    title: {en: 'Lesson 2: Feelings about School', vi: 'Bài học 2: Cảm xúc về trường học'},
+                    title: {en: 'Lesson 2: UFO Sightings', vi: 'Bài học 2: Nhìn thấy UFO'},
                     aims: {
-                        en: ['Talk about how you feel about school', 'Use intensifiers and "because"'],
-                        vi: ['Nói về cảm xúc của bạn về trường học', 'Sử dụng các từ nhấn mạnh và "because"']
+                        en: ['Talk about possible past sightings of UFOs and aliens', 'Use the Past Continuous and Past Simple'],
+                        vi: ['Nói về các trường hợp có thể nhìn thấy UFO và người ngoài hành tinh trong quá khứ', 'Sử dụng thì Quá khứ tiếp diễn và Quá khứ đơn']
                     },
                     vocabulary: [
-                        {term: 'upset', pronunciation: '/ʌpˈsɛt/', vietnamese: 'buồn bã'},
-                        {term: 'fail', pronunciation: '/feɪl/', vietnamese: 'trượt'},
-                        {term: 'pleased', pronunciation: '/pliːzd/', vietnamese: 'hài lòng'},
-                        {term: 'disappointed', pronunciation: '/ˌdɪsəˈpɔɪntɪd/', vietnamese: 'thất vọng'},
-                        {term: 'surprised', pronunciation: '/sərˈpraɪzd/', vietnamese: 'ngạc nhiên'},
-                        {term: 'delighted', pronunciation: '/dɪˈlaɪtɪd/', vietnamese: 'vui mừng'},
-                        {term: 'annoyed', pronunciation: '/əˈnɔɪd/', vietnamese: 'bực mình'},
-                        {term: 'pass', pronunciation: '/pæs/', vietnamese: 'đỗ'}
+                        {term: 'UFO', pronunciation: '/ˌjuː ɛf ˈoʊ/', vietnamese: 'vật thể bay không xác định (UFO)'},
+                        {term: 'flying saucer', pronunciation: '/ˌflaɪɪŋ ˈsɔːsər/', vietnamese: 'đĩa bay'},
+                        {term: 'disk-shaped', pronunciation: '/dɪsk ʃeɪpt/', vietnamese: 'hình đĩa'},
+                        {term: 'appeared', pronunciation: '/əˈpɪrd/', vietnamese: 'xuất hiện'},
+                        {term: 'strange', pronunciation: '/streɪndʒ/', vietnamese: 'kỳ lạ'},
+                        {term: 'disappeared', pronunciation: '/ˌdɪsəˈpɪrd/', vietnamese: 'biến mất'},
+                        {term: 'aliens', pronunciation: '/ˈeɪliənz/', vietnamese: 'người ngoài hành tinh'},
+                        {term: 'huge', pronunciation: '/hjuːdʒ/', vietnamese: 'khổng lồ'},
+                        {term: 'tiny', pronunciation: '/ˈtaɪni/', vietnamese: 'bé tí'},
+                        {term: 'terrified', pronunciation: '/ˈterɪfaɪd/', vietnamese: 'khiếp sợ'}
                     ],
-                    grammar: [
-                        {title: {en: 'because', vi: 'because'}, explanation: {en: ['We use the subordinating conjunction because to connect two clauses in a sentence.', 'I failed my math test because I didn\'t study.'], vi: ['Chúng ta dùng liên từ phụ thuộc because để nối hai mệnh đề trong một câu.', 'Tôi đã trượt bài kiểm tra toán vì tôi không học.']}},
-                        {title: {en: 'so and really', vi: 'so và really'}, explanation: {en: ['We use the intensifiers so and really to make adjectives stronger.', 'He is so happy because he passed his test.'], vi: ['Chúng ta dùng các từ nhấn mạnh so và really để làm cho tính từ mạnh hơn.', 'Anh ấy rất vui vì đã đỗ bài kiểm tra.']}}
-                    ],
-                    activities: []
+                    grammar: [{
+                        title: {en: 'Past Continuous and Past Simple', vi: 'Thì Quá khứ tiếp diễn và Quá khứ đơn'},
+                        explanation: {en: ['We use the **Past Continuous** to describe an ongoing action in the past (background action) and the **Past Simple** to describe an action that interrupts it (sudden action).', 'I **was walking** home when I suddenly **saw** a UFO.'], vi: ['Chúng ta dùng **Quá khứ tiếp diễn** để mô tả hành động đang diễn ra trong quá khứ (hành động nền) và **Quá khứ đơn** để mô tả hành động xen vào (hành động đột ngột).', 'Tôi **đang đi bộ** về nhà thì đột nhiên **thấy** một UFO.'] }
+                    }],
+                    activities: [
+                        { type: 'Role-play', description: { en: ['Role-play a breaking news interview about an alien or UFO sighting.'], vi: ['Đóng vai một cuộc phỏng vấn tin tức nóng hổi về việc nhìn thấy người ngoài hành tinh hoặc UFO.'] } }
+                    ]
                 },
                 {
                     id: 80603,
-                    title: {en: 'Lesson 3: Studying Abroad', vi: 'Bài học 3: Du học'},
+                    title: {en: 'Lesson 3: A Strange Event', vi: 'Bài học 3: Một sự kiện Kỳ lạ'},
                     aims: {
-                        en: ['Talk about studying abroad', 'Write a paragraph about studying abroad'],
-                        vi: ['Nói về việc du học', 'Viết một đoạn văn về việc du học']
+                        en: ['Narrate a sighting of a UFO or alien', 'Write a narrative passage about seeing a visitor from another planet'],
+                        vi: ['Kể về việc nhìn thấy UFO và người ngoài hành tinh', 'Viết một câu chuyện về việc nhìn thấy du khách từ hành tinh khác']
                     },
-                    vocabulary: [],
-                    grammar: [{
-                        title: {en: 'Using conjunctions (however, although)', vi: 'Sử dụng liên từ (however, although)'},
-                        explanation: {en: ['To show two ideas are different, you should use "however" and "although."', 'I woke up early. I missed the bus. -> Although I woke up early, I missed the bus.'], vi: ['Để thể hiện hai ý tưởng khác nhau, bạn nên dùng "however" và "although."', 'Tôi thức dậy sớm. Tôi đã lỡ chuyến xe buýt. -> Mặc dù tôi thức dậy sớm, tôi đã lỡ chuyến xe buýt.']}
-                    }],
-                    activities: []
+                    vocabulary: [
+                        { term: 'visitor', pronunciation: '/ˈvɪzɪtər/', vietnamese: 'vị khách' },
+                        { term: 'narrative', pronunciation: '/ˈnærətɪv/', vietnamese: 'bài tự sự' },
+                        { term: 'climax', pronunciation: '/ˈklaɪmæks/', vietnamese: 'cao trào' },
+                        { term: 'resolution', pronunciation: '/ˌrezəˈluːʃn/', vietnamese: 'cách giải quyết' }
+                    ],
+                    grammar: [],
+                    activities: [
+                        { type: 'Writing', description: { en: ['Plan a short story (characters, setting, plot, ending) about meeting a strange visitor and write a narrative paragraph (80-100 words).'], vi: ['Lên kế hoạch cho một câu chuyện (nhân vật, bối cảnh, diễn biến, kết thúc) về việc gặp một vị khách lạ và viết thành một đoạn văn tự sự (80-100 từ).'] } }
+                    ]
                 }
             ]
         },
         {
             id: 807,
-            title: { en: 'Unit 7: Transportation', vi: 'Bài 7: Giao thông' },
+            title: { en: 'Unit 7: Teens', vi: 'Bài 7: Thanh thiếu niên' },
             lessons: [
                 {
                     id: 80701,
-                    title: {en: 'Lesson 1: At the Airport', vi: 'Bài học 1: Ở sân bay'},
+                    title: {en: 'Lesson 1: Dreams and Dream Jobs', vi: 'Bài học 1: Ước mơ và Công việc mơ ước'},
                     aims: {
-                        en: ['Describe and identify personal belongings', 'Use possessive pronouns and adjectives in order'],
-                        vi: ['Mô tả và nhận dạng đồ dùng cá nhân', 'Sử dụng đại từ sở hữu và tính từ theo thứ tự']
+                        en: ['Talk about dreams and dream jobs', 'Use possessive pronouns'],
+                        vi: ['Nói về ước mơ và công việc mơ ước', 'Sử dụng đại từ sở hữu']
                     },
                     vocabulary: [
-                        {term: 'boarding pass', pronunciation: '/ˈbɔːrdɪŋ pæs/', vietnamese: 'thẻ lên máy bay'},
-                        {term: 'passport', pronunciation: '/ˈpæspɔːrt/', vietnamese: 'hộ chiếu'},
-                        {term: 'customs', pronunciation: '/ˈkʌstəmz/', vietnamese: 'hải quan'},
-                        {term: 'baggage claim', pronunciation: '/ˈbæɡɪdʒ kleɪm/', vietnamese: 'nơi nhận hành lý'},
-                        {term: 'suitcase', pronunciation: '/ˈsuːtkeɪs/', vietnamese: 'va li'},
-                        {term: 'backpack', pronunciation: '/ˈbækpæk/', vietnamese: 'ba lô'},
-                        {term: 'luggage', pronunciation: '/ˈlʌɡɪdʒ/', vietnamese: 'hành lý'}
+                        {term: 'dream', pronunciation: '/driːm/', vietnamese: 'ước mơ'},
+                        {term: 'director', pronunciation: '/dəˈrektər/', vietnamese: 'đạo diễn'},
+                        {term: 'vlogger', pronunciation: '/ˈvlɔːɡər/', vietnamese: 'người làm vlog'},
+                        {term: 'musician', pronunciation: '/mjuːˈzɪʃn/', vietnamese: 'nhạc sĩ'},
+                        {term: 'game designer', pronunciation: '/ɡeɪm dɪˈzaɪnər/', vietnamese: 'nhà thiết kế trò chơi'},
+                        {term: 'veterinarian', pronunciation: '/ˌvetərɪˈnɛriən/', vietnamese: 'bác sĩ thú y'},
+                        {term: 'dentist', pronunciation: '/ˈdentɪst/', vietnamese: 'nha sĩ'},
+                        {term: 'engineer', pronunciation: '/ˌendʒɪˈnɪr/', vietnamese: 'kỹ sư'},
+                        {term: 'journalist', pronunciation: '/ˈdʒɜːrnəlɪst/', vietnamese: 'nhà báo'},
+                        {term: 'flight attendant', pronunciation: '/ˈflaɪt əˌtendənt/', vietnamese: 'tiếp viên hàng không'}
                     ],
-                    grammar: [
-                        {title: {en: 'Ordering adjectives', vi: 'Thứ tự tính từ'}, explanation: {en: ['We put adjectives in the order of size, age, color in our sentences.', 'Mine is a small new yellow backpack.'], vi: ['Chúng ta đặt tính từ theo thứ tự kích thước, tuổi, màu sắc trong câu.', 'Của tôi là một chiếc ba lô màu vàng, mới, nhỏ.']}},
-                        {title: {en: 'Possessive Pronouns', vi: 'Đại từ sở hữu'}, explanation: {en: ['We use possessive pronouns (mine, yours, his, hers, ours, theirs) to talk about what we own and what belongs to us.', 'My backpack is red. -> Mine is red.'], vi: ['Chúng ta dùng đại từ sở hữu (của tôi, của bạn, của anh ấy, của cô ấy, của chúng tôi, của họ) để nói về những gì chúng ta sở hữu và những gì thuộc về chúng ta.', 'Ba lô của tôi màu đỏ. -> Cái của tôi màu đỏ.']}}
-                    ],
-                    activities: []
+                    grammar: [{
+                        title: {en: 'Possessive Pronouns', vi: 'Đại từ sở hữu'},
+                        explanation: {en: ['We use possessive pronouns (**mine**, **yours**, **his**, **hers**, **ours**, **theirs**) to talk about what we own/possess, replacing the noun phrase to avoid repetition.', 'My dream job is a doctor. What\'s **yours**?'], vi: ['Chúng ta dùng đại từ sở hữu (**của tôi**, **của bạn**, **của anh ấy**, **của cô ấy**, **của chúng tôi**, **của họ**) để nói về sự sở hữu, thay thế cụm danh từ để tránh lặp lại.', 'Công việc mơ ước của tôi là bác sĩ. **Của bạn** là gì?']}
+                    }],
+                    activities: [
+                        { type: 'Speaking', description: { en: ['Conduct a survey on dream jobs and reasons, then discuss the most common dreams among young people.'], vi: ['Thực hiện khảo sát về công việc mơ ước và lý do, sau đó thảo luận về ước mơ phổ biến nhất của giới trẻ.'] } }
+                    ]
                 },
                 {
                     id: 80702,
-                    title: {en: 'Lesson 2: Types of Transportation', vi: 'Bài học 2: Các loại phương tiện giao thông'},
+                    title: {en: 'Lesson 2: Teen Celebrities', vi: 'Bài học 2: Người nổi tiếng tuổi teen'},
                     aims: {
-                        en: ['Compare different types of transportation', 'Use "(not) as...as..." to compare things'],
-                        vi: ['So sánh các loại phương tiện giao thông khác nhau', 'Sử dụng "(not) as...as..." để so sánh mọi thứ']
+                        en: ['Report on the life of teen celebrities', 'Use reported speech for statements'],
+                        vi: ['Tường thuật lại cuộc sống của những người nổi tiếng tuổi teen', 'Sử dụng câu tường thuật cho câu trần thuật']
                     },
                     vocabulary: [
-                        {term: 'frequent', pronunciation: '/ˈfriːkwənt/', vietnamese: 'thường xuyên'},
-                        {term: 'eco-friendly', pronunciation: '/ˈiːkoʊ ˈfrɛndli/', vietnamese: 'thân thiện với môi trường'},
-                        {term: 'comfortable', pronunciation: '/ˈkʌmfərtəbl/', vietnamese: 'thoải mái'},
-                        {term: 'convenient', pronunciation: '/kənˈviːniənt/', vietnamese: 'tiện lợi'},
-                        {term: 'public', pronunciation: '/ˈpʌblɪk/', vietnamese: 'công cộng'},
-                        {term: 'ticket', pronunciation: '/ˈtɪkɪt/', vietnamese: 'vé'},
-                        {term: 'reliable', pronunciation: '/rɪˈlaɪəbl/', vietnamese: 'đáng tin cậy'}
+                        {term: 'celebrity', pronunciation: '/səˈlebrəti/', vietnamese: 'người nổi tiếng'},
+                        {term: 'millionaire', pronunciation: '/ˌmɪljəˈnɛr/', vietnamese: 'triệu phú'},
+                        {term: 'mansion', pronunciation: '/ˈmænʃn/', vietnamese: 'biệt thự'},
+                        {term: 'home theater', pronunciation: '/hoʊm ˈθiːətər/', vietnamese: 'phòng chiếu phim tại gia'},
+                        {term: 'sports car', pronunciation: '/spɔːrts kɑːr/', vietnamese: 'xe thể thao'},
+                        {term: 'jet', pronunciation: '/dʒet/', vietnamese: 'máy bay phản lực cá nhân'},
+                        {term: 'yacht', pronunciation: '/jɑːt/', vietnamese: 'du thuyền'},
+                        {term: 'fans', pronunciation: '/fæn/', vietnamese: 'người hâm mộ'}
                     ],
                     grammar: [{
-                        title: {en: '(not) as...as...', vi: '(không) bằng...'},
-                        explanation: {en: ['We can compare things using not as...as... if they are different or as...as... if they are the same.', 'The tickets are as expensive as a train ticket. Buses aren\'t as fast as trains.'], vi: ['Chúng ta có thể so sánh mọi thứ bằng cách sử dụng not as...as... nếu chúng khác nhau hoặc as...as... nếu chúng giống nhau.', 'Vé cũng đắt như vé tàu. Xe buýt không nhanh bằng tàu hỏa.']}
+                        title: {en: 'Reported speech for statements', vi: 'Câu tường thuật cho câu trần thuật'},
+                        explanation: {en: ['We use reported speech to report what someone said, usually with a tense shift (Present Simple -> Past Simple).', 'He **said that** he **loved** his new yacht. She **told me that** she **was** a millionaire.'], vi: ['Chúng ta dùng câu tường thuật để kể lại lời ai đó đã nói, thường có sự thay đổi thì (Hiện tại đơn -> Quá khứ đơn).', 'Anh ấy **nói rằng** anh ấy **yêu** chiếc du thuyền mới của mình. Cô ấy **nói với tôi rằng** cô ấy **là** triệu phú.'] }
                     }],
-                    activities: []
+                    activities: [
+                        { type: 'Role-play', description: { en: ['Role-play a journalist interviewing a famous teen musician, then report the interview using reported speech.'], vi: ['Đóng vai một nhà báo phỏng vấn một nhạc sĩ tuổi teen nổi tiếng, sau đó tường thuật lại cuộc phỏng vấn.'] } }
+                    ]
                 },
                 {
                     id: 80703,
-                    title: {en: 'Lesson 3: Personal Transport', vi: 'Bài học 3: Phương tiện cá nhân'},
+                    title: {en: 'Lesson 3: Teen Problems', vi: 'Bài học 3: Vấn đề của Thanh thiếu niên'},
                     aims: {
-                        en: ['Talk about transportation', 'Write an opinion paragraph about a type of transportation'],
-                        vi: ['Nói về phương tiện giao thông', 'Viết một đoạn văn bày tỏ quan điểm về một loại phương tiện giao thông']
+                        en: ['Talk about problems teens face in your area', 'Write a problem and solution paragraph'],
+                        vi: ['Nói về các vấn đề mà thanh thiếu niên gặp phải ở nơi bạn sống', 'Viết một đoạn văn về vấn đề và giải pháp']
                     },
-                    vocabulary: [],
+                    vocabulary: [
+                        { term: 'bullying', pronunciation: '/ˈbʊliɪŋ/', vietnamese: 'bắt nạt' },
+                        { term: 'peer pressure', pronunciation: '/pɪr ˈpreʃər/', vietnamese: 'áp lực từ bạn bè' },
+                        { term: 'mental health', pronunciation: '/ˈmentl hɛlθ/', vietnamese: 'sức khỏe tinh thần' },
+                        { term: 'solution', pronunciation: '/səˈluːʃn/', vietnamese: 'giải pháp' }
+                    ],
                     grammar: [],
-                    activities: []
+                    activities: [
+                        { type: 'Writing', description: { en: ['Discuss the biggest problem teens face, suggest solutions, and write a problem and solution paragraph (80-100 words).'], vi: ['Thảo luận về vấn đề lớn nhất của thanh thiếu niên, đề xuất giải pháp và viết thành một đoạn văn (80-100 từ).'] } }
+                    ]
                 }
             ]
         },
         {
             id: 808,
-            title: { en: 'Unit 8: Festivals around the World', vi: 'Bài 8: Các lễ hội trên thế giới' },
+            title: { en: 'Unit 8: Traditions of Ethnic Groups in Vietnam', vi: 'Bài 8: Truyền thống các Dân tộc ở Việt Nam' },
             lessons: [
                 {
                     id: 80801,
-                    title: {en: 'Lesson 1: Festivals', vi: 'Bài học 1: Lễ hội'},
+                    title: {en: 'Lesson 1: Culture', vi: 'Bài học 1: Văn hóa'},
                     aims: {
-                        en: ['Talk about the festivals around the world', 'Use the Future Simple'],
-                        vi: ['Nói về các lễ hội trên thế giới', 'Sử dụng thì Tương lai đơn']
+                        en: ['Talk about the culture of ethnic groups in Vietnam', 'Use articles'],
+                        vi: ['Nói về văn hóa của các dân tộc ở Việt Nam', 'Sử dụng mạo từ']
                     },
                     vocabulary: [
-                        {term: 'lantern', pronunciation: '/ˈlæntərn/', vietnamese: 'đèn lồng'},
-                        {term: 'bonfire', pronunciation: '/ˈbɑːnfaɪər/', vietnamese: 'lửa trại'},
-                        {term: 'race', pronunciation: '/reɪs/', vietnamese: 'cuộc đua'},
-                        {term: '(eating) competition', pronunciation: '/kɑːmpəˈtɪʃn/', vietnamese: 'cuộc thi (ăn)'},
-                        {term: 'sculpture', pronunciation: '/ˈskʌlptʃər/', vietnamese: 'tác phẩm điêu khắc'},
-                        {term: '(water) fight', pronunciation: '/faɪt/', vietnamese: 'cuộc chiến (nước)'},
-                        {term: 'hot-air balloon', pronunciation: '/hɑːt ɛər bəˈluːn/', vietnamese: 'khinh khí cầu'}
+                        {term: 'headscarf', pronunciation: '/ˈhedskɑːrf/', vietnamese: 'khăn quàng đầu'},
+                        {term: 'pottery', pronunciation: '/ˈpɑːtəri/', vietnamese: 'đồ gốm'},
+                        {term: 'embroidery', pronunciation: '/ɪmˈbrɔɪdəri/', vietnamese: 'nghệ thuật thêu'},
+                        {term: 'cloth', pronunciation: '/klɔːθ/', vietnamese: 'vải'},
+                        {term: 'basket', pronunciation: '/ˈbæskɪt/', vietnamese: 'cái rổ/gùi'},
+                        {term: 'ethnic', pronunciation: '/ˈeθnɪk/', vietnamese: 'dân tộc'},
+                        {term: 'silver', pronunciation: '/ˈsɪlvər/', vietnamese: 'bạc'},
+                        {term: 'pattern', pronunciation: '/ˈpætərn/', vietnamese: 'hoa văn'},
+                        {term: 'product', pronunciation: '/ˈprɑːdʌkt/', vietnamese: 'sản phẩm'}
                     ],
                     grammar: [{
-                        title: {en: 'Future Simple', vi: 'Thì Tương lai đơn'},
-                        explanation: {en: ['We can use the Future Simple to give or ask for information about events in the future.', 'It will take place from May 12th to 15th.', 'Rob Curly will not/won\'t perform this year.'], vi: ['Chúng ta có thể sử dụng thì Tương lai đơn để đưa ra hoặc hỏi thông tin về các sự kiện trong tương lai.', 'Nó sẽ diễn ra từ ngày 12 đến ngày 15 tháng 5.', 'Rob Curly sẽ không biểu diễn trong năm nay.']}
+                        title: {en: 'Articles (a, an, the, zero article)', vi: 'Mạo từ (a, an, the, mạo từ rỗng)'},
+                        explanation: {en: ['Reviewing the use of **a/an** with singular countable nouns, **the** for specific items, and the **zero article (Ø)** for plural/uncountable nouns in general or abstract concepts.'], vi: ['Ôn tập cách dùng **a/an** với danh từ đếm được số ít, **the** cho các đối tượng xác định, và **mạo từ rỗng (Ø)** cho danh từ số nhiều/không đếm được ở nghĩa chung hoặc trừu tượng.']}
                     }],
-                    activities: []
+                    activities: [
+                        { type: 'Reading', description: { en: ['Read about the culture, crafts, and clothing of the Cham people.'], vi: ['Đọc về văn hóa, nghề thủ công và trang phục của người Chăm.'] } },
+                        { type: 'Speaking', description: { en: ['Discuss and compare different ethnic groups in Vietnam (e.g., Pu Peo, Red Dao, Chu Ru).'], vi: ['Thảo luận và so sánh về các dân tộc khác nhau ở Việt Nam.'] } }
+                    ]
                 },
                 {
                     id: 80802,
-                    title: {en: 'Lesson 2: Traditions', vi: 'Bài học 2: Truyền thống'},
+                    title: {en: 'Lesson 2: Reporting a Conversation', vi: 'Bài học 2: Tường thuật một Cuộc trò chuyện'},
                     aims: {
-                        en: ['Compare how different countries celebrate festivals', 'Use "like" and "different from" to compare'],
-                        vi: ['So sánh cách các quốc gia khác nhau tổ chức lễ hội', 'Sử dụng "like" và "different from" để so sánh']
+                        en: ['Report a conversation about crafts, food, and culture with an ethnic person', 'Use reported speech for questions'],
+                        vi: ['Tường thuật một cuộc trò chuyện với người dân tộc thiểu số về nghề thủ công, ẩm thực và văn hóa', 'Sử dụng câu tường thuật cho câu hỏi']
                     },
                     vocabulary: [
-                        {term: 'exchange', pronunciation: '/ɪksˈtʃeɪndʒ/', vietnamese: 'trao đổi'},
-                        {term: 'tradition', pronunciation: '/trəˈdɪʃn/', vietnamese: 'truyền thống'},
-                        {term: 'midnight', pronunciation: '/ˈmɪdnaɪt/', vietnamese: 'nửa đêm'},
-                        {term: 'wish', pronunciation: '/wɪʃ/', vietnamese: 'ước'},
-                        {term: 'greeting', pronunciation: '/ˈɡriːtɪŋ/', vietnamese: 'lời chào'},
-                        {term: 'celebrate', pronunciation: '/ˈsɛləbreɪt/', vietnamese: 'tổ chức lễ'}
+                        {term: 'blouse', pronunciation: '/blaʊs/', vietnamese: 'áo cánh'},
+                        {term: 'apron', pronunciation: '/ˈeɪprən/', vietnamese: 'tạp dề'},
+                        {term: 'sticky rice', pronunciation: '/ˈstɪki raɪs/', vietnamese: 'xôi/gạo nếp'},
+                        {term: 'steamed', pronunciation: '/stiːmd/', vietnamese: 'hấp'},
+                        {term: 'utensils', pronunciation: '/juːˈtenslz/', vietnamese: 'dụng cụ'},
+                        {term: 'corn', pronunciation: '/kɔːrn/', vietnamese: 'ngô/bắp'}
                     ],
                     grammar: [{
-                        title: {en: 'different from and like', vi: 'khác với và giống'},
-                        explanation: {en: ['We use be + different from to say that one thing is not the same as another.', 'We use like + noun to say that two things are similar.', 'In Italy, they eat seafood at Christmas. That\'s different from Japan.'], vi: ['Chúng ta dùng be + different from để nói rằng một thứ không giống thứ khác.', 'Chúng ta dùng like + danh từ để nói rằng hai thứ giống nhau.', 'Ở Ý, họ ăn hải sản vào Giáng sinh. Điều đó khác với Nhật Bản.']}
+                        title: {en: 'Reported speech for questions', vi: 'Câu tường thuật cho câu hỏi'},
+                        explanation: {en: ['We use reported speech for questions, using **if/whether** for Yes/No questions and the **Wh-word** for Wh-questions, and shifting the word order and tense.', 'She **asked him what** his favorite food **was**. He **asked her if** she **had been** to Sapa.'], vi: ['Chúng ta dùng câu tường thuật cho câu hỏi, sử dụng **if/whether** cho câu hỏi Yes/No và **từ Wh-** cho câu hỏi Wh-, đồng thời thay đổi thứ tự từ và thì.', 'Cô ấy **hỏi anh ấy món ăn yêu thích của anh ấy là gì**. Anh ấy **hỏi cô ấy liệu** cô ấy **đã từng đến** Sa Pa chưa.'] }
                     }],
-                    activities: []
+                    activities: [
+                        { type: 'Role-play', description: { en: ['Role-play meeting an ethnic person, then report the conversation to a friend using reported speech for questions and statements.'], vi: ['Đóng vai kề lại cho bạn bè về cuộc gặp gỡ với một người dân tộc, sử dụng câu tường thuật.'] } }
+                    ]
                 },
                 {
                     id: 80803,
-                    title: {en: 'Lesson 3: Local Festivals', vi: 'Bài học 3: Lễ hội địa phương'},
+                    title: {en: 'Lesson 3: Fun Things to Do', vi: 'Bài học 3: Những điều Thú vị để làm'},
                     aims: {
-                        en: ['Talk about unusual festivals in Vietnam', 'Write a blog post about your favorite festivals'],
-                        vi: ['Nói về các lễ hội lạ ở Việt Nam', 'Viết một bài blog về các lễ hội yêu thích của bạn']
+                        en: ['Talk about fun activities in ethnic villages in Vietnam', 'Write a paragraph about a trip to an ethnic village'],
+                        vi: ['Nói về những điều thú vị để làm tại các làng dân tộc ở Việt Nam', 'Viết một đoạn văn về chuyến đi đến một làng dân tộc']
                     },
-                    vocabulary: [],
-                    grammar: [],
-                    activities: []
+                    vocabulary: [
+                        { term: 'convincing', pronunciation: '/kənˈvɪnsɪŋ/', vietnamese: 'thuyết phục' },
+                        { term: 'support', pronunciation: '/səˈpɔːrt/', vietnamese: 'ủng hộ' },
+                        { term: 'traditionally', pronunciation: '/trəˈdɪʃənəli/', vietnamese: 'theo truyền thống' },
+                        { term: 'handicraft', pronunciation: '/ˈhændikræft/', vietnamese: 'đồ thủ công mỹ nghệ' }
+                    ],
+                    grammar: [
+                        { title: {en: 'Giving supporting information (facts, examples, opinions)', vi: 'Cung cấp thông tin hỗ trợ (sự thật, ví dụ, ý kiến)'}, explanation: {en: ['Reviewing ways to make writing more convincing by including different types of supporting details (facts, examples, and opinions).'], vi: ['Ôn tập cách làm cho bài viết thuyết phục hơn bằng cách bao gồm các loại chi tiết hỗ trợ khác nhau (sự thật, ví dụ và ý kiến).']} }
+                    ],
+                    activities: [
+                        { type: 'Writing', description: { en: ['Write a paragraph (80-100 words) about a trip to an ethnic village (e.g., Kon K\'Tu or Phia Thap), using supporting details to make the text convincing.'], vi: ['Viết một đoạn văn (80-100 từ) kể về chuyến đi đến một làng dân tộc, sử dụng các thông tin hỗ trợ để làm cho bài viết thuyết phục hơn.'] } }
+                    ]
                 }
             ]
         },
         {
             id: 809,
-            title: { en: 'Unit 9: English in the World', vi: 'Bài 9: Tiếng Anh trên thế giới' },
+            title: { en: 'Unit 9: Career Day', vi: 'Bài 9: Ngày hội Nghề nghiệp' },
             lessons: [
                 {
                     id: 80901,
-                    title: {en: 'Lesson 1: Tourist Attractions', vi: 'Bài học 1: Địa điểm du lịch'},
+                    title: {en: 'Lesson 1: Jobs', vi: 'Bài học 1: Các Công việc'},
                     aims: {
-                        en: ['Talk about tourist attractions and cultures of English-speaking countries', 'Use articles'],
-                        vi: ['Nói về các điểm du lịch và văn hóa của các nước nói tiếng Anh', 'Sử dụng mạo từ']
+                        en: ['Talk about different jobs', 'Use relative clauses with "who" and "that"'],
+                        vi: ['Nói về các công việc khác nhau', 'Sử dụng mệnh đề quan hệ với "who" và "that"']
                     },
                     vocabulary: [
-                        {term: 'tour guide', pronunciation: '/tʊər ɡaɪd/', vietnamese: 'hướng dẫn viên du lịch'},
-                        {term: 'stadium', pronunciation: '/ˈsteɪdiəm/', vietnamese: 'sân vận động'},
-                        {term: 'flight', pronunciation: '/flaɪt/', vietnamese: 'chuyến bay'},
-                        {term: 'historic', pronunciation: '/hɪˈstɔːrɪk/', vietnamese: 'có tính lịch sử'},
-                        {term: 'jog', pronunciation: '/dʒɑːɡ/', vietnamese: 'chạy bộ'},
-                        {term: 'ferry', pronunciation: '/ˈfɛri/', vietnamese: 'phà'}
+                        {term: 'cook', pronunciation: '/kʊk/', vietnamese: 'đầu bếp'},
+                        {term: 'mechanic', pronunciation: '/mɪˈkænɪk/', vietnamese: 'thợ máy'},
+                        {term: 'firefighter', pronunciation: '/ˈfaɪərˌfaɪtər/', vietnamese: 'lính cứu hỏa'},
+                        {term: 'accountant', pronunciation: '/əˈkaʊntənt/', vietnamese: 'kế toán'},
+                        {term: 'architect', pronunciation: '/ˈɑːrkɪtekt/', vietnamese: 'kiến trúc sư'},
+                        {term: 'engineer', pronunciation: '/ˌendʒɪˈnɪr/', vietnamese: 'kỹ sư'},
+                        {term: 'nurse', pronunciation: '/nɜːrs/', vietnamese: 'y tá'},
+                        {term: 'sales assistant', pronunciation: '/seɪlz əˈsɪstənt/', vietnamese: 'trợ lý bán hàng'}
                     ],
                     grammar: [{
-                        title: {en: 'Articles', vi: 'Mạo từ'},
-                        explanation: {en: ['We use the zero article (Ø) with names of streets, parks, lakes, rivers, beaches, towns, cities, islands, and most countries.', 'We use the with some countries (the United States of America, the United Kingdom, the Netherlands, the Philippines).', 'We use the with famous buildings, museums, most hotels, and restaurants (the Empire State Building).'], vi: ['Chúng ta dùng mạo từ zero (Ø) với tên đường, công viên, hồ, sông, bãi biển, thị trấn, thành phố, đảo, và hầu hết các quốc gia.', 'Chúng ta dùng the với một số quốc gia (Hợp chủng quốc Hoa Kỳ, Vương quốc Anh, Hà Lan, Philippines).', 'Chúng ta dùng the với các tòa nhà, bảo tàng, hầu hết khách sạn và nhà hàng nổi tiếng (Tòa nhà Empire State).']}
+                        title: {en: 'Relative clauses with "who" and "that"', vi: 'Mệnh đề quan hệ với "who" và "that"'},
+                        explanation: {en: ['We use relative clauses with **who** (for people) or **that** (for people and things) to define or describe the noun before it.', 'A cook is someone **who** prepares food. An architect is a person **that** designs buildings.'], vi: ['Chúng ta dùng mệnh đề quan hệ với **who** (cho người) hoặc **that** (cho người và vật) để xác định hoặc mô tả danh từ đứng trước nó.', 'Đầu bếp là người **mà** chuẩn bị thức ăn. Kiến trúc sư là người **mà** thiết kế các tòa nhà.']}
                     }],
-                    activities: []
+                    activities: [
+                        { type: 'Speaking', description: { en: ['Define different jobs using relative clauses with "who" and "that".'], vi: ['Định nghĩa các công việc khác nhau bằng cách sử dụng mệnh đề quan hệ với "who" và "that".'] } }
+                    ]
                 },
                 {
                     id: 80902,
-                    title: {en: 'Lesson 2: Holidays', vi: 'Bài học 2: Kỳ nghỉ'},
+                    title: {en: 'Lesson 2: Skills and Qualifications', vi: 'Bài học 2: Kỹ năng và Bằng cấp'},
                     aims: {
-                        en: ['Talk about holidays in English-speaking countries', 'Use the Past Simple with irregular verbs'],
-                        vi: ['Nói về các kỳ nghỉ ở các nước nói tiếng Anh', 'Sử dụng thì Quá khứ đơn với động từ bất quy tắc']
+                        en: ['Talk about skills and qualifications needed for jobs', 'Use "going to" for future plans'],
+                        vi: ['Nói về các kỹ năng và bằng cấp cần thiết cho công việc', 'Sử dụng "going to" cho các kế hoạch tương lai']
                     },
                     vocabulary: [
-                        {term: 'souvenirs', pronunciation: '/ˌsuːvəˈnɪrz/', vietnamese: 'đồ lưu niệm'},
-                        {term: 'sightseeing', pronunciation: '/ˈsaɪtsiːɪŋ/', vietnamese: 'ngắm cảnh'},
-                        {term: 'swimsuit', pronunciation: '/ˈswɪmsuːt/', vietnamese: 'đồ bơi'},
-                        {term: 'postcards', pronunciation: '/ˈpoʊstkɑːrdz/', vietnamese: 'bưu thiếp'},
-                        {term: 'photos', pronunciation: '/ˈfoʊtoʊz/', vietnamese: 'ảnh'},
-                        {term: 'beach', pronunciation: '/biːtʃ/', vietnamese: 'bãi biển'},
-                        {term: 'wallet', pronunciation: '/ˈwɑːlɪt/', vietnamese: 'ví'}
+                        {term: 'qualification', pronunciation: '/ˌkwɑːlɪfɪˈkeɪʃn/', vietnamese: 'bằng cấp/trình độ'},
+                        {term: 'skill', pronunciation: '/skɪl/', vietnamese: 'kỹ năng'},
+                        {term: 'teamwork', pronunciation: '/ˈtiːmwɜːrk/', vietnamese: 'làm việc nhóm'},
+                        {term: 'problem-solving', pronunciation: '/ˈprɑːbləm ˈsɑːlvɪŋ/', vietnamese: 'giải quyết vấn đề'},
+                        {term: 'degree', pronunciation: '/dɪˈɡriː/', vietnamese: 'bằng đại học'},
+                        {term: 'certificate', pronunciation: '/sərˈtɪfɪkət/', vietnamese: 'chứng chỉ'},
+                        {term: 'salary', pronunciation: '/ˈsæləri/', vietnamese: 'lương'}
                     ],
                     grammar: [{
-                        title: {en: 'Past Simple with irregular verbs', vi: 'Thì Quá khứ đơn với động từ bất quy tắc'},
-                        explanation: {en: ['Some verbs are irregular. Their Past Simple forms do not end with -ed.', 'go - went, take - took, buy - bought, see - saw, etc.'], vi: ['Một số động từ là bất quy tắc. Dạng Quá khứ đơn của chúng không kết thúc bằng -ed.', 'go - went, take - took, buy - bought, see - saw, v.v.']}
+                        title: {en: 'Future with "going to"', vi: 'Tương lai với "going to"'},
+                        explanation: {en: ['We use **going to** + infinitive to talk about future plans we have already decided or intentions.', 'I **am going to** become a teacher. They **are going to** study accounting.'], vi: ['Chúng ta dùng **going to** + động từ nguyên mẫu để nói về các kế hoạch hoặc dự định đã được quyết định trong tương lai.', 'Tôi **sẽ trở thành** một giáo viên. Họ **sẽ học** kế toán.']}
                     }],
-                    activities: []
+                    activities: [
+                        { type: 'Speaking', description: { en: ['Discuss future plans related to education and career using "going to".'], vi: ['Thảo luận về các kế hoạch tương lai liên quan đến giáo dục và nghề nghiệp bằng cách sử dụng "going to".'] } }
+                    ]
                 },
                 {
                     id: 80903,
-                    title: {en: 'Lesson 3: Benefits of English', vi: 'Bài học 3: Lợi ích của tiếng Anh'},
+                    title: {en: 'Lesson 3: Career Day', vi: 'Bài học 3: Ngày hội Nghề nghiệp'},
                     aims: {
-                        en: ['Talk about the benefits of speaking English', 'Write a postcard to a friend'],
-                        vi: ['Nói về lợi ích của việc nói tiếng Anh', 'Viết bưu thiếp cho bạn bè']
+                        en: ['Talk about your future job', 'Write an email asking for information about a job'],
+                        vi: ['Nói về công việc tương lai của bạn', 'Viết email hỏi thông tin về một công việc']
                     },
-                    vocabulary: [],
+                    vocabulary: [
+                        { term: 'career day', pronunciation: '/kəˈrɪr deɪ/', vietnamese: 'ngày hội nghề nghiệp' },
+                        { term: 'internship', pronunciation: '/ˈɪntɜːrnʃɪp/', vietnamese: 'thực tập' },
+                        { term: 'application', pronunciation: '/ˌæplɪˈkeɪʃn/', vietnamese: 'đơn xin việc' },
+                        { term: 'interview', pronunciation: '/ˈɪntərvjuː/', vietnamese: 'phỏng vấn' }
+                    ],
                     grammar: [],
-                    activities: []
+                    activities: [
+                        { type: 'Writing', description: { en: ['Write an email (80-100 words) to a company asking for more information about a job position you are interested in.'], vi: ['Viết một email (80-100 từ) cho một công ty để hỏi thêm thông tin về vị trí công việc mà bạn quan tâm.'] } }
+                    ]
                 }
             ]
         },
         {
             id: 810,
-            title: { en: 'Unit 10: Energy Sources', vi: 'Bài 10: Nguồn năng lượng' },
+            title: { en: 'Unit 10: Travel', vi: 'Bài 10: Du lịch' },
             lessons: [
                 {
                     id: 81001,
-                    title: {en: 'Lesson 1: Types of Energy', vi: 'Bài học 1: Các loại năng lượng'},
+                    title: {en: 'Lesson 1: Travel Destinations', vi: 'Bài học 1: Địa điểm Du lịch'},
                     aims: {
-                        en: ['Talk about types and sources of energy', 'Use "more...than..." and "less...than..." to make comparisons'],
-                        vi: ['Nói về các loại và nguồn năng lượng', 'Sử dụng "more...than..." và "less...than..." để so sánh']
+                        en: ['Talk about travel destinations', 'Use the Past Simple and Past Continuous for narrative'],
+                        vi: ['Nói về các địa điểm du lịch', 'Sử dụng thì Quá khứ đơn và Quá khứ tiếp diễn để kể chuyện']
                     },
                     vocabulary: [
-                        {term: 'renewable energy', pronunciation: '/rɪˈnuːəbl ˈɛnərdʒi/', vietnamese: 'năng lượng tái tạo'},
-                        {term: 'non-renewable energy', pronunciation: '/nɑːn rɪˈnuːəbl ˈɛnərdʒi/', vietnamese: 'năng lượng không tái tạo'},
-                        {term: 'solar power', pronunciation: '/ˈsoʊlər ˈpaʊər/', vietnamese: 'năng lượng mặt trời'},
-                        {term: 'wind power', pronunciation: '/wɪnd ˈpaʊər/', vietnamese: 'năng lượng gió'},
-                        {term: 'oil', pronunciation: '/ɔɪl/', vietnamese: 'dầu'},
-                        {term: 'coal', pronunciation: '/koʊl/', vietnamese: 'than đá'},
-                        {term: 'natural gas', pronunciation: '/ˈnætʃərəl ɡæs/', vietnamese: 'khí tự nhiên'},
-                        {term: 'hydropower', pronunciation: '/ˈhaɪdroʊˌpaʊər/', vietnamese: 'thủy điện'}
+                        {term: 'resort', pronunciation: '/rɪˈzɔːrt/', vietnamese: 'khu nghỉ dưỡng'},
+                        {term: 'waterfall', pronunciation: '/ˈwɔːtərfɔːl/', vietnamese: 'thác nước'},
+                        {term: 'temple', pronunciation: '/ˈtempl/', vietnamese: 'đền/chùa'},
+                        {term: 'beach', pronunciation: '/biːtʃ/', vietnamese: 'bãi biển'},
+                        {term: 'cave', pronunciation: '/keɪv/', vietnamese: 'hang động'},
+                        {term: 'museum', pronunciation: '/mjuːˈziːəm/', vietnamese: 'bảo tàng'},
+                        {term: 'hot springs', pronunciation: '/hɑːt sprɪŋz/', vietnamese: 'suối nước nóng'},
+                        {term: 'market', pronunciation: '/ˈmɑːrkɪt/', vietnamese: 'chợ'}
                     ],
                     grammar: [{
-                        title: {en: 'more...than... / less...than...', vi: 'nhiều hơn... / ít hơn...'},
-                        explanation: {en: ['We use more...than... and less...than... to compare different things.', 'Springfield uses 40% more coal than Twin Peaks.'], vi: ['Chúng ta dùng more...than... và less...than... để so sánh những thứ khác nhau.', 'Springfield sử dụng nhiều hơn 40% than đá so với Twin Peaks.']}
+                        title: {en: 'Past Simple and Past Continuous for narrative', vi: 'Thì Quá khứ đơn và Quá khứ tiếp diễn để kể chuyện'},
+                        explanation: {en: ['Reviewing the combined use of the Past Continuous (for background) and the Past Simple (for main events in a story or trip).', 'We **were driving** to the hotel when we suddenly **saw** the temple.'], vi: ['Ôn tập cách kết hợp Quá khứ tiếp diễn (cho bối cảnh) và Quá khứ đơn (cho các sự kiện chính trong một câu chuyện hoặc chuyến đi).', 'Chúng tôi **đang lái xe** đến khách sạn thì đột nhiên **nhìn thấy** ngôi đền.']}
                     }],
-                    activities: []
+                    activities: [
+                        { type: 'Speaking', description: { en: ['Work in pairs to discuss a past trip and use the Past Continuous and Past Simple to narrate the experience.'], vi: ['Làm việc theo cặp để thảo luận về một chuyến đi trong quá khứ và sử dụng Quá khứ tiếp diễn và Quá khứ đơn để kể lại trải nghiệm.'] } }
+                    ]
                 },
                 {
                     id: 81002,
-                    title: {en: 'Lesson 2: Advantages and Disadvantages', vi: 'Bài học 2: Ưu điểm và Nhược điểm'},
+                    title: {en: 'Lesson 2: Travel Tips', vi: 'Bài học 2: Mẹo Du lịch'},
                     aims: {
-                        en: ['Talk about advantages and disadvantages of energy sources', 'Use "and" and "but"'],
-                        vi: ['Nói về ưu và nhược điểm của các nguồn năng lượng', 'Sử dụng "and" và "but"']
+                        en: ['Give advice and tips for travel', 'Use sequencing adverbs to organize ideas'],
+                        vi: ['Đưa ra lời khuyên và mẹo du lịch', 'Sử dụng trạng từ trình tự để sắp xếp ý tưởng']
                     },
                     vocabulary: [
-                        {term: 'power plant', pronunciation: '/ˈpaʊər plænt/', vietnamese: 'nhà máy điện'},
-                        {term: 'wind turbine', pronunciation: '/wɪnd ˈtɜːrbaɪn/', vietnamese: 'tua-bin gió'},
-                        {term: 'solar panel', pronunciation: '/ˈsoʊlər ˈpænl/', vietnamese: 'tấm pin mặt trời'},
-                        {term: 'nuclear power', pronunciation: '/ˈnuːkliər ˈpaʊər/', vietnamese: 'năng lượng hạt nhân'}
+                        {term: 'tip', pronunciation: '/tɪp/', vietnamese: 'mẹo/lời khuyên'},
+                        {term: 'luggage', pronunciation: '/ˈlʌɡɪdʒ/', vietnamese: 'hành lý'},
+                        {term: 'pack', pronunciation: '/pæk/', vietnamese: 'đóng gói'},
+                        {term: 'budget', pronunciation: '/ˈbʌdʒɪt/', vietnamese: 'ngân sách'},
+                        {term: 'local currency', pronunciation: '/ˈloʊkl ˈkɜːrənsi/', vietnamese: 'tiền tệ địa phương'},
+                        {term: 'transportation', pronunciation: '/ˌtrænspɔːrˈteɪʃn/', vietnamese: 'giao thông vận tải'}
                     ],
                     grammar: [{
-                        title: {en: 'and and but', vi: 'and và but'},
-                        explanation: {en: ['We use and to add similar ideas. It\'s cheap to run and it\'s renewable.', 'We use but to add different or unexpected information. It\'s cheap to build a power plant, but it causes pollution.'], vi: ['Chúng ta dùng and để thêm các ý tưởng tương tự. Nó rẻ để vận hành và có thể tái tạo.', 'Chúng ta dùng but để thêm thông tin khác biệt hoặc bất ngờ. Xây dựng một nhà máy điện thì rẻ, nhưng nó gây ô nhiễm.']}
+                        title: {en: 'Sequencing adverbs (first, next, then, finally, after that)', vi: 'Trạng từ trình tự (đầu tiên, tiếp theo, sau đó, cuối cùng, sau đó)'},
+                        explanation: {en: ['We use sequencing adverbs to clearly organize the steps or stages in a process or narrative.', '**First**, you should book your flight. **Next**, you should pack your bags.'], vi: ['Chúng ta dùng trạng từ trình tự để sắp xếp rõ ràng các bước hoặc giai đoạn trong một quy trình hoặc bài kể chuyện.', '**Đầu tiên**, bạn nên đặt chuyến bay. **Tiếp theo**, bạn nên đóng gói hành lý.']}
                     }],
-                    activities: []
+                    activities: [
+                        { type: 'Speaking', description: { en: ['Discuss and share your best travel tips for planning and packing, using sequencing adverbs.'], vi: ['Thảo luận và chia sẻ những mẹo du lịch tốt nhất của bạn để lên kế hoạch và đóng gói, sử dụng trạng từ trình tự.'] } }
+                    ]
                 },
                 {
                     id: 81003,
-                    title: {en: 'Lesson 3: City Energy Problems', vi: 'Bài học 3: Vấn đề năng lượng đô thị'},
+                    title: {en: 'Lesson 3: A Travel Blog', vi: 'Bài học 3: Blog Du lịch'},
                     aims: {
-                        en: ['Talk about different energy sources', 'Write a formal email'],
-                        vi: ['Nói về các nguồn năng lượng khác nhau', 'Viết một email trang trọng']
+                        en: ['Talk about a travel experience', 'Write a travel blog post'],
+                        vi: ['Nói về một trải nghiệm du lịch', 'Viết một bài blog du lịch']
                     },
-                    vocabulary: [],
+                    vocabulary: [
+                        { term: 'memorable', pronunciation: '/ˈmemərəbl/', vietnamese: 'đáng nhớ' },
+                        { term: 'exotic', pronunciation: '/ɪɡˈzɑːtɪk/', vietnamese: 'ngoại lai/độc đáo' },
+                        { term: 'culture', pronunciation: '/ˈkʌltʃər/', vietnamese: 'văn hóa' },
+                        { term: 'adventure', pronunciation: '/ədˈventʃər/', vietnamese: 'cuộc phiêu lưu' }
+                    ],
                     grammar: [],
-                    activities: []
+                    activities: [
+                        { type: 'Writing', description: { en: ['Write a travel blog post (80-100 words) about a memorable trip, describing the place, activities, and what made it special.'], vi: ['Viết một bài blog du lịch (80-100 từ) về một chuyến đi đáng nhớ, mô tả địa điểm, hoạt động và điều gì làm nên sự đặc biệt của nó.'] } }
+                    ]
                 }
             ]
         }
