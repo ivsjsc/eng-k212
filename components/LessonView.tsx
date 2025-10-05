@@ -131,7 +131,7 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFr
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main lesson content - left two columns on large screens */}
         <div className="lg:col-span-2">
-          <div className="card-glass p-0 mb-6">
+    <div className="card-glass p-0 mb-6" data-nav-target tabIndex={-1}>
             <div className="flex flex-wrap sm:flex-nowrap border-b border-slate-200 dark:border-slate-700">
               {t.map(tab => (
                 <TabButton key={tab.id} id={tab.id} icon={tab.icon} label={tab.label} />
@@ -184,7 +184,7 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFr
         </div>
 
   {/* Right column: ebook viewer */}
-        <aside className="space-y-4">
+  <aside className="space-y-4" data-nav-target tabIndex={-1}>
           <div className="card-glass p-4">
             <h4 className="font-semibold mb-2 flex items-center gap-2">
               <i className="fa-solid fa-book-open text-blue-500"></i>

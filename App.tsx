@@ -313,6 +313,34 @@ function App() {
 
       // Quick navigation (only if no modifiers and not in modal)
       if (!e.ctrlKey && !e.altKey && !e.metaKey && !showKeyboardHelp && user) {
+        // Block navigation: arrow keys move between elements marked with data-nav-target
+        const isArrow = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key);
+        if (isArrow) {
+          const blocks = Array.from(document.querySelectorAll<HTMLElement>('[data-nav-target]'))
+            .filter(el => el.offsetParent !== null); // visible only
+
+          if (blocks.length > 0) {
+            e.preventDefault();
+            const active = document.activeElement as HTMLElement | null;
+            // find index of block that contains activeElement (or equals)
+            let currentIndex = blocks.findIndex(b => b === active || (active && b.contains(active)));
+            if (currentIndex === -1) {
+              // if nothing focused, pick first
+              currentIndex = 0;
+            }
+
+            const forward = e.key === 'ArrowRight' || e.key === 'ArrowDown';
+            const nextIndex = forward ? (currentIndex + 1) % blocks.length : (currentIndex - 1 + blocks.length) % blocks.length;
+            const next = blocks[nextIndex];
+            if (next) {
+              // ensure focusable
+              if (!next.hasAttribute('tabindex')) next.tabIndex = -1;
+              next.focus();
+            }
+            return;
+          }
+        }
+
         switch (e.key.toLowerCase()) {
           case 'h':
             e.preventDefault();

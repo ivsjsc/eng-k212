@@ -30,7 +30,7 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course, onBack, language, s
   }
 
   const UnitList = () => (
-    <div className="p-6">
+    <div className="p-6" data-nav-target tabIndex={-1}>
         <h2 className="text-2xl font-bold mb-4">{language === 'vi' ? 'Các bài học' : 'Units'}</h2>
         <div className="space-y-2">
             {course.rawLevel.units.map((unit: CurriculumUnit) => (
@@ -120,8 +120,8 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course, onBack, language, s
             </div>
         </div>
         
-        <div className="md:col-span-2">
-             <div className="card-glass h-[80vh] flex flex-col">
+     <div className="md:col-span-2">
+       <div className="card-glass h-[80vh] flex flex-col" data-nav-target tabIndex={-1}>
                 <div className="p-4 border-b dark:border-slate-700">
                     <h3 className="font-bold">{language === 'vi' ? 'Sách điện tử' : 'Ebook Viewer'}</h3>
                 </div>
