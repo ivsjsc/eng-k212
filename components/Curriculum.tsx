@@ -6,15 +6,35 @@ interface CurriculumProps {
   language: 'en' | 'vi';
   user: User;
   onSelectCourse: (course: Course) => void;
+  setView?: (v: string) => void;
 }
 
-const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse }) => {
+const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse, setView }) => {
   const data: Curriculum = curriculumData;
 
-  // Filter curriculum based on user's gradeLevel
+  // Normalize gradeLevel values and filter curriculum accordingly
+  const normalizeGradeLevel = (raw?: string) => {
+    if (!raw) return '';
+    const s = raw.toString().trim().toLowerCase();
+    // common numeric forms -> map to buckets
+    const gradeNumMatch = s.match(/(grade\s*-?\s*)?(\d{1,2})/i);
+    if (gradeNumMatch) {
+      const n = Number(gradeNumMatch[2]);
+      if (n <= 5) return 'primary';
+      if (n >= 6 && n <= 9) return 'secondary';
+      if (n >= 10) return 'high-school';
+    }
+    if (s.includes('kindergarten') || s.includes('mầm') || s.includes('preschool')) return 'kindergarten';
+    if (s.includes('primary') || s.includes('tiểu') || s.includes('grade 1') || s.includes('grade 5')) return 'primary';
+    if (s.includes('secondary') || s.includes('thcs') || s.includes('grade 6')) return 'secondary';
+    if (s.includes('high') || s.includes('thpt') || s.includes('grade 10')) return 'high-school';
+    return '';
+  };
+
   const getFilteredCurriculum = () => {
-    if (!user.gradeLevel) return data; // Show all if no gradeLevel set
-    
+    const normalized = normalizeGradeLevel(user.gradeLevel);
+    if (!normalized) return data; // Show all if no gradeLevel set or not parsable
+
     const gradeMap: Record<string, string[]> = {
       'kindergarten': ['Kindergarten', 'Mầm non'],
       'primary': ['Primary', 'Tiểu học', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5'],
@@ -22,7 +42,7 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse 
       'high-school': ['High School', 'THPT', 'Grade 10', 'Grade 11', 'Grade 12'],
     };
 
-    const keywords = gradeMap[user.gradeLevel] || [];
+    const keywords = gradeMap[normalized] || [];
     return data.filter(cat => 
       keywords.some(kw => cat.category.en.includes(kw) || cat.category.vi.includes(kw))
     );
@@ -76,10 +96,23 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse 
 
       {/* Show all courses grouped by category */}
       {noMatchesForGrade && (
-        <div className="mb-6 p-4 rounded-md bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-200">
-          {language === 'vi'
-            ? 'Không có chương trình khớp với cấp học bạn đã chọn. Hiện đang hiển thị tất cả chương trình. Vui lòng kiểm tra và cập nhật thông tin cá nhân nếu cần.'
-            : 'No programs match the grade level you selected. Showing all programs instead. Please review and update your profile if needed.'}
+        <div className="mb-6 p-4 rounded-md bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-200 flex items-center justify-between">
+          <div>
+            {language === 'vi'
+              ? 'Không có chương trình khớp với cấp học bạn đã chọn. Hiện đang hiển thị tất cả chương trình.'
+              : 'No programs match the grade level you selected. Showing all programs instead.'}
+            <div className="text-sm mt-1 text-slate-600 dark:text-slate-300">
+              {language === 'vi' ? 'Bạn có thể chỉnh sửa thông tin hồ sơ để xem chương trình phù hợp.' : 'You can edit your profile to see matching programs.'}
+            </div>
+          </div>
+          <div>
+            <button
+              onClick={() => setView ? setView('settings') : undefined}
+              className="btn btn-sm btn-primary"
+            >
+              {language === 'vi' ? 'Chỉnh sửa hồ sơ' : 'Edit Profile'}
+            </button>
+          </div>
         </div>
       )}
 
