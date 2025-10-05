@@ -20,9 +20,6 @@ const Sidebar: React.FC<SidebarProps> = ({ user, currentView, setView, language,
       teacherDashboard: 'Dashboard',
       analytics: 'Analytics',
       aiContentGenerator: 'AI Content Creator',
-      writingGrader: 'Writing Grader',
-      speakingPartner: 'Speaking Partner',
-      aiTutor: 'AI Tutor Chat',
       learningPath: 'Learning Path',
       ivsAssistant: 'IVS Assistant',
       settings: 'Settings',
@@ -36,9 +33,6 @@ const Sidebar: React.FC<SidebarProps> = ({ user, currentView, setView, language,
       teacherDashboard: 'Bảng điều khiển',
       analytics: 'Phân tích',
       aiContentGenerator: 'Tạo nội dung AI',
-      writingGrader: 'Chấm bài viết',
-      speakingPartner: 'Luyện nói',
-      aiTutor: 'Chat AI Gia sư',
       learningPath: 'Lộ trình học tập',
       ivsAssistant: 'Trợ lý IVS',
       settings: 'Cài đặt',
@@ -142,13 +136,8 @@ const Sidebar: React.FC<SidebarProps> = ({ user, currentView, setView, language,
         
         <div className="border-b border-white/10 px-6 py-5">
           <div className="flex items-center gap-3 rounded-2xl bg-white/5 p-4 text-sm text-white shadow-inner shadow-white/10">
-            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500/30 text-white overflow-hidden">
-              {user.avatar && (user.avatar.startsWith('http') || user.avatar.startsWith('/')) ? (
-                <img src={user.avatar} alt={user.name} className="w-12 h-12 object-cover rounded-2xl" />
-              ) : (
-                // try local svg under images/avatars/<avatar>.svg
-                <img src={`/images/avatars/${user.avatar}.svg`} alt={user.name} className="w-12 h-12 object-cover rounded-2xl" onError={(e) => { (e.target as HTMLImageElement).src = '' }} />
-              )}
+            <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500/30 text-white">
+              <i className={`fa-solid ${user.avatar} text-2xl`}></i>
             </span>
             <div className="truncate">
               <p className="text-base font-semibold leading-tight text-white">{user.name}</p>
