@@ -389,7 +389,9 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
                 <section className="card-glass p-6">
                   <h2 className="text-2xl font-bold mb-4">{t.profileTitle}</h2>
                   <div className="flex items-center gap-6">
-                      <i className={`${user.avatar} text-6xl text-blue-500`}></i>
+                      {/* show image avatar when available, fallback to font-awesome */}
+                      {/* import Avatar lazily to avoid changing bundle significantly */}
+                      <img src={user.avatar && (user.avatar.startsWith('http') || user.avatar.startsWith('/')) ? user.avatar : `/images/avatars/${user.avatar}.svg`} alt="avatar" className="w-16 h-16 rounded-full" />
                       <div className="flex-grow">
                           <p className="text-xl font-bold">{user.name}</p>
                           <p className="text-slate-500 dark:text-slate-400 capitalize">{user.role === 'student' ? t.student : t.teacher}</p>

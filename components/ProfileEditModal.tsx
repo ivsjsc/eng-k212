@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Avatar from '../src/components/Avatar';
 import type { User } from '../types';
 
 interface ProfileEditModalProps {
@@ -78,17 +79,33 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({ user, onSave, onClo
         <div className="mt-6 space-y-4">
           <div>
             <label className="block text-sm font-medium text-slate-800 dark:text-slate-300 mb-2">{t.avatarLabel}</label>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 items-center">
+              {/* allow uploading a custom avatar image */}
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={e => {
+                    const f = e.target.files?.[0];
+                    if (!f) return;
+                    const url = URL.createObjectURL(f);
+                    handleAvatarChange(url);
+                  }}
+                />
+                <div className="w-12 h-12 rounded-full flex items-center justify-center bg-slate-200 dark:bg-slate-700 text-sm text-slate-700 dark:text-slate-200">Upload</div>
+              </label>
+
               {avatars.map(avatar => (
                 <button
                   type="button"
                   key={avatar}
                   onClick={() => handleAvatarChange(avatar)}
-                  className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl transition-all duration-200 ${
+                  className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 ${
                     formData.avatar === avatar ? 'bg-blue-500 text-white scale-110 ring-2 ring-blue-300' : 'bg-slate-200 dark:bg-slate-700'
                   }`}
                 >
-                  <i className={`fa-solid ${avatar}`}></i>
+                  <Avatar avatar={avatar} size={32} />
                 </button>
               ))}
             </div>
