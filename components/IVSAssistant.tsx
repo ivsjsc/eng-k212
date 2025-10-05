@@ -1,6 +1,65 @@
 import React, { useState, useRef, useEffect } from 'react';
-import type { User } from '../types';
-import { chatWithOpenAI, isOpenAIConfigured, buildConversationHistory } from '../services/openaiService';
+
+
+const IVSAssistant: React.FC<Props> = ({ user, language }) => {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [useRealAI, setUseRealAI] = useState(false);
+  const [model, setModel] = useState('gpt-4o-mini');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Voice input and TTS state
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const recognitionRef = useRef<any>(null);
+
+  // Start speech recognition
+  const handleVoiceInput = () => {
+    if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+      alert('Speech recognition is not supported in this browser.');
+      return;
+    }
+    const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = language === 'vi' ? 'vi-VN' : 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setInput(transcript);
+      setIsListening(false);
+    };
+    recognition.onerror = () => setIsListening(false);
+    recognition.onend = () => setIsListening(false);
+    recognitionRef.current = recognition;
+    setIsListening(true);
+    recognition.start();
+  };
+
+  // Stop speech recognition
+  const handleStopListening = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    }
+  };
+
+  // Text-to-speech for last assistant message
+  const handleSpeak = () => {
+    if (!('speechSynthesis' in window)) {
+      alert('Text-to-speech is not supported in this browser.');
+      return;
+    }
+    const lastMsg = [...messages].reverse().find(m => m.role === 'assistant');
+    if (!lastMsg) return;
+    const utter = new window.SpeechSynthesisUtterance(lastMsg.content);
+    utter.lang = language === 'vi' ? 'vi-VN' : 'en-US';
+    setIsSpeaking(true);
+    utter.onend = () => setIsSpeaking(false);
+    window.speechSynthesis.speak(utter);
+  };
+
 
 interface Message {
   id: string;
@@ -19,11 +78,27 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [useRealAI, setUseRealAI] = useState(false);
+  const [model, setModel] = useState('gpt-4o-mini');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Check if OpenAI is configured on mount
   useEffect(() => {
     setUseRealAI(isOpenAIConfigured());
+    // load persisted messages and preferences
+    try {
+      const raw = localStorage.getItem('ivs_assistant_messages');
+      if (raw) {
+        const parsed = JSON.parse(raw) as Message[];
+        // revive dates
+        setMessages(parsed.map(m => ({ ...m, timestamp: new Date(m.timestamp) })));
+      }
+      const savedModel = localStorage.getItem('ivs_assistant_model');
+      if (savedModel) setModel(savedModel);
+      const savedUseReal = localStorage.getItem('ivs_assistant_useReal');
+      if (savedUseReal) setUseRealAI(savedUseReal === 'true');
+    } catch (e) {
+      console.warn('Failed to load IVS Assistant state', e);
+    }
   }, []);
 
   const t = {
@@ -378,6 +453,12 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    try {
+      // persist messages
+      localStorage.setItem('ivs_assistant_messages', JSON.stringify(messages));
+    } catch (e) {
+      // ignore
+    }
   }, [messages]);
 
   const handleSend = async () => {
@@ -403,7 +484,7 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
         const history = buildConversationHistory(
           messages.map(m => ({ role: m.role, content: m.content }))
         );
-        response = await chatWithOpenAI(userInput, language, history);
+        response = await chatWithOpenAI(userInput, language, history, undefined, model);
       } else {
         // Fallback to demo responses
         await new Promise(resolve => setTimeout(resolve, 800));
@@ -436,6 +517,21 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
 
   const handleSampleClick = (sample: string) => {
     setInput(sample);
+  };
+
+  const handleClear = () => {
+    setMessages([]);
+    localStorage.removeItem('ivs_assistant_messages');
+  };
+
+  const handleExport = () => {
+    const blob = new Blob([JSON.stringify(messages, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ivs-assistant-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -474,6 +570,44 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
               </span>
               {language === 'en' ? 'Premium perks' : 'Ưu đãi Premium'}
             </span>
+            <div className="flex items-center gap-2">
+            <button
+              onClick={isListening ? handleStopListening : handleVoiceInput}
+              className={`text-xs px-2 py-1 rounded-md ${isListening ? 'bg-yellow-100 text-yellow-700' : 'bg-white border'}`}
+              title={isListening ? (language === 'vi' ? 'Dừng ghi âm' : 'Stop listening') : (language === 'vi' ? 'Nhập bằng giọng nói' : 'Voice input')}
+            >
+              <i className={`fa-solid fa-microphone${isListening ? '-slash' : ''} mr-1`}></i>
+              {isListening ? (language === 'vi' ? 'Đang nghe...' : 'Listening...') : (language === 'vi' ? 'Nói' : 'Voice')}
+            </button>
+            <button
+              onClick={handleSpeak}
+              disabled={isSpeaking}
+              className={`text-xs px-2 py-1 rounded-md ${isSpeaking ? 'bg-blue-100 text-blue-700' : 'bg-white border'}`}
+              title={language === 'vi' ? 'Đọc to câu trả lời' : 'Read aloud'}
+            >
+              <i className="fa-solid fa-volume-high mr-1"></i>
+              {language === 'vi' ? 'Đọc' : 'Speak'}
+            </button>
+              <label className="text-xs text-slate-600 dark:text-slate-300 mr-2">AI</label>
+              <button
+                onClick={() => { setUseRealAI(v => { localStorage.setItem('ivs_assistant_useReal', String(!v)); return !v; }); }}
+                title="Toggle real AI"
+                className={`px-2 py-1 rounded-md text-xs ${useRealAI ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-700'}`}
+              >
+                {useRealAI ? 'Real' : 'Demo'}
+              </button>
+              <select
+                value={model}
+                onChange={(e) => { setModel(e.target.value); localStorage.setItem('ivs_assistant_model', e.target.value); }}
+                className="text-xs px-2 py-1 rounded-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700"
+              >
+                <option value="gpt-4o-mini">gpt-4o-mini</option>
+                <option value="gpt-4o">gpt-4o</option>
+                <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+              </select>
+              <button onClick={handleExport} className="text-xs px-2 py-1 rounded-md bg-white border">Export</button>
+              <button onClick={handleClear} className="text-xs px-2 py-1 rounded-md bg-red-50 text-red-700 border">Clear</button>
+            </div>
           </div>
         </div>
       </div>

@@ -112,7 +112,8 @@ export async function chatWithOpenAI(
   userMessage: string,
   language: 'en' | 'vi' = 'en',
   conversationHistory: OpenAIMessage[] = [],
-  userContext?: string
+  userContext?: string,
+  modelOverride?: string
 ): Promise<string> {
   const apiKey = getOpenAIKey();
   
@@ -133,7 +134,7 @@ export async function chatWithOpenAI(
   ];
 
   const requestBody: OpenAIRequest = {
-    model: 'gpt-4o-mini', // Using efficient model for education
+    model: modelOverride || 'gpt-4o-mini', // allow override from caller
     messages: messages,
     temperature: 0.7,
     max_tokens: 500,

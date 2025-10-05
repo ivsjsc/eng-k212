@@ -30,5 +30,6 @@ secrets/
 # Environment and secrets
 .env
 .env.local
+env.js
 service-account.b64
 service-account.json
