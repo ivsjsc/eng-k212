@@ -62,16 +62,10 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
 
 
 interface Message {
-  id: string;
-  role: 'user' | 'assistant';
-  content: string;
-  timestamp: Date;
-}
+
 
 interface Props {
-  user: User;
-  language: 'en' | 'vi';
-}
+
 
 const IVSAssistant: React.FC<Props> = ({ user, language }) => {
   const [messages, setMessages] = useState<Message[]>([]);
