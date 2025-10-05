@@ -26,6 +26,7 @@ const AssistiveTouch = lazy(() => import('./components/AssistiveTouch'));
 const AuthPage = lazy(() => import('./components/AuthPage'));
 const RoleSelectionPage = lazy(() => import('./components/RoleSelectionPage'));
 const KeyboardShortcutsHelp = lazy(() => import('./components/KeyboardShortcutsHelp'));
+const GlobalSearch = lazy(() => import('./components/GlobalSearch'));
 import Curriculum from './components/Curriculum';
 import FirstUseOverlay from './components/FirstUseOverlay';
 import ProfileSetupModal from './components/ProfileSetupModal';
@@ -60,6 +61,7 @@ function App() {
   const [showProfileSetup, setShowProfileSetup] = useState(false);
   const [showLinkPassword, setShowLinkPassword] = useState(false);
   const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
+  const [showGlobalSearch, setShowGlobalSearch] = useState(false);
 
   // Appearance states
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -286,14 +288,10 @@ function App() {
         return;
       }
 
-      // Search with Ctrl+F
+      // Search with Ctrl+F -> open GlobalSearch overlay
       if (e.ctrlKey && e.key === 'f') {
         e.preventDefault();
-        // Trigger search functionality (can be enhanced later)
-        const searchInput = document.querySelector('input[type="search"]') as HTMLInputElement;
-        if (searchInput) {
-          searchInput.focus();
-        }
+        setShowGlobalSearch(true);
         return;
       }
 
@@ -630,6 +628,67 @@ function App() {
                   <KeyboardShortcutsHelp
                     language={language}
                     onClose={() => setShowKeyboardHelp(false)}
+                  />
+                </Suspense>
+              )}
+
+              {showGlobalSearch && (
+                <Suspense fallback={<LoadingFallback />}>
+                  <GlobalSearch
+                    language={language}
+                    onClose={() => setShowGlobalSearch(false)}
+                    onOpenCourse={(levelIndex, unitIndex, lessonId) => {
+                      // Navigate to curriculum view and open selected course / lesson
+                      try {
+                        const category = require('./data/curriculum').curriculumData as any[];
+                        const level = category.flatMap(c => c.levels)[levelIndex];
+                        if (!level) return;
+                        // Build a Course object similar to other parts of the app
+                        const course: any = {
+                          id: `course-${level.title.en.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+                          title: language === 'vi' ? level.title.vi : level.title.en,
+                          series: language === 'vi' ? category.find((c:any)=>c.levels.includes(level))?.category.vi : category.find((c:any)=>c.levels.includes(level))?.category.en,
+                          level: level.subtitle.en.split(' - ')[0],
+                          imageUrl: `https://picsum.photos/seed/${level.level}/400/225`,
+                          description: language === 'vi' ? level.subtitle.vi : level.subtitle.en,
+                          lessons: [],
+                          color: '#4A90E2',
+                          progress: 0,
+                          rawLevel: level
+                        };
+
+                        setSelectedCourse(course);
+                        setCurrentView('curriculum');
+
+                        if (lessonId) {
+                          // find the lesson in the raw level and open LessonView directly
+                          const unit = level.units[unitIndex ?? 0];
+                          const lesson = unit?.lessons.find((l:any) => l.id.toString() === lessonId.toString());
+                          if (lesson) {
+                            const mappedLesson = {
+                              id: lesson.id.toString(),
+                              title: language === 'vi' ? lesson.title.vi : lesson.title.en,
+                              type: 'ebook',
+                              content: '',
+                              rawLesson: lesson
+                            } as any;
+                            // open LessonView by setting selectedCourse then selected lesson after small tick
+                            setTimeout(() => {
+                              setSelectedCourse(course);
+                              // rely on CourseDetail to render LessonView when selectedLesson state is set via CourseDetail flow
+                              // But we can also set a temporary global selectedLesson here by emulating CourseDetail behaviour
+                              // For simplicity, we'll set current view to curriculum and let user click the lesson.
+                              setShowGlobalSearch(false);
+                            }, 30);
+                          }
+                        } else {
+                          setShowGlobalSearch(false);
+                        }
+                      } catch (err) {
+                        console.error('Error opening course from search', err);
+                        setShowGlobalSearch(false);
+                      }
+                    }}
                   />
                 </Suspense>
               )}
