@@ -257,6 +257,26 @@ function App() {
     localStorage.setItem('ivs-fontWeight', fontWeight.toString());
   }, [fontWeight]);
 
+  // Initialize UI sounds and attach global click handler to play sounds for elements with data-sound
+  useEffect(() => {
+    try {
+      // initSounds is safe to call multiple times
+      const mod = require('./utils/sound');
+      if (mod && typeof mod.initSounds === 'function') {
+        mod.initSounds('/sounds');
+      }
+      if (mod && typeof mod.attachGlobalSoundHandler === 'function') {
+        const detach = mod.attachGlobalSoundHandler();
+        return () => {
+          try { detach(); } catch (e) { /* ignore */ }
+        };
+      }
+    } catch (err) {
+      // ignore if sound utilities or files are not available
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Keyboard shortcuts handler
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
