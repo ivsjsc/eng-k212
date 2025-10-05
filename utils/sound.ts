@@ -6,6 +6,8 @@ type SoundName = 'click' | 'confirm' | 'cancel' | 'open' | 'close' | 'notificati
 const DEFAULT_VOLUME = 0.14;
 const audioMap: Partial<Record<SoundName, HTMLAudioElement>> = {};
 let initialized = false;
+let enabled = false;
+let detachHandler: (() => void) | null = null;
 
 export function initSounds(basePath = '/sounds') {
   if (initialized) return;
@@ -62,6 +64,34 @@ export function attachGlobalSoundHandler() {
   };
   window.addEventListener('click', handler);
   return () => window.removeEventListener('click', handler);
+}
+
+export function enableSounds(basePath = '/sounds') {
+  try {
+    if (enabled) return;
+    initSounds(basePath);
+    detachHandler = attachGlobalSoundHandler();
+    enabled = true;
+  } catch (err) {
+    // ignore
+  }
+}
+
+export function disableSounds() {
+  try {
+    if (!enabled) return;
+    if (detachHandler) {
+      try { detachHandler(); } catch (e) { /* ignore */ }
+      detachHandler = null;
+    }
+    enabled = false;
+  } catch (err) {
+    // ignore
+  }
+}
+
+export function soundsEnabled() {
+  return enabled;
 }
 
 export function setVolume(name: SoundName, v: number) {

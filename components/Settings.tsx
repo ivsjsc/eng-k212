@@ -5,6 +5,7 @@ import ProfileEditModal from './ProfileEditModal';
 import { isAiConfigured } from '../services/geminiService';
 import { auth } from '../services/firebase';
 import { EmailAuthProvider, reauthenticateWithCredential, updatePassword, linkWithCredential } from 'firebase/auth';
+import { enableSounds, disableSounds, soundsEnabled, setVolume } from '../utils/sound';
 
 interface SettingsProps {
   user: User;
@@ -24,6 +25,8 @@ interface SettingsProps {
 const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpdateClasses, theme, setTheme, language, setLanguage, fontSize, setFontSize, fontWeight, setFontWeight }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [aiStatus, setAiStatus] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(false);
+  const [soundVolume, setSoundVolume] = useState<number>(0.14);
   const [activeTab, setActiveTab] = useState<'profile' | 'account' | 'appearance' | 'data' | 'ai'>('profile');
   
   // Account tab states
@@ -43,6 +46,22 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
       const hasEmailProvider = currentUser.providerData.some(p => p.providerId === 'password');
       setHasPassword(hasEmailProvider);
     }
+  }, []);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('ivs-sounds-enabled');
+      const vol = localStorage.getItem('ivs-sounds-volume');
+      const enabled = saved === '1';
+      const volNum = vol ? parseFloat(vol) : 0.14;
+      setSoundEnabled(enabled);
+      setSoundVolume(volNum);
+      if (enabled) enableSounds('/sounds');
+      try { setVolume('click', volNum); setVolume('confirm', volNum); setVolume('cancel', volNum); setVolume('open', volNum); setVolume('close', volNum); setVolume('notification', volNum); } catch (e) { }
+    } catch (err) {
+      // ignore
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
   // FIX: Updated translations to remove user-facing API key management text.
@@ -502,6 +521,31 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
                               </button>
                           </div>
                       </div>
+                  </div>
+                </section>
+
+                <section className="card-glass p-6">
+                  <h2 className="text-2xl font-bold mb-4">Âm thanh giao diện (UI Sounds)</h2>
+                  <div className="flex flex-col gap-3">
+                    <label className="flex items-center gap-3">
+                      <input type="checkbox" checked={soundEnabled} onChange={(e) => {
+                        const on = e.target.checked;
+                        setSoundEnabled(on);
+                        localStorage.setItem('ivs-sounds-enabled', on ? '1' : '0');
+                        if (on) enableSounds('/sounds'); else disableSounds();
+                      }} />
+                      <span className="font-medium">Bật âm thanh giao diện</span>
+                    </label>
+
+                    <div>
+                      <label className="block text-sm font-semibold mb-1">Âm lượng</label>
+                      <input type="range" min={0} max={1} step={0.01} value={soundVolume} onChange={(e) => {
+                        const v = parseFloat(e.target.value);
+                        setSoundVolume(v);
+                        localStorage.setItem('ivs-sounds-volume', v.toString());
+                        try { setVolume('click', v); setVolume('confirm', v); setVolume('cancel', v); setVolume('open', v); setVolume('close', v); setVolume('notification', v); } catch (e) { }
+                      }} className="w-full" />
+                    </div>
                   </div>
                 </section>
 
