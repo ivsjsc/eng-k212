@@ -49,8 +49,6 @@ export default defineConfig(({ mode }) => {
               // Feature chunks
               'components': [
                 './components/TeacherDashboard',
-                './components/WritingGrader',
-                './components/SpeakingPartner',
                 './components/CourseDetail'
               ]
             },

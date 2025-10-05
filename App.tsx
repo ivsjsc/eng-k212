@@ -15,9 +15,6 @@ const CourseDetail = lazy(() => import('./components/CourseDetail'));
 const TeacherDashboard = lazy(() => import('./components/TeacherDashboard'));
 const ClassAnalyticsDashboard = lazy(() => import('./components/ClassAnalyticsDashboard'));
 const AIContentGenerator = lazy(() => import('./components/AIContentGenerator'));
-const WritingGrader = lazy(() => import('./components/WritingGrader'));
-const SpeakingPartner = lazy(() => import('./components/SpeakingPartner'));
-const AITutorChat = lazy(() => import('./components/AITutorChat'));
 const PersonalizedLearningPath = lazy(() => import('./components/PersonalizedLearningPath'));
 const IVSAssistant = lazy(() => import('./components/IVSAssistant'));
 const Settings = lazy(() => import('./components/Settings'));
@@ -476,12 +473,6 @@ function App() {
         return <ClassAnalyticsDashboard classes={classes} language={language} />;
       case 'ai-content-generator':
         return <AIContentGenerator language={language} />;
-      case 'writing-grader':
-        return <WritingGrader language={language} setView={handleSetView} user={user} />;
-      case 'speaking-partner':
-        return <SpeakingPartner language={language} setView={handleSetView} user={user} />;
-      case 'ai-tutor':
-        return <AITutorChat user={user!} language={language} />;
       case 'learning-path':
         return <PersonalizedLearningPath user={user!} language={language} />;
       case 'ivs-assistant':

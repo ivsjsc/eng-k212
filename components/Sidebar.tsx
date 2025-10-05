@@ -56,9 +56,6 @@ const Sidebar: React.FC<SidebarProps> = ({ user, currentView, setView, language,
   ];
 
   const commonNavItems: { view: View; icon: string; label: keyof typeof t.en; badge?: 'free' | 'premium' }[] = [
-    { view: 'writing-grader', icon: 'fa-pen-ruler', label: 'writingGrader', badge: 'free' },
-    { view: 'speaking-partner', icon: 'fa-comments', label: 'speakingPartner', badge: 'premium' },
-    { view: 'ai-tutor', icon: 'fa-robot', label: 'aiTutor', badge: 'premium' },
     { view: 'learning-path', icon: 'fa-map', label: 'learningPath', badge: 'premium' },
   ];
   

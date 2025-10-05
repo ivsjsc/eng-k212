@@ -38,6 +38,17 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFr
   const grammar = lesson.rawLesson.grammar;
   const activities = lesson.rawLesson.activities;
 
+  // Function to speak text using Web Speech API
+  const speakText = (text: string, lang: string = 'en-US') => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = lang;
+      utterance.rate = 0.8;
+      utterance.pitch = 1;
+      speechSynthesis.speak(utterance);
+    }
+  };
+
   // Simple TABS definition for lesson sections
   const TABS = {
     en: [
@@ -77,8 +88,26 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFr
         <img src={item.imageUrl} alt={item.term} className="w-24 h-24 object-cover rounded-lg" />
       )}
       <div className="flex-1 text-center sm:text-left">
-        <h4 className="text-xl font-bold">{item.term}</h4>
-        <p className="text-slate-500 dark:text-slate-400">{item.pronunciation}</p>
+        <div className="flex items-center gap-2 mb-1">
+          <h4 className="text-xl font-bold">{item.term}</h4>
+          <button
+            onClick={() => speakText(item.term)}
+            className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+            title="Phát âm từ"
+          >
+            <i className="fa-solid fa-volume-high"></i>
+          </button>
+        </div>
+        <div className="flex items-center gap-2 mb-2">
+          <p className="text-slate-500 dark:text-slate-400">{item.pronunciation}</p>
+          <button
+            onClick={() => speakText(item.pronunciation.replace(/[\/\[\]]/g, ''), 'en-US')}
+            className="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 transition-colors text-sm"
+            title="Phát âm phiên âm"
+          >
+            <i className="fa-solid fa-volume-low"></i>
+          </button>
+        </div>
         <p className="text-blue-600 dark:text-blue-400 font-medium">{item.vietnamese}</p>
       </div>
     </div>
@@ -157,9 +186,29 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFr
                 <div className="space-y-6">
                   {grammar.map((point, index) => (
                     <div key={index} className="bg-slate-100 dark:bg-slate-800/50 p-6 rounded-lg">
-                      <h3 className="text-xl font-bold mb-3">{point.title[language]}</h3>
+                      <div className="flex items-center gap-2 mb-3">
+                        <h3 className="text-xl font-bold">{point.title[language]}</h3>
+                        <button
+                          onClick={() => speakText(point.title[language])}
+                          className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                          title="Phát âm tiêu đề"
+                        >
+                          <i className="fa-solid fa-volume-high"></i>
+                        </button>
+                      </div>
                       <div className="prose prose-slate dark:prose-invert max-w-none">
-                          {point.explanation[language].map((line, i) => <p key={i}>{line}</p>)}
+                        <div className="flex items-start gap-2">
+                          <div className="flex-1">
+                            {point.explanation[language].map((line, i) => <p key={i}>{line}</p>)}
+                          </div>
+                          <button
+                            onClick={() => speakText(point.explanation[language].join(' '))}
+                            className="text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-300 transition-colors mt-1"
+                            title="Phát âm giải thích"
+                          >
+                            <i className="fa-solid fa-volume-high"></i>
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}
