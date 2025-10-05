@@ -324,6 +324,26 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFr
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 animate-fade-in">
+      {/* Premium Tools banner */}
+      <div className="w-full flex justify-center mb-3">
+        <div className="px-6 py-2 rounded-md bg-gradient-to-r from-slate-800 to-slate-900 text-white font-semibold shadow-md border border-slate-700">
+          Premium Tools
+        </div>
+      </div>
+
+      {/* Pill toolbar for premium tool quick actions */}
+      <div className="flex items-center justify-center md:justify-end gap-3 mb-6">
+        <button onClick={() => setShowQuizModal(true)} className="px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-purple-600 to-purple-500 text-white shadow-sm hover:opacity-95">
+          <i className="fa-solid fa-clipboard-question mr-2"></i> {language === 'vi' ? 'Quiz Nhanh' : 'Quick Quiz'}
+        </button>
+        <button onClick={() => setShowConversationModal(true)} className="px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-green-500 to-green-400 text-white shadow-sm hover:opacity-95">
+          <i className="fa-solid fa-comments mr-2"></i> {language === 'vi' ? 'Luyện Hội thoại' : 'Conversation Practice'}
+        </button>
+        <button onClick={() => setShowAssistantModal(true)} className="px-4 py-2 rounded-full text-sm font-medium bg-gradient-to-r from-indigo-600 to-indigo-500 text-white shadow-sm hover:opacity-95">
+          <i className="fa-solid fa-robot mr-2"></i> {language === 'vi' ? 'Trợ lý AI Bài học' : 'Lesson AI Assistant'}
+        </button>
+      </div>
+
       <h1 className="text-3xl font-bold mb-6">{lesson.title}</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -381,7 +401,7 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFr
           </div>
         </div>
 
-        {/* Right column: ebook viewer + compact AI tool buttons */}
+  {/* Right column: ebook viewer */}
         <aside className="space-y-4">
           <div className="card-glass p-4">
             <h4 className="font-semibold mb-2 flex items-center gap-2">
@@ -404,36 +424,7 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFr
             )}
           </div>
 
-          {/* Compact Premium Tools - click to expand */}
-          <div className="card-glass p-4">
-            <h4 className="font-semibold mb-3 flex items-center gap-2">
-              <i className="fa-solid fa-sparkles text-purple-500"></i>
-              {language === 'vi' ? 'Tiện ích Premium' : 'Premium Tools'}
-            </h4>
-            <div className="space-y-2">
-              {/* Quick Quiz Button */}
-              <PremiumToolButton
-                icon="fa-clipboard-question"
-                label={language === 'vi' ? 'Quiz Nhanh' : 'Quick Quiz'}
-                color="purple"
-                onClick={() => setShowQuizModal(true)}
-              />
-              {/* Conversation Practice Button */}
-              <PremiumToolButton
-                icon="fa-comments"
-                label={language === 'vi' ? 'Luyện Hội thoại' : 'Conversation Practice'}
-                color="green"
-                onClick={() => setShowConversationModal(true)}
-              />
-              {/* AI Assistant Button */}
-              <PremiumToolButton
-                icon="fa-robot"
-                label={language === 'vi' ? 'Trợ lý AI Bài học' : 'Lesson AI Assistant'}
-                color="indigo"
-                onClick={() => setShowAssistantModal(true)}
-              />
-            </div>
-          </div>
+          {/* (premium tools moved to top toolbar) */}
         </aside>
       </div>
 
