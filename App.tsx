@@ -260,6 +260,8 @@ function App() {
   // Initialize UI sounds and attach global click handler to play sounds for elements with data-sound
   useEffect(() => {
     try {
+      const enabled = localStorage.getItem('ivs-sounds-enabled') === '1';
+      if (!enabled) return;
       // initSounds is safe to call multiple times
       const mod = require('./utils/sound');
       if (mod && typeof mod.initSounds === 'function') {
@@ -279,6 +281,10 @@ function App() {
 
   // Keyboard shortcuts handler
   useEffect(() => {
+    // Feature flag: enable keyboard shortcuts only when explicitly enabled in localStorage
+    let shortcutsEnabled = false;
+    try { shortcutsEnabled = localStorage.getItem('ivs-enable-shortcuts') === '1'; } catch (e) { shortcutsEnabled = false; }
+    if (!shortcutsEnabled) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       // Don't trigger shortcuts if user is typing in an input
       const target = e.target as HTMLElement;

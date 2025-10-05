@@ -550,6 +550,24 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
                 </section>
 
                 <section className="card-glass p-6">
+                  <h2 className="text-2xl font-bold mb-4">Phím tắt (Keyboard Shortcuts)</h2>
+                  <div className="flex flex-col gap-3">
+                    <label className="flex items-center gap-3">
+                      <input type="checkbox" defaultChecked={localStorage.getItem('ivs-enable-shortcuts') === '1'} onChange={(e) => {
+                        const on = e.target.checked;
+                        try {
+                          localStorage.setItem('ivs-enable-shortcuts', on ? '1' : '0');
+                        } catch (err) {}
+                        // Inform user they may need to reload
+                        alert('Đã cập nhật. Vui lòng tải lại trang để áp dụng phím tắt. (Reload the page to apply keyboard shortcuts)');
+                      }} />
+                      <span className="font-medium">Bật phím tắt toàn cục</span>
+                    </label>
+                    <p className="text-sm text-slate-500">Kích hoạt các phím tắt toàn cục (Esc, ?, Ctrl+F, mũi tên điều hướng). Sau khi bật, hãy tải lại trang để áp dụng.</p>
+                  </div>
+                </section>
+
+                <section className="card-glass p-6">
                   <h2 className="text-2xl font-bold mb-4">{t.fontSettingsTitle}</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                        <div>
