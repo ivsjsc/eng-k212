@@ -12,6 +12,16 @@ interface CurriculumProps {
 const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse, setView }) => {
   const data: Curriculum = curriculumData;
 
+  // Debug logs to help trace why curriculum may not appear
+  try {
+    // eslint-disable-next-line no-console
+    console.debug('[Curriculum] total categories:', data.length, 'first categories:', data.slice(0,3).map(c => c.category));
+    // eslint-disable-next-line no-console
+    console.debug('[Curriculum] user.gradeLevel:', user?.gradeLevel);
+  } catch (e) {
+    // ignore logging errors
+  }
+
   // Normalize gradeLevel values and filter curriculum accordingly
   const normalizeGradeLevel = (raw?: string) => {
     if (!raw) return '';
@@ -54,12 +64,15 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse,
   const noMatchesForGrade = !!user.gradeLevel && filteredData.length === 0;
   const effectiveData = noMatchesForGrade ? data : filteredData;
 
+  // Debug UI state (small toggle) to show why filtering behaved a certain way
+  const [showFilterDebug, setShowFilterDebug] = React.useState(false);
+
   const allCourses = useMemo(() => {
     const colorPalette = ['#4A90E2', '#50E3C2', '#F5A623', '#BD10E0', '#9013FE', '#D0021B', '#F8E71C', '#7ED321'];
     let colorIndex = 0;
     const slug = (str: string) => str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-
-    return filteredData.flatMap(category =>
+    // Build course index from the effectiveData (which may be the full data when noMatchesForGrade)
+    return effectiveData.flatMap(category =>
       category.levels.map(level => {
         const courseId = `course-${slug(level.title.en)}`;
         return {
@@ -79,10 +92,11 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse,
   }, [filteredData, language]);
 
   const handleCategoryClick = (categoryIndex: number) => {
-    const category = filteredData[categoryIndex];
+    const category = effectiveData[categoryIndex];
     if (category && category.levels.length > 0) {
       // Find the first course for this category
-      const firstCourse = allCourses.find(course => course.series === (language === 'vi' ? category.category.vi : category.category.en));
+      const seriesName = language === 'vi' ? category.category.vi : category.category.en;
+      const firstCourse = allCourses.find(course => course.series === seriesName);
       if (firstCourse) {
         onSelectCourse(firstCourse);
       }
@@ -92,7 +106,24 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse,
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <h1 className="text-3xl font-bold mb-2 text-white">{language === 'vi' ? 'Chương trình học' : 'Learning Programs'}</h1>
-      <p className="text-slate-300 mb-8">{language === 'vi' ? 'Chọn khóa học để bắt đầu học tập' : 'Select a course to start learning'}</p>
+      <div className="flex items-center gap-3 mb-4">
+        <p className="text-slate-300">{language === 'vi' ? 'Chọn khóa học để bắt đầu học tập' : 'Select a course to start learning'}</p>
+        <button
+          onClick={() => setShowFilterDebug(s => !s)}
+          title="Debug: show grade filter info"
+          className="text-slate-400 hover:text-white text-sm px-2 py-1 rounded"
+        >
+          <i className="fa-solid fa-circle-info"></i>
+        </button>
+      </div>
+      {showFilterDebug && (
+        <div className="mb-4 text-sm text-slate-400 bg-white/5 p-3 rounded">
+          <div><strong>user.gradeLevel:</strong> {String(user.gradeLevel)}</div>
+          <div><strong>normalized:</strong> {normalizeGradeLevel(user.gradeLevel)}</div>
+          <div><strong>filtered categories:</strong> {filteredData.length}</div>
+          <div><strong>effective categories:</strong> {effectiveData.length}</div>
+        </div>
+      )}
 
       {/* Show all courses grouped by category */}
       {noMatchesForGrade && (

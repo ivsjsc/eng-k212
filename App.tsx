@@ -443,6 +443,8 @@ function App() {
         id: 'guest-student-01',
         name: language === 'vi' ? 'Học sinh Khách' : 'Guest Student',
         role: 'student',
+        // Friendly default so curriculum filtering shows relevant programs
+        gradeLevel: 'primary',
       };
       setUser(guestStudent);
     } else {
