@@ -115,7 +115,7 @@ Nếu bạn có câu hỏi, yêu cầu hoặc khiếu nại về Chính sách B�
 - Email: info@ivsacademy.edu.vn
 - Tên công ty: INTEGRATE VISION SYNERGY TRADING SERVICES JSC
 - Địa chỉ: Long Phuoc, Dong Nai Province, Vietnam
-
+- Website: ivsacademy.edu.vn
 Chúng tôi sẽ cố gắng phản hồi trong vòng 30 ngày làm việc.
 
 ---
