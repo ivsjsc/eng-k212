@@ -1,5 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
+import type { User } from '../types';
+import { chatWithOpenAI, isOpenAIConfigured, buildConversationHistory } from '../services/openaiService';
 
+interface Message {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: Date;
+}
+
+interface Props {
+  user: User;
+  language: 'en' | 'vi';
+}
 
 const IVSAssistant: React.FC<Props> = ({ user, language }) => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -60,30 +73,12 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
     window.speechSynthesis.speak(utter);
   };
 
-
-interface Message {
-
-
-interface Props {
-
-
-const IVSAssistant: React.FC<Props> = ({ user, language }) => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [useRealAI, setUseRealAI] = useState(false);
-  const [model, setModel] = useState('gpt-4o-mini');
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  // Check if OpenAI is configured on mount
+  // Load persisted state on mount
   useEffect(() => {
-    setUseRealAI(isOpenAIConfigured());
-    // load persisted messages and preferences
     try {
       const raw = localStorage.getItem('ivs_assistant_messages');
       if (raw) {
         const parsed = JSON.parse(raw) as Message[];
-        // revive dates
         setMessages(parsed.map(m => ({ ...m, timestamp: new Date(m.timestamp) })));
       }
       const savedModel = localStorage.getItem('ivs_assistant_model');
