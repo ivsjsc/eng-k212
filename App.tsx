@@ -25,6 +25,7 @@ const UserGuide = lazy(() => import('./components/UserGuide'));
 const AssistiveTouch = lazy(() => import('./components/AssistiveTouch'));
 const AuthPage = lazy(() => import('./components/AuthPage'));
 const RoleSelectionPage = lazy(() => import('./components/RoleSelectionPage'));
+const KeyboardShortcutsHelp = lazy(() => import('./components/KeyboardShortcutsHelp'));
 import Curriculum from './components/Curriculum';
 import FirstUseOverlay from './components/FirstUseOverlay';
 import ProfileSetupModal from './components/ProfileSetupModal';
@@ -58,6 +59,7 @@ function App() {
   const [showFirstUseOverlay, setShowFirstUseOverlay] = useState(false);
   const [showProfileSetup, setShowProfileSetup] = useState(false);
   const [showLinkPassword, setShowLinkPassword] = useState(false);
+  const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
 
   // Appearance states
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -252,6 +254,89 @@ function App() {
     document.documentElement.style.fontWeight = fontWeight.toString();
     localStorage.setItem('ivs-fontWeight', fontWeight.toString());
   }, [fontWeight]);
+
+  // Keyboard shortcuts handler
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger shortcuts if user is typing in an input
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
+        // Allow Ctrl+F even in inputs
+        if (!(e.ctrlKey && e.key === 'f')) {
+          return;
+        }
+      }
+
+      // Help shortcuts
+      if (e.key === '?' || e.key === 'F1') {
+        e.preventDefault();
+        setShowKeyboardHelp(prev => !prev);
+        return;
+      }
+
+      // Close modals with Escape
+      if (e.key === 'Escape') {
+        if (showKeyboardHelp) {
+          setShowKeyboardHelp(false);
+        } else if (selectedCourse) {
+          setSelectedCourse(null);
+        } else if (currentView !== 'home' && currentView !== 'curriculum') {
+          handleSetView('home');
+        }
+        return;
+      }
+
+      // Search with Ctrl+F
+      if (e.ctrlKey && e.key === 'f') {
+        e.preventDefault();
+        // Trigger search functionality (can be enhanced later)
+        const searchInput = document.querySelector('input[type="search"]') as HTMLInputElement;
+        if (searchInput) {
+          searchInput.focus();
+        }
+        return;
+      }
+
+      // Save with Ctrl+S
+      if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        // Trigger save if in a form context
+        return;
+      }
+
+      // Command palette with Ctrl+K
+      if (e.ctrlKey && e.key === 'k') {
+        e.preventDefault();
+        setIsSidebarOpen(true);
+        return;
+      }
+
+      // Quick navigation (only if no modifiers and not in modal)
+      if (!e.ctrlKey && !e.altKey && !e.metaKey && !showKeyboardHelp && user) {
+        switch (e.key.toLowerCase()) {
+          case 'h':
+            e.preventDefault();
+            handleSetView('home');
+            break;
+          case 'c':
+            e.preventDefault();
+            handleSetView('curriculum');
+            break;
+          case 's':
+            e.preventDefault();
+            handleSetView('settings');
+            break;
+          case 'a':
+            e.preventDefault();
+            handleSetView('ivs-assistant');
+            break;
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentView, selectedCourse, showKeyboardHelp, user]);
 
   const handleSetView = (view: View) => {
     setSelectedCourse(null);
@@ -512,6 +597,15 @@ function App() {
                 />
               )}
 
+              {showKeyboardHelp && (
+                <Suspense fallback={<LoadingFallback />}>
+                  <KeyboardShortcutsHelp
+                    language={language}
+                    onClose={() => setShowKeyboardHelp(false)}
+                  />
+                </Suspense>
+              )}
+
               <div className="relative z-20">
                 <Suspense fallback={<LoadingFallback />}>
                   <ErrorBoundary>
@@ -521,6 +615,21 @@ function App() {
               </div>
             </main>
           </div>
+        </div>
+
+        {/* Keyboard shortcut indicator */}
+        <div className="fixed bottom-4 left-4 z-[90] hidden lg:block">
+          <button
+            onClick={() => setShowKeyboardHelp(true)}
+            className="group flex items-center gap-2 px-3 py-2 bg-slate-800/90 hover:bg-slate-700/90 backdrop-blur-sm text-slate-300 hover:text-white rounded-lg border border-slate-700 hover:border-slate-600 transition-all shadow-lg"
+            title={language === 'vi' ? 'Xem phím tắt' : 'View keyboard shortcuts'}
+          >
+            <i className="fa-solid fa-keyboard text-sm"></i>
+            <span className="text-xs font-medium">
+              {language === 'vi' ? 'Phím tắt' : 'Shortcuts'}
+            </span>
+            <kbd className="ml-1 px-1.5 py-0.5 text-xs bg-slate-700 group-hover:bg-slate-600 rounded">?</kbd>
+          </button>
         </div>
       </div>
     </ErrorBoundary>
