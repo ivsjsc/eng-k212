@@ -29,6 +29,10 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse 
   };
 
   const filteredData = getFilteredCurriculum();
+  // If the user's gradeLevel produced zero matches, fall back to showing all programs
+  // but keep a flag so we can show a helpful notice explaining what's happening.
+  const noMatchesForGrade = !!user.gradeLevel && filteredData.length === 0;
+  const effectiveData = noMatchesForGrade ? data : filteredData;
 
   const allCourses = useMemo(() => {
     const colorPalette = ['#4A90E2', '#50E3C2', '#F5A623', '#BD10E0', '#9013FE', '#D0021B', '#F8E71C', '#7ED321'];
@@ -71,7 +75,15 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse 
       <p className="text-slate-300 mb-8">{language === 'vi' ? 'Chọn khóa học để bắt đầu học tập' : 'Select a course to start learning'}</p>
 
       {/* Show all courses grouped by category */}
-      {filteredData.map((cat, catIdx) => (
+      {noMatchesForGrade && (
+        <div className="mb-6 p-4 rounded-md bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-200">
+          {language === 'vi'
+            ? 'Không có chương trình khớp với cấp học bạn đã chọn. Hiện đang hiển thị tất cả chương trình. Vui lòng kiểm tra và cập nhật thông tin cá nhân nếu cần.'
+            : 'No programs match the grade level you selected. Showing all programs instead. Please review and update your profile if needed.'}
+        </div>
+      )}
+
+      {effectiveData.map((cat, catIdx) => (
         <div key={catIdx} className="mb-12">
           <h2 className="text-2xl font-bold mb-4 text-white flex items-center gap-3">
             <span className="h-1 w-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full"></span>
