@@ -13,12 +13,13 @@
     "exceljs": "^4.4.0",
     "firebase": "^12.3.0",
     "firebase-admin": "^13.5.0",
-  "react": "^19.1.1",
-  "react-dom": "^19.1.1",
-  "recharts": "^2.12.7"
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "recharts": "^2.12.7"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
+    "@vercel/node": "^5.3.24",
     "@vitejs/plugin-react": "^5.0.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",

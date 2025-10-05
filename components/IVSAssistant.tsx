@@ -20,12 +20,16 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [useRealAI, setUseRealAI] = useState(false);
   const [model, setModel] = useState('gpt-4o-mini');
+  const [useGeminiRealtime, setUseGeminiRealtime] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Voice input and TTS state
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const recognitionRef = useRef<any>(null);
+  const geminiSocketRef = useRef<WebSocket | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const audioStreamRef = useRef<MediaStream | null>(null);
 
   // Start speech recognition
   const handleVoiceInput = () => {
@@ -73,6 +77,122 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
     window.speechSynthesis.speak(utter);
   };
 
+  // Gemini real-time audio functions
+  const connectGeminiRealtime = async () => {
+    try {
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      if (!apiKey) {
+        alert('Gemini API key not configured. Please set VITE_GEMINI_API_KEY in your environment.');
+        return;
+      }
+
+      // Get microphone access
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioStreamRef.current = stream;
+
+      // Create audio context for processing
+      audioContextRef.current = new AudioContext();
+      const source = audioContextRef.current.createMediaStreamSource(stream);
+
+      // Connect to Gemini WebSocket
+      const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${apiKey}`;
+      const socket = new WebSocket(wsUrl);
+      geminiSocketRef.current = socket;
+
+      socket.onopen = () => {
+        console.log('Connected to Gemini realtime');
+
+        // Send initial configuration
+        const configMessage = {
+          setup: {
+            model: 'models/gemini-2.5-flash-native-audio-preview-09-2025',
+            generation_config: {
+              response_modalities: ['text', 'audio'],
+              speech_config: {
+                voice_config: {
+                  prebuilt_voice_config: {
+                    voice_name: 'Zephyr'
+                  }
+                }
+              }
+            }
+          }
+        };
+        socket.send(JSON.stringify(configMessage));
+      };
+
+      socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.text) {
+          // Add text response to messages
+          const newMessage: Message = {
+            id: Date.now().toString(),
+            role: 'assistant',
+            content: data.text,
+            timestamp: new Date()
+          };
+          setMessages(prev => [...prev, newMessage]);
+        }
+        if (data.audio) {
+          // Play audio response
+          playGeminiAudio(data.audio);
+        }
+      };
+
+      socket.onerror = (error) => {
+        console.error('Gemini WebSocket error:', error);
+        alert('Failed to connect to Gemini realtime service');
+      };
+
+      socket.onclose = () => {
+        console.log('Gemini WebSocket closed');
+        disconnectGeminiRealtime();
+      };
+
+    } catch (error) {
+      console.error('Failed to connect to Gemini:', error);
+      alert('Failed to start Gemini realtime conversation');
+    }
+  };
+
+  const disconnectGeminiRealtime = () => {
+    if (geminiSocketRef.current) {
+      geminiSocketRef.current.close();
+      geminiSocketRef.current = null;
+    }
+    if (audioStreamRef.current) {
+      audioStreamRef.current.getTracks().forEach(track => track.stop());
+      audioStreamRef.current = null;
+    }
+    if (audioContextRef.current) {
+      audioContextRef.current.close();
+      audioContextRef.current = null;
+    }
+  };
+
+  const playGeminiAudio = (audioData: string) => {
+    // Convert base64 audio to playable format
+    const audioBuffer = Uint8Array.from(atob(audioData), c => c.charCodeAt(0));
+    const blob = new Blob([audioBuffer], { type: 'audio/pcm' });
+    const audioUrl = URL.createObjectURL(blob);
+    const audio = new Audio(audioUrl);
+    audio.play();
+  };
+
+  const sendAudioToGemini = (audioData: ArrayBuffer) => {
+    if (geminiSocketRef.current && geminiSocketRef.current.readyState === WebSocket.OPEN) {
+      const message = {
+        realtime_input: {
+          media_chunks: [{
+            data: btoa(String.fromCharCode(...new Uint8Array(audioData))),
+            mime_type: 'audio/pcm'
+          }]
+        }
+      };
+      geminiSocketRef.current.send(JSON.stringify(message));
+    }
+  };
+
   // Load persisted state on mount
   useEffect(() => {
     try {
@@ -88,6 +208,13 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
     } catch (e) {
       console.warn('Failed to load IVS Assistant state', e);
     }
+  }, []);
+
+  // Cleanup Gemini connection on unmount
+  useEffect(() => {
+    return () => {
+      disconnectGeminiRealtime();
+    };
   }, []);
 
   const t = {
@@ -468,7 +595,21 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
     try {
       let response: string;
 
-      if (useRealAI) {
+      if (useGeminiRealtime && geminiSocketRef.current) {
+        // Send text to Gemini WebSocket
+        const message = {
+          client_content: {
+            turns: [{
+              role: 'user',
+              parts: [{ text: userInput }]
+            }],
+            turn_complete: true
+          }
+        };
+        geminiSocketRef.current.send(JSON.stringify(message));
+        setIsLoading(false);
+        return; // Response will come via WebSocket
+      } else if (useRealAI) {
         // Use OpenAI for real intelligent responses
         const history = buildConversationHistory(
           messages.map(m => ({ role: m.role, content: m.content }))
@@ -493,7 +634,7 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: language === 'en' 
+        content: language === 'en'
           ? '❌ Sorry, I encountered an error. Please try again or contact support if the issue persists.'
           : '❌ Xin lỗi, đã xảy ra lỗi. Vui lòng thử lại hoặc liên hệ hỗ trợ nếu vấn đề vẫn tiếp diễn.',
         timestamp: new Date()
@@ -561,21 +702,22 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
             </span>
             <div className="flex items-center gap-2">
             <button
-              onClick={isListening ? handleStopListening : handleVoiceInput}
-              className={`text-xs px-2 py-1 rounded-md ${isListening ? 'bg-yellow-100 text-yellow-700' : 'bg-white border'}`}
-              title={isListening ? (language === 'vi' ? 'Dừng ghi âm' : 'Stop listening') : (language === 'vi' ? 'Nhập bằng giọng nói' : 'Voice input')}
+              onClick={useGeminiRealtime ? undefined : (isListening ? handleStopListening : handleVoiceInput)}
+              disabled={useGeminiRealtime}
+              className={`text-xs px-2 py-1 rounded-md ${isListening ? 'bg-yellow-100 text-yellow-700' : useGeminiRealtime ? 'bg-slate-100 text-slate-500 cursor-not-allowed' : 'bg-white border'}`}
+              title={useGeminiRealtime ? (language === 'vi' ? 'Tự động ghi âm khi Gemini hoạt động' : 'Auto-recording when Gemini is active') : (isListening ? (language === 'vi' ? 'Dừng ghi âm' : 'Stop listening') : (language === 'vi' ? 'Nhập bằng giọng nói' : 'Voice input'))}
             >
               <i className={`fa-solid fa-microphone${isListening ? '-slash' : ''} mr-1`}></i>
-              {isListening ? (language === 'vi' ? 'Đang nghe...' : 'Listening...') : (language === 'vi' ? 'Nói' : 'Voice')}
+              {useGeminiRealtime ? (language === 'vi' ? 'Tự động' : 'Auto') : (isListening ? (language === 'vi' ? 'Đang nghe...' : 'Listening...') : (language === 'vi' ? 'Nói' : 'Voice'))}
             </button>
             <button
-              onClick={handleSpeak}
-              disabled={isSpeaking}
-              className={`text-xs px-2 py-1 rounded-md ${isSpeaking ? 'bg-blue-100 text-blue-700' : 'bg-white border'}`}
-              title={language === 'vi' ? 'Đọc to câu trả lời' : 'Read aloud'}
+              onClick={useGeminiRealtime ? undefined : handleSpeak}
+              disabled={useGeminiRealtime || isSpeaking}
+              className={`text-xs px-2 py-1 rounded-md ${isSpeaking ? 'bg-blue-100 text-blue-700' : useGeminiRealtime ? 'bg-slate-100 text-slate-500 cursor-not-allowed' : 'bg-white border'}`}
+              title={useGeminiRealtime ? (language === 'vi' ? 'Gemini tự động nói' : 'Gemini speaks automatically') : (language === 'vi' ? 'Đọc to câu trả lời' : 'Read aloud')}
             >
               <i className="fa-solid fa-volume-high mr-1"></i>
-              {language === 'vi' ? 'Đọc' : 'Speak'}
+              {useGeminiRealtime ? (language === 'vi' ? 'Tự động' : 'Auto') : (language === 'vi' ? 'Đọc' : 'Speak')}
             </button>
               <label className="text-xs text-slate-600 dark:text-slate-300 mr-2">AI</label>
               <button
@@ -584,6 +726,21 @@ const IVSAssistant: React.FC<Props> = ({ user, language }) => {
                 className={`px-2 py-1 rounded-md text-xs ${useRealAI ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-700'}`}
               >
                 {useRealAI ? 'Real' : 'Demo'}
+              </button>
+              <button
+                onClick={() => {
+                  if (useGeminiRealtime) {
+                    disconnectGeminiRealtime();
+                  } else {
+                    connectGeminiRealtime();
+                  }
+                  setUseGeminiRealtime(!useGeminiRealtime);
+                }}
+                title="Toggle Gemini real-time audio"
+                className={`px-2 py-1 rounded-md text-xs ml-2 ${useGeminiRealtime ? 'bg-purple-100 text-purple-700' : 'bg-slate-100 text-slate-700'}`}
+              >
+                <i className="fa-solid fa-waveform-lines mr-1"></i>
+                {useGeminiRealtime ? 'Live' : 'Gemini'}
               </button>
               <select
                 value={model}
