@@ -16,13 +16,15 @@ interface LessonViewProps {
   setView: (view: View) => void;
   // optional prop to indicate if the current user is on the free tier
   isFreeTier?: boolean;
+  // optional course-level ebook PDF URL so the lesson view can show the full ebook side-by-side
+  ebookPdfUrl?: string;
 }
 
 import LessonQuickQuiz from './LessonQuickQuiz';
 import LessonConversationPractice from './LessonConversationPractice';
 import LessonAIAssistant from './LessonAIAssistant';
 
-const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFreeTier = true }) => {
+const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFreeTier = true, ebookPdfUrl }) => {
   const [activeTab, setActiveTab] = useState('aims');
   const [translation, setTranslation] = useState<Record<string, string>>({});
   const [isTranslating, setIsTranslating] = useState<Record<string, boolean>>({});
@@ -379,16 +381,27 @@ const LessonView: React.FC<LessonViewProps> = ({ lesson, language, setView, isFr
           </div>
         </div>
 
-        {/* Right column: ebook preview + compact AI tool buttons */}
+        {/* Right column: ebook viewer + compact AI tool buttons */}
         <aside className="space-y-4">
           <div className="card-glass p-4">
             <h4 className="font-semibold mb-2 flex items-center gap-2">
               <i className="fa-solid fa-book-open text-blue-500"></i>
               {language === 'vi' ? 'Sách điện tử' : 'E-book'}
             </h4>
-            <div className="h-64 overflow-auto bg-white dark:bg-slate-900 rounded-md p-3 text-sm text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-              <p className="whitespace-pre-line">{lesson.rawLesson.bookExcerpt?.[language] ?? lesson.rawLesson.intro?.[language] ?? 'No preview available.'}</p>
-            </div>
+            {ebookPdfUrl ? (
+              <div className="h-[60vh] bg-white dark:bg-slate-900 rounded-md overflow-hidden border border-slate-200 dark:border-slate-700">
+                <iframe
+                  src={`${ebookPdfUrl.replace('/view?usp=sharing', '/preview').replace('/view?usp=drive_link', '/preview')}`}
+                  className="w-full h-full border-0"
+                  title={`${lesson.title} Ebook`}
+                  allow="fullscreen"
+                ></iframe>
+              </div>
+            ) : (
+              <div className="h-64 overflow-auto bg-white dark:bg-slate-900 rounded-md p-3 text-sm text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                <p className="whitespace-pre-line">{lesson.rawLesson.bookExcerpt?.[language] ?? lesson.rawLesson.intro?.[language] ?? 'No preview available.'}</p>
+              </div>
+            )}
           </div>
 
           {/* Compact Premium Tools - click to expand */}

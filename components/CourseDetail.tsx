@@ -19,14 +19,14 @@ const CourseDetail: React.FC<CourseDetailProps> = ({ course, onBack, language, s
   };
   
   if (selectedLesson) {
-    return (
-        <div>
-            <button onClick={() => setSelectedLesson(null)} className="m-4 btn btn-secondary-outline">
-                <i className="fa-solid fa-arrow-left mr-2"></i> {language === 'vi' ? 'Quay lại Khóa học' : 'Back to Course'}
-            </button>
-            <LessonView lesson={selectedLesson} language={language} setView={setView} />
-        </div>
-    );
+  return (
+    <div>
+      <button onClick={() => setSelectedLesson(null)} className="m-4 btn btn-secondary-outline">
+        <i className="fa-solid fa-arrow-left mr-2"></i> {language === 'vi' ? 'Quay lại Khóa học' : 'Back to Course'}
+      </button>
+      <LessonView lesson={selectedLesson} language={language} setView={setView} ebookPdfUrl={course.rawLevel.ebookPdfUrl} />
+    </div>
+  );
   }
 
   const UnitList = () => (
