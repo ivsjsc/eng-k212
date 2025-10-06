@@ -257,7 +257,16 @@ function App() {
   // Initialize UI sounds and attach global click handler to play sounds for elements with data-sound
   useEffect(() => {
     try {
-      const enabled = localStorage.getItem('ivs-sounds-enabled') === '1';
+      // Default to ENABLED for better UX (opt-out instead of opt-in)
+      const saved = localStorage.getItem('ivs-sounds-enabled');
+      let enabled = true; // Default enabled
+      if (saved === null) {
+        // First time user - enable by default
+        localStorage.setItem('ivs-sounds-enabled', '1');
+        enabled = true;
+      } else {
+        enabled = saved === '1';
+      }
       if (!enabled) return;
       // initSounds is safe to call multiple times
       const mod = require('./utils/sound');
@@ -278,9 +287,20 @@ function App() {
 
   // Keyboard shortcuts handler
   useEffect(() => {
-    // Feature flag: enable keyboard shortcuts only when explicitly enabled in localStorage
-    let shortcutsEnabled = false;
-    try { shortcutsEnabled = localStorage.getItem('ivs-enable-shortcuts') === '1'; } catch (e) { shortcutsEnabled = false; }
+    // Feature flag: enable keyboard shortcuts by DEFAULT (opt-out instead of opt-in)
+    let shortcutsEnabled = true; // Default to enabled
+    try { 
+      const saved = localStorage.getItem('ivs-enable-shortcuts');
+      if (saved === null) {
+        // First time user - enable by default
+        localStorage.setItem('ivs-enable-shortcuts', '1');
+        shortcutsEnabled = true;
+      } else {
+        shortcutsEnabled = saved === '1';
+      }
+    } catch (e) { 
+      shortcutsEnabled = true; // Default to enabled even on error
+    }
     if (!shortcutsEnabled) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       // Don't trigger shortcuts if user is typing in an input

@@ -52,7 +52,14 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
     try {
       const saved = localStorage.getItem('ivs-sounds-enabled');
       const vol = localStorage.getItem('ivs-sounds-volume');
-      const enabled = saved === '1';
+      // Default to ENABLED if not set (first time user)
+      let enabled = true;
+      if (saved === null) {
+        localStorage.setItem('ivs-sounds-enabled', '1');
+        enabled = true;
+      } else {
+        enabled = saved === '1';
+      }
       const volNum = vol ? parseFloat(vol) : 0.14;
       setSoundEnabled(enabled);
       setSoundVolume(volNum);
@@ -500,72 +507,352 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
               <>
                 <section className="card-glass p-6">
                   <h2 className="text-2xl font-bold mb-4">{t.appearanceTitle}</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                          <h3 className="text-lg font-semibold mb-2">{t.themeTitle}</h3>
-                          <div className="flex gap-2">
-                              <button onClick={() => handleThemeChange('light')} className={`btn flex-1 ${theme === 'light' ? 'btn-primary' : 'btn-secondary-outline'}`}>
-                                  <i className="fa-solid fa-sun mr-2"></i> {t.light}
-                              </button>
-                              <button onClick={() => handleThemeChange('dark')} className={`btn flex-1 ${theme === 'dark' ? 'btn-primary' : 'btn-secondary-outline'}`}>
-                                  <i className="fa-solid fa-moon mr-2"></i> {t.dark}
-                              </button>
+                  
+                  {/* Enhanced Theme Selector with Preview Cards */}
+                  <div className="mb-8">
+                    <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                      <i className="fa-solid fa-palette"></i>
+                      {t.themeTitle}
+                    </h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      {/* Light Theme Card */}
+                      <button 
+                        onClick={() => handleThemeChange('light')}
+                        className={`relative p-4 rounded-xl border-2 transition-all hover:scale-105 ${
+                          theme === 'light' 
+                            ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-lg ring-2 ring-blue-300' 
+                            : 'border-slate-300 dark:border-slate-600 hover:border-blue-400'
+                        }`}
+                      >
+                        {/* Preview Card */}
+                        <div className="bg-white rounded-lg p-3 mb-3 shadow-sm border border-slate-200">
+                          <div className="h-2 bg-slate-200 rounded mb-2"></div>
+                          <div className="h-2 bg-slate-100 rounded w-3/4 mb-2"></div>
+                          <div className="h-1 bg-slate-100 rounded w-1/2"></div>
+                        </div>
+                        {/* Title */}
+                        <div className="flex items-center justify-center gap-2">
+                          <i className="fa-solid fa-sun text-2xl text-yellow-500"></i>
+                          <span className="font-bold text-slate-800 dark:text-slate-200">{t.light}</span>
+                        </div>
+                        {/* Checkmark Badge */}
+                        {theme === 'light' && (
+                          <div className="absolute -top-2 -right-2 bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
+                            <i className="fa-solid fa-check text-sm"></i>
                           </div>
-                      </div>
-                       <div>
-                          <h3 className="text-lg font-semibold mb-2">{t.languageTitle}</h3>
-                          <div className="flex gap-2">
-                               <button onClick={() => setLanguage('en')} className={`btn flex-1 ${language === 'en' ? 'btn-primary' : 'btn-secondary-outline'}`}>
-                                  English
-                              </button>
-                               <button onClick={() => setLanguage('vi')} className={`btn flex-1 ${language === 'vi' ? 'btn-primary' : 'btn-secondary-outline'}`}>
-                                  Tiếng Việt
-                              </button>
+                        )}
+                      </button>
+
+                      {/* Dark Theme Card */}
+                      <button 
+                        onClick={() => handleThemeChange('dark')}
+                        className={`relative p-4 rounded-xl border-2 transition-all hover:scale-105 ${
+                          theme === 'dark' 
+                            ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20 shadow-lg ring-2 ring-purple-300' 
+                            : 'border-slate-300 dark:border-slate-600 hover:border-purple-400'
+                        }`}
+                      >
+                        {/* Preview Card */}
+                        <div className="bg-slate-800 rounded-lg p-3 mb-3 shadow-sm border border-slate-700">
+                          <div className="h-2 bg-slate-600 rounded mb-2"></div>
+                          <div className="h-2 bg-slate-700 rounded w-3/4 mb-2"></div>
+                          <div className="h-1 bg-slate-700 rounded w-1/2"></div>
+                        </div>
+                        {/* Title */}
+                        <div className="flex items-center justify-center gap-2">
+                          <i className="fa-solid fa-moon text-2xl text-purple-500"></i>
+                          <span className="font-bold text-slate-800 dark:text-slate-200">{t.dark}</span>
+                        </div>
+                        {/* Checkmark Badge */}
+                        {theme === 'dark' && (
+                          <div className="absolute -top-2 -right-2 bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
+                            <i className="fa-solid fa-check text-sm"></i>
                           </div>
-                      </div>
+                        )}
+                      </button>
+                    </div>
                   </div>
-                </section>
 
-                <section className="card-glass p-6">
-                  <h2 className="text-2xl font-bold mb-4">Âm thanh giao diện (UI Sounds)</h2>
-                  <div className="flex flex-col gap-3">
-                    <label className="flex items-center gap-3">
-                      <input type="checkbox" checked={soundEnabled} onChange={(e) => {
-                        const on = e.target.checked;
-                        setSoundEnabled(on);
-                        localStorage.setItem('ivs-sounds-enabled', on ? '1' : '0');
-                        if (on) enableSounds('/sounds'); else disableSounds();
-                      }} />
-                      <span className="font-medium">Bật âm thanh giao diện</span>
-                    </label>
-
-                    <div>
-                      <label className="block text-sm font-semibold mb-1">Âm lượng</label>
-                      <input type="range" min={0} max={1} step={0.01} value={soundVolume} onChange={(e) => {
-                        const v = parseFloat(e.target.value);
-                        setSoundVolume(v);
-                        localStorage.setItem('ivs-sounds-volume', v.toString());
-                        try { setVolume('click', v); setVolume('confirm', v); setVolume('cancel', v); setVolume('open', v); setVolume('close', v); setVolume('notification', v); } catch (e) { }
-                      }} className="w-full" />
+                  {/* Language Selector */}
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                      <i className="fa-solid fa-globe"></i>
+                      {t.languageTitle}
+                    </h3>
+                    <div className="grid grid-cols-2 gap-4">
+                      <button 
+                        onClick={() => setLanguage('en')} 
+                        className={`p-4 rounded-xl border-2 transition-all hover:scale-105 flex items-center justify-center gap-3 ${
+                          language === 'en' 
+                            ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-lg ring-2 ring-blue-300' 
+                            : 'border-slate-300 dark:border-slate-600 hover:border-blue-400'
+                        }`}
+                      >
+                        <span className="text-3xl">🇺🇸</span>
+                        <span className="font-bold text-lg">English</span>
+                        {language === 'en' && (
+                          <i className="fa-solid fa-check text-blue-500 ml-auto"></i>
+                        )}
+                      </button>
+                      <button 
+                        onClick={() => setLanguage('vi')} 
+                        className={`p-4 rounded-xl border-2 transition-all hover:scale-105 flex items-center justify-center gap-3 ${
+                          language === 'vi' 
+                            ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 shadow-lg ring-2 ring-blue-300' 
+                            : 'border-slate-300 dark:border-slate-600 hover:border-blue-400'
+                        }`}
+                      >
+                        <span className="text-3xl">🇻🇳</span>
+                        <span className="font-bold text-lg">Tiếng Việt</span>
+                        {language === 'vi' && (
+                          <i className="fa-solid fa-check text-blue-500 ml-auto"></i>
+                        )}
+                      </button>
                     </div>
                   </div>
                 </section>
 
                 <section className="card-glass p-6">
-                  <h2 className="text-2xl font-bold mb-4">Phím tắt (Keyboard Shortcuts)</h2>
-                  <div className="flex flex-col gap-3">
-                    <label className="flex items-center gap-3">
-                      <input type="checkbox" defaultChecked={localStorage.getItem('ivs-enable-shortcuts') === '1'} onChange={(e) => {
-                        const on = e.target.checked;
-                        try {
-                          localStorage.setItem('ivs-enable-shortcuts', on ? '1' : '0');
-                        } catch (err) {}
-                        // Inform user they may need to reload
-                        alert('Đã cập nhật. Vui lòng tải lại trang để áp dụng phím tắt. (Reload the page to apply keyboard shortcuts)');
-                      }} />
-                      <span className="font-medium">Bật phím tắt toàn cục</span>
+                  <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <i className="fa-solid fa-volume-high text-blue-500"></i>
+                    {language === 'en' ? 'UI Sounds' : 'Âm thanh giao diện'}
+                  </h2>
+                  
+                  <div className="flex flex-col gap-4">
+                    {/* Sound Toggle with Enhanced UI */}
+                    <label className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                      soundEnabled 
+                        ? 'border-green-500 bg-green-50 dark:bg-green-900/20' 
+                        : 'border-slate-300 dark:border-slate-600 hover:border-slate-400'
+                    }`}>
+                      <input 
+                        type="checkbox" 
+                        checked={soundEnabled} 
+                        onChange={(e) => {
+                          const on = e.target.checked;
+                          setSoundEnabled(on);
+                          localStorage.setItem('ivs-sounds-enabled', on ? '1' : '0');
+                          if (on) {
+                            enableSounds('/sounds');
+                            // Play test sound
+                            try {
+                              const audio = new Audio('/sounds/click.mp3');
+                              audio.volume = soundVolume;
+                              audio.play().catch(() => {});
+                            } catch (e) {}
+                          } else {
+                            disableSounds();
+                          }
+                        }} 
+                        className="w-5 h-5"
+                      />
+                      <div className="flex-1">
+                        <span className="font-bold text-lg">
+                          {language === 'en' ? 'Enable UI Sounds' : 'Bật âm thanh giao diện'}
+                        </span>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                          {language === 'en' 
+                            ? 'Play sounds when clicking buttons and interacting with the interface' 
+                            : 'Phát âm thanh khi nhấn nút và tương tác với giao diện'}
+                        </p>
+                      </div>
+                      {soundEnabled && (
+                        <i className="fa-solid fa-check-circle text-2xl text-green-500"></i>
+                      )}
                     </label>
-                    <p className="text-sm text-slate-500">Kích hoạt các phím tắt toàn cục (Esc, ?, Ctrl+F, mũi tên điều hướng). Sau khi bật, hãy tải lại trang để áp dụng.</p>
+
+                    {/* Volume Slider with Visual Indicator */}
+                    {soundEnabled && (
+                      <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                        <div className="flex items-center justify-between mb-2">
+                          <label className="font-semibold flex items-center gap-2">
+                            <i className="fa-solid fa-volume-low text-slate-400"></i>
+                            {language === 'en' ? 'Volume' : 'Âm lượng'}
+                          </label>
+                          <span className="text-sm font-bold text-blue-600 dark:text-blue-400">
+                            {Math.round(soundVolume * 100)}%
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <i className="fa-solid fa-volume-off text-slate-400"></i>
+                          <input 
+                            type="range" 
+                            min={0} 
+                            max={1} 
+                            step={0.01} 
+                            value={soundVolume} 
+                            onChange={(e) => {
+                              const v = parseFloat(e.target.value);
+                              setSoundVolume(v);
+                              localStorage.setItem('ivs-sounds-volume', v.toString());
+                              try { 
+                                setVolume('click', v); 
+                                setVolume('confirm', v); 
+                                setVolume('cancel', v); 
+                                setVolume('open', v); 
+                                setVolume('close', v); 
+                                setVolume('notification', v); 
+                              } catch (e) { }
+                            }} 
+                            className="flex-1 h-2"
+                            style={{
+                              background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${soundVolume * 100}%, #e5e7eb ${soundVolume * 100}%, #e5e7eb 100%)`
+                            }}
+                          />
+                          <i className="fa-solid fa-volume-high text-blue-500"></i>
+                        </div>
+                        {/* Test Button */}
+                        <button
+                          onClick={() => {
+                            try {
+                              const audio = new Audio('/sounds/notification.mp3');
+                              audio.volume = soundVolume;
+                              audio.play().catch(() => {});
+                            } catch (e) {}
+                          }}
+                          className="btn btn-secondary mt-3 w-full"
+                        >
+                          <i className="fa-solid fa-play mr-2"></i>
+                          {language === 'en' ? 'Test Sound' : 'Kiểm tra âm thanh'}
+                        </button>
+                      </div>
+                    )}
+
+                    {/* Warning if sounds folder doesn't exist */}
+                    {soundEnabled && (
+                      <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-300 dark:border-yellow-700 rounded-lg text-sm">
+                        <p className="flex items-center gap-2 text-yellow-800 dark:text-yellow-200">
+                          <i className="fa-solid fa-info-circle"></i>
+                          {language === 'en' 
+                            ? 'Sound files should be placed in /public/sounds/ folder. See README for details.' 
+                            : 'File âm thanh cần được đặt trong thư mục /public/sounds/. Xem README để biết chi tiết.'}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </section>
+
+                <section className="card-glass p-6">
+                  <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+                    <i className="fa-solid fa-keyboard text-purple-500"></i>
+                    {language === 'en' ? 'Keyboard Shortcuts' : 'Phím tắt'}
+                  </h2>
+                  
+                  <div className="flex flex-col gap-4">
+                    {/* Enhanced Toggle with Better UX */}
+                    <label className={`flex items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                      localStorage.getItem('ivs-enable-shortcuts') === '1'
+                        ? 'border-purple-500 bg-purple-50 dark:bg-purple-900/20' 
+                        : 'border-slate-300 dark:border-slate-600 hover:border-slate-400'
+                    }`}>
+                      <input 
+                        type="checkbox" 
+                        defaultChecked={localStorage.getItem('ivs-enable-shortcuts') === '1'} 
+                        onChange={(e) => {
+                          const on = e.target.checked;
+                          try {
+                            localStorage.setItem('ivs-enable-shortcuts', on ? '1' : '0');
+                          } catch (err) {}
+                          // Better feedback - offer to reload
+                          if (window.confirm(
+                            language === 'en'
+                              ? 'Keyboard shortcuts updated! Would you like to reload the page to apply changes now?'
+                              : 'Đã cập nhật phím tắt! Bạn có muốn tải lại trang để áp dụng ngay không?'
+                          )) {
+                            window.location.reload();
+                          }
+                        }} 
+                        className="w-5 h-5"
+                      />
+                      <div className="flex-1">
+                        <span className="font-bold text-lg">
+                          {language === 'en' ? 'Enable Global Shortcuts' : 'Bật phím tắt toàn cục'}
+                        </span>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                          {language === 'en' 
+                            ? 'Use keyboard shortcuts for faster navigation and actions. Press ? to see all shortcuts.' 
+                            : 'Sử dụng phím tắt để điều hướng và thao tác nhanh hơn. Nhấn ? để xem tất cả phím tắt.'}
+                        </p>
+                      </div>
+                      {localStorage.getItem('ivs-enable-shortcuts') === '1' && (
+                        <i className="fa-solid fa-check-circle text-2xl text-purple-500"></i>
+                      )}
+                    </label>
+
+                    {/* Shortcut Quick Reference */}
+                    <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                      <h3 className="font-bold mb-3 flex items-center gap-2">
+                        <i className="fa-solid fa-lightbulb text-yellow-500"></i>
+                        {language === 'en' ? 'Quick Reference' : 'Tham khảo nhanh'}
+                      </h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                        <div className="flex items-center gap-2">
+                          <kbd className="px-2 py-1 bg-white dark:bg-slate-700 rounded border text-xs font-mono">?</kbd>
+                          <span className="text-slate-600 dark:text-slate-400">
+                            {language === 'en' ? 'Show all shortcuts' : 'Hiện tất cả phím tắt'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <kbd className="px-2 py-1 bg-white dark:bg-slate-700 rounded border text-xs font-mono">Esc</kbd>
+                          <span className="text-slate-600 dark:text-slate-400">
+                            {language === 'en' ? 'Close/Go back' : 'Đóng/Quay lại'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <kbd className="px-2 py-1 bg-white dark:bg-slate-700 rounded border text-xs font-mono">Ctrl</kbd>
+                          <span className="text-xs">+</span>
+                          <kbd className="px-2 py-1 bg-white dark:bg-slate-700 rounded border text-xs font-mono">F</kbd>
+                          <span className="text-slate-600 dark:text-slate-400">
+                            {language === 'en' ? 'Global search' : 'Tìm kiếm toàn cục'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <kbd className="px-2 py-1 bg-white dark:bg-slate-700 rounded border text-xs font-mono">Ctrl</kbd>
+                          <span className="text-xs">+</span>
+                          <kbd className="px-2 py-1 bg-white dark:bg-slate-700 rounded border text-xs font-mono">K</kbd>
+                          <span className="text-slate-600 dark:text-slate-400">
+                            {language === 'en' ? 'Open sidebar' : 'Mở thanh bên'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <kbd className="px-2 py-1 bg-white dark:bg-slate-700 rounded border text-xs font-mono">↑↓←→</kbd>
+                          <span className="text-slate-600 dark:text-slate-400">
+                            {language === 'en' ? 'Navigate items' : 'Điều hướng'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <kbd className="px-2 py-1 bg-white dark:bg-slate-700 rounded border text-xs font-mono">Ctrl</kbd>
+                          <span className="text-xs">+</span>
+                          <kbd className="px-2 py-1 bg-white dark:bg-slate-700 rounded border text-xs font-mono">S</kbd>
+                          <span className="text-slate-600 dark:text-slate-400">
+                            {language === 'en' ? 'Save (context)' : 'Lưu (ngữ cảnh)'}
+                          </span>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => {
+                          // Trigger the keyboard help modal
+                          window.dispatchEvent(new KeyboardEvent('keydown', { key: '?' }));
+                        }}
+                        className="btn btn-secondary mt-3 w-full"
+                      >
+                        <i className="fa-solid fa-list mr-2"></i>
+                        {language === 'en' ? 'View All Shortcuts' : 'Xem tất cả phím tắt'}
+                      </button>
+                    </div>
+
+                    {/* Pro Tip */}
+                    <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-300 dark:border-blue-700 rounded-lg text-sm">
+                      <p className="flex items-start gap-2 text-blue-800 dark:text-blue-200">
+                        <i className="fa-solid fa-star text-yellow-500 mt-0.5"></i>
+                        <span>
+                          <strong>{language === 'en' ? 'Pro Tip:' : 'Mẹo:'}</strong>{' '}
+                          {language === 'en' 
+                            ? 'Keyboard shortcuts are enabled by default for new users. You can always toggle them here.' 
+                            : 'Phím tắt được bật mặc định cho người dùng mới. Bạn có thể bật/tắt bất cứ lúc nào.'}
+                        </span>
+                      </p>
+                    </div>
                   </div>
                 </section>
 
