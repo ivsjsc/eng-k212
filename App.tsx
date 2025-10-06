@@ -555,7 +555,7 @@ function App() {
 
     switch (currentView) {
       case 'home':
-        return <Home user={user!} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes} />;
+        return <Home user={user!} onUpdateUser={handleUpdateUser} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes} />;
       case 'curriculum':
         return <Curriculum language={language} user={user!} onSelectCourse={handleSelectCourse} setView={handleSetView} />;
       case 'teacher-dashboard':
@@ -588,9 +588,9 @@ function App() {
       case 'user-guide':
         return <UserGuide language={language} />;
       case 'admin':
-        return isAdmin ? <AdminPanel /> : <Home user={user!} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes} />;
+        return isAdmin ? <AdminPanel /> : <Home user={user!} onUpdateUser={handleUpdateUser} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes} />;
       default:
-        return <Home user={user!} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes} />;
+        return <Home user={user!} onUpdateUser={handleUpdateUser} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes} />;
     }
   };
 
@@ -671,7 +671,7 @@ function App() {
           <div className="flex min-w-0 flex-1 flex-col">
             <Suspense fallback={<LoadingFallback />}>
               <ErrorBoundary>
-                <Header currentView={currentView} language={language} onMenuClick={() => setIsSidebarOpen(true)} />
+                <Header currentView={currentView} language={language} onMenuClick={() => setIsSidebarOpen(true)} user={user} />
               </ErrorBoundary>
             </Suspense>
 

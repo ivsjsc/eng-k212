@@ -7,17 +7,23 @@ import SkillRadar from './SkillRadar';
 import RecommendedLessons from './RecommendedLessons';
 import StudyGroup from './StudyGroup';
 import AchievementBadges from './AchievementBadges';
+import SScoreDisplay from './SScoreDisplay';
+import RewardsStore from './RewardsStore';
+import AchievementBadgesModal from './AchievementBadgesModal';
 import { curriculumData } from '../data/curriculum';
 
 interface StudentHomeProps {
   user: User;
+  onUpdateUser: (user: User) => void;
   onSelectCourse: (course: Course) => void;
   language: 'en' | 'vi';
   setView: (view: View) => void;
 }
 
-const StudentHome: React.FC<StudentHomeProps> = ({ user, onSelectCourse, language, setView }) => {
+const StudentHome: React.FC<StudentHomeProps> = ({ user, onUpdateUser, onSelectCourse, language, setView }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'progress' | 'achievements' | 'social'>('overview');
+  const [showRewardsStore, setShowRewardsStore] = useState(false);
+  const [showBadgesModal, setShowBadgesModal] = useState(false);
 
   const allCourses = useMemo(() => {
     const colorPalette = ['#4A90E2', '#50E3C2', '#F5A623', '#BD10E0', '#9013FE', '#D0021B', '#F8E71C', '#7ED321'];
@@ -137,6 +143,31 @@ const StudentHome: React.FC<StudentHomeProps> = ({ user, onSelectCourse, languag
           <p className="text-xl md:text-2xl font-bold text-slate-700 dark:text-slate-200">{t.subtitle}</p>
         </div>
       </header>
+
+      {/* S-Score Display with Quick Actions */}
+      <div className="mb-8">
+        <div className="flex flex-col lg:flex-row gap-4 items-start">
+          <div className="flex-1 w-full">
+            <SScoreDisplay user={user} showDetails={false} compact={false} />
+          </div>
+          <div className="flex flex-col gap-3 lg:w-64">
+            <button
+              onClick={() => setShowRewardsStore(true)}
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              <i className="fas fa-store"></i>
+              <span>{language === 'vi' ? 'Cửa hàng thưởng' : 'Rewards Store'}</span>
+            </button>
+            <button
+              onClick={() => setShowBadgesModal(true)}
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              <i className="fas fa-trophy"></i>
+              <span>{language === 'vi' ? 'Huy hiệu' : 'Achievements'}</span>
+            </button>
+          </div>
+        </div>
+      </div>
 
       {/* Stats Cards - Redesigned with Gradients */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -303,6 +334,22 @@ const StudentHome: React.FC<StudentHomeProps> = ({ user, onSelectCourse, languag
             </div>
           </div>
         </div>
+      )}
+
+      {/* Modals */}
+      {showRewardsStore && (
+        <RewardsStore
+          user={user}
+          onUserUpdate={onUpdateUser}
+          onClose={() => setShowRewardsStore(false)}
+        />
+      )}
+
+      {showBadgesModal && (
+        <AchievementBadgesModal
+          user={user}
+          onClose={() => setShowBadgesModal(false)}
+        />
       )}
     </div>
   );

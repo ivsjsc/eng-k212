@@ -37,6 +37,17 @@ export interface User {
     tier: 'free' | 'student' | 'teacher' | 'enterprise';
     expiresAt?: Date;
   };
+  // S-Score Gamification System
+  sscore?: number; // Total S-Score points
+  aiTokens?: number; // Tokens for AI features
+  achievements?: string[]; // Achievement badge IDs
+  completedLessons?: string[]; // Lesson IDs
+  currentStreak?: number; // Current daily login streak
+  longestStreak?: number; // Longest streak achieved
+  lastActiveDate?: string; // ISO date string for streak tracking
+  tier?: 'Bronze' | 'Silver' | 'Gold' | 'Platinum'; // Reward tier
+  totalTestsPassed?: number; // Count of passed tests
+  perfectScores?: number; // Count of 100% quiz scores
 }
 
 export interface Lesson {
@@ -380,3 +391,111 @@ export interface StudentAnalytics {
 }
 
 // (View is declared at top of the file)
+
+// ===== S-Score Gamification System Types =====
+
+export type SScoreEventType = 
+  | 'lesson_complete' 
+  | 'test_passed' 
+  | 'quiz_perfect' 
+  | 'daily_streak_bonus' 
+  | 'first_try_bonus' 
+  | 'help_peer' 
+  | 'weekly_challenge'
+  | 'token_exchange'
+  | 'achievement_unlocked';
+
+export interface SScoreTransaction {
+  id: string;
+  userId: string;
+  eventType: SScoreEventType;
+  points: number;
+  description: string;
+  metadata?: Record<string, any>; // lessonId, testId, etc.
+  timestamp: string; // ISO date string
+}
+
+export interface LessonProgress {
+  id: string;
+  lessonId: string;
+  courseId: string;
+  userId: string;
+  status: 'not_started' | 'in_progress' | 'completed';
+  completedAt?: string; // ISO date
+  score?: number; // 0-100
+  timeSpent?: number; // minutes
+  attemptsCount: number;
+  sscoreAwarded?: number;
+}
+
+export type TestQuestionType = 'multiple_choice' | 'fill_blank' | 'essay' | 'listening' | 'speaking';
+
+export interface TestQuestion {
+  id: string;
+  type: TestQuestionType;
+  question: string;
+  options?: string[]; // for multiple choice
+  correctAnswer: string | string[]; // can be multiple for fill_blank
+  points: number;
+  explanation?: string;
+}
+
+export interface Test {
+  id: string;
+  courseId: string;
+  unitId?: string;
+  title: string;
+  description?: string;
+  questions: TestQuestion[];
+  passingScore: number; // percentage
+  timeLimit?: number; // minutes
+  sscoreReward: number; // points awarded for passing
+  createdBy: string;
+  createdAt: string;
+  isPublished: boolean;
+}
+
+export interface TestResult {
+  id: string;
+  testId: string;
+  userId: string;
+  answers: Record<string, string | string[]>; // questionId -> answer
+  score: number; // 0-100
+  passed: boolean;
+  timeSpent: number; // minutes
+  completedAt: string; // ISO date
+  sscoreAwarded?: number;
+}
+
+export interface Badge {
+  id: string;
+  name: string;
+  description: string;
+  icon: string; // font-awesome class or URL
+  rarity: 'common' | 'rare' | 'epic' | 'legendary';
+  criteria: {
+    type: 'sscore' | 'streak' | 'tests' | 'lessons' | 'perfect_scores';
+    value: number;
+  };
+  sscoreReward: number;
+  unlockedBy?: string[]; // user IDs who unlocked this
+}
+
+export type RewardTier = 'Bronze' | 'Silver' | 'Gold' | 'Platinum';
+
+export interface RewardTierConfig {
+  tier: RewardTier;
+  minPoints: number;
+  maxPoints: number | null; // null for highest tier
+  color: string;
+  benefits: string[];
+  icon: string;
+}
+
+export interface TokenExchangeRate {
+  feature: 'ai_writing_grader' | 'ai_speaking_partner' | 'ai_personalized_lesson' | 'ai_instant_feedback';
+  cost: number; // in S-Score points
+  displayName: string;
+  description: string;
+}
+
