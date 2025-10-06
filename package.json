@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@azure/msal-node": "^3.8.0",
     "@google/genai": "^1.19.0",
     "exceljs": "^4.4.0",
     "firebase": "^12.3.0",
