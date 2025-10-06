@@ -550,7 +550,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Tôi có thể giúp bạn như thế nào?"
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect for Life Experiences",
+                                "vi": "Thì hiện tại hoàn thành cho trải nghiệm cuộc sống"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Use: We use present perfect to talk about experiences that happened at an unspecified time in the past.",
+                                    "Form: Subject + have/has + past participle",
+                                    "Examples: - I have tried yoga for stress relief. - She has visited many doctors.",
+                                    "Time expressions: ever, never, since, for, just, already, yet"
+                                ],
+                                "vi": [
+                                    "Cách dùng: Chúng ta dùng thì hiện tại hoàn thành để nói về những trải nghiệm xảy ra tại thời điểm không xác định trong quá khứ.",
+                                    "Cấu trúc: Chủ ngữ + have/has + past participle",
+                                    "Ví dụ: - Tôi đã thử yoga để giảm căng thẳng. - Cô ấy đã thăm nhiều bác sĩ.",
+                                    "Trạng từ thời gian: ever (đã từng), never (chưa từng), since (từ khi), for (trong), just (vừa), already (đã), yet (chưa)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Useful Expressions",
@@ -788,7 +809,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Bạn đã thử... chưa?"
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect for Life Experiences",
+                                "vi": "Thì hiện tại hoàn thành cho trải nghiệm cuộc sống"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Use: We use present perfect to talk about experiences that happened at an unspecified time in the past.",
+                                    "Form: Subject + have/has + past participle",
+                                    "Examples: - I have tried yoga for stress relief. - She has visited many doctors.",
+                                    "Time expressions: ever, never, since, for, just, already, yet"
+                                ],
+                                "vi": [
+                                    "Cách dùng: Chúng ta dùng thì hiện tại hoàn thành để nói về những trải nghiệm xảy ra tại thời điểm không xác định trong quá khứ.",
+                                    "Cấu trúc: Chủ ngữ + have/has + past participle",
+                                    "Ví dụ: - Tôi đã thử yoga để giảm căng thẳng. - Cô ấy đã thăm nhiều bác sĩ.",
+                                    "Trạng từ thời gian: ever (đã từng), never (chưa từng), since (từ khi), for (trong), just (vừa), already (đã), yet (chưa)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Model Analysis",
@@ -937,7 +979,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "vi sinh vật"
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Modal Verbs for Health Advice",
+                                "vi": "Động từ khuyết thiếu cho lời khuyên sức khỏe"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Use: We use modals (should, must, have to) to give advice and talk about obligations.",
+                                    "Should: For recommendations - \"You should exercise regularly.\"",
+                                    "Must/Have to: For strong obligations - \"You must see a doctor immediately.\"",
+                                    "Examples: - You should eat more vegetables. - You have to quit smoking."
+                                ],
+                                "vi": [
+                                    "Cách dùng: Chúng ta dùng động từ khuyết thiếu (should, must, have to) để đưa ra lời khuyên và nói về nghĩa vụ.",
+                                    "Should: Cho khuyến nghị - \"You should exercise regularly.\"",
+                                    "Must/Have to: Cho nghĩa vụ mạnh - \"You must see a doctor immediately.\"",
+                                    "Ví dụ: - Bạn nên ăn nhiều rau hơn. - Bạn phải bỏ hút thuốc."
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Scientific Reading",
@@ -1014,7 +1077,28 @@ export const g11Data: CurriculumLevel = {
                         ]
                     },
                     "vocabulary": [],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Modal Verbs for Health Advice",
+                                "vi": "Động từ khuyết thiếu cho lời khuyên sức khỏe"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Use: We use modals (should, must, have to) to give advice and talk about obligations.",
+                                    "Should: For recommendations - \"You should exercise regularly.\"",
+                                    "Must/Have to: For strong obligations - \"You must see a doctor immediately.\"",
+                                    "Examples: - You should eat more vegetables. - You have to quit smoking."
+                                ],
+                                "vi": [
+                                    "Cách dùng: Chúng ta dùng động từ khuyết thiếu (should, must, have to) để đưa ra lời khuyên và nói về nghĩa vụ.",
+                                    "Should: Cho khuyến nghị - \"You should exercise regularly.\"",
+                                    "Must/Have to: Cho nghĩa vụ mạnh - \"You must see a doctor immediately.\"",
+                                    "Ví dụ: - Bạn nên ăn nhiều rau hơn. - Bạn phải bỏ hút thuốc."
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Planning Phase",
@@ -1395,7 +1479,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Hãy để tôi đưa ra một ví dụ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Simple for Family Routines",
+                                "vi": "Thì hiện tại đơn cho thói quen gia đình"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Use: We use present simple to talk about regular family activities and habits.",
+                                    "Form: Subject + V(base form/s/es) + Object",
+                                    "Examples: - My family eats dinner together every evening. - She helps with household chores.",
+                                    "Time expressions: every day, usually, often, always, never"
+                                ],
+                                "vi": [
+                                    "Cách dùng: Chúng ta dùng thì hiện tại đơn để nói về các hoạt động và thói quen gia đình đều đặn.",
+                                    "Cấu trúc: Chủ ngữ + Động từ (nguyên mẫu/thêm s/es) + Tân ngữ",
+                                    "Ví dụ: - Gia đình tôi ăn tối cùng nhau mỗi tối. - Cô ấy giúp việc nhà.",
+                                    "Trạng từ thời gian: every day (mỗi ngày), usually (thường), often (thường), always (luôn), never (không bao giờ)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Useful Expressions",
@@ -1592,7 +1697,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Kết quả là, ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Simple for Family Routines",
+                                "vi": "Thì hiện tại đơn cho thói quen gia đình"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Use: We use present simple to talk about regular family activities and habits.",
+                                    "Form: Subject + V(base form/s/es) + Object",
+                                    "Examples: - My family eats dinner together every evening. - She helps with household chores.",
+                                    "Time expressions: every day, usually, often, always, never"
+                                ],
+                                "vi": [
+                                    "Cách dùng: Chúng ta dùng thì hiện tại đơn để nói về các hoạt động và thói quen gia đình đều đặn.",
+                                    "Cấu trúc: Chủ ngữ + Động từ (nguyên mẫu/thêm s/es) + Tân ngữ",
+                                    "Ví dụ: - Gia đình tôi ăn tối cùng nhau mỗi tối. - Cô ấy giúp việc nhà.",
+                                    "Trạng từ thời gian: every day (mỗi ngày), usually (thường), often (thường), always (luôn), never (không bao giờ)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Model Analysis",
@@ -1688,7 +1814,28 @@ export const g11Data: CurriculumLevel = {
                         ]
                     },
                     "vocabulary": [],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Past Simple vs Present Perfect for Family Stories",
+                                "vi": "Quá khứ đơn vs Hiện tại hoàn thành cho câu chuyện gia đình"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited my grandparents last weekend.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited my grandparents many times.\"",
+                                    "Examples: - We moved house in 2010. (Past Simple) - We have lived here for 5 years. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (since, for, ever)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited my grandparents last weekend.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited my grandparents many times.\"",
+                                    "Ví dụ: - Chúng tôi chuyển nhà năm 2010. (Quá khứ đơn) - Chúng tôi đã sống ở đây 5 năm. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (since, for, ever)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Cultural Exploration",
@@ -2052,7 +2199,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Hãy để tôi đưa ra một ví dụ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect vs Past Simple",
+                                "vi": "Hiện tại hoàn thành vs Quá khứ đơn"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited Paris last year.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited Paris.\"",
+                                    "Examples: - She finished her homework yesterday. (Past Simple) - She has finished her homework. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (ever, never, since, for)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited Paris last year.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited Paris.\"",
+                                    "Ví dụ: - Cô ấy hoàn thành bài tập về nhà hôm qua. (Quá khứ đơn) - Cô ấy đã hoàn thành bài tập về nhà. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (ever, never, since, for)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Useful Expressions",
@@ -2249,7 +2417,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Kết quả là, ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect vs Past Simple",
+                                "vi": "Hiện tại hoàn thành vs Quá khứ đơn"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited Paris last year.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited Paris.\"",
+                                    "Examples: - She finished her homework yesterday. (Past Simple) - She has finished her homework. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (ever, never, since, for)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited Paris last year.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited Paris.\"",
+                                    "Ví dụ: - Cô ấy hoàn thành bài tập về nhà hôm qua. (Quá khứ đơn) - Cô ấy đã hoàn thành bài tập về nhà. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (ever, never, since, for)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Model Analysis",
@@ -2345,7 +2534,28 @@ export const g11Data: CurriculumLevel = {
                         ]
                     },
                     "vocabulary": [],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Modal Verbs for Advice and Suggestions",
+                                "vi": "Động từ khuyết thiếu cho lời khuyên và gợi ý"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Should: For general advice - \"You should read more books.\"",
+                                    "Could: For possibilities - \"You could join a club.\"",
+                                    "Might: For tentative suggestions - \"You might try a new hobby.\"",
+                                    "Examples: - You should exercise regularly. - You could volunteer at a local charity."
+                                ],
+                                "vi": [
+                                    "Should: Cho lời khuyên chung - \"You should read more books.\"",
+                                    "Could: Cho khả năng - \"You could join a club.\"",
+                                    "Might: Cho gợi ý do dự - \"You might try a new hobby.\"",
+                                    "Ví dụ: - Bạn nên tập thể dục đều đặn. - Bạn có thể tình nguyện tại tổ chức từ thiện địa phương."
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Cultural Exploration",
@@ -2709,7 +2919,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Hãy để tôi đưa ra một ví dụ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect vs Past Simple",
+                                "vi": "Hiện tại hoàn thành vs Quá khứ đơn"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited Paris last year.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited Paris.\"",
+                                    "Examples: - She finished her homework yesterday. (Past Simple) - She has finished her homework. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (ever, never, since, for)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited Paris last year.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited Paris.\"",
+                                    "Ví dụ: - Cô ấy hoàn thành bài tập về nhà hôm qua. (Quá khứ đơn) - Cô ấy đã hoàn thành bài tập về nhà. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (ever, never, since, for)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Useful Expressions",
@@ -2906,7 +3137,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Kết quả là, ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect vs Past Simple",
+                                "vi": "Hiện tại hoàn thành vs Quá khứ đơn"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited Paris last year.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited Paris.\"",
+                                    "Examples: - She finished her homework yesterday. (Past Simple) - She has finished her homework. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (ever, never, since, for)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited Paris last year.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited Paris.\"",
+                                    "Ví dụ: - Cô ấy hoàn thành bài tập về nhà hôm qua. (Quá khứ đơn) - Cô ấy đã hoàn thành bài tập về nhà. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (ever, never, since, for)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Model Analysis",
@@ -3002,7 +3254,28 @@ export const g11Data: CurriculumLevel = {
                         ]
                     },
                     "vocabulary": [],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Modal Verbs for Advice and Suggestions",
+                                "vi": "Động từ khuyết thiếu cho lời khuyên và gợi ý"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Should: For general advice - \"You should read more books.\"",
+                                    "Could: For possibilities - \"You could join a club.\"",
+                                    "Might: For tentative suggestions - \"You might try a new hobby.\"",
+                                    "Examples: - You should exercise regularly. - You could volunteer at a local charity."
+                                ],
+                                "vi": [
+                                    "Should: Cho lời khuyên chung - \"You should read more books.\"",
+                                    "Could: Cho khả năng - \"You could join a club.\"",
+                                    "Might: Cho gợi ý do dự - \"You might try a new hobby.\"",
+                                    "Ví dụ: - Bạn nên tập thể dục đều đặn. - Bạn có thể tình nguyện tại tổ chức từ thiện địa phương."
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Cultural Exploration",
@@ -3366,7 +3639,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Hãy để tôi đưa ra một ví dụ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect vs Past Simple",
+                                "vi": "Hiện tại hoàn thành vs Quá khứ đơn"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited Paris last year.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited Paris.\"",
+                                    "Examples: - She finished her homework yesterday. (Past Simple) - She has finished her homework. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (ever, never, since, for)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited Paris last year.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited Paris.\"",
+                                    "Ví dụ: - Cô ấy hoàn thành bài tập về nhà hôm qua. (Quá khứ đơn) - Cô ấy đã hoàn thành bài tập về nhà. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (ever, never, since, for)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Useful Expressions",
@@ -3563,7 +3857,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Kết quả là, ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect vs Past Simple",
+                                "vi": "Hiện tại hoàn thành vs Quá khứ đơn"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited Paris last year.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited Paris.\"",
+                                    "Examples: - She finished her homework yesterday. (Past Simple) - She has finished her homework. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (ever, never, since, for)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited Paris last year.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited Paris.\"",
+                                    "Ví dụ: - Cô ấy hoàn thành bài tập về nhà hôm qua. (Quá khứ đơn) - Cô ấy đã hoàn thành bài tập về nhà. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (ever, never, since, for)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Model Analysis",
@@ -3659,7 +3974,28 @@ export const g11Data: CurriculumLevel = {
                         ]
                     },
                     "vocabulary": [],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Modal Verbs for Advice and Suggestions",
+                                "vi": "Động từ khuyết thiếu cho lời khuyên và gợi ý"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Should: For general advice - \"You should read more books.\"",
+                                    "Could: For possibilities - \"You could join a club.\"",
+                                    "Might: For tentative suggestions - \"You might try a new hobby.\"",
+                                    "Examples: - You should exercise regularly. - You could volunteer at a local charity."
+                                ],
+                                "vi": [
+                                    "Should: Cho lời khuyên chung - \"You should read more books.\"",
+                                    "Could: Cho khả năng - \"You could join a club.\"",
+                                    "Might: Cho gợi ý do dự - \"You might try a new hobby.\"",
+                                    "Ví dụ: - Bạn nên tập thể dục đều đặn. - Bạn có thể tình nguyện tại tổ chức từ thiện địa phương."
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Cultural Exploration",
@@ -4023,7 +4359,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Hãy để tôi đưa ra một ví dụ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect vs Past Simple",
+                                "vi": "Hiện tại hoàn thành vs Quá khứ đơn"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited Paris last year.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited Paris.\"",
+                                    "Examples: - She finished her homework yesterday. (Past Simple) - She has finished her homework. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (ever, never, since, for)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited Paris last year.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited Paris.\"",
+                                    "Ví dụ: - Cô ấy hoàn thành bài tập về nhà hôm qua. (Quá khứ đơn) - Cô ấy đã hoàn thành bài tập về nhà. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (ever, never, since, for)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Useful Expressions",
@@ -4220,7 +4577,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Kết quả là, ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect vs Past Simple",
+                                "vi": "Hiện tại hoàn thành vs Quá khứ đơn"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited Paris last year.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited Paris.\"",
+                                    "Examples: - She finished her homework yesterday. (Past Simple) - She has finished her homework. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (ever, never, since, for)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited Paris last year.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited Paris.\"",
+                                    "Ví dụ: - Cô ấy hoàn thành bài tập về nhà hôm qua. (Quá khứ đơn) - Cô ấy đã hoàn thành bài tập về nhà. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (ever, never, since, for)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Model Analysis",
@@ -4316,7 +4694,28 @@ export const g11Data: CurriculumLevel = {
                         ]
                     },
                     "vocabulary": [],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Modal Verbs for Advice and Suggestions",
+                                "vi": "Động từ khuyết thiếu cho lời khuyên và gợi ý"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Should: For general advice - \"You should read more books.\"",
+                                    "Could: For possibilities - \"You could join a club.\"",
+                                    "Might: For tentative suggestions - \"You might try a new hobby.\"",
+                                    "Examples: - You should exercise regularly. - You could volunteer at a local charity."
+                                ],
+                                "vi": [
+                                    "Should: Cho lời khuyên chung - \"You should read more books.\"",
+                                    "Could: Cho khả năng - \"You could join a club.\"",
+                                    "Might: Cho gợi ý do dự - \"You might try a new hobby.\"",
+                                    "Ví dụ: - Bạn nên tập thể dục đều đặn. - Bạn có thể tình nguyện tại tổ chức từ thiện địa phương."
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Cultural Exploration",
@@ -4680,7 +5079,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Hãy để tôi đưa ra một ví dụ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Future Forms for Educational Planning",
+                                "vi": "Các dạng thì tương lai cho kế hoạch giáo dục"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Will + infinitive: For spontaneous decisions - \"I will study abroad next year.\"",
+                                    "Be going to: For planned intentions - \"I'm going to take the TOEFL test.\"",
+                                    "Present continuous: For fixed arrangements - \"I'm starting university in September.\"",
+                                    "Examples: - She will graduate next month. - They are going to learn a new language."
+                                ],
+                                "vi": [
+                                    "Will + infinitive: Cho quyết định tức thời - \"I will study abroad next year.\"",
+                                    "Be going to: Cho ý định đã lên kế hoạch - \"I'm going to take the TOEFL test.\"",
+                                    "Hiện tại tiếp diễn: Cho sắp xếp cố định - \"I'm starting university in September.\"",
+                                    "Ví dụ: - Cô ấy sẽ tốt nghiệp tháng tới. - Họ sẽ học ngoại ngữ mới."
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Useful Expressions",
@@ -4877,7 +5297,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Kết quả là, ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Future Forms for Educational Planning",
+                                "vi": "Các dạng thì tương lai cho kế hoạch giáo dục"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Will + infinitive: For spontaneous decisions - \"I will study abroad next year.\"",
+                                    "Be going to: For planned intentions - \"I'm going to take the TOEFL test.\"",
+                                    "Present continuous: For fixed arrangements - \"I'm starting university in September.\"",
+                                    "Examples: - She will graduate next month. - They are going to learn a new language."
+                                ],
+                                "vi": [
+                                    "Will + infinitive: Cho quyết định tức thời - \"I will study abroad next year.\"",
+                                    "Be going to: Cho ý định đã lên kế hoạch - \"I'm going to take the TOEFL test.\"",
+                                    "Hiện tại tiếp diễn: Cho sắp xếp cố định - \"I'm starting university in September.\"",
+                                    "Ví dụ: - Cô ấy sẽ tốt nghiệp tháng tới. - Họ sẽ học ngoại ngữ mới."
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Model Analysis",
@@ -4973,7 +5414,28 @@ export const g11Data: CurriculumLevel = {
                         ]
                     },
                     "vocabulary": [],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Conditionals for Educational Scenarios",
+                                "vi": "Câu điều kiện cho tình huống giáo dục"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "First conditional: Real possibilities - \"If I study hard, I will pass the exam.\"",
+                                    "Second conditional: Hypothetical situations - \"If I had more time, I would learn another language.\"",
+                                    "Third conditional: Past regrets - \"If I had studied harder, I would have got a better grade.\"",
+                                    "Examples: - If you practice regularly, you will improve. - If I were you, I would choose science."
+                                ],
+                                "vi": [
+                                    "Câu điều kiện loại 1: Khả năng thực tế - \"If I study hard, I will pass the exam.\"",
+                                    "Câu điều kiện loại 2: Tình huống giả định - \"If I had more time, I would learn another language.\"",
+                                    "Câu điều kiện loại 3: Hối hận quá khứ - \"If I had studied harder, I would have got a better grade.\"",
+                                    "Ví dụ: - Nếu bạn luyện tập đều đặn, bạn sẽ tiến bộ. - Nếu tôi là bạn, tôi sẽ chọn khoa học."
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Cultural Exploration",
@@ -5337,7 +5799,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Hãy để tôi đưa ra một ví dụ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect vs Past Simple",
+                                "vi": "Hiện tại hoàn thành vs Quá khứ đơn"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited Paris last year.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited Paris.\"",
+                                    "Examples: - She finished her homework yesterday. (Past Simple) - She has finished her homework. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (ever, never, since, for)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited Paris last year.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited Paris.\"",
+                                    "Ví dụ: - Cô ấy hoàn thành bài tập về nhà hôm qua. (Quá khứ đơn) - Cô ấy đã hoàn thành bài tập về nhà. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (ever, never, since, for)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Useful Expressions",
@@ -5534,7 +6017,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Kết quả là, ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect vs Past Simple",
+                                "vi": "Hiện tại hoàn thành vs Quá khứ đơn"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited Paris last year.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited Paris.\"",
+                                    "Examples: - She finished her homework yesterday. (Past Simple) - She has finished her homework. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (ever, never, since, for)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited Paris last year.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited Paris.\"",
+                                    "Ví dụ: - Cô ấy hoàn thành bài tập về nhà hôm qua. (Quá khứ đơn) - Cô ấy đã hoàn thành bài tập về nhà. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (ever, never, since, for)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Model Analysis",
@@ -5630,7 +6134,28 @@ export const g11Data: CurriculumLevel = {
                         ]
                     },
                     "vocabulary": [],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Modal Verbs for Advice and Suggestions",
+                                "vi": "Động từ khuyết thiếu cho lời khuyên và gợi ý"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Should: For general advice - \"You should read more books.\"",
+                                    "Could: For possibilities - \"You could join a club.\"",
+                                    "Might: For tentative suggestions - \"You might try a new hobby.\"",
+                                    "Examples: - You should exercise regularly. - You could volunteer at a local charity."
+                                ],
+                                "vi": [
+                                    "Should: Cho lời khuyên chung - \"You should read more books.\"",
+                                    "Could: Cho khả năng - \"You could join a club.\"",
+                                    "Might: Cho gợi ý do dự - \"You might try a new hobby.\"",
+                                    "Ví dụ: - Bạn nên tập thể dục đều đặn. - Bạn có thể tình nguyện tại tổ chức từ thiện địa phương."
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Cultural Exploration",
@@ -5994,7 +6519,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Hãy để tôi đưa ra một ví dụ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Reported Speech for Social Discussions",
+                                "vi": "Câu tường thuật cho thảo luận xã hội"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Use: We use reported speech to share what others have said in discussions.",
+                                    "Changes: Pronouns, tense, time expressions",
+                                    "Examples: Direct: \"We must help others.\" → Reported: \"He said we must help others.\"",
+                                    "Common in community meetings and social issue discussions"
+                                ],
+                                "vi": [
+                                    "Cách dùng: Chúng ta dùng câu tường thuật để chia sẻ những gì người khác đã nói trong thảo luận.",
+                                    "Thay đổi: Đại từ, thì, trạng từ thời gian",
+                                    "Ví dụ: Trực tiếp: \"We must help others.\" → Tường thuật: \"He said we must help others.\"",
+                                    "Thường dùng trong các cuộc họp cộng đồng và thảo luận vấn đề xã hội"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Useful Expressions",
@@ -6191,7 +6737,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Kết quả là, ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Reported Speech for Social Discussions",
+                                "vi": "Câu tường thuật cho thảo luận xã hội"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Use: We use reported speech to share what others have said in discussions.",
+                                    "Changes: Pronouns, tense, time expressions",
+                                    "Examples: Direct: \"We must help others.\" → Reported: \"He said we must help others.\"",
+                                    "Common in community meetings and social issue discussions"
+                                ],
+                                "vi": [
+                                    "Cách dùng: Chúng ta dùng câu tường thuật để chia sẻ những gì người khác đã nói trong thảo luận.",
+                                    "Thay đổi: Đại từ, thì, trạng từ thời gian",
+                                    "Ví dụ: Trực tiếp: \"We must help others.\" → Tường thuật: \"He said we must help others.\"",
+                                    "Thường dùng trong các cuộc họp cộng đồng và thảo luận vấn đề xã hội"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Model Analysis",
@@ -6287,7 +6854,28 @@ export const g11Data: CurriculumLevel = {
                         ]
                     },
                     "vocabulary": [],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Modals of Obligation and Prohibition",
+                                "vi": "Động từ khuyết thiếu chỉ nghĩa vụ và cấm đoán"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Must/Have to: Strong obligation - \"You must follow the rules.\"",
+                                    "Should/Ought to: Recommendation - \"You should volunteer in your community.\"",
+                                    "Must not/Cannot: Prohibition - \"You must not discriminate against others.\"",
+                                    "Examples: - Citizens have to pay taxes. - People should help those in need."
+                                ],
+                                "vi": [
+                                    "Must/Have to: Nghĩa vụ mạnh - \"You must follow the rules.\"",
+                                    "Should/Ought to: Khuyến nghị - \"You should volunteer in your community.\"",
+                                    "Must not/Cannot: Cấm đoán - \"You must not discriminate against others.\"",
+                                    "Ví dụ: - Công dân phải nộp thuế. - Mọi người nên giúp đỡ những người cần giúp đỡ."
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Cultural Exploration",
@@ -6651,7 +7239,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Hãy để tôi đưa ra một ví dụ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect vs Past Simple",
+                                "vi": "Hiện tại hoàn thành vs Quá khứ đơn"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited Paris last year.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited Paris.\"",
+                                    "Examples: - She finished her homework yesterday. (Past Simple) - She has finished her homework. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (ever, never, since, for)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited Paris last year.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited Paris.\"",
+                                    "Ví dụ: - Cô ấy hoàn thành bài tập về nhà hôm qua. (Quá khứ đơn) - Cô ấy đã hoàn thành bài tập về nhà. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (ever, never, since, for)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Useful Expressions",
@@ -6848,7 +7457,28 @@ export const g11Data: CurriculumLevel = {
                             "vietnamese": "Kết quả là, ..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect vs Past Simple",
+                                "vi": "Hiện tại hoàn thành vs Quá khứ đơn"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited Paris last year.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited Paris.\"",
+                                    "Examples: - She finished her homework yesterday. (Past Simple) - She has finished her homework. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (ever, never, since, for)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited Paris last year.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited Paris.\"",
+                                    "Ví dụ: - Cô ấy hoàn thành bài tập về nhà hôm qua. (Quá khứ đơn) - Cô ấy đã hoàn thành bài tập về nhà. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (ever, never, since, for)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Model Analysis",
@@ -6944,7 +7574,28 @@ export const g11Data: CurriculumLevel = {
                         ]
                     },
                     "vocabulary": [],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Modal Verbs for Advice and Suggestions",
+                                "vi": "Động từ khuyết thiếu cho lời khuyên và gợi ý"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Should: For general advice - \"You should read more books.\"",
+                                    "Could: For possibilities - \"You could join a club.\"",
+                                    "Might: For tentative suggestions - \"You might try a new hobby.\"",
+                                    "Examples: - You should exercise regularly. - You could volunteer at a local charity."
+                                ],
+                                "vi": [
+                                    "Should: Cho lời khuyên chung - \"You should read more books.\"",
+                                    "Could: Cho khả năng - \"You could join a club.\"",
+                                    "Might: Cho gợi ý do dự - \"You might try a new hobby.\"",
+                                    "Ví dụ: - Bạn nên tập thể dục đều đặn. - Bạn có thể tình nguyện tại tổ chức từ thiện địa phương."
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Cultural Exploration",

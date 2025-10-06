@@ -546,7 +546,28 @@ export const g10Data: CurriculumLevel = {
                             "vietnamese": "Ưu điểm/nhược điểm của... là..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Simple for Family Routines",
+                                "vi": "Thì hiện tại đơn cho thói quen gia đình"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Use: We use present simple to talk about regular family activities and habits.",
+                                    "Form: Subject + V(base form/s/es) + Object",
+                                    "Examples: - My family eats dinner together every evening. - She helps with household chores.",
+                                    "Time expressions: every day, usually, often, always, never"
+                                ],
+                                "vi": [
+                                    "Cách dùng: Chúng ta dùng thì hiện tại đơn để nói về các hoạt động và thói quen gia đình đều đặn.",
+                                    "Cấu trúc: Chủ ngữ + Động từ (nguyên mẫu/thêm s/es) + Tân ngữ",
+                                    "Ví dụ: - Gia đình tôi ăn tối cùng nhau mỗi tối. - Cô ấy giúp việc nhà.",
+                                    "Trạng từ thời gian: every day (mỗi ngày), usually (thường), often (thường), always (luôn), never (không bao giờ)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Useful Expressions",
@@ -760,7 +781,28 @@ export const g10Data: CurriculumLevel = {
                             "vietnamese": "kết quả là"
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Simple for Family Routines",
+                                "vi": "Thì hiện tại đơn cho thói quen gia đình"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Use: We use present simple to talk about regular family activities and habits.",
+                                    "Form: Subject + V(base form/s/es) + Object",
+                                    "Examples: - My family eats dinner together every evening. - She helps with household chores.",
+                                    "Time expressions: every day, usually, often, always, never"
+                                ],
+                                "vi": [
+                                    "Cách dùng: Chúng ta dùng thì hiện tại đơn để nói về các hoạt động và thói quen gia đình đều đặn.",
+                                    "Cấu trúc: Chủ ngữ + Động từ (nguyên mẫu/thêm s/es) + Tân ngữ",
+                                    "Ví dụ: - Gia đình tôi ăn tối cùng nhau mỗi tối. - Cô ấy giúp việc nhà.",
+                                    "Trạng từ thời gian: every day (mỗi ngày), usually (thường), often (thường), always (luôn), never (không bao giờ)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Model Analysis",
@@ -895,7 +937,28 @@ export const g10Data: CurriculumLevel = {
                             "vietnamese": "tôn trọng người lớn tuổi"
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Past Simple vs Present Perfect for Family Stories",
+                                "vi": "Quá khứ đơn vs Hiện tại hoàn thành cho câu chuyện gia đình"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited my grandparents last weekend.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited my grandparents many times.\"",
+                                    "Examples: - We moved house in 2010. (Past Simple) - We have lived here for 5 years. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (since, for, ever)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited my grandparents last weekend.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited my grandparents many times.\"",
+                                    "Ví dụ: - Chúng tôi chuyển nhà năm 2010. (Quá khứ đơn) - Chúng tôi đã sống ở đây 5 năm. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (since, for, ever)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Reading & Discussion",
@@ -1471,7 +1534,28 @@ export const g10Data: CurriculumLevel = {
                             "vietnamese": "Một cách để... là..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Continuous for Current Changes",
+                                "vi": "Thì hiện tại tiếp diễn cho những thay đổi hiện tại"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Use: We use present continuous to talk about changes happening now.",
+                                    "Form: Subject + am/is/are + V-ing + Object",
+                                    "Examples: - The Earth is warming rapidly. - Sea levels are rising every year.",
+                                    "Time expressions: now, at the moment, currently, these days"
+                                ],
+                                "vi": [
+                                    "Cách dùng: Chúng ta dùng thì hiện tại tiếp diễn để nói về những thay đổi đang xảy ra.",
+                                    "Cấu trúc: Chủ ngữ + am/is/are + V-ing + Tân ngữ",
+                                    "Ví dụ: - Trái Đất đang nóng lên nhanh chóng. - Mực nước biển đang dâng cao mỗi năm.",
+                                    "Trạng từ thời gian: now (bây giờ), at the moment (hiện tại), currently (hiện nay), these days (những ngày này)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Useful Language",
@@ -1695,7 +1779,28 @@ export const g10Data: CurriculumLevel = {
                             "vietnamese": "cách khác để... là..."
                         }
                     ],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Continuous for Current Changes",
+                                "vi": "Thì hiện tại tiếp diễn cho những thay đổi hiện tại"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Use: We use present continuous to talk about changes happening now.",
+                                    "Form: Subject + am/is/are + V-ing + Object",
+                                    "Examples: - The Earth is warming rapidly. - Sea levels are rising every year.",
+                                    "Time expressions: now, at the moment, currently, these days"
+                                ],
+                                "vi": [
+                                    "Cách dùng: Chúng ta dùng thì hiện tại tiếp diễn để nói về những thay đổi đang xảy ra.",
+                                    "Cấu trúc: Chủ ngữ + am/is/are + V-ing + Tân ngữ",
+                                    "Ví dụ: - Trái Đất đang nóng lên nhanh chóng. - Mực nước biển đang dâng cao mỗi năm.",
+                                    "Trạng từ thời gian: now (bây giờ), at the moment (hiện tại), currently (hiện nay), these days (những ngày này)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Model Analysis",
@@ -1941,7 +2046,28 @@ export const g10Data: CurriculumLevel = {
                         ]
                     },
                     "vocabulary": [],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect vs Past Simple",
+                                "vi": "Hiện tại hoàn thành vs Quá khứ đơn"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited Paris last year.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited Paris.\"",
+                                    "Examples: - She finished her homework yesterday. (Past Simple) - She has finished her homework. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (ever, never, since, for)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited Paris last year.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited Paris.\"",
+                                    "Ví dụ: - Cô ấy hoàn thành bài tập về nhà hôm qua. (Quá khứ đơn) - Cô ấy đã hoàn thành bài tập về nhà. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (ever, never, since, for)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Practice",
@@ -2003,7 +2129,28 @@ export const g10Data: CurriculumLevel = {
                         ]
                     },
                     "vocabulary": [],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Present Perfect vs Past Simple",
+                                "vi": "Hiện tại hoàn thành vs Quá khứ đơn"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Past Simple: For completed actions at specific times - \"I visited Paris last year.\"",
+                                    "Present Perfect: For experiences with present relevance - \"I have visited Paris.\"",
+                                    "Examples: - She finished her homework yesterday. (Past Simple) - She has finished her homework. (Present Perfect)",
+                                    "Time expressions: Past Simple (yesterday, last week), Present Perfect (ever, never, since, for)"
+                                ],
+                                "vi": [
+                                    "Quá khứ đơn: Cho hành động hoàn thành tại thời điểm cụ thể - \"I visited Paris last year.\"",
+                                    "Hiện tại hoàn thành: Cho trải nghiệm có liên quan đến hiện tại - \"I have visited Paris.\"",
+                                    "Ví dụ: - Cô ấy hoàn thành bài tập về nhà hôm qua. (Quá khứ đơn) - Cô ấy đã hoàn thành bài tập về nhà. (Hiện tại hoàn thành)",
+                                    "Trạng từ thời gian: Quá khứ đơn (yesterday, last week), Hiện tại hoàn thành (ever, never, since, for)"
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Practice",
@@ -2034,7 +2181,28 @@ export const g10Data: CurriculumLevel = {
                         ]
                     },
                     "vocabulary": [],
-                    "grammar": [],
+                    "grammar": [
+                        {
+                            "title": {
+                                "en": "Modal Verbs for Advice and Suggestions",
+                                "vi": "Động từ khuyết thiếu cho lời khuyên và gợi ý"
+                            },
+                            "explanation": {
+                                "en": [
+                                    "Should: For general advice - \"You should read more books.\"",
+                                    "Could: For possibilities - \"You could join a club.\"",
+                                    "Might: For tentative suggestions - \"You might try a new hobby.\"",
+                                    "Examples: - You should exercise regularly. - You could volunteer at a local charity."
+                                ],
+                                "vi": [
+                                    "Should: Cho lời khuyên chung - \"You should read more books.\"",
+                                    "Could: Cho khả năng - \"You could join a club.\"",
+                                    "Might: Cho gợi ý do dự - \"You might try a new hobby.\"",
+                                    "Ví dụ: - Bạn nên tập thể dục đều đặn. - Bạn có thể tình nguyện tại tổ chức từ thiện địa phương."
+                                ]
+                            }
+                        }
+                    ],
                     "activities": [
                         {
                             "type": "Practice",
