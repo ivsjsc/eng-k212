@@ -66,25 +66,25 @@ const shortcuts: Shortcut[] = [
     category: { en: 'Actions', vi: 'Hành động' }
   },
   
-  // Views
+  // Views - Updated shortcuts
   {
-    keys: ['H'],
+    keys: ['Ctrl', 'H'],
     description: { en: 'Go to Home', vi: 'Về Trang chủ' },
     category: { en: 'Quick Navigation', vi: 'Điều hướng nhanh' }
   },
   {
-    keys: ['C'],
-    description: { en: 'Go to Curriculum', vi: 'Đến Chương trình học' },
+    keys: ['Ctrl', 'L'],
+    description: { en: 'Go to Lessons/Curriculum', vi: 'Đến Bài học/Chương trình' },
     category: { en: 'Quick Navigation', vi: 'Điều hướng nhanh' }
   },
   {
-    keys: ['S'],
-    description: { en: 'Go to Settings', vi: 'Đến Cài đặt' },
+    keys: ['Ctrl', ','],
+    description: { en: 'Open Settings', vi: 'Mở Cài đặt' },
     category: { en: 'Quick Navigation', vi: 'Điều hướng nhanh' }
   },
   {
-    keys: ['A'],
-    description: { en: 'Open IVS Assistant', vi: 'Mở Trợ lý IVS' },
+    keys: ['Ctrl', 'Shift', 'T'],
+    description: { en: 'Toggle theme (Light/Dark)', vi: 'Chuyển chủ đề (Sáng/Tối)' },
     category: { en: 'Quick Navigation', vi: 'Điều hướng nhanh' }
   },
   

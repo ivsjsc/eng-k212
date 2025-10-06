@@ -237,7 +237,14 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('ivs-theme', theme);
-    document.documentElement.classList.toggle('dark', theme === 'dark');
+    // Apply dark class to both html and body for full page theme
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.body.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.body.classList.remove('dark');
+    }
   }, [theme]);
 
   useEffect(() => {
@@ -352,34 +359,85 @@ function App() {
         return;
       }
 
+      // Open settings with Ctrl+,
+      if (e.ctrlKey && e.key === ',') {
+        e.preventDefault();
+        handleSetView('settings');
+        return;
+      }
+
+      // Toggle theme with Ctrl+Shift+T
+      if (e.ctrlKey && e.shiftKey && e.key === 'T') {
+        e.preventDefault();
+        const newTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(newTheme);
+        // Show toast notification (optional)
+        console.log(`Theme switched to ${newTheme}`);
+        return;
+      }
+
+      // Navigate to home with Ctrl+H
+      if (e.ctrlKey && e.key === 'h') {
+        e.preventDefault();
+        handleSetView('home');
+        return;
+      }
+
+      // Navigate to curriculum with Ctrl+L
+      if (e.ctrlKey && e.key === 'l') {
+        e.preventDefault();
+        handleSetView('curriculum');
+        return;
+      }
+
       // Quick navigation (only if no modifiers and not in modal)
       if (!e.ctrlKey && !e.altKey && !e.metaKey && !showKeyboardHelp && user) {
-        // Block navigation: arrow keys move between elements marked with data-nav-target
+        // Enhanced arrow key navigation - works with all focusable elements
         const isArrow = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key);
         if (isArrow) {
-          const blocks = Array.from(document.querySelectorAll<HTMLElement>('[data-nav-target]'))
-            .filter(el => el.offsetParent !== null); // visible only
-
-          if (blocks.length > 0) {
-            e.preventDefault();
-            const active = document.activeElement as HTMLElement | null;
-            // find index of block that contains activeElement (or equals)
-            let currentIndex = blocks.findIndex(b => b === active || (active && b.contains(active)));
-            if (currentIndex === -1) {
-              // if nothing focused, pick first
-              currentIndex = 0;
-            }
-
-            const forward = e.key === 'ArrowRight' || e.key === 'ArrowDown';
-            const nextIndex = forward ? (currentIndex + 1) % blocks.length : (currentIndex - 1 + blocks.length) % blocks.length;
-            const next = blocks[nextIndex];
-            if (next) {
-              // ensure focusable
-              if (!next.hasAttribute('tabindex')) next.tabIndex = -1;
-              next.focus();
-            }
+          e.preventDefault();
+          
+          // Get all focusable elements (buttons, links, inputs, etc.)
+          const focusableElements = Array.from(
+            document.querySelectorAll<HTMLElement>(
+              'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"]), [data-nav-target]'
+            )
+          ).filter(el => {
+            // Only visible elements
+            if (el.offsetParent === null) return false;
+            // Exclude elements in hidden modals/panels
+            const style = window.getComputedStyle(el);
+            return style.display !== 'none' && style.visibility !== 'hidden';
+          });
+          
+          const activeElement = document.activeElement as HTMLElement;
+          const currentIndex = focusableElements.indexOf(activeElement);
+          
+          // If nothing focused, focus first element
+          if (currentIndex === -1) {
+            focusableElements[0]?.focus();
+            focusableElements[0]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
             return;
           }
+          
+          let nextIndex = currentIndex;
+          
+          // Forward: ArrowRight or ArrowDown
+          if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+            nextIndex = (currentIndex + 1) % focusableElements.length;
+          } 
+          // Backward: ArrowLeft or ArrowUp
+          else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+            nextIndex = (currentIndex - 1 + focusableElements.length) % focusableElements.length;
+          }
+          
+          const nextElement = focusableElements[nextIndex];
+          if (nextElement) {
+            nextElement.focus();
+            // Smooth scroll to keep element in view
+            nextElement.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+          }
+          return;
         }
 
         switch (e.key.toLowerCase()) {

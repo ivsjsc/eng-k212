@@ -4,11 +4,26 @@
 */
 :root{
   --bg: #ffffff;
+  --bg-dark: #0f172a;
   --muted: #64748b;
   --primary: #0ea5e9; /* sky-500 */
   --primary-600: #0284c7;
   --accent: #0f172a;
+  --accent-dark: #f1f5f9;
   --header-height: 4.25rem;
+}
+
+/* Dark mode background */
+html.dark,
+body.dark {
+  background: var(--bg-dark);
+  color: var(--accent-dark);
+}
+
+html:not(.dark),
+body:not(.dark) {
+  background: var(--bg);
+  color: var(--accent);
 }
 
 /* Smooth theme transition animations */
@@ -78,6 +93,45 @@ input[type="checkbox"] {
   height: 20px;
   cursor: pointer;
   accent-color: #3b82f6;
+}
+
+/* Enhanced focus indicators for keyboard navigation */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[data-nav-target]:focus,
+[tabindex]:focus-visible {
+  outline: 3px solid #3b82f6;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.2);
+  border-radius: 8px;
+  transition: outline 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Dark mode focus indicators */
+.dark button:focus-visible,
+.dark a:focus-visible,
+.dark input:focus-visible,
+.dark select:focus-visible,
+.dark textarea:focus-visible,
+.dark [data-nav-target]:focus,
+.dark [tabindex]:focus-visible {
+  outline-color: #60a5fa;
+  box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.3);
+}
+
+/* Remove default focus outline (we use box-shadow instead) */
+button:focus,
+a:focus,
+input:focus {
+  outline: none;
+}
+
+/* Visible focus ring for accessibility */
+*:focus:not(:focus-visible) {
+  outline: none;
 }
 
 *{box-sizing:border-box}
