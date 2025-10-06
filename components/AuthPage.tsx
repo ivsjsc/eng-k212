@@ -3,6 +3,8 @@ import {
     auth, 
     db, 
     googleProvider,
+    microsoftProvider,
+    linkedinProvider,
     onAuthStateChanged,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -780,6 +782,70 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                                         <img src="/google-icon.svg" alt="Google" className="h-5 w-5" />
                                         <span>{t.googleBtn}</span>
                                     </button>
+
+                                                            <button
+                                                                onClick={async () => {
+                                                                    setIsLoading(true);
+                                                                    setError(null);
+                                                                    try {
+                                                                        if (!auth || !db || !microsoftProvider) {
+                                                                            setError(t.authError);
+                                                                            return;
+                                                                        }
+                                                                        sessionStorage.setItem('authRole', selectedRole);
+                                                                        const result = await signInWithPopup(auth, microsoftProvider as any);
+                                                                        const u = result?.user;
+                                                                        if (u) {
+                                                                            setSuccessMessage(`${t.loginSuccess} (${u.email || u.uid})`);
+                                                                            window.location.href = '/';
+                                                                            return;
+                                                                        }
+                                                                        setError('Microsoft sign-in failed.');
+                                                                    } catch (err: any) {
+                                                                        const raw = (err?.message || String(err)).replace('Firebase: ', '');
+                                                                        setError(raw);
+                                                                    } finally {
+                                                                        setIsLoading(false);
+                                                                    }
+                                                                }}
+                                                                className="flex items-center justify-center gap-3 rounded-xl border border-slate-700 bg-slate-800/60 py-3 text-white transition hover:brightness-105"
+                                                                disabled={isLoading}
+                                                            >
+                                                                <img src="/images/social/microsoft.svg" alt="Microsoft" className="h-5 w-5" />
+                                                                <span>{language === 'vi' ? 'Tiếp tục với Microsoft' : 'Continue with Microsoft'}</span>
+                                                            </button>
+
+                                                            <button
+                                                                onClick={async () => {
+                                                                    setIsLoading(true);
+                                                                    setError(null);
+                                                                    try {
+                                                                        if (!auth || !db || !linkedinProvider) {
+                                                                            setError(t.authError);
+                                                                            return;
+                                                                        }
+                                                                        sessionStorage.setItem('authRole', selectedRole);
+                                                                        const result = await signInWithPopup(auth, linkedinProvider as any);
+                                                                        const u = result?.user;
+                                                                        if (u) {
+                                                                            setSuccessMessage(`${t.loginSuccess} (${u.email || u.uid})`);
+                                                                            window.location.href = '/';
+                                                                            return;
+                                                                        }
+                                                                        setError('LinkedIn sign-in failed.');
+                                                                    } catch (err: any) {
+                                                                        const raw = (err?.message || String(err)).replace('Firebase: ', '');
+                                                                        setError(raw);
+                                                                    } finally {
+                                                                        setIsLoading(false);
+                                                                    }
+                                                                }}
+                                                                className="flex items-center justify-center gap-3 rounded-xl border border-slate-700 bg-slate-800/60 py-3 text-white transition hover:brightness-105"
+                                                                disabled={isLoading}
+                                                            >
+                                                                <img src="/images/social/linkedin.svg" alt="LinkedIn" className="h-5 w-5" />
+                                                                <span>{language === 'vi' ? 'Tiếp tục với LinkedIn' : 'Continue with LinkedIn'}</span>
+                                                            </button>
 
                                     {authMethod === 'email' ? (
                                         <button

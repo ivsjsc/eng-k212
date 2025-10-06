@@ -8,6 +8,7 @@ import {
     signOut,
     updateProfile,
     GoogleAuthProvider,
+    OAuthProvider,
     signInWithPopup, // Included from 'main'
     signInWithRedirect,
     getRedirectResult,
@@ -49,6 +50,8 @@ let auth: Auth | null = null;
 let db: Firestore | null = null;
 let firebaseInitError: string | null = null; // Standardized error variable name
 let googleProvider: GoogleAuthProvider | null = null;
+let microsoftProvider: OAuthProvider | null = null;
+let linkedinProvider: OAuthProvider | null = null;
 let functionsClient: ReturnType<typeof getFunctions> | null = null;
 let analyticsClient: Analytics | null = null; // Standardized analytics variable name
 
@@ -91,6 +94,24 @@ try {
             // ignore analytics initialization failures (e.g., in tests or SSR)
         }
         googleProvider = new GoogleAuthProvider();
+
+        // Microsoft and LinkedIn can be used via the generic OAuthProvider.
+        // We create lightweight client-side provider instances here. The
+        // actual OAuth client IDs/secrets and redirect URIs should be
+        // configured in the Firebase Console (Authentication → Sign-in
+        // method) and in the provider developer consoles (Azure AD / LinkedIn).
+        try {
+            microsoftProvider = new OAuthProvider('microsoft.com');
+            // Request basic profile scopes (adjust as needed)
+            microsoftProvider.addScope('user.read');
+
+            linkedinProvider = new OAuthProvider('linkedin.com');
+            // LinkedIn scopes for profile and email
+            linkedinProvider.addScope('r_liteprofile');
+            linkedinProvider.addScope('r_emailaddress');
+        } catch (e) {
+            // Ignore if OAuthProvider isn't available in this runtime
+        }
     } else {
     firebaseInitError = "Firebase configuration is missing or invalid. Please check your environment variables (.env.local file).";
     logger.error(firebaseInitError);
@@ -108,6 +129,8 @@ export {
     db, 
     firebaseInitError,
     googleProvider,
+    microsoftProvider,
+    linkedinProvider,
     functionsClient,
     analyticsClient,
     
