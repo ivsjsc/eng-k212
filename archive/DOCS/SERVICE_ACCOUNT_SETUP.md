@@ -1,8 +1,7 @@
 # Hướng dẫn tạo Service Account mới cho Firebase
 
 ## Lỗi hiện tại
-Service account hiện tại (`arctic-outpost-472823-r2`) đã bị xóa.
-Cần tạo service account mới cho project `english-c0f9d`.
+Service account trước đây đã bị xóa. Cần tạo service account mới cho project `english-c0f9d`.
 
 ## Các bước thực hiện
 

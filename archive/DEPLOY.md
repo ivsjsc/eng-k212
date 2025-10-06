@@ -14,7 +14,7 @@ firebase login
 ```pwsh
 cd e:\IVS\Apps\eng-k212\eng-k212
 firebase use --add
-# follow interactive prompts and select `arctic-outpost-472823-r2` (your project)
+# follow interactive prompts and select `english-c0f9d` (your project)
 ```
 
 3. Deploy functions:

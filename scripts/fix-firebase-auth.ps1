@@ -5,14 +5,14 @@ Write-Host "🔥 Firebase Domain Authorization Fix" -ForegroundColor Red
 Write-Host "Opening Firebase and Google Cloud Console pages..." -ForegroundColor Yellow
 
 # Firebase Authentication Settings
-$firebaseAuthUrl = "https://console.firebase.google.com/project/arctic-outpost-472823-r2/authentication/settings"
+$firebaseAuthUrl = "https://console.firebase.google.com/project/english-c0f9d/authentication/settings"
 Write-Host "`n1️⃣  Opening Firebase Auth Settings..." -ForegroundColor Green
 Start-Process $firebaseAuthUrl
 
 Start-Sleep -Seconds 2
 
 # Google Cloud OAuth Credentials
-$googleOAuthUrl = "https://console.cloud.google.com/apis/credentials?project=arctic-outpost-472823-r2"
+$googleOAuthUrl = "https://console.cloud.google.com/apis/credentials?project=english-c0f9d"
 Write-Host "2️⃣  Opening Google Cloud OAuth Settings..." -ForegroundColor Green  
 Start-Process $googleOAuthUrl
 
@@ -25,4 +25,4 @@ Write-Host "  ✅ Add 'https://khahome.cloud' to JavaScript origins" -Foreground
 Write-Host "  ✅ Add 'https://khahome.cloud/__/auth/handler' to Redirect URIs" -ForegroundColor Gray
 
 Write-Host "`n⏱️  Wait 5-10 minutes after changes, then test the app!" -ForegroundColor Yellow
-Write-Host "🌐 App URL: https://khahome.cloud" -ForegroundColor Green
+Write-Host "🌐 App URL: https://english-c0f9d.web.app" -ForegroundColor Green

@@ -6,14 +6,14 @@
 ## 🎯 Cách sửa ngay:
 
 ### 1. Firebase Console - Authorized Domains
-1. Mở: https://console.firebase.google.com/project/arctic-outpost-472823-r2/authentication/settings
+1. Mở: https://console.firebase.google.com/project/english-c0f9d/authentication/settings
 2. Scroll xuống "Authorized domains" 
 3. Click "Add domain"
 4. Thêm: `khahome.cloud`
 5. Click "Done"
 
 ### 2. Google Cloud Console - OAuth Settings  
-1. Mở: https://console.cloud.google.com/apis/credentials?project=arctic-outpost-472823-r2
+1. Mở: https://console.cloud.google.com/apis/credentials?project=english-c0f9d
 2. Click vào OAuth client ID (Web application)
 3. Thêm vào "Authorized JavaScript origins":
    - `https://khahome.cloud`
@@ -22,8 +22,8 @@
 5. Click "Save"
 
 ### 3. Quick Links:
-🔗 Firebase Auth Settings: https://console.firebase.google.com/project/arctic-outpost-472823-r2/authentication/settings
-🔗 Google OAuth Credentials: https://console.cloud.google.com/apis/credentials?project=arctic-outpost-472823-r2
+🔗 Firebase Auth Settings: https://console.firebase.google.com/project/english-c0f9d/authentication/settings
+🔗 Google OAuth Credentials: https://console.cloud.google.com/apis/credentials?project=english-c0f9d
 
 ## ⚡ Sau khi cập nhật:
 - Đợi 5-10 phút để changes có hiệu lực

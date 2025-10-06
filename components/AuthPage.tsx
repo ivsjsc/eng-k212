@@ -290,7 +290,9 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
         }
     }[language];
 
-    const projectIdForConsole = 'arctic-outpost-472823-r2';
+    // Prefer the project id from environment (comes from .env.local) so
+    // any console links in the UI point to the correct Firebase project.
+    const projectIdForConsole = (import.meta as any).env?.VITE_FIREBASE_PROJECT_ID || 'english-c0f9d';
     const currentHost = typeof window !== 'undefined' ? window.location.hostname : '';
     const currentOrigin = typeof window !== 'undefined' ? window.location.origin : '';
     const authRedirectUrl = currentOrigin ? `${currentOrigin.replace(/\/$/, '')}/__/auth/handler` : '';
