@@ -226,7 +226,7 @@ Nếu vẫn gặp vấn đề, kiểm tra:
 **Giải pháp**:
 ```
 1. Kiểm tra thư mục /public/assets/sw9/
-2. Upload các file page-1.jpg, page-2.jpg, ...
+2. Upload các file page-1.png, page-2.png, ...
 3. Hoặc cập nhật số trang trong ebooks.ts
 ```
 
