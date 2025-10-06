@@ -1,8 +1,145 @@
 # 🔊 UI Sound Files Setup Guide
 
-## 📁 Required Sound Files
+## ⚠️ **QUAN TRỌNG: CẦN TẢI FILE ÂM THANH MP3 THỰC SỰ**
 
-Place these 6 sound files in `/public/sounds/` folder:
+**Hiện tại folder chỉ có README. Bạn CẦN tải 6 file âm thanh MP3 thực sự!**
+
+---
+
+## 📁 Required Sound Files (6 files cần thiết)
+
+### 🎯 **HƯỚNG DẪN TẢI NHANH (5 PHÚT)**
+
+#### **Bước 1: Truy cập Mixkit.co (Dễ nhất)**
+```
+1. Mở: https://mixkit.co/free-sound-effects/
+2. Tìm kiếm từng loại âm thanh
+3. Click "Download" (MP3, miễn phí)
+4. Đổi tên file theo đúng tên dưới đây
+5. Copy vào folder: E:\IVS\Apps\eng-k212\public\sounds\
+```
+
+#### **Bước 2: File cần tải**
+
+### 1. **click.mp3** (Nhấn nút)
+- **Tìm kiếm**: "click" hoặc "button click"
+- **Thời lượng**: 50-100ms
+- **Ví dụ**: https://mixkit.co/free-sound-effects/click/
+- **Mô tả**: Âm thanh click nhẹ khi nhấn nút
+
+### 2. **confirm.mp3** (Xác nhận thành công)
+- **Tìm kiếm**: "success" hoặc "positive"
+- **Thời lượng**: 200-400ms
+- **Ví dụ**: https://mixkit.co/free-sound-effects/win/
+- **Mô tả**: Âm thanh vui khi lưu/thành công
+
+### 3. **cancel.mp3** (Hủy/Hoàn tác)
+- **Tìm kiếm**: "error" hoặc "cancel"
+- **Thời lượng**: 100-300ms
+- **Ví dụ**: https://mixkit.co/free-sound-effects/error/
+- **Mô tả**: Âm thanh nhẹ khi hủy hoặc lỗi
+
+### 4. **open.mp3** (Mở modal/panel)
+- **Tìm kiếm**: "pop" hoặc "slide open"
+- **Thời lượng**: 150-300ms
+- **Ví dụ**: https://mixkit.co/free-sound-effects/pop/
+- **Mô tả**: Âm thanh khi mở modal hoặc panel
+
+### 5. **close.mp3** (Đóng modal/panel)
+- **Tìm kiếm**: "swoosh" hoặc "close"
+- **Thời lượng**: 100-250ms
+- **Ví dụ**: https://mixkit.co/free-sound-effects/swoosh/
+- **Mô tả**: Âm thanh khi đóng modal hoặc panel
+
+### 6. **notification.mp3** (Thông báo)
+- **Tìm kiếm**: "notification" hoặc "bell"
+- **Thời lượng**: 300-600ms
+- **Ví dụ**: https://mixkit.co/free-sound-effects/notification/
+- **Mô tả**: Âm thanh thu hút khi có thông báo
+
+---
+
+## 🔧 **Cách khác: Freesound.org**
+
+Nếu Mixkit không có đủ:
+
+```
+1. Mở: https://freesound.org/
+2. Tạo tài khoản miễn phí
+3. Tìm kiếm âm thanh
+4. Filter: License=CC0 (không cần ghi nguồn)
+5. Download WAV/MP3
+6. Đổi tên và copy vào folder
+```
+
+---
+
+## 📋 **Kiểm tra sau khi tải**
+
+Sau khi tải đủ 6 file:
+
+```bash
+# Kiểm tra file
+Get-ChildItem E:\IVS\Apps\eng-k212\public\sounds\
+
+# Kết quả mong đợi:
+click.mp3      (5-15KB)
+confirm.mp3    (5-15KB)
+cancel.mp3     (5-15KB)
+open.mp3       (5-15KB)
+close.mp3      (5-15KB)
+notification.mp3 (5-15KB)
+README.md      (9KB)
+```
+
+---
+
+## 🧪 **Test âm thanh**
+
+```bash
+# Chạy app
+npm run dev
+
+# Vào Settings > Appearance > UI Sounds
+# Bật toggle "Enable UI Sounds"
+# Click nút "Test Sound"
+# Điều chỉnh volume
+```
+
+---
+
+## ⚙️ **Thông số kỹ thuật**
+
+**Tất cả file MP3 phải có:**
+- **Format**: MP3
+- **Sample Rate**: 44.1kHz hoặc 48kHz
+- **Bit Rate**: 128kbps
+- **Channels**: Mono (hoặc Stereo)
+- **File Size**: 5-15KB mỗi file
+- **Volume**: -3dB đến -6dB peak
+
+---
+
+## 🎵 **Nếu không muốn tự tải**
+
+Tôi có thể tạo file âm thanh đơn giản bằng code, nhưng chất lượng sẽ không tốt bằng file chuyên nghiệp.
+
+**Bạn muốn tôi tạo file âm thanh cơ bản không?** (Sẽ không hay bằng file chuyên nghiệp)
+
+---
+
+## 📞 **Hỗ trợ**
+
+Nếu gặp vấn đề:
+1. Kiểm tra file có đúng tên không
+2. Kiểm tra file có phải MP3 thực sự không (không phải HTML redirect)
+3. Test trên trình duyệt khác
+4. Kiểm tra console browser có lỗi không
+
+---
+
+**Thời gian ước tính**: 5-10 phút để tải đủ 6 file
+**Kết quả**: Âm thanh UI hoạt động hoàn hảo! 🔊✨
 
 ### 1. **click.mp3** (Button/Link Click)
 - **Duration**: 50-100ms
