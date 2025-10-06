@@ -849,14 +849,20 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                                                                 <span>{language === 'vi' ? 'Tiếp tục với LinkedIn' : 'Continue with LinkedIn'}</span>
                                                             </button>
 
+                                    {/* Phone auth disabled due to Firebase billing requirements */}
                                     {authMethod === 'email' ? (
                                         <button
-                                            onClick={() => setAuthMethod('phone')}
-                                            className="flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 py-3 font-semibold text-white shadow-md transition hover:shadow-lg"
-                                            disabled={isLoading}
+                                            onClick={() => {
+                                                setError(language === 'vi' 
+                                                    ? 'Đăng nhập bằng số điện thoại tạm thời không khả dụng (yêu cầu Firebase billing). Vui lòng sử dụng Email hoặc Google.' 
+                                                    : 'Phone sign-in is temporarily unavailable (requires Firebase billing plan). Please use Email or Google.');
+                                            }}
+                                            className="flex items-center justify-center gap-3 rounded-xl bg-slate-600/60 py-3 font-semibold text-slate-300 shadow-md cursor-not-allowed"
+                                            disabled={true}
                                         >
                                             <i className="fa-solid fa-phone"></i>
                                             {t.phoneBtn}
+                                            <span className="text-xs opacity-75">(disabled)</span>
                                         </button>
                                     ) : (
                                         <button

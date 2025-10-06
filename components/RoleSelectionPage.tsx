@@ -214,7 +214,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             actions={null}
           />
 
-          {/* Teacher card (right) - with stacked actions to match screenshot */}
+          {/* Teacher card (right) - simplified with two clear options */}
           <RoleCard
             role="teacher"
             title={t.teacher}
@@ -226,37 +226,23 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
               <>
                 <button
                   onClick={() => {
-                    // trial action: treat as guest trial for foreigner teachers and set English UI
-                    setLanguage('en');
-                    onGuestLogin('foreigner-teacher');
+                    setLanguage('vi');
+                    onGuestLogin('teacher');
                   }}
-                  className="w-full py-2 rounded-md bg-slate-800/80 text-slate-100 hover:bg-slate-800 transition"
+                  className="w-full py-3 rounded-lg bg-slate-700/80 text-slate-100 hover:bg-slate-700 transition font-medium"
                 >
-                  Try with a guest account (Foreigner Teacher)
+                  {t.guest}
                 </button>
 
                 <button
-                  onClick={() => { setLanguage('vi'); onSelectRole('teacher'); }}
-                  className="w-full py-2 rounded-md bg-purple-600 text-white hover:brightness-105 transition"
+                  onClick={() => { 
+                    setLanguage('vi'); 
+                    onSelectRole('teacher'); 
+                  }}
+                  className="w-full py-3 rounded-lg bg-green-500 text-white hover:brightness-110 transition font-medium shadow-lg"
                 >
-                  Sign in / Sign up
+                  {t.login}
                 </button>
-
-                <button
-                  onClick={() => onGuestLogin('foreigner-teacher')}
-                  className="w-full py-2 rounded-md bg-slate-700/80 text-slate-100 hover:bg-slate-700 transition"
-                >
-                  {t.guest} (for Foreigner Teachers)
-                </button>
-
-                <button
-                  onClick={() => onSelectRole('teacher')}
-                  className="w-full py-2 rounded-md bg-emerald-500 text-white hover:brightness-105 transition"
-                >
-                  Đăng nhập / Đăng ký
-                </button>
-
-                <div className="mt-2 text-sm text-slate-300">Vietnamese Teacher</div>
               </>
             )}
           />
@@ -265,7 +251,11 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         {/* About App Button */}
         <div className="mt-8 text-center">
           <button
-            onClick={() => window.open('/IVS_APP_INTRODUCTION.md', '_blank')}
+            onClick={() => {
+              // Open introduction in new tab/window
+              const introUrl = window.location.origin + '/IVS_APP_INTRODUCTION.md';
+              window.open(introUrl, '_blank', 'noopener,noreferrer');
+            }}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white/90 hover:text-white transition-all duration-200 backdrop-blur-sm border border-white/20 hover:border-white/30"
           >
             <i className="fa-solid fa-info-circle"></i>

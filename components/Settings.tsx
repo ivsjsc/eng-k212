@@ -399,7 +399,7 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
               <>
                 <section className="card-glass p-6">
                   <h2 className="text-2xl font-bold mb-4">{t.profileTitle}</h2>
-                  <div className="flex items-center gap-6">
+                  <div className="flex items-center gap-6 mb-6">
                       {/* show image avatar when available, fallback to font-awesome */}
                       {/* import Avatar lazily to avoid changing bundle significantly */}
                       <img src={user.avatar && (user.avatar.startsWith('http') || user.avatar.startsWith('/')) ? user.avatar : `/images/avatars/${user.avatar}.svg`} alt="avatar" className="w-16 h-16 rounded-full" />
@@ -414,6 +414,30 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
                           <i className="fa-solid fa-pen-to-square mr-2"></i> {t.editProfile}
                       </button>
                   </div>
+                  
+                  {/* Grade Level Editor for Students */}
+                  {user.role === 'student' && (
+                    <div className="border-t border-slate-200 dark:border-slate-700 pt-6">
+                      <label className="block text-sm font-semibold mb-2">{t.grade}</label>
+                      <select
+                        value={user.gradeLevel || ''}
+                        onChange={(e) => {
+                          const updatedUser = { ...user, gradeLevel: e.target.value };
+                          onUpdateUser(updatedUser);
+                        }}
+                        className="form-input w-full max-w-md"
+                      >
+                        <option value="">{language === 'vi' ? 'Chọn cấp lớp' : 'Select grade level'}</option>
+                        <option value="kindergarten">{language === 'vi' ? 'Mầm non (3-5 tuổi)' : 'Kindergarten (3-5 years)'}</option>
+                        <option value="primary">{language === 'vi' ? 'Tiểu học (6-10 tuổi)' : 'Primary (6-10 years)'}</option>
+                        <option value="secondary">{language === 'vi' ? 'Trung học Cơ sở (11-15 tuổi)' : 'Secondary (11-15 years)'}</option>
+                        <option value="highschool">{language === 'vi' ? 'Trung học Phổ thông (16-18 tuổi)' : 'High School (16-18 years)'}</option>
+                      </select>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+                        {language === 'vi' ? 'Thay đổi cấp lớp sẽ điều chỉnh nội dung học phù hợp với trình độ của bạn.' : 'Changing your grade level will adjust the content to match your learning level.'}
+                      </p>
+                    </div>
+                  )}
                 </section>
                 
                 <section className="card-glass p-6">
