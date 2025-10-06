@@ -721,28 +721,22 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                     </section>
 
                     <section className="relative">
-                        <div className="mx-auto w-full max-w-lg rounded-[32px] border border-white/15 bg-white/90 text-slate-900 shadow-[0_40px_100px_-40px_rgba(15,23,42,1)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/75 dark:text-slate-100">
-                            <div className="absolute -top-10 left-1/2 hidden h-20 w-20 -translate-x-1/2 items-center justify-center rounded-full bg-gradient-to-br from-sky-500 to-indigo-600 text-white shadow-2xl ring-2 ring-white/40 lg:flex">
-                                <i className="fa-solid fa-graduation-cap text-2xl"></i>
+                        <div className="mx-auto w-full max-w-lg rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(6,8,24,0.9),rgba(7,10,30,0.95))] text-slate-50 shadow-2xl backdrop-blur-md">
+                            <div className="absolute -top-16 left-1/2 flex h-20 w-20 -translate-x-1/2 items-center justify-center rounded-full bg-white/5 text-white shadow-xl ring-2 ring-white/20">
+                                <img src="/images/logo/logo-lighting.png" alt="logo" className="h-14 w-auto" />
                             </div>
-                            <div className="space-y-8 px-6 py-10 sm:px-10">
+                            <div className="space-y-6 px-6 py-8 sm:px-10">
                                 <div className="space-y-4 text-center">
-                                                                    <div className="mx-auto h-40 w-full overflow-hidden rounded-md hidden lg:block">
-                                                                        <div className="w-full h-full bg-center bg-cover rounded-md" style={{ backgroundImage: `url('/images/banner/ivsenglish-banner.svg')` }} aria-hidden="true" />
-                                                                    </div>
-                                                                    {/* small screens: inline svg for crispness */}
-                                                                    <img src="/images/banner/ivsenglish-banner.svg" alt="IVS English Banner" className="mx-auto h-16 w-auto lg:hidden" />
+                                    <div className="mx-auto h-40 w-full overflow-hidden rounded-md hidden lg:block">
+                                        <div className="w-full h-full bg-center bg-cover rounded-md" style={{ backgroundImage: `url('/images/banner/ivs-login-preview.jpg')` }} aria-hidden="true" />
+                                    </div>
+                                    {/* small screens: inline svg for crispness */}
+                                    <img src="/images/banner/ivs-login-preview.jpg" alt="IVS Login" className="mx-auto h-16 w-auto lg:hidden" />
                                     <div className="space-y-2">
-                                        <img
-                                            src="/images/logo/logo-lighting.png"
-                                            onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/logo/logo.svg'; }}
-                                            alt="IVS Logo"
-                                            className="mx-auto h-20 w-auto mb-2"
-                                        />
-                                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
+                                        <h2 className="text-3xl font-extrabold text-white">
                                             {isLoginView ? t.loginTitle : t.signupTitle}
                                         </h2>
-                                        <p className="text-sm text-slate-500 dark:text-slate-400">
+                                        <p className="text-sm text-slate-300">
                                             {isLoginView ? t.loginSubtitle : t.signupSubtitle}
                                         </p>
                                     </div>
@@ -780,7 +774,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                                 <div className="flex flex-col gap-3">
                                     <button
                                         onClick={handleGoogleSignIn}
-                                        className="flex items-center justify-center gap-3 rounded-2xl border border-slate-200/70 bg-white/70 py-3 text-slate-700 transition hover:-translate-y-[1px] hover:border-sky-400/60 hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100"
+                                        className="flex items-center justify-center gap-3 rounded-xl border border-slate-700 bg-slate-800/60 py-3 text-white transition hover:brightness-105"
                                         disabled={isLoading}
                                     >
                                         <img src="/google-icon.svg" alt="Google" className="h-5 w-5" />
@@ -790,7 +784,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                                     {authMethod === 'email' ? (
                                         <button
                                             onClick={() => setAuthMethod('phone')}
-                                            className="flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-sky-500 to-indigo-600 py-3 font-semibold text-white shadow-lg shadow-sky-500/30 transition hover:shadow-xl hover:shadow-sky-500/35"
+                                            className="flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 py-3 font-semibold text-white shadow-md transition hover:shadow-lg"
                                             disabled={isLoading}
                                         >
                                             <i className="fa-solid fa-phone"></i>
@@ -799,7 +793,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                                     ) : (
                                         <button
                                             onClick={() => setAuthMethod('email')}
-                                            className="flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-sky-500 to-indigo-600 py-3 font-semibold text-white shadow-lg shadow-sky-500/30 transition hover:shadow-xl hover:shadow-sky-500/35"
+                                            className="flex items-center justify-center gap-3 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 py-3 font-semibold text-white shadow-md transition hover:shadow-lg"
                                             disabled={isLoading}
                                         >
                                             <i className="fa-solid fa-envelope"></i>
@@ -822,13 +816,21 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                                     </button>
                                 </p>
 
-                                <button
-                                    onClick={onBack}
-                                    className="flex w-full items-center justify-center gap-2 rounded-2xl border border-transparent bg-slate-100 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-200 dark:bg-slate-800/60 dark:text-slate-200 dark:hover:bg-slate-800"
-                                >
-                                    <i className="fa-solid fa-arrow-left"></i>
-                                    {t.goBack}
-                                </button>
+                                <div className="mt-2 flex flex-col gap-3">
+                                    <div className="flex items-center justify-center text-sm text-slate-400 uppercase tracking-wider">{t.or}</div>
+                                    <div className="text-sm text-slate-300">Vietnamese Teacher</div>
+                                    <div className="flex flex-col gap-2">
+                                        <button onClick={handleGoogleSignIn} className="rounded-xl border border-slate-700 bg-slate-800/60 py-3 text-white">{t.googleBtn}</button>
+                                        <button onClick={() => setAuthMethod('phone')} className="rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 py-3 text-white">{t.phoneBtn}</button>
+                                    </div>
+                                    <button
+                                        onClick={onBack}
+                                        className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-transparent bg-slate-700/40 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-slate-700/60"
+                                    >
+                                        <i className="fa-solid fa-arrow-left"></i>
+                                        {t.goBack}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </section>
