@@ -1,11 +1,305 @@
-# CHƯƠNG TRÌNH TIẾNG ANH LỚP 7 - I-LEARN SMART WORLD
+# CHƯƠNG TRÌNH TIẾNG ANH LỚP 8 - I-LEARN SMART WORLD
 ## (Phiên bản Hoàn chỉnh - Chuẩn hóa 2025)
 
-**Giáo trình**: i-Learn Smart World 7
-**Cấp độ**: Trung học cơ sở - Lớp 7
+**Giáo trình**: i-Learn Smart World 8
+**Cấp độ**: Trung học cơ sở - Lớp 8
 **Số Unit**: 10 Units (Semester 1: 1-5, Semester 2: 6-10)
 **Số Lessons/Unit**: 3 Lessons (đã enhanced với IPA, activities, grammar đầy đủ)
 **Phiên bản**: Complete Enhanced v1.0 - October 2025
+
+---
+
+# HỌC KỲ I
+
+---
+
+## UNIT 1: LIFE STORIES (CUỘC ĐỜI)
+
+### 📌 Unit Overview
+**Theme**: Personal biographies, life events, storytelling
+**Grammar**: Past Simple, Past Continuous, Used to
+**Skills**: Speaking (narratives), Writing (biographies), Listening (stories)
+**Vocabulary**: Life stages, achievements, personal experiences
+
+### LESSON 1: CHILDHOOD MEMORIES
+**Vocabulary**: childhood /ˈtʃaɪldhʊd/, memory /ˈmeməri/, adventure /ədˈventʃər/, mischief /ˈmɪstʃɪf/
+**Grammar**: Past Simple for completed actions
+**Activities**: Memory sharing, childhood photo discussions, story circles
+**IPA Coverage**: 100% with pronunciation practice
+
+### LESSON 2: LIFE EVENTS
+**Vocabulary**: milestone /ˈmaɪlstoʊn/, achievement /əˈtʃiːvmənt/, challenge /ˈtʃælɪndʒ/, turning point /ˈtɜːrnɪŋ pɔɪnt/
+**Grammar**: Past Continuous for background actions
+**Activities**: Timeline creation, event sequencing, personal storytelling
+
+### LESSON 3: BIOGRAPHIES & WRITING
+**Vocabulary**: biography /baɪˈɑːɡrəfi/, autobiography /ˌɔːtoʊbaɪˈɑːɡrəfi/, timeline /ˈtaɪmlaɪn/, legacy /ˈleɡəsi/
+**Grammar**: Used to for past habits
+**Activities**: Famous people research, biography writing workshop
+**Writing**: Complete biography essays with structure
+
+---
+
+## UNIT 2: URBANIZATION (ĐÔ THỊ HÓA)
+
+### 📌 Unit Overview
+**Theme**: City development, urban challenges, community solutions
+**Grammar**: Present Perfect, Future forms, Passive voice
+**Skills**: Speaking (debate), Writing (reports), Problem-solving
+**Vocabulary**: Urban development, environmental issues, community planning
+
+### LESSON 1: CITY LIFE
+**Vocabulary**: urbanization /ˌɜːrbənəˈzeɪʃn/, infrastructure /ˈɪnfrəstrʌktʃər/, congestion /kənˈdʒestʃən/, pollution /pəˈluːʃn/
+**Grammar**: Present Perfect for experiences
+**Activities**: City comparison surveys, urban problem analysis
+
+### LESSON 2: URBAN CHALLENGES
+**Vocabulary**: overcrowding /ˌoʊvərˈkraʊdɪŋ/, sustainability /səˌsteɪnəˈbɪləti/, gentrification /ˌdʒentrɪfɪˈkeɪʃn/, migration /maɪˈɡreɪʃn/
+**Grammar**: Future forms for predictions
+**Activities**: Challenge identification, solution brainstorming
+
+### LESSON 3: URBAN SOLUTIONS & WRITING
+**Vocabulary**: renovation /ˌrenəˈveɪʃn/, innovation /ˌɪnəˈveɪʃn/, policy /ˈpɑːləsi/, implementation /ˌɪmplɪmenˈteɪʃn/
+**Grammar**: Passive voice for formal writing
+**Activities**: Solution proposal development, policy writing
+**Writing**: Urban development reports
+
+---
+
+## UNIT 3: MEDIA AND ADVERTISING (TRUYỀN THÔNG VÀ QUẢNG CÁO)
+
+### 📌 Unit Overview
+**Theme**: Media influence, advertising techniques, consumer awareness
+**Grammar**: Modals (can, may, must), Conditionals, Persuasive language
+**Skills**: Speaking (analysis), Writing (advertisements), Critical thinking
+**Vocabulary**: Media types, advertising methods, consumer terms
+
+### LESSON 1: MEDIA TYPES
+**Vocabulary**: broadcast /ˈbrɔːdkæst/, digital media /ˈdɪdʒɪtl ˈmiːdiə/, journalism /ˈdʒɜːrnəlɪzəm/, censorship /ˈsensərʃɪp/
+**Grammar**: Can/may/must for media access
+**Activities**: Media consumption surveys, type analysis
+
+### LESSON 2: ADVERTISING TECHNIQUES
+**Vocabulary**: slogan /ˈsloʊɡən/, endorsement /ɪnˈdɔːrsmənt/, target audience /ˈtɑːrɡɪt ˈɔːdiəns/, manipulation /məˌnɪpjəˈleɪʃn/
+**Grammar**: First conditional for advertising scenarios
+**Activities**: Advertisement analysis, technique identification
+
+### LESSON 3: CONSUMER AWARENESS & WRITING
+**Vocabulary**: consumerism /kənˈsuːmərɪzəm/, ethics /ˈeθɪks/, transparency /trænsˈpærənsi/, regulation /ˌreɡjəˈleɪʃn/
+**Grammar**: Persuasive language structures
+**Activities**: Consumer rights discussions, awareness campaigns
+**Writing**: Consumer awareness advertisements
+
+---
+
+## UNIT 4: CLIMATE CHANGE (BIẾN ĐỔI KHÍ HẬU)
+
+### 📌 Unit Overview
+**Theme**: Environmental issues, climate impact, global solutions
+**Grammar**: Future perfect, Second conditionals, Quantifiers
+**Skills**: Speaking (debate), Writing (proposals), Research
+**Vocabulary**: Climate terms, environmental vocabulary, solution language
+
+### LESSON 1: CLIMATE PHENOMENA
+**Vocabulary**: greenhouse effect /ˈɡriːnhaʊs ɪˈfekt/, deforestation /diːˌfɔːrɪˈsteɪʃn/, fossil fuels /ˈfɑːsl ˈfjuːəlz/, emissions /ɪˈmɪʃənz/
+**Grammar**: Future perfect for completed actions
+**Activities**: Climate data analysis, phenomenon explanations
+
+### LESSON 2: ENVIRONMENTAL IMPACT
+**Vocabulary**: biodiversity /ˌbaɪoʊdaɪˈvɜːrsəti/, ecosystem /ˈiːkoʊsɪstəm/, extinction /ɪkˈstɪŋkʃən/, habitat /ˈhæbɪtæt/
+**Grammar**: Second conditional for hypothetical situations
+**Activities**: Impact assessment, scenario discussions
+
+### LESSON 3: CLIMATE SOLUTIONS & WRITING
+**Vocabulary**: renewable energy /rɪˈnuːəbl ˈenərdʒi/, conservation /ˌkɑːnsərˈveɪʃn/, mitigation /ˌmɪtɪˈɡeɪʃn/, adaptation /ˌædæpˈteɪʃn/
+**Grammar**: Quantifiers with environmental terms
+**Activities**: Solution proposal development, action plans
+**Writing**: Climate change policy proposals
+
+---
+
+## UNIT 5: INVENTIONS AND DISCOVERIES (PHÁT MINH VÀ KHÁM PHÁ)
+
+### 📌 Unit Overview
+**Theme**: Scientific achievements, invention processes, technological impact
+**Grammar**: Past perfect, Third conditionals, Passive reporting
+**Skills**: Speaking (presentations), Writing (reports), Research skills
+**Vocabulary**: Invention terms, scientific vocabulary, technology impact
+
+### LESSON 1: GREAT INVENTIONS
+**Vocabulary**: innovation /ˌɪnəˈveɪʃn/, patent /ˈpætnt/, prototype /ˈproʊtətaɪp/, breakthrough /ˈbreɪkθruː/
+**Grammar**: Past perfect for sequence of events
+**Activities**: Invention timelines, impact analysis
+
+### LESSON 2: SCIENTIFIC DISCOVERIES
+**Vocabulary**: hypothesis /haɪˈpɑːθəsɪs/, experiment /ɪkˈsperɪmənt/, observation /ˌɑːbzərˈveɪʃn/, theory /ˈθiːəri/
+**Grammar**: Third conditional for hypothetical past
+**Activities**: Discovery process analysis, scientific method exploration
+
+### LESSON 3: IMPACT OF INVENTIONS & WRITING
+**Vocabulary**: transformation /ˌtrænsfərˈmeɪʃn/, revolution /ˌrevəˈluːʃn/, automation /ɔːˌtɑːməˈteɪʃn/, ethics /ˈeθɪks/
+**Grammar**: Passive voice for scientific reporting
+**Activities**: Impact debates, ethical discussions
+**Writing**: Invention impact reports
+
+---
+
+# HỌC KỲ II
+
+---
+
+## UNIT 6: GLOBAL CITIZENSHIP (CÔNG DÂN TOÀN CẦU)
+
+### 📌 Unit Overview
+**Theme**: Global issues, cultural understanding, international cooperation
+**Grammar**: Gerunds and infinitives, Modal verbs, Complex sentences
+**Skills**: Speaking (debate), Writing (essays), Cross-cultural communication
+**Vocabulary**: Global issues, citizenship terms, international relations
+
+### LESSON 1: GLOBAL ISSUES
+**Vocabulary**: humanitarian /hjuːˌmænɪˈteriən/, refugee /ˈrefjədʒi/, inequality /ˌɪnɪˈkwɑːləti/, diplomacy /dɪˈploʊməsi/
+**Grammar**: Gerunds after verbs of concern
+**Activities**: Global issue research, awareness campaigns
+
+### LESSON 2: CULTURAL UNDERSTANDING
+**Vocabulary**: diversity /dɪˈvɜːrsəti/, tolerance /ˈtɑːlərəns/, heritage /ˈherɪtɪdʒ/, integration /ˌɪntɪˈɡreɪʃn/
+**Grammar**: Infinitives of purpose
+**Activities**: Cultural exchange simulations, diversity celebrations
+
+### LESSON 3: INTERNATIONAL COOPERATION & WRITING
+**Vocabulary**: alliance /əˈlaɪəns/, treaty /ˈtriːti/, peacekeeping /ˈpiːskeɪpɪŋ/, sustainable development /səˈsteɪnəbl dɪˈveləpmənt/
+**Grammar**: Complex sentence structures
+**Activities**: Cooperation project planning, international agreements
+**Writing**: Global citizenship essays
+
+---
+
+## UNIT 7: DIGITAL LITERACY (THÀNH THẠO SỐ)
+
+### 📌 Unit Overview
+**Theme**: Digital technology, online safety, information literacy
+**Grammar**: Future forms, Passive voice, Technical vocabulary
+**Skills**: Speaking (presentations), Writing (guides), Digital research
+**Vocabulary**: Technology terms, online safety, digital citizenship
+
+### LESSON 1: DIGITAL TECHNOLOGIES
+**Vocabulary**: artificial intelligence /ˌɑːrtɪˈfɪʃl ɪnˈtelɪdʒəns/, cybersecurity /saɪˈbɜːrˈsekjərəti/, algorithm /ˈælɡərɪðəm/, encryption /ɪnˈkrɪpʃn/
+**Grammar**: Future continuous for ongoing developments
+**Activities**: Technology trend analysis, digital tool exploration
+
+### LESSON 2: ONLINE SAFETY
+**Vocabulary**: privacy /ˈpraɪvəsi/, phishing /ˈfɪʃɪŋ/, malware /ˈmælwer/, authentication /ɔːˌθentɪˈkeɪʃn/
+**Grammar**: Modals for rules and recommendations
+**Activities**: Safety scenario role-plays, protection strategy development
+
+### LESSON 3: INFORMATION LITERACY & WRITING
+**Vocabulary**: verification /ˌverɪfɪˈkeɪʃn/, credibility /ˌkredəˈbɪləti/, bias /ˈbaɪəs/, misinformation /ˌmɪsɪnfərˈmeɪʃn/
+**Grammar**: Passive reporting of information
+**Activities**: Source evaluation workshops, literacy guides
+**Writing**: Digital literacy handbooks
+
+---
+
+## UNIT 8: CAREERS AND ASPIRATIONS (NGHỀ NGHIỆP VÀ KHÁT VỌNG)
+
+### 📌 Unit Overview
+**Theme**: Career exploration, future planning, professional development
+**Grammar**: Future forms, Conditionals, Professional vocabulary
+**Skills**: Speaking (interviews), Writing (CVs), Career planning
+**Vocabulary**: Career terms, job skills, professional development
+
+### LESSON 1: CAREER EXPLORATION
+**Vocabulary**: vocation /voʊˈkeɪʃn/, aptitude /ˈæptɪtuːd/, internship /ˈɪntərnʃɪp/, mentorship /ˈmentərʃɪp/
+**Grammar**: Future perfect for career goals
+**Activities**: Career interest surveys, profession research
+
+### LESSON 2: SKILLS DEVELOPMENT
+**Vocabulary**: competency /ˈkɑːmpɪtənsi/, proficiency /prəˈfɪʃənsi/, certification /ˌsɜːrtɪfɪˈkeɪʃn/, portfolio /pɔːrtˈfoʊlioʊ/
+**Grammar**: Second conditional for career scenarios
+**Activities**: Skills assessment, development planning
+
+### LESSON 3: FUTURE ASPIRATIONS & WRITING
+**Vocabulary**: ambition /æmˈbɪʃən/, entrepreneurship /ˌɑːntrəprənərˈʃɪp/, work-life balance /wɜːrk laɪf ˈbæləns/, fulfillment /fʊlˈfɪlmənt/
+**Grammar**: Mixed conditionals for aspirations
+**Activities**: Aspiration sharing, goal setting workshops
+**Writing**: Career development plans
+
+---
+
+## UNIT 9: SPORTS AND COMPETITION (THỂ THAO VÀ CUỘC THI)
+
+### 📌 Unit Overview
+**Theme**: Sports psychology, competition ethics, physical wellness
+**Grammar**: Present perfect continuous, Comparatives, Sports commentary
+**Skills**: Speaking (commentary), Writing (reports), Teamwork
+**Vocabulary**: Sports terms, competition vocabulary, performance language
+
+### LESSON 1: SPORTS PSYCHOLOGY
+**Vocabulary**: motivation /ˌmoʊtɪˈveɪʃn/, resilience /rɪˈzɪliəns/, endurance /ɪnˈdʊrəns/, concentration /ˌkɑːnsənˈtreɪʃn/
+**Grammar**: Present perfect continuous for ongoing training
+**Activities**: Mental preparation exercises, psychology discussions
+
+### LESSON 2: COMPETITION ETHICS
+**Vocabulary**: fair play /fer pleɪ/, doping /ˈdoʊpɪŋ/, integrity /ɪnˈteɡrəti/, sportsmanship /ˈspɔːrtsmənʃɪp/
+**Grammar**: Comparatives for performance analysis
+**Activities**: Ethics debates, rule discussions
+
+### LESSON 3: SPORTS EVENTS & WRITING
+**Vocabulary**: tournament /ˈtʊrnəmənt/, championship /ˈtʃæmpiənʃɪp/, spectator /spekˈteɪtər/, commentary /ˈkɑːmənteri/
+**Grammar**: Sports reporting language
+**Activities**: Event simulation, commentary practice
+**Writing**: Sports event reports
+
+---
+
+## UNIT 10: CREATIVE EXPRESSION (BIỂU ĐẠT SÁNG TẠO)
+
+### 📌 Unit Overview
+**Theme**: Artistic expression, creative processes, cultural creativity
+**Grammar**: Descriptive language, Creative writing structures, Artistic vocabulary
+**Skills**: Speaking (critique), Writing (creative pieces), Artistic appreciation
+**Vocabulary**: Art terms, creative vocabulary, expression language
+
+### LESSON 1: ARTISTIC FORMS
+**Vocabulary**: expressionism /ɪkˈspreʃənɪzəm/, abstraction /æbˈstrækʃən/, symbolism /ˈsɪmbəlɪzəm/, realism /ˈriːəlɪzəm/
+**Grammar**: Descriptive adjectives and adverbs
+**Activities**: Art movement exploration, style analysis
+
+### LESSON 2: CREATIVE PROCESSES
+**Vocabulary**: inspiration /ˌɪnspəˈreɪʃn/, technique /tekˈniːk/, composition /ˌkɑːmpəˈzɪʃn/, innovation /ˌɪnəˈveɪʃn/
+**Grammar**: Process description language
+**Activities**: Creative process mapping, technique workshops
+
+### LESSON 3: CREATIVE PROJECTS & WRITING
+**Vocabulary**: masterpiece /ˈmæstərpiːs/, portfolio /pɔːrtˈfoʊlioʊ/, exhibition /ˌeksɪˈbɪʃn/, critique /krɪˈtiːk/
+**Grammar**: Creative writing structures
+**Activities**: Project development, portfolio creation
+**Writing**: Creative expression pieces
+
+---
+
+# ASSESSMENT & PROJECTS
+
+## 📊 Grade 8 Assessment Framework
+
+### Enhanced Metrics (Compared to Grade 7)
+- **Vocabulary Complexity**: Advanced terms, technical vocabulary
+- **Grammar Structures**: More complex forms, academic language
+- **Critical Thinking**: Analysis, evaluation, synthesis skills
+- **Research Skills**: Information gathering, source evaluation
+- **Project Work**: Independent research, presentation skills
+
+### Success Criteria by Unit
+- **Higher Order Thinking**: Analysis, evaluation, creation
+- **Academic Language**: Formal writing, technical vocabulary
+- **Research Skills**: Source evaluation, information synthesis
+- **Presentation Skills**: Public speaking, visual aids
+
+---
+
+**Grade 8 Enhanced Curriculum - Complete Implementation**
+**Focus**: Advanced language skills, critical thinking, research abilities
+**Challenge Level**: High (preparing for THPT transition)
 
 ---
 
