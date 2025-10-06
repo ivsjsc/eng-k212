@@ -46,6 +46,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         'Dạy tiếng Anh với hỗ trợ ngôn ngữ bản địa và phương pháp giảng dạy quốc tế.',
       guest: 'Dùng thử với vai trò khách',
       login: 'Đăng nhập / Đăng ký',
+      aboutApp: 'Giới thiệu về ứng dụng',
       toggle: 'us English'
     }
   }[language];
@@ -123,11 +124,11 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             onClick={() => setLangMenuOpen(v => !v)}
             aria-haspopup="true"
             aria-expanded={langMenuOpen}
-            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-black/40 text-white/90 shadow backdrop-blur-sm"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black/40 text-white/90 shadow backdrop-blur-sm hover:bg-black/60 transition-colors"
             title="Language"
           >
             <i className="fa-solid fa-globe text-lg" />
-            <span className="sr-only">Language</span>
+            <span className="text-sm font-medium">{language === 'en' ? 'EN' : 'VI'}</span>
           </button>
 
           {langMenuOpen && (
@@ -193,6 +194,17 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             color="border-purple-500"
             buttonColor="bg-purple-500"
           />
+        </div>
+        
+        {/* About App Button */}
+        <div className="mt-8 text-center">
+          <button
+            onClick={() => window.open('/IVS_APP_INTRODUCTION.md', '_blank')}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white/90 hover:text-white transition-all duration-200 backdrop-blur-sm border border-white/20 hover:border-white/30"
+          >
+            <i className="fa-solid fa-info-circle"></i>
+            {t.aboutApp}
+          </button>
         </div>
       </div>
     </div>
