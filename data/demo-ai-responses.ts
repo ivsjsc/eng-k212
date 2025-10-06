@@ -146,50 +146,136 @@ export const demoAIResponses = {
   learningPath: {
     en: {
       title: "Your Suggested Learning Path (Demo)",
-      description: "This is a sample learning path. Upgrade to Premium for AI-personalized paths based on your actual progress!",
-      steps: [
+      description: "This is a sample 4-week learning path. Upgrade to Premium for AI-personalized paths that adapt to your actual progress!",
+      weeks: [
         {
           week: 1,
-          title: "Foundation Building",
-          topics: ["Present Simple & Continuous", "Basic Vocabulary (500 words)", "Simple Sentences"],
-          exercises: ["Grammar drills", "Vocabulary flashcards", "Sentence construction"]
+          topic: "Foundation Building - Grammar Basics",
+          focus: "Master essential tenses and sentence structures",
+          exercises: [
+            "📖 Study Present Simple & Present Continuous",
+            "📝 Complete 20 grammar exercises",
+            "🎯 Learn 100 common verbs",
+            "✍️ Write 5 sentences daily using new tenses",
+            "🎧 Listen to 3 beginner podcasts"
+          ],
+          estimatedHours: "5-6 hours"
         },
         {
           week: 2,
-          title: "Expanding Skills",
-          topics: ["Past Tenses", "Common Phrasal Verbs", "Question Formation"],
-          exercises: ["Story telling", "Conversation practice", "Listening exercises"]
+          topic: "Vocabulary Expansion",
+          focus: "Build a strong vocabulary foundation",
+          exercises: [
+            "📚 Learn 150 essential words (themed: daily life, food, travel)",
+            "🃏 Use flashcards for daily practice",
+            "📝 Create 10 example sentences per theme",
+            "🎮 Play vocabulary games in the app",
+            "🗣️ Practice pronunciation with audio"
+          ],
+          estimatedHours: "6-7 hours"
         },
         {
           week: 3,
-          title: "Advanced Grammar",
-          topics: ["Perfect Tenses", "Conditionals", "Passive Voice"],
-          exercises: ["Writing essays", "Reading comprehension", "Speaking practice"]
+          topic: "Speaking & Listening",
+          focus: "Develop communication skills",
+          exercises: [
+            "🎧 Listen to 5 intermediate conversations",
+            "🗣️ Practice speaking exercises (10 mins daily)",
+            "📹 Record yourself speaking about 3 topics",
+            "👥 Complete 3 role-play scenarios",
+            "🎯 Learn 20 common phrases for conversation"
+          ],
+          estimatedHours: "7-8 hours"
+        },
+        {
+          week: 4,
+          topic: "Reading & Writing",
+          focus: "Improve comprehension and expression",
+          exercises: [
+            "📖 Read 3 short articles (200-300 words each)",
+            "✍️ Write a 150-word essay on a given topic",
+            "📝 Practice paragraph writing (5 paragraphs)",
+            "🎯 Learn linking words and transitions",
+            "✅ Complete a comprehensive review test"
+          ],
+          estimatedHours: "8-10 hours"
         }
+      ],
+      totalDuration: "4 weeks",
+      totalHours: "26-31 hours",
+      premiumFeatures: [
+        "✨ AI analyzes your actual performance",
+        "🎯 Dynamic difficulty adjustment",
+        "📊 Detailed progress tracking",
+        "🔄 Personalized exercise recommendations",
+        "💬 Unlimited AI tutor support"
       ]
     },
     vi: {
       title: "Lộ trình Học đề xuất (Demo)",
-      description: "Đây là lộ trình mẫu. Nâng cấp Premium để nhận lộ trình AI cá nhân hóa dựa trên tiến độ thực của bạn!",
-      steps: [
+      description: "Đây là lộ trình mẫu 4 tuần. Nâng cấp Premium để nhận lộ trình AI cá nhân hóa thích ứng với tiến độ thực tế của bạn!",
+      weeks: [
         {
           week: 1,
-          title: "Xây dựng Nền tảng",
-          topics: ["Thì Hiện tại Đơn & Tiếp diễn", "Từ vựng Cơ bản (500 từ)", "Câu Đơn giản"],
-          exercises: ["Luyện ngữ pháp", "Flashcard từ vựng", "Xây dựng câu"]
+          topic: "Xây dựng Nền tảng - Ngữ pháp Cơ bản",
+          focus: "Nắm vững các thì cơ bản và cấu trúc câu",
+          exercises: [
+            "📖 Học Thì Hiện tại Đơn & Hiện tại Tiếp diễn",
+            "📝 Hoàn thành 20 bài tập ngữ pháp",
+            "🎯 Học 100 động từ thông dụng",
+            "✍️ Viết 5 câu mỗi ngày sử dụng thì mới học",
+            "🎧 Nghe 3 podcast cho người mới bắt đầu"
+          ],
+          estimatedHours: "5-6 giờ"
         },
         {
           week: 2,
-          title: "Mở rộng Kỹ năng",
-          topics: ["Các thì Quá khứ", "Phrasal Verbs phổ biến", "Tạo Câu hỏi"],
-          exercises: ["Kể chuyện", "Luyện hội thoại", "Bài tập nghe"]
+          topic: "Mở rộng Từ vựng",
+          focus: "Xây dựng vốn từ vựng vững chắc",
+          exercises: [
+            "📚 Học 150 từ thiết yếu (chủ đề: cuộc sống, ẩm thực, du lịch)",
+            "🃏 Sử dụng flashcard luyện tập hàng ngày",
+            "📝 Tạo 10 câu ví dụ cho mỗi chủ đề",
+            "🎮 Chơi trò chơi từ vựng trong ứng dụng",
+            "🗣️ Luyện phát âm với audio"
+          ],
+          estimatedHours: "6-7 giờ"
         },
         {
           week: 3,
-          title: "Ngữ pháp Nâng cao",
-          topics: ["Thì Hoàn thành", "Câu Điều kiện", "Câu Bị động"],
-          exercises: ["Viết luận", "Đọc hiểu", "Luyện nói"]
+          topic: "Nói & Nghe",
+          focus: "Phát triển kỹ năng giao tiếp",
+          exercises: [
+            "🎧 Nghe 5 đoạn hội thoại trung cấp",
+            "🗣️ Luyện nói (10 phút mỗi ngày)",
+            "📹 Ghi âm bản thân nói về 3 chủ đề",
+            "👥 Hoàn thành 3 tình huống nhập vai",
+            "🎯 Học 20 cụm từ thông dụng trong giao tiếp"
+          ],
+          estimatedHours: "7-8 giờ"
+        },
+        {
+          week: 4,
+          topic: "Đọc & Viết",
+          focus: "Cải thiện khả năng đọc hiểu và diễn đạt",
+          exercises: [
+            "📖 Đọc 3 bài viết ngắn (200-300 từ mỗi bài)",
+            "✍️ Viết một bài luận 150 từ về chủ đề cho trước",
+            "📝 Luyện viết đoạn văn (5 đoạn)",
+            "🎯 Học từ nối và liên kết ý",
+            "✅ Hoàn thành bài kiểm tra tổng hợp"
+          ],
+          estimatedHours: "8-10 giờ"
         }
+      ],
+      totalDuration: "4 tuần",
+      totalHours: "26-31 giờ",
+      premiumFeatures: [
+        "✨ AI phân tích hiệu suất thực tế của bạn",
+        "🎯 Điều chỉnh độ khó động",
+        "📊 Theo dõi tiến độ chi tiết",
+        "🔄 Đề xuất bài tập cá nhân hóa",
+        "💬 Hỗ trợ AI tutor không giới hạn"
       ]
     }
   }
