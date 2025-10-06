@@ -8,6 +8,7 @@ Immersive bilingual learning workspace for IVS students and teachers. The app no
 - **Modern UI:** Responsive gradient shell, redesigned sidebar, and polished mobile auth screens with bilingual copy.
 - **Verified auth flow:** Email/Password signup with verification enforcement, phone OTP login, Google redirect, password reset dialog, and guest trials.
 - **Role-aware dashboards:** Student and teacher experiences, AI-powered utilities, analytics, and assistive navigation.
+- **Complete Curriculum:** THCS (Grades 6-9) + THPT (Grades 10-12) with 330 professional lessons
 - **Runtime-friendly config:** Works with Vite `.env` variables or an optional `public/env.js` fallback for rapid deployments.
 
 ## 🧰 Prerequisites
@@ -39,14 +40,23 @@ Immersive bilingual learning workspace for IVS students and teachers. The app no
 	npm run build
 	```
 
-## 🔐 Authentication UX
+## � Curriculum Overview
 
-- **Email signup** now auto-sends a verification email, persists profile data to Firestore, signs the user out, and displays bilingual instructions to verify before the first login.
-- **Email login** blocks unverified accounts, re-sends the verification email, and surfaces actionable guidance when domain/OAuth misconfigurations occur.
-- **Forgot password** opens a redesigned modal with inline validation and success feedback.
-- **Phone login** presents an OTP flow with invisible reCAPTCHA setup, localized alerts, and fallback copy.
-- **Google sign-in** uses redirect to avoid third-party cookie issues and maintains the selected role through session storage.
-- **Guest mode** still works for quick demos without touching Firebase data.
+The platform includes a comprehensive K-12 English curriculum:
+
+### THCS (Grades 6-9) - Enhanced
+- **120 lessons** across 4 grades (30 lessons/grade)
+- **40 units** with 3 lessons each
+- Features: IPA pronunciation, detailed grammar, 7 activities/lesson
+- Seamless transition to THPT
+
+### THPT (Grades 10-12) - Professional
+- **210 lessons** across 3 grades (70 lessons/grade)
+- **30 units** with 7 lessons each (Getting Started, Language Focus, Reading, Speaking, Listening, Writing, Culture/CLIL)
+- Features: Academic vocabulary, complex grammar, university preparation
+- Textbook-quality content with bilingual support
+
+**Total: 330 professional lessons** ready for deployment.
 
 ## 🎨 UI Improvements
 
