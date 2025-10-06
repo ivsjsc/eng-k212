@@ -145,7 +145,7 @@ declare global {
 
 interface AuthPageProps {
     language: 'en' | 'vi';
-    selectedRole: 'student' | 'teacher';
+    selectedRole: 'student' | 'teacher' | 'foreigner-teacher';
     onBack: () => void;
 }
 
@@ -816,13 +816,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                                     </button>
                                 </p>
 
-                                <div className="mt-2 flex flex-col gap-3">
-                                    <div className="flex items-center justify-center text-sm text-slate-400 uppercase tracking-wider">{t.or}</div>
-                                    <div className="text-sm text-slate-300">Vietnamese Teacher</div>
-                                    <div className="flex flex-col gap-2">
-                                        <button onClick={handleGoogleSignIn} className="rounded-xl border border-slate-700 bg-slate-800/60 py-3 text-white">{t.googleBtn}</button>
-                                        <button onClick={() => setAuthMethod('phone')} className="rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 py-3 text-white">{t.phoneBtn}</button>
-                                    </div>
+                                <div className="mt-4">
                                     <button
                                         onClick={onBack}
                                         className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-transparent bg-slate-700/40 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-slate-700/60"

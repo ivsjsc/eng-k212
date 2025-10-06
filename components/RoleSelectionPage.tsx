@@ -53,6 +53,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
 
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const langRef = useRef<HTMLDivElement | null>(null);
+  const innerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     function handleDocClick(e: MouseEvent) {
@@ -125,6 +126,13 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}
+      onClick={(e) => {
+        // if user clicks outside the inner content, treat as selecting foreigner teacher and switch to English
+        if (innerRef.current && !innerRef.current.contains(e.target as Node)) {
+          setLanguage('en');
+          onSelectRole('foreigner-teacher');
+        }
+      }}
     >
       <div className="absolute inset-0 bg-black/60 dark:bg-black/70" aria-hidden />
 
@@ -166,7 +174,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         </div>
       </header>
 
-      <div className="relative z-20 w-full max-w-4xl">
+  <div className="relative z-20 w-full max-w-4xl" ref={innerRef}>
         <img
           src="/images/logo/logo-lighting.png"
           onError={e => {
