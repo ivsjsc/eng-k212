@@ -48,7 +48,7 @@ function App() {
 
   // New state for multi-step authentication flow
   const [authStep, setAuthStep] = useState<'roleSelection' | 'login'>('roleSelection');
-  const [selectedRole, setSelectedRole] = useState<'student' | 'teacher'>('student');
+  const [selectedRole, setSelectedRole] = useState<'student' | 'teacher' | 'foreigner-teacher'>('student');
 
   const [currentView, setCurrentView] = useState<View>('home');
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);

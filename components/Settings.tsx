@@ -196,10 +196,14 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
   const handleThemeChange = (newTheme: 'light' | 'dark') => {
     setTheme(newTheme);
     localStorage.setItem('ivs-theme', newTheme);
-    if (newTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    // Only apply theme to settings modal, not entire app
+    const settingsModal = document.querySelector('[data-settings-modal]');
+    if (settingsModal) {
+      if (newTheme === 'dark') {
+        settingsModal.classList.add('dark');
+      } else {
+        settingsModal.classList.remove('dark');
+      }
     }
   };
 
@@ -349,7 +353,7 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 animate-fade-in">
+    <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 animate-fade-in" data-settings-modal>
         <div className="text-center mb-8">
             <i className="fa-solid fa-cog text-5xl text-blue-500 mb-4"></i>
             <h1 className="text-4xl font-bold">{t.title}</h1>

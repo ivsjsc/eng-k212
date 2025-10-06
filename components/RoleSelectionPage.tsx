@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 interface RoleSelectionPageProps {
-  onSelectRole: (role: 'student' | 'teacher') => void;
-  onGuestLogin: (role: 'student' | 'teacher') => void;
+  onSelectRole: (role: 'student' | 'teacher' | 'foreigner-teacher') => void;
+  onGuestLogin: (role: 'student' | 'teacher' | 'foreigner-teacher') => void;
   language: 'en' | 'vi';
   setLanguage: (language: 'en' | 'vi') => void;
+  onShowIntroduction?: () => void;
 }
 
 const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
@@ -23,8 +24,12 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
       teacher: 'I am a Teacher',
       teacherDesc:
         'Manage your classes, assign lessons, and track student progress.',
+      foreignerTeacher: 'I am a Foreigner Teacher',
+      foreignerTeacherDesc:
+        'Teach English with native language support and international teaching methods.',
       guest: 'Try with a guest account',
       login: 'Login / Sign Up',
+      aboutApp: 'About IVS English',
       toggle: 'vn Tiếng Việt'
     },
     vi: {
@@ -36,6 +41,9 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
       teacher: 'Tôi là Giáo viên',
       teacherDesc:
         'Quản lý lớp học, giao bài và theo dõi tiến độ của học sinh.',
+      foreignerTeacher: 'Tôi là Giáo viên Nước ngoài',
+      foreignerTeacherDesc:
+        'Dạy tiếng Anh với hỗ trợ ngôn ngữ bản địa và phương pháp giảng dạy quốc tế.',
       guest: 'Dùng thử với vai trò khách',
       login: 'Đăng nhập / Đăng ký',
       toggle: 'us English'
@@ -56,7 +64,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
   }, []);
 
   const RoleCard: React.FC<{
-    role: 'student' | 'teacher';
+    role: 'student' | 'teacher' | 'foreigner-teacher';
     title: string;
     description: string;
     icon: string;
@@ -160,7 +168,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-2">{t.welcome}</h1>
         <p className="text-lg text-white/90 mb-12">{t.subtitle}</p>
 
-        <div className="flex flex-col md:flex-row gap-8 justify-center items-stretch">
+        <div className="flex flex-col lg:flex-row gap-8 justify-center items-stretch">
           <RoleCard
             role="student"
             title={t.student}
@@ -176,6 +184,14 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             icon="fa-person-chalkboard"
             color="border-green-500"
             buttonColor="bg-green-500"
+          />
+          <RoleCard
+            role="foreigner-teacher"
+            title={t.foreignerTeacher}
+            description={t.foreignerTeacherDesc}
+            icon="fa-earth-americas"
+            color="border-purple-500"
+            buttonColor="bg-purple-500"
           />
         </div>
       </div>

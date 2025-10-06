@@ -23,7 +23,7 @@ export interface User {
   level: string;
   points: number;
   badges: string[];
-  role: 'student' | 'teacher';
+  role: 'student' | 'teacher' | 'foreigner-teacher';
   age?: string | number;
   gradeLevel?: string; // 'kindergarten' | 'primary' | 'secondary' | 'high-school'
   gender?: string;

@@ -159,6 +159,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
     const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [otp, setOtp] = useState('');
+    const [selectedGrade, setSelectedGrade] = useState<string>('');
 
     // State management
     const [error, setError] = useState<string | null>(null);
@@ -183,6 +184,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
             emailLabel: "Email address",
             phoneLabel: "Phone number",
             phonePlaceholder: "e.g., +84912345678",
+            gradeLabel: "Grade Level",
+            selectGrade: "Select your grade level",
             passwordLabel: "Password",
             otpLabel: "Verification Code",
             loginBtn: "Login",
@@ -225,6 +228,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
             emailLabel: "Địa chỉ email",
             phoneLabel: "Số điện thoại",
             phonePlaceholder: "VD: +84912345678",
+            gradeLabel: "Cấp lớp",
+            selectGrade: "Chọn cấp lớp của bạn",
             passwordLabel: "Mật khẩu",
             otpLabel: "Mã xác thực",
             loginBtn: "Đăng nhập",
@@ -391,6 +396,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                     name,
                     role: selectedRole,
                     email: firebaseUser.email || email,
+                    gradeLevel: selectedGrade,
                 };
                 await setDoc(doc(db, "users", firebaseUser.uid), {
                     ...newUser,
@@ -460,7 +466,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                     id: user.uid,
                     name: newName,
                     role: selectedRole,
-                    phone: user.phoneNumber || phoneNumber
+                    phone: user.phoneNumber || phoneNumber,
+                    gradeLevel: selectedGrade,
                 };
                 await setDoc(userDocRef, newUser);
             }
@@ -562,10 +569,27 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
     const renderEmailForm = () => (
         <form onSubmit={handleEmailAuth} className="space-y-4">
             {!isLoginView && (
-                <div>
-                    <label className="form-label">{t.nameLabel}</label>
-                    <input type="text" value={name} onChange={e => setName(e.target.value)} className="form-input" required />
-                </div>
+                <>
+                    <div>
+                        <label className="form-label">{t.nameLabel}</label>
+                        <input type="text" value={name} onChange={e => setName(e.target.value)} className="form-input" required />
+                    </div>
+                    <div>
+                        <label className="form-label">{t.gradeLabel}</label>
+                        <select 
+                            value={selectedGrade} 
+                            onChange={e => setSelectedGrade(e.target.value)} 
+                            className="form-input" 
+                            required
+                        >
+                            <option value="">{t.selectGrade}</option>
+                            <option value="kindergarten">Mầm non (3-5 tuổi)</option>
+                            <option value="primary">Tiểu học (6-10 tuổi)</option>
+                            <option value="secondary">Trung học Cơ sở (11-15 tuổi)</option>
+                            <option value="highschool">Trung học Phổ thông (16-18 tuổi)</option>
+                        </select>
+                    </div>
+                </>
             )}
             <div>
                 <label className="form-label">{t.emailLabel}</label>
@@ -601,10 +625,27 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
             {!isOtpSent ? (
                 <form onSubmit={handleSendOtp} className="space-y-4">
                     {!isLoginView && (
-                        <div>
-                            <label className="form-label">{t.nameLabel}</label>
-                            <input type="text" value={name} onChange={e => setName(e.target.value)} className="form-input" required />
-                        </div>
+                        <>
+                            <div>
+                                <label className="form-label">{t.nameLabel}</label>
+                                <input type="text" value={name} onChange={e => setName(e.target.value)} className="form-input" required />
+                            </div>
+                            <div>
+                                <label className="form-label">{t.gradeLabel}</label>
+                                <select 
+                                    value={selectedGrade} 
+                                    onChange={e => setSelectedGrade(e.target.value)} 
+                                    className="form-input" 
+                                    required
+                                >
+                                    <option value="">{t.selectGrade}</option>
+                                    <option value="kindergarten">Mầm non (3-5 tuổi)</option>
+                                    <option value="primary">Tiểu học (6-10 tuổi)</option>
+                                    <option value="secondary">Trung học Cơ sở (11-15 tuổi)</option>
+                                    <option value="highschool">Trung học Phổ thông (16-18 tuổi)</option>
+                                </select>
+                            </div>
+                        </>
                     )}
                     <div>
                         <label className="form-label">{t.phoneLabel}</label>
