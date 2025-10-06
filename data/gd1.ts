@@ -17,100 +17,118 @@ export const goaldigger1Data: CurriculumLevel = {
                     id: 10101,
                     title: { en: 'Familiar Objects & Colors', vi: 'Đồ vật quen thuộc & Màu sắc' },
                     aims: {
-                        en: ['Speak about familiar objects and colors.', 'Listen and identify colors and objects.', 'Read and recognize words about objects and colors.', 'Write simple words to describe objects and colors.'],
-                        vi: ['Nói về các đồ vật quen thuộc và màu sắc.', 'Nghe và nhận diện màu sắc, đồ vật.', 'Đọc và nhận biết các từ về đồ vật, màu sắc.', 'Viết các từ đơn giản mô tả đồ vật, màu sắc.']
+                        en: ['Explore familiar objects and colors through play.', 'Develop sensory awareness and basic communication.', 'Build confidence through interactive activities.'],
+                        vi: ['Khám phá đồ vật quen thuộc và màu sắc qua trò chơi.', 'Phát triển nhận thức giác quan và giao tiếp cơ bản.', 'Xây dựng sự tự tin qua các hoạt động tương tác.']
                     },
                     vocabulary: [
                         { term: 'red', pronunciation: '/rɛd/', vietnamese: 'màu đỏ', imageUrl: `${GD_BASE}red.png` },
                         { term: 'yellow', pronunciation: '/ˈjɛloʊ/', vietnamese: 'màu vàng', imageUrl: `${GD_BASE}yellow.png` },
-                        { term: 'orange', pronunciation: '/ˈɔrɪndʒ/', vietnamese: 'màu cam', imageUrl: `${GD_BASE}orange.png` },
-                        { term: 'green', pronunciation: '/ɡrin/', vietnamese: 'màu xanh lá', imageUrl: `${GD_BASE}green.png` },
                         { term: 'blue', pronunciation: '/blu/', vietnamese: 'màu xanh dương', imageUrl: `${GD_BASE}blue.png` },
                         { term: 'apple', pronunciation: '/ˈæpəl/', vietnamese: 'quả táo', imageUrl: `${GD_BASE}apple.png` },
-                        { term: 'flower', pronunciation: '/ˈflaʊər/', vietnamese: 'bông hoa', imageUrl: `${GD_BASE}flower.png` },
-                        { term: 'sun', pronunciation: '/sʌn/', vietnamese: 'mặt trời', imageUrl: `${GD_BASE}sun.png` },
-                        { term: 'bear', pronunciation: '/bɛər/', vietnamese: 'con gấu', imageUrl: `${GD_BASE}bear.png` },
-                        { term: 'fish', pronunciation: '/fɪʃ/', vietnamese: 'con cá', imageUrl: `${GD_BASE}fish.png` },
                         { term: 'ball', pronunciation: '/bɔːl/', vietnamese: 'quả bóng' },
-                        { term: 'car', pronunciation: '/kɑːr/', vietnamese: 'xe ô tô' },
-                        { term: 'tree', pronunciation: '/triː/', vietnamese: 'cái cây' },
-                        { term: 'book', pronunciation: '/bʊk/', vietnamese: 'quyển sách' },
-                        { term: 'chair', pronunciation: '/tʃɛər/', vietnamese: 'cái ghế' },
+                        { term: 'sun', pronunciation: '/sʌn/', vietnamese: 'mặt trời', imageUrl: `${GD_BASE}sun.png` },
                     ],
                     grammar: [{
-                        title: { en: 'Simple Sentences with "This is..."', vi: 'Câu đơn giản với "This is..."' },
-                        explanation: { en: ['Use "This is..." to introduce a singular object.', 'Example: This is a red apple.'], vi: ['Sử dụng "This is..." để giới thiệu một vật thể số ít.', 'Ví dụ: Đây là một quả táo màu đỏ.'] }
+                        title: { en: 'Natural Communication', vi: 'Giao tiếp tự nhiên' },
+                        explanation: {
+                            en: ['Focus on natural expression through play and interaction.', 'No formal grammar rules - emphasize communication through gestures, sounds, and simple words.'],
+                            vi: ['Tập trung vào biểu đạt tự nhiên qua trò chơi và tương tác.', 'Không có quy tắc ngữ pháp chính thức - nhấn mạnh giao tiếp qua cử chỉ, âm thanh và từ đơn giản.']
+                        }
                     }],
                     activities: [{
-                        type: 'Practice',
-                        description: { en: ['Match colors to the correct objects (Worksheet 9).', 'Color fruits and objects (Worksheet 10).'], vi: ['Nối màu với các đồ vật đúng (Bài tập 9).', 'Tô màu trái cây và đồ vật (Bài tập 10).'] }
+                        type: 'Interactive Play',
+                        description: {
+                            en: ['Color recognition games with real objects.', 'Sensory play with colored balls and toys.', 'Parent-child color matching activities at home.', 'Group circle time with color songs and movements.'],
+                            vi: ['Trò chơi nhận biết màu sắc với đồ vật thật.', 'Trò chơi giác quan với bóng và đồ chơi màu.', 'Hoạt động phối hợp phụ huynh - con nhận biết màu tại nhà.', 'Thời gian vòng tròn nhóm với bài hát màu sắc và cử chỉ.']
+                        }
+                    },
+                    {
+                        type: 'Parent Involvement',
+                        description: {
+                            en: ['Daily color exploration at home with household items.', 'Photo sharing of child\'s favorite colored objects.', 'Simple color vocabulary practice during meals and playtime.'],
+                            vi: ['Khám phá màu sắc hàng ngày tại nhà với đồ vật gia đình.', 'Chia sẻ ảnh đồ vật màu yêu thích của con.', 'Thực hành từ vựng màu sắc đơn giản trong bữa ăn và giờ chơi.']
+                        }
                     }]
                 },
                 {
                     id: 10102,
                     title: { en: 'Counting & Animals', vi: 'Đếm số & Động vật' },
                     aims: {
-                        en: ['Count numbers from 1 to 5.', 'Recognize and name common animals.', 'Answer simple questions about numbers and animals.'],
-                        vi: ['Đếm các số từ 1 đến 5.', 'Nhận biết và gọi tên các loài động vật phổ biến.', 'Trả lời các câu hỏi đơn giản về số và động vật.']
+                        en: ['Experience numbers through movement and play.', 'Connect with animals through stories and songs.', 'Develop basic counting skills through fun activities.'],
+                        vi: ['Trải nghiệm số qua cử động và trò chơi.', 'Kết nối với động vật qua câu chuyện và bài hát.', 'Phát triển kỹ năng đếm cơ bản qua hoạt động vui vẻ.']
                     },
                     vocabulary: [
                         { term: 'one', pronunciation: '/wʌn/', vietnamese: 'một', imageUrl: `${GD_BASE}one.png` },
                         { term: 'two', pronunciation: '/tu/', vietnamese: 'hai', imageUrl: `${GD_BASE}two.png` },
                         { term: 'three', pronunciation: '/θri/', vietnamese: 'ba', imageUrl: `${GD_BASE}three.png` },
-                        { term: 'four', pronunciation: '/fɔr/', vietnamese: 'bốn', imageUrl: `${GD_BASE}four.png` },
-                        { term: 'five', pronunciation: '/faɪv/', vietnamese: 'năm', imageUrl: `${GD_BASE}five.png` },
-                        { term: 'lion', pronunciation: '/ˈlaɪən/', vietnamese: 'sư tử', imageUrl: `${GD_BASE}lion.png` },
-                        { term: 'rabbit', pronunciation: '/ˈræbɪt/', vietnamese: 'con thỏ', imageUrl: `${GD_BASE}rabbit.png` },
-                        { term: 'horse', pronunciation: '/hɔrs/', vietnamese: 'con ngựa', imageUrl: `${GD_BASE}horse.png` },
-                        { term: 'elephant', pronunciation: '/ˈɛləfənt/', vietnamese: 'con voi', imageUrl: `${GD_BASE}elephant.png` },
                         { term: 'cat', pronunciation: '/kæt/', vietnamese: 'con mèo', imageUrl: `${GD_BASE}cat.png` },
                         { term: 'dog', pronunciation: '/dɔɡ/', vietnamese: 'con chó', imageUrl: `${GD_BASE}dog.png` },
-                        { term: 'monkey', pronunciation: '/ˈmʌŋki/', vietnamese: 'con khỉ' },
-                        { term: 'duck', pronunciation: '/dʌk/', vietnamese: 'con vịt' },
-                        { term: 'pig', pronunciation: '/pɪɡ/', vietnamese: 'con lợn' },
-                        { term: 'bird', pronunciation: '/bɜːrd/', vietnamese: 'con chim' },
-                        { term: 'sheep', pronunciation: '/ʃiːp/', vietnamese: 'con cừu' },
+                        { term: 'bird', pronunciation: '/bɜːrd/', vietnamese: 'con chim', imageUrl: `${GD_BASE}bird.png` },
                     ],
                     grammar: [{
-                        title: { en: 'Simple Sentences with "There are..."', vi: 'Câu đơn giản với "There are..."' },
-                        explanation: { en: ['Use "There are..." to talk about more than one object.', 'Example: There are two flowers.'], vi: ['Sử dụng "There are..." để nói về nhiều hơn một vật thể.', 'Ví dụ: Có hai bông hoa.'] }
+                        title: { en: 'Natural Communication', vi: 'Giao tiếp tự nhiên' },
+                        explanation: {
+                            en: ['Focus on natural expression through play and interaction.', 'No formal grammar rules - emphasize communication through gestures, sounds, and simple words.'],
+                            vi: ['Tập trung vào biểu đạt tự nhiên qua trò chơi và tương tác.', 'Không có quy tắc ngữ pháp chính thức - nhấn mạnh giao tiếp qua cử chỉ, âm thanh và từ đơn giản.']
+                        }
                     }],
                     activities: [{
-                        type: 'Practice',
-                        description: { en: ['Match numbers to the correct number of pictures (Worksheet 3).', 'Color the correct number of apples (Worksheet 4).', 'Match animals to their shadows (Worksheet 5).'], vi: ['Nối số với số lượng hình ảnh chính xác (Bài tập 3).', 'Tô màu đúng số lượng táo (Bài tập 4).', 'Nối động vật với bóng của chúng (Bài tập 5).'] }
+                        type: 'Movement Games',
+                        description: {
+                            en: ['Counting jumps and hops with animal movements.', 'Animal charades and imitation games.', 'Number songs with body movements.', 'Counting toys during playtime.'],
+                            vi: ['Đếm nhảy và nhún với cử động động vật.', 'Trò chơi bắt chước và diễn tả động vật.', 'Bài hát số với cử động cơ thể.', 'Đếm đồ chơi trong giờ chơi.']
+                        }
+                    },
+                    {
+                        type: 'Story Time',
+                        description: {
+                            en: ['Animal finger puppets and storytelling.', 'Parent-child animal sound games.', 'Picture book sharing about familiar animals.', 'Animal movement dances and songs.'],
+                            vi: ['Con rối ngón tay động vật và kể chuyện.', 'Trò chơi âm thanh động vật với phụ huynh.', 'Chia sẻ sách hình về động vật quen thuộc.', 'Điệu nhảy và bài hát cử động động vật.']
+                        }
                     }]
                 },
                 {
                     id: 10103,
                     title: { en: 'Emotions & Daily Activities', vi: 'Cảm xúc & Hoạt động hàng ngày' },
                     aims: {
-                        en: ['Describe simple emotions.', 'Describe daily activities like eating, sleeping, and playing.'],
-                        vi: ['Mô tả các cảm xúc đơn giản.', 'Mô tả các hoạt động hàng ngày như ăn, ngủ, và chơi.']
+                        en: ['Express feelings through play and art.', 'Connect daily routines with familiar activities.', 'Build emotional awareness through interactive experiences.'],
+                        vi: ['Biểu đạt cảm xúc qua trò chơi và nghệ thuật.', 'Kết nối thói quen hàng ngày với hoạt động quen thuộc.', 'Xây dựng nhận thức cảm xúc qua trải nghiệm tương tác.']
                     },
                     vocabulary: [
                         { term: 'happy', pronunciation: '/ˈhæpi/', vietnamese: 'vui vẻ', imageUrl: `${GD_BASE}happy.png` },
-                        { term: 'great', pronunciation: '/ɡreɪt/', vietnamese: 'tuyệt vời', imageUrl: `${GD_BASE}great.png` },
                         { term: 'sleepy', pronunciation: '/ˈslipi/', vietnamese: 'buồn ngủ', imageUrl: `${GD_BASE}sleepy.png` },
                         { term: 'hungry', pronunciation: '/ˈhʌŋɡri/', vietnamese: 'đói bụng', imageUrl: `${GD_BASE}hungry.png` },
-                        { term: 'thirsty', pronunciation: '/ˈθɜrsti/', vietnamese: 'khát nước', imageUrl: `${GD_BASE}thirsty.png` },
-                        { term: 'tired', pronunciation: '/ˈtaɪərd/', vietnamese: 'mệt mỏi', imageUrl: `${GD_BASE}tired.png` },
                         { term: 'eat', pronunciation: '/it/', vietnamese: 'ăn', imageUrl: `${GD_BASE}eat.png` },
                         { term: 'drink', pronunciation: '/drɪŋk/', vietnamese: 'uống', imageUrl: `${GD_BASE}drink.png` },
-                        { term: 'sleep', pronunciation: '/slip/', vietnamese: 'ngủ', imageUrl: `${GD_BASE}sleep.png` },
                         { term: 'play', pronunciation: '/pleɪ/', vietnamese: 'chơi', imageUrl: `${GD_BASE}play.png` },
-                        { term: 'sad', pronunciation: '/sæd/', vietnamese: 'buồn' },
-                        { term: 'angry', pronunciation: '/ˈæŋɡri/', vietnamese: 'tức giận' },
-                        { term: 'surprised', pronunciation: '/sərˈpraɪzd/', vietnamese: 'ngạc nhiên' },
-                        { term: 'scared', pronunciation: '/skɛərd/', vietnamese: 'sợ hãi' },
-                        { term: 'read', pronunciation: '/riːd/', vietnamese: 'đọc' },
                     ],
                     grammar: [{
-                        title: { en: 'Asking "How are you?"', vi: 'Hỏi "Bạn khỏe không?"' },
-                        explanation: { en: ['Use "How are you?" to ask about someone\'s feeling.', 'You can answer with "I am happy." or "I am hungry."'], vi: ['Sử dụng "How are you?" để hỏi về cảm giác của ai đó.', 'Bạn có thể trả lời bằng "Tôi vui." hoặc "Tôi đói."'] }
+                        title: { en: 'Natural Communication', vi: 'Giao tiếp tự nhiên' },
+                        explanation: {
+                            en: ['Focus on natural expression through play and interaction.', 'No formal grammar rules - emphasize communication through gestures, sounds, and simple words.'],
+                            vi: ['Tập trung vào biểu đạt tự nhiên qua trò chơi và tương tác.', 'Không có quy tắc ngữ pháp chính thức - nhấn mạnh giao tiếp qua cử chỉ, âm thanh và từ đơn giản.']
+                        }
                     }],
                     activities: [{
-                        type: 'Practice',
-                        description: { en: ['Identify your feelings from pictures (Worksheet 1, 2).', 'Match activities to their shadows (Worksheet 14).'], vi: ['Xác định cảm xúc của bạn từ hình ảnh (Bài tập 1, 2).', 'Nối các hoạt động với bóng của chúng (Bài tập 14).'] }
+                        type: 'Emotional Expression',
+                        description: {
+                            en: ['Emotion faces drawing and role-play.', 'Feeling check-in circle time.', 'Emotion charades with family members.', 'Comfort object sharing and stories.'],
+                            vi: ['Vẽ khuôn mặt cảm xúc và đóng vai.', 'Thời gian vòng tròn kiểm tra cảm xúc.', 'Trò diễn tả cảm xúc với thành viên gia đình.', 'Chia sẻ đồ vật an ủi và câu chuyện.']
+                        }
+                    },
+                    {
+                        type: 'Daily Routine Play',
+                        description: {
+                            en: ['Doll house daily routine role-play.', 'Personal care routine songs and movements.', 'Meal time preparation games.', 'Bedtime routine stories and puppets.'],
+                            vi: ['Đóng vai thói quen hàng ngày với nhà búp bê.', 'Bài hát và cử động thói quen chăm sóc cá nhân.', 'Trò chơi chuẩn bị bữa ăn.', 'Câu chuyện và con rối thói quen đi ngủ.']
+                        }
+                    },
+                    {
+                        type: 'Parent Partnership',
+                        description: {
+                            en: ['Home emotion journal with photos.', 'Daily routine charts with child participation.', 'Family feeling sharing during dinner.', 'Comfort item rituals for transitions.'],
+                            vi: ['Nhật ký cảm xúc tại nhà với ảnh.', 'Biểu đồ thói quen hàng ngày với sự tham gia của con.', 'Chia sẻ cảm xúc gia đình trong bữa tối.', 'Nghi thức đồ vật an ủi cho các chuyển tiếp.']
+                        }
                     }]
                 }
             ]
