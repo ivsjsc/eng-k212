@@ -47,15 +47,16 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse,
 
     const gradeMap: Record<string, string[]> = {
       'kindergarten': ['Kindergarten', 'Mầm non'],
-      'primary': ['Primary', 'Tiểu học', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5'],
-      'secondary': ['Secondary', 'THCS', 'Grade 6', 'Grade 7', 'Grade 8', 'Grade 9'],
-      'high-school': ['High School', 'THPT', 'Grade 10', 'Grade 11', 'Grade 12'],
+      'primary': ['Primary', 'Tiểu học'],
+      'secondary': ['Secondary', 'Trung học IVS', 'THCS'],
+      'high-school': ['Highschool', 'High School', 'Trung học phổ thông', 'THPT'],
     };
 
     const keywords = gradeMap[normalized] || [];
-    return data.filter(cat => 
-      keywords.some(kw => cat.category.en.includes(kw) || cat.category.vi.includes(kw))
-    );
+    return data.filter(cat => {
+      const categoryText = `${cat.category.en} ${cat.category.vi}`.toLowerCase();
+      return keywords.some(kw => categoryText.includes(kw.toLowerCase()));
+    });
   };
 
   const filteredData = getFilteredCurriculum();

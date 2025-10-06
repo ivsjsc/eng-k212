@@ -14,4 +14,9 @@ const generatePagePaths = (prefix: string, count: number): string[] => {
 export const ebookData: { [key: number]: string[] } = {
     6: generatePagePaths('sw6', 134), // The user provided many pages, let's use a placeholder.
     7: generatePagePaths('sw7', 134), // The user provided many pages, let's use a placeholder.
+    8: generatePagePaths('sw8', 134), // i-Learn Smart World 8 ebook pages
+    9: generatePagePaths('sw9', 134), // i-Learn Smart World 9 ebook pages
+    10: generatePagePaths('g10', 134), // Global Success 10 ebook pages
+    11: generatePagePaths('g11', 134), // Global Success 11 ebook pages
+    12: generatePagePaths('g12', 134), // Global Success 12 ebook pages
 };
