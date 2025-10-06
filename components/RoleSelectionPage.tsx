@@ -71,7 +71,9 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
     icon: string;
     color: string;
     buttonColor: string;
-  }> = ({ role, title, description, icon, color, buttonColor }) => {
+    // optional custom actions (used for teacher card to match screenshot)
+    actions?: React.ReactNode;
+  }> = ({ role, title, description, icon, color, buttonColor, actions }) => {
     const shade = buttonColor.replace(/^bg-/, '');
     return (
       <div
@@ -89,19 +91,27 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
           <p className="text-base text-slate-300 mb-6">{description}</p>
         </div>
         <div className="space-y-3">
-          <button
-            onClick={() => onGuestLogin(role)}
-            className="btn bg-slate-700/80 text-slate-100 hover:bg-slate-700 w-full py-3 sm:py-2"
-          >
-            {t.guest}
-          </button>
-          <button
-            onClick={() => onSelectRole(role)}
-            className={`btn ${buttonColor} text-white w-full py-3 sm:py-2`}
-            style={{ boxShadow: '0 8px 24px rgba(2,6,23,0.35)' }}
-          >
-            {t.login}
-          </button>
+          {actions ? (
+            // render custom actions when provided (teacher card)
+            actions
+          ) : (
+            // default actions for student and other roles
+            <>
+              <button
+                onClick={() => onGuestLogin(role)}
+                className="btn bg-slate-700/80 text-slate-100 hover:bg-slate-700 w-full py-3 sm:py-2"
+              >
+                {t.guest}
+              </button>
+              <button
+                onClick={() => onSelectRole(role)}
+                className={`btn ${buttonColor} text-white w-full py-3 sm:py-2`}
+                style={{ boxShadow: '0 8px 24px rgba(2,6,23,0.35)' }}
+              >
+                {t.login}
+              </button>
+            </>
+          )}
         </div>
       </div>
     );
@@ -170,6 +180,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         <p className="text-lg text-white/90 mb-12">{t.subtitle}</p>
 
         <div className="flex flex-col lg:flex-row gap-8 justify-center items-stretch">
+          {/* Student card (left) */}
           <RoleCard
             role="student"
             title={t.student}
@@ -178,6 +189,8 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             color="border-blue-500"
             buttonColor="bg-blue-500"
           />
+
+          {/* Teacher card (right) - with stacked actions to match screenshot */}
           <RoleCard
             role="teacher"
             title={t.teacher}
@@ -185,14 +198,39 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             icon="fa-person-chalkboard"
             color="border-green-500"
             buttonColor="bg-green-500"
-          />
-          <RoleCard
-            role="foreigner-teacher"
-            title={t.foreignerTeacher}
-            description={t.foreignerTeacherDesc}
-            icon="fa-earth-americas"
-            color="border-purple-500"
-            buttonColor="bg-purple-500"
+            actions={(
+              <>
+                <button
+                  onClick={() => window.open('/trial', '_blank')}
+                  className="w-full py-2 rounded-md bg-slate-800/80 text-slate-100 hover:bg-slate-800 transition"
+                >
+                  Click here for Trial
+                </button>
+
+                <button
+                  onClick={() => onSelectRole('teacher')}
+                  className="w-full py-2 rounded-md bg-purple-600 text-white hover:brightness-105 transition"
+                >
+                  Sign in / Sign up
+                </button>
+
+                <button
+                  onClick={() => onGuestLogin('teacher')}
+                  className="w-full py-2 rounded-md bg-slate-700/80 text-slate-100 hover:bg-slate-700 transition"
+                >
+                  {t.guest}
+                </button>
+
+                <button
+                  onClick={() => onSelectRole('teacher')}
+                  className="w-full py-2 rounded-md bg-emerald-500 text-white hover:brightness-105 transition"
+                >
+                  Đăng nhập / Đăng ký
+                </button>
+
+                <div className="mt-2 text-sm text-slate-300">Vietnamese Teacher</div>
+              </>
+            )}
           />
         </div>
         
