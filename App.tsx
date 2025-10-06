@@ -514,7 +514,7 @@ function App() {
     setCurrentView('home');
   };
 
-  const handleGuestLogin = (role: 'student' | 'teacher') => {
+  const handleGuestLogin = (role: 'student' | 'teacher' | 'foreigner-teacher') => {
     if (role === 'student') {
       const guestStudent: User = {
         ...MOCK_USER,
@@ -525,6 +525,17 @@ function App() {
         gradeLevel: 'primary',
       };
       setUser(guestStudent);
+    } else if (role === 'foreigner-teacher') {
+      const guestForeignerTeacher: User = {
+        ...MOCK_USER,
+        id: 'guest-foreigner-teacher-01',
+        name: language === 'vi' ? 'Giáo viên Nước ngoài Khách' : 'Guest Foreign Teacher',
+        role: 'foreigner-teacher',
+      };
+      setUser(guestForeignerTeacher);
+      setClasses(MOCK_CLASSES);
+      // Set default language to English for foreigner teacher
+      setLanguage('en');
     } else {
       const guestTeacher: User = {
         ...MOCK_USER,

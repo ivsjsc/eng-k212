@@ -259,6 +259,15 @@ const UserGuide: React.FC<UserGuideProps> = ({ language }) => {
                 <p>{content.teacher_import_p3}</p>
             </GuideSection>
 
+            <GuideSection title={isVietnamese ? 'Dành cho Giáo viên Nước ngoài' : 'For Foreign Teachers'}>
+                <p>{isVietnamese 
+                    ? 'Giáo viên nước ngoài có thể sử dụng ứng dụng với giao diện ngôn ngữ mặc định là tiếng Anh. Bạn có thể chuyển sang tiếng Việt bất cứ lúc nào trong phần cài đặt.'
+                    : 'Foreign teachers can use the application with English as the default language interface. You can switch to Vietnamese anytime in the settings.'}</p>
+                <p>{isVietnamese
+                    ? 'Tất cả các tính năng dành cho giáo viên đều khả dụng, bao gồm quản lý lớp học, theo dõi tiến độ học sinh và sử dụng công cụ AI.'
+                    : 'All teacher features are available, including class management, student progress tracking, and AI tools usage.'}</p>
+            </GuideSection>
+
             <GuideSection title={content.student_title}>
                 <p dangerouslySetInnerHTML={{ __html: content.student_p1 }}></p>
             </GuideSection>

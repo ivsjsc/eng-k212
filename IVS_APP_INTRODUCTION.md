@@ -1,8 +1,8 @@
-# IVS English Learning App - Hệ thống Học Tiếng Anh K-12
+# Eng Learners by IVS - Hệ thống Học Tiếng Anh K-12
 
 ## 🎓 Tổng quan
 
-**IVS English Learning App** là nền tảng học tiếng Anh toàn diện dành cho học sinh từ mầm non đến trung học phổ thông (từ 3 tuổi đến 18 tuổi). Ứng dụng được thiết kế với phương pháp giảng dạy hiện đại, tích hợp trí tuệ nhân tạo và trải nghiệm học tập cá nhân hóa.
+**Eng Learners by IVS** là nền tảng học tiếng Anh toàn diện dành cho học sinh từ mầm non đến trung học phổ thông (từ 3 tuổi đến 18 tuổi). Ứng dụng được thiết kế với phương pháp giảng dạy hiện đại, tích hợp trí tuệ nhân tạo và trải nghiệm học tập cá nhân hóa.
 
 **🌐 Website:** [https://english-c0f9d.web.app](https://english-c0f9d.web.app)  
 **📱 Nền tảng:** Web Application  
@@ -290,7 +290,7 @@ Chương trình chuyên sâu cho học sinh THPT chuẩn bị cho tương lai.
 
 ## 🎉 Kết luận
 
-**IVS English Learning App** không chỉ là một ứng dụng học tiếng Anh, mà là một hệ sinh thái giáo dục toàn diện, kết hợp công nghệ tiên tiến với phương pháp giảng dạy truyền thống để tạo ra trải nghiệm học tập tốt nhất cho học sinh Việt Nam.
+**Eng Learners by IVS** không chỉ là một ứng dụng học tiếng Anh, mà là một hệ sinh thái giáo dục toàn diện, kết hợp công nghệ tiên tiến với phương pháp giảng dạy truyền thống để tạo ra trải nghiệm học tập tốt nhất cho học sinh Việt Nam.
 
 Chúng tôi cam kết không ngừng đổi mới và phát triển để mang đến giá trị giáo dục cao nhất cho cộng đồng.
 
