@@ -4,6 +4,11 @@ const { g12Data } = require('../data/g12.ts');
 const fs = require('fs');
 const path = require('path');
 
+// Temporary lightweight type used by the script so the TypeScript checker
+// doesn't fail during project builds. The exact shape isn't required for
+// this conversion script; treating it as `any` is acceptable here.
+type CurriculumLevel = any;
+
 function convertToMarkdown(data: CurriculumLevel): string {
     let markdown = `# ${data.title.en} - ${data.subtitle.en}\n`;
     markdown += `## ${data.title.vi} - ${data.subtitle.vi}\n\n`;

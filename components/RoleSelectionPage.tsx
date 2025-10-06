@@ -16,8 +16,8 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
 }) => {
   const t = {
     en: {
-      welcome: 'Welcome to IVS English',
-      subtitle: 'The English learning platform for Vietnamese people',
+      welcome: 'Welcome to ENGLISH LEARNERS by IVS',
+      subtitle: 'The English learning platform for international users',
       student: 'I am a Student',
       studentDesc:
         'Start your English learning journey with a personalized and AI-powered curriculum.',
@@ -29,12 +29,12 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         'Teach English with native language support and international teaching methods.',
       guest: 'Try with a guest account',
       login: 'Login / Sign Up',
-      aboutApp: 'About IVS English',
+      aboutApp: 'About ENGLISH LEARNERS by IVS',
       toggle: 'vn Tiếng Việt'
     },
     vi: {
-      welcome: 'Chào mừng đến IVS English',
-      subtitle: 'Nền tảng học tiếng Anh dành cho Người Việt',
+      welcome: 'Chào mừng đến ENGLISH LEARNERS by IVS',
+      subtitle: 'Nền tảng học tiếng Anh dành cho học sinh Việt Nam',
       student: 'Tôi là Học sinh',
       studentDesc:
         'Bắt đầu hành trình học tiếng Anh với lộ trình cá nhân hóa và AI.',
@@ -46,7 +46,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         'Dạy tiếng Anh với hỗ trợ ngôn ngữ bản địa và phương pháp giảng dạy quốc tế.',
       guest: 'Dùng thử với vai trò khách',
       login: 'Đăng nhập / Đăng ký',
-      aboutApp: 'Giới thiệu về ứng dụng',
+      aboutApp: 'Giới thiệu về ENGLISH LEARNERS by IVS',
       toggle: 'us English'
     }
   }[language];
@@ -54,6 +54,12 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const langRef = useRef<HTMLDivElement | null>(null);
   const innerRef = useRef<HTMLDivElement | null>(null);
+
+  // Ensure landing page defaults to Vietnamese (per requirement)
+  useEffect(() => {
+    if (language !== 'vi') setLanguage('vi');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     function handleDocClick(e: MouseEvent) {
@@ -99,13 +105,22 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             // default actions for student and other roles
             <>
               <button
-                onClick={() => onGuestLogin(role)}
+                onClick={() => {
+                  // ensure language default per role when trying as guest
+                  if (role === 'foreigner-teacher') setLanguage('en');
+                  else setLanguage('vi');
+                  onGuestLogin(role);
+                }}
                 className="btn bg-slate-700/80 text-slate-100 hover:bg-slate-700 w-full py-3 sm:py-2"
               >
                 {t.guest}
               </button>
               <button
-                onClick={() => onSelectRole(role)}
+                onClick={() => {
+                  if (role === 'foreigner-teacher') setLanguage('en');
+                  else setLanguage('vi');
+                  onSelectRole(role);
+                }}
                 className={`btn ${buttonColor} text-white w-full py-3 sm:py-2`}
                 style={{ boxShadow: '0 8px 24px rgba(2,6,23,0.35)' }}
               >
@@ -142,11 +157,11 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             onClick={() => setLangMenuOpen(v => !v)}
             aria-haspopup="true"
             aria-expanded={langMenuOpen}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black/40 text-white/90 shadow backdrop-blur-sm hover:bg-black/60 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black/60 text-white font-semibold shadow-lg backdrop-blur-sm hover:bg-black/70 transition-colors"
             title="Language"
           >
             <i className="fa-solid fa-globe text-lg" />
-            <span className="text-sm font-medium">{language === 'en' ? 'EN' : 'VI'}</span>
+            <span className="text-sm font-medium">{language === 'en' ? 'ENGLISH' : 'TIẾNG VIỆT'}</span>
           </button>
 
           {langMenuOpen && (
@@ -196,6 +211,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             icon="fa-graduation-cap"
             color="border-blue-500"
             buttonColor="bg-blue-500"
+            actions={null}
           />
 
           {/* Teacher card (right) - with stacked actions to match screenshot */}
@@ -209,24 +225,28 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             actions={(
               <>
                 <button
-                  onClick={() => window.open('/trial', '_blank')}
+                  onClick={() => {
+                    // trial action: treat as guest trial for foreigner teachers and set English UI
+                    setLanguage('en');
+                    onGuestLogin('foreigner-teacher');
+                  }}
                   className="w-full py-2 rounded-md bg-slate-800/80 text-slate-100 hover:bg-slate-800 transition"
                 >
-                  Click here for Trial
+                  Try with a guest account (Foreigner Teacher)
                 </button>
 
                 <button
-                  onClick={() => onSelectRole('teacher')}
+                  onClick={() => { setLanguage('vi'); onSelectRole('teacher'); }}
                   className="w-full py-2 rounded-md bg-purple-600 text-white hover:brightness-105 transition"
                 >
                   Sign in / Sign up
                 </button>
 
                 <button
-                  onClick={() => onGuestLogin('teacher')}
+                  onClick={() => onGuestLogin('foreigner-teacher')}
                   className="w-full py-2 rounded-md bg-slate-700/80 text-slate-100 hover:bg-slate-700 transition"
                 >
-                  {t.guest}
+                  {t.guest} (for Foreigner Teachers)
                 </button>
 
                 <button

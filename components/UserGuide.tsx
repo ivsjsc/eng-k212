@@ -19,10 +19,10 @@ const UserGuide: React.FC<UserGuideProps> = ({ language }) => {
 
     const content = {
         title: isVietnamese ? 'Hướng dẫn sử dụng' : 'User Guide',
-        intro_title: isVietnamese ? 'Chào mừng đến với IVS English!' : 'Welcome to IVS English!',
+        intro_title: isVietnamese ? 'Chào mừng đến với ENGLISH LEARNERS by IVS!' : 'Welcome to ENGLISH LEARNERS by IVS!',
         intro_p1: isVietnamese
-            ? 'Ứng dụng này là một nền tảng học tiếng Anh tích hợp dành cho học sinh K-12, bao gồm sách điện tử tương tác, công cụ luyện tập AI, gamification và các tính năng quản lý toàn diện cho giáo viên.'
-            : 'This application is an integrated English learning platform for K-12 students, featuring interactive ebooks, AI-powered practice tools, gamification, and comprehensive teacher management features.',
+            ? 'Ứng dụng này là ENGLISH LEARNERS by IVS, nền tảng học tiếng Anh tích hợp dành cho học sinh K-12, bao gồm sách điện tử tương tác, công cụ luyện tập AI, gamification và các tính năng quản lý toàn diện cho giáo viên.'
+            : 'This application is ENGLISH LEARNERS by IVS, an integrated English learning platform for K-12 students, featuring interactive ebooks, AI-powered practice tools, gamification, and comprehensive teacher management features.',
         
         getting_started_title: isVietnamese ? 'Bắt đầu' : 'Getting Started',
         getting_started_role: isVietnamese
@@ -34,15 +34,15 @@ const UserGuide: React.FC<UserGuideProps> = ({ language }) => {
 
         install_title: isVietnamese ? 'Cài đặt Ứng dụng (Truy cập Nhanh)' : 'Installing the App (Quick Access)',
         install_intro: isVietnamese
-            ? 'Để truy cập nhanh hơn và có trải nghiệm giống như một ứng dụng gốc, bạn có thể cài đặt IVS English trực tiếp lên màn hình chính hoặc máy tính của bạn.'
-            : 'For faster access and a native app-like experience, you can install IVS English directly onto your home screen or desktop.',
+            ? 'Để truy cập nhanh hơn và có trải nghiệm giống như một ứng dụng gốc, bạn có thể cài đặt ENGLISH LEARNERS by IVS trực tiếp lên màn hình chính hoặc máy tính của bạn.'
+            : 'For faster access and a native app-like experience, you can install ENGLISH LEARNERS by IVS directly onto your home screen or desktop.',
         install_windows_title: isVietnamese ? 'Trên Windows (Sử dụng Chrome)' : 'On Windows (Using Chrome)',
         install_windows_step1: isVietnamese
             ? `Nhấp vào biểu tượng ba chấm (<i class="fa-solid fa-ellipsis-vertical mx-1"></i>) ở góc trên bên phải của trình duyệt.`
             : `Click the three-dots icon (<i class="fa-solid fa-ellipsis-vertical mx-1"></i>) in the top-right corner of the browser.`,
         install_windows_step2: isVietnamese
-            ? `Chọn <strong>"Cài đặt IVS English App"</strong> hoặc tìm trong "Lưu và chia sẻ" &rarr; "Cài đặt...".`
-            : `Select <strong>"Install IVS English App"</strong> or look under "Save and share" &rarr; "Install...".`,
+            ? `Chọn <strong>"Cài đặt ENGLISH LEARNERS by IVS"</strong> hoặc tìm trong "Lưu và chia sẻ" &rarr; "Cài đặt...".`
+            : `Select <strong>"Install ENGLISH LEARNERS by IVS"</strong> or look under "Save and share" &rarr; "Install..."`,
         install_windows_step3: isVietnamese
             ? 'Làm theo hướng dẫn để thêm ứng dụng vào màn hình desktop hoặc menu Start của bạn.'
             : 'Follow the prompts to add the app to your desktop or Start Menu.',
