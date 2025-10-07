@@ -269,7 +269,19 @@ const StudentHome: React.FC<StudentHomeProps> = ({ user, onUpdateUser, onSelectC
                       course={course}
                       onSelect={() => onSelectCourse(course)}
                       isPinned={true}
-                      onPinToggle={() => { /* This would be handled in curriculum view */ }}
+                      onPinToggle={() => {
+                        // toggle pin state for this course
+                        const current = user.pinnedCourses || [];
+                        const exists = current.includes(course.id);
+                        const next = exists ? current.filter(c => c !== course.id) : [...current, course.id];
+                        const updatedUser = { ...user, pinnedCourses: next } as User;
+                        try {
+                          if (user.id.startsWith('guest-')) {
+                            localStorage.setItem('ivs-guest-pinned', JSON.stringify(next));
+                          }
+                        } catch (e) {}
+                        onUpdateUser(updatedUser);
+                      }}
                       language={language}
                     />
                   ))}

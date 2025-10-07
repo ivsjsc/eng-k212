@@ -6,10 +6,11 @@ interface CurriculumProps {
   language: 'en' | 'vi';
   user: User;
   onSelectCourse: (course: Course) => void;
+  onUpdateUser?: (u: User) => void;
   setView?: (v: string) => void;
 }
 
-const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse, setView }) => {
+const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse, onUpdateUser, setView }) => {
   const data: Curriculum = curriculumData;
 
   // Debug logs to help trace why curriculum may not appear
@@ -104,6 +105,22 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse,
     }
   };
 
+  const togglePin = (courseId: string) => {
+    const current = user.pinnedCourses || [];
+    const exists = current.includes(courseId);
+    const next = exists ? current.filter(c => c !== courseId) : [...current, courseId];
+    const updatedUser = { ...user, pinnedCourses: next } as User;
+    // Persist for guest users in localStorage, for real users call onUpdateUser if provided
+    try {
+      if (user.id && user.id.startsWith('guest-')) {
+        localStorage.setItem('ivs-guest-pinned', JSON.stringify(next));
+      }
+    } catch (e) {
+      // ignore localStorage errors
+    }
+    if (onUpdateUser) onUpdateUser(updatedUser);
+  };
+
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <h1 className="text-3xl font-bold mb-2 text-white">{language === 'vi' ? 'Chương trình học' : 'Learning Programs'}</h1>
@@ -157,7 +174,7 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse,
           </h2>
           
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {cat.levels.map((level, levelIdx) => {
+              {cat.levels.map((level, levelIdx) => {
               const course = allCourses.find(c => c.rawLevel === level);
               if (!course) return null;
 
@@ -196,9 +213,21 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse,
                       <i className="fa-solid fa-book mr-1"></i>
                       {level.units?.length || 0} {language === 'vi' ? 'bài' : 'units'}
                     </div>
-                    <button className="btn bg-white/20 hover:bg-white/30 text-white py-1 px-3 rounded-lg text-xs font-semibold">
-                      {buttonText}
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); onSelectCourse(course); }}
+                        className="btn bg-white/20 hover:bg-white/30 text-white py-1 px-3 rounded-lg text-xs font-semibold"
+                      >
+                        {buttonText}
+                      </button>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); togglePin(course.id); }}
+                        className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors duration-200 text-white ${user.pinnedCourses?.includes(course.id) ? 'bg-amber-400' : 'bg-white/10 hover:bg-white/20'}`}
+                        title={user.pinnedCourses?.includes(course.id) ? (language === 'vi' ? 'Bỏ ghim' : 'Unpin') : (language === 'vi' ? 'Ghim' : 'Pin')}
+                      >
+                        <i className="fa-solid fa-thumbtack"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
               );

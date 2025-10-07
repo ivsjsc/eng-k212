@@ -521,8 +521,18 @@ function App() {
         id: 'guest-student-01',
         name: language === 'vi' ? 'Học sinh Khách' : 'Guest Student',
         role: 'student',
-        // Friendly default so curriculum filtering shows relevant programs
-        gradeLevel: 'primary',
+        // Do not force a gradeLevel for guest students so they can explore the full curriculum
+        // Load any previously pinned courses for guest users from localStorage
+        pinnedCourses: (() => {
+          try {
+            const raw = localStorage.getItem('ivs-guest-pinned');
+            if (!raw) return undefined;
+            const parsed = JSON.parse(raw);
+            return Array.isArray(parsed) ? parsed as string[] : undefined;
+          } catch (e) {
+            return undefined;
+          }
+        })(),
       };
       setUser(guestStudent);
     } else if (role === 'foreigner-teacher') {
@@ -557,7 +567,7 @@ function App() {
       case 'home':
         return <Home user={user!} onUpdateUser={handleUpdateUser} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes} />;
       case 'curriculum':
-        return <Curriculum language={language} user={user!} onSelectCourse={handleSelectCourse} setView={handleSetView} />;
+        return <Curriculum language={language} user={user!} onSelectCourse={handleSelectCourse} onUpdateUser={handleUpdateUser} setView={handleSetView} />;
       case 'teacher-dashboard':
         return <TeacherDashboard classes={classes} setClasses={handleUpdateClasses} language={language} />;
       case 'teacher-analytics':
