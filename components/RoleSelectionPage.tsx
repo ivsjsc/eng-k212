@@ -16,8 +16,10 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
 }) => {
   const t = {
     en: {
-      welcome: 'Welcome to IVS English',
-      subtitle: 'The English learning platform for Vietnamese people',
+      welcome: 'Welcome to ENGLISH LEARNERS',
+      byline: 'by IVS',
+      subtitle: 'An English learning platform for every learner, harmonizing Vietnamese and international standards in a world shaped by accelerating technology.',
+      slogan: 'From local roots to global routes.' ,
       student: 'I am a Student',
       studentDesc:
         'Start your English learning journey with a personalized and AI-powered curriculum.',
@@ -33,8 +35,10 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
       toggle: 'vn Tiếng Việt'
     },
     vi: {
-      welcome: 'Chào mừng đến với IVS English',
-      subtitle: 'Nền tảng học tiếng Anh dành cho người Việt Nam',
+      welcome: 'Chào mừng đến ENGLISH LEARNERS',
+      byline: 'bởi IVS',
+      subtitle: 'Nền tảng học tiếng Anh dành cho mọi người, kết nối tinh thần Việt và chuẩn mực toàn cầu giữa thời đại công nghệ bùng nổ.',
+      slogan: 'Từ gốc Việt đến đường quốc tế.',
       student: 'Tôi là Học sinh',
       studentDesc:
         'Bắt đầu hành trình học tiếng Anh với lộ trình cá nhân hóa và AI.',
@@ -192,10 +196,11 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             alt="IVS English Logo"
             className="w-24 h-24 mx-auto mb-6 rounded-full shadow-2xl ring-4 ring-white/20"
           />
-          <h1 className="text-5xl lg:text-6xl font-extrabold text-white mb-3 tracking-tight">
-            {t.welcome}
+          <h1 className="text-5xl lg:text-6xl font-extrabold text-white mb-1 tracking-tight">
+            {t.welcome} <span className="text-base align-super font-normal ml-2">{t.byline}</span>
           </h1>
-          <p className="text-xl text-white/90">{t.subtitle}</p>
+          <p className="text-xl text-white/90 mb-2">{t.subtitle}</p>
+          <p className="text-sm text-slate-200 italic mb-6">{language === 'en' ? t.slogan : t.slogan}</p>
         </div>
 
         {/* Two Column Layout */}
@@ -282,7 +287,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         </div>
         
         {/* About App Button */}
-        <div className="mt-12 text-center">
+        <div className="mt-8 text-center">
           <button
             onClick={() => {
               const introUrl = window.location.origin + '/IVS_APP_INTRODUCTION.md';
@@ -293,6 +298,24 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             <i className="fa-solid fa-info-circle text-lg"></i>
             {t.aboutApp}
           </button>
+        </div>
+        
+        {/* Bilingual footer block */}
+        <div className="mt-8 text-sm text-slate-300 max-w-3xl mx-auto leading-relaxed">
+          {language === 'en' ? (
+            <>
+              <div className="text-slate-100 font-medium mb-1">English Version – 2025 Standard</div>
+              <div className="mb-2">Developed by IVS Education &amp; IVS Celestech, under IVS JSC, this platform delivers a Vietnamese-rooted yet globally-aligned English learning experience. Designed for all levels, it integrates AI, adaptive learning, and international standards to meet the demands of a rapidly evolving digital era.</div>
+            </>
+          ) : (
+            <>
+              <div className="text-slate-100 font-medium mb-1">🇻🇳 Phiên bản tiếng Việt tương đương</div>
+              <div className="mb-2">Ứng dụng được phát triển bởi IVS Education &amp; IVS Celestech, trực thuộc IVS JSC. Nền tảng học tiếng Anh này kết hợp tinh thần Thuần Việt với chuẩn mực Quốc tế, dành cho mọi cấp độ. Tích hợp AI, học tập thích ứng và tiêu chuẩn toàn cầu, ứng dụng đáp ứng nhu cầu giáo dục trong thời đại số phát triển vượt bậc.</div>
+            </>
+          )}
+
+          <div className="mt-2 text-slate-400">{language === 'en' ? 'Slogan:' : 'Slogan:'} <span className="font-semibold">{language === 'en' ? t.slogan : t.slogan}</span></div>
+          <div className="mt-2 text-slate-400">Tích hợp Firebase Firestore để lưu dữ liệu học tập</div>
         </div>
       </div>
     </div>
