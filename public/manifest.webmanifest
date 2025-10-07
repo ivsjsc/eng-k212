@@ -1,21 +1,28 @@
 {
-  "name": "IVS English K-12",
+  "name": "IVS English K-12 Learning App",
   "short_name": "IVS English",
-  "description": "IVS English K-12 Learning App",
+  "description": "Nền Tảng Giáo Dục Tiếng Anh Toàn Diện K-12",
   "icons": [
     {
       "src": "/images/logo/logo.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/images/logo/logo-lighting.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": "/",
+  "start_url": "/?source=homescreen",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#0f172a",
-  "theme_color": "#0ea5e9"
+  "theme_color": "#0ea5e9",
+  "scope": "/",
+  "id": "ivs-english-k12",
+  "categories": ["education", "productivity"],
+  "lang": "vi"
 }

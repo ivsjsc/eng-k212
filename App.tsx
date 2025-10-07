@@ -24,6 +24,7 @@ const AuthPage = lazy(() => import('./components/AuthPage'));
 const RoleSelectionPage = lazy(() => import('./components/RoleSelectionPage'));
 const KeyboardShortcutsHelp = lazy(() => import('./components/KeyboardShortcutsHelp'));
 const GlobalSearch = lazy(() => import('./components/GlobalSearch'));
+const PWAInstallPrompt = lazy(() => import('./components/PWAInstallPrompt'));
 import Curriculum from './components/Curriculum';
 import FirstUseOverlay from './components/FirstUseOverlay';
 import ProfileSetupModal from './components/ProfileSetupModal';

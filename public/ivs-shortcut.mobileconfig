@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>PayloadDisplayName</key>
+      <string>IVS English K-12 Shortcut</string>
+      <key>PayloadDescription</key>
+      <string>Thêm shortcut IVS English vào màn hình chính</string>
+      <key>PayloadIdentifier</key>
+      <string>edu.ivsacademy.eng.webclip</string>
+      <key>PayloadType</key>
+      <string>com.apple.webClip.managed</string>
+      <key>PayloadUUID</key>
+      <string>A1B2C3D4-E5F6-4A5B-9C8D-7E6F5A4B3C2D</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>Label</key>
+      <string>IVS English</string>
+      <key>URL</key>
+      <string>https://eng.ivsacademy.edu.vn</string>
+      <key>IsRemovable</key>
+      <true/>
+      <key>Precomposed</key>
+      <false/>
+      <key>Icon</key>
+      <data>
+        <!-- Base64 encoded PNG icon data would go here -->
+        <!-- For production, encode your logo.png file to base64 -->
+      </data>
+    </dict>
+  </array>
+  <key>PayloadDisplayName</key>
+  <string>IVS English Mobile Configuration</string>
+  <key>PayloadDescription</key>
+  <string>Cấu hình để cài đặt IVS English trên thiết bị iOS</string>
+  <key>PayloadIdentifier</key>
+  <string>edu.ivsacademy.eng.profile</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>B2C3D4E5-F6A7-5B6C-8D9E-0F1A2B3C4D5E</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+  <key>PayloadOrganization</key>
+  <string>IVS Academy</string>
+</dict>
+</plist>
