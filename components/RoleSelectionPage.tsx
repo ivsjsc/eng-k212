@@ -49,7 +49,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
       vietnameseTeacher: 'Vietnamese Teacher',
       guest: 'Dùng thử với tài khoản khách',
       login: 'Đăng nhập / Đăng ký',
-      signInSignUp: 'Đăng nhập / Đăng ký',
+      signInSignUp: 'Sign in / Sign up',
       aboutApp: 'Giới thiệu về English Learners',
       toggle: 'us English'
     }
