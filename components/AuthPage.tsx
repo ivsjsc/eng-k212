@@ -813,7 +813,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                                                                 className="flex items-center justify-center gap-3 rounded-xl border border-slate-700 bg-slate-800/60 py-3 text-white transition hover:brightness-105"
                                                                 disabled={isLoading}
                                                             >
-                                                                <img src="/images/social/microsoft.svg" alt="Microsoft" className="h-5 w-5" />
+                                                                <img src="/microsoft-icon.svg" alt="Microsoft" className="h-5 w-5" />
                                                                 <span>{language === 'vi' ? 'Tiếp tục với Microsoft' : 'Continue with Microsoft'}</span>
                                                             </button>
 
@@ -845,7 +845,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                                                                 className="flex items-center justify-center gap-3 rounded-xl border border-slate-700 bg-slate-800/60 py-3 text-white transition hover:brightness-105"
                                                                 disabled={isLoading}
                                                             >
-                                                                <img src="/images/social/linkedin.svg" alt="LinkedIn" className="h-5 w-5" />
+                                                                <img src="/linkedin-icon.svg" alt="LinkedIn" className="h-5 w-5" />
                                                                 <span>{language === 'vi' ? 'Tiếp tục với LinkedIn' : 'Continue with LinkedIn'}</span>
                                                             </button>
 
