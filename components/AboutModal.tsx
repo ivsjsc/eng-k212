@@ -21,7 +21,12 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, language }) =>
       <div className="relative z-10 w-full max-w-4xl bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
         <div className="flex items-start justify-between p-6 gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full bg-gradient-to-r from-blue-600 to-emerald-500 flex items-center justify-center text-white text-2xl font-bold shadow">IV</div>
+                <div className="w-14 h-14 rounded-full overflow-hidden bg-white/5 flex items-center justify-center shadow">
+                  <picture>
+                    <source srcSet="/images/logo/logo-lighting.webp" type="image/webp" />
+                    <img src="/images/logo/logo-lighting.png" alt="IVS logo" className="w-14 h-14 object-cover" />
+                  </picture>
+                </div>
             <div>
               <h2 id="about-modal-title" className="text-2xl font-extrabold text-white">IVS English Learning App</h2>
               <div className="text-sm text-slate-300">Nền Tảng Giáo Dục Tiếng Anh Toàn Diện K-12</div>
@@ -152,7 +157,10 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, language }) =>
               <p className="mt-2">IVS English Learning App là giải pháp giáo dục toàn diện, kết hợp sự hoàn hảo về nội dung chuyên môn (392 Units) với sức mạnh của công nghệ AI, sẵn sàng dẫn dắt học sinh Việt Nam đến tương lai toàn cầu.</p>
 
               <div className="mt-4 flex gap-3">
-                <a href="/auth" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold">Đăng ký miễn phí</a>
+                <a href="/auth" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold">
+                  <img src="/images/logo/logo-lighting.webp" alt="logo" className="w-5 h-5 inline-block mr-1" />
+                  Đăng ký miễn phí
+                </a>
                 <button onClick={onClose} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/6 hover:bg-white/10 text-white">Đóng</button>
               </div>
             </div>
