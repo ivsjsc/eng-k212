@@ -18,7 +18,11 @@ npm run dev
 
 Bạn sẽ thấy:
 - **Logo IVS** ở trên cùng (tròn với viền sáng)
-- **Tiêu đề**: "Chào mừng đến với IVS English"
+- **Tiêu đề**: "Welcome to ENGLISH LEARNERS" (by IVS nhỏ phía sau)
+- **Mô tả chuẩn hoá (EN/VI)**:
+   - English: "An English learning platform for every learner, harmonizing Vietnamese and international standards in a world shaped by accelerating technology."
+   - Vietnamese: "Nền tảng học tiếng Anh dành cho mọi người, kết nối tinh thần Việt và chuẩn mực toàn cầu giữa thời đại công nghệ bùng nổ."
+- **Slogan**: "From local roots to global routes." ("Từ gốc Việt đến đường quốc tế")
 - **2 cột lớn**:
 
 #### CỘT TRÁI: HỌC SINH (Xanh dương)

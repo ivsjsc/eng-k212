@@ -276,6 +276,7 @@ const UserGuide: React.FC<UserGuideProps> = ({ language }) => {
                 <p className="font-semibold">{content.duns}</p>
                 <p>{content.copyright}</p>
                 <p>{content.developed_by}</p>
+                <div className="text-xs text-slate-400">ENGLISH LEARNERS — 2025 Standard • Version: 2025.10.07</div>
                 <div className="pt-2 flex items-center justify-center gap-x-6 gap-y-1 flex-wrap">
                     <span><i className="fa-solid fa-phone mr-1"></i> {content.contact_phone_label}: {content.contact_phone_value}</span>
                     <a href="https://ivsacademy.edu.vn" target="_blank" rel="noopener noreferrer" className="hover:underline hover:text-blue-500">

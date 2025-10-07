@@ -395,6 +395,12 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
         </div>
 
         <div className="space-y-8">
+        <div className="text-right">
+          <button onClick={() => window.open(window.location.origin + '/IVS_APP_INTRODUCTION.md', '_blank', 'noopener')} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-sm text-white/90">
+            <i className="fa-solid fa-info-circle"></i>
+            About
+          </button>
+        </div>
             {activeTab === 'profile' && (
               <>
                 <section className="card-glass p-6">

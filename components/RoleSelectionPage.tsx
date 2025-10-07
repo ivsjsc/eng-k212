@@ -188,16 +188,18 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
   <div className="relative z-20 w-full max-w-7xl px-4" ref={innerRef}>
         {/* Logo and Title */}
         <div className="text-center mb-12">
-          <img
-            src="/images/logo/logo-lighting.png"
-            onError={e => {
-              (e.currentTarget as HTMLImageElement).src = '/images/logo/logo.svg';
-            }}
-            alt="IVS English Logo"
-            className="w-24 h-24 mx-auto mb-6 rounded-full shadow-2xl ring-4 ring-white/20"
-          />
+          <picture>
+            <source srcSet="/images/logo/logo-lighting.webp" type="image/webp" />
+            <source srcSet="/images/logo/logo-lighting.png" type="image/png" />
+            <img
+              src="/images/logo/logo-lighting.png"
+              onError={e => { (e.currentTarget as HTMLImageElement).src = '/images/logo/logo.svg'; }}
+              alt="IVS English Logo"
+              className="w-24 h-24 mx-auto mb-6 rounded-full shadow-2xl ring-4 ring-white/20"
+            />
+          </picture>
           <h1 className="text-5xl lg:text-6xl font-extrabold text-white mb-1 tracking-tight">
-            {t.welcome} <span className="text-base align-super font-normal ml-2">{t.byline}</span>
+            {t.welcome} <span className="text-sm align-super font-light ml-3">{t.byline}</span>
           </h1>
           <p className="text-xl text-white/90 mb-2">{t.subtitle}</p>
           <p className="text-sm text-slate-200 italic mb-6">{language === 'en' ? t.slogan : t.slogan}</p>
