@@ -93,8 +93,12 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         }}
       >
         <div className="flex-grow">
-          <div className={`w-24 h-24 rounded-full mx-auto flex items-center justify-center mb-6 ${iconBg} shadow-lg`}>
-            <i className={`fa-solid ${icon} text-5xl text-white`}></i>
+          <div className={`w-24 h-24 rounded-full mx-auto flex items-center justify-center mb-6 ${iconBg} shadow-lg overflow-hidden`}>
+            {icon && (icon.startsWith('/') || icon.includes('.webp') || icon.includes('.png')) ? (
+              <img src={icon} alt={`${title} icon`} className="w-16 h-16 object-contain" />
+            ) : (
+              <i className={`fa-solid ${icon} text-5xl text-white`}></i>
+            )}
           </div>
           <h3 className="text-3xl font-bold mb-4 text-white">{title}</h3>
           <p className="text-base text-slate-200 mb-8 leading-relaxed">{description}</p>
@@ -212,7 +216,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             role="student"
             title={t.student}
             description={t.studentDesc}
-            icon="fa-graduation-cap"
+            icon="/images/logo/icon-student.webp"
             bgColor="bg-gradient-to-br from-blue-900/70 to-blue-800/60"
             iconBg="bg-gradient-to-br from-blue-500 to-blue-600"
             actions={
@@ -244,7 +248,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             role="teacher"
             title={t.teacher}
             description={t.teacherDesc}
-            icon="fa-person-chalkboard"
+            icon="/images/logo/icon-teacher.webp"
             bgColor="bg-gradient-to-br from-green-900/70 to-green-800/60"
             iconBg="bg-gradient-to-br from-green-500 to-green-600"
             actions={
