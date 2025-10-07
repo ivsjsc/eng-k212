@@ -172,6 +172,14 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, language }) =>
               <p>Tầm nhìn: Trở thành nền tảng học tiếng Anh số 1 Việt Nam, kết nối giáo dục với công nghệ AI.</p>
               <p className="mt-2">IVS English Learning App là giải pháp giáo dục toàn diện, kết hợp sự hoàn hảo về nội dung chuyên môn (392 Units) với sức mạnh của công nghệ AI, sẵn sàng dẫn dắt học sinh Việt Nam đến tương lai toàn cầu.</p>
 
+              <h4 className="mt-4 font-semibold">📞 Liên Hệ & Phản Hồi</h4>
+              <p>
+                Chúng tôi trân trọng và biết ơn mọi ý kiến phản hồi, góp ý và xây dựng từ tất cả mọi người.
+              </p>
+              <p className="mt-2">
+                <strong>Mail nhận:</strong> <a href="mailto:info@ivsacademy.edu.vn" className="text-blue-400 underline">info@ivsacademy.edu.vn</a>
+              </p>
+
               <div className="mt-4 flex gap-3">
                 <a href="/auth" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold">
                   <img src="/images/logo/logo-lighting.webp" alt="logo" className="w-5 h-5 inline-block mr-1" />
