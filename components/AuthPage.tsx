@@ -732,7 +732,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                             <div className="space-y-6 px-6 py-8 sm:px-10">
                                 <div className="space-y-4 text-center">
                                     <div className="mx-auto h-40 w-full overflow-hidden rounded-md hidden lg:block">
-                                        <div className="w-full h-full bg-center bg-cover rounded-md" style={{ backgroundImage: `url('public/images/banner/ivs-login-preview.webp')` }} aria-hidden="true" />
+                                        <div className="w-full h-full bg-center bg-cover rounded-md" style={{ backgroundImage: `url('/public/images/banner/ivs-login-preview.webp')` }} aria-hidden="true" />
                                     </div>
                                     <img src="public/images/banner/ivs-presentitation.webp" alt="IVS Login" className="w-full h-full object-cover rounded-md" />
                                     <div className="space-y-2">

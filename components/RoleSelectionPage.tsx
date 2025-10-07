@@ -142,9 +142,9 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         <div className="text-center mb-12">
           <picture>
             <source srcSet="/images/logo/logo-lighting.webp" type="image/webp" />
-            <source srcSet="/images/logo/logo-lighting.png" type="image/png" />
+            <source srcSet="/images/logo/logo-lighting.webp" type="image/webp" />
             <img
-              src="/images/logo/logo-lighting.png"
+              src="/images/logo/logo-lighting.webp"
               onError={e => { (e.currentTarget as HTMLImageElement).src = '/images/logo/logo.svg'; }}
               alt="IVS English Logo"
               className="w-24 h-24 mx-auto mb-6 rounded-full shadow-2xl ring-4 ring-white/20"
