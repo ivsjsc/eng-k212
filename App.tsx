@@ -837,6 +837,13 @@ function App() {
             <kbd className="ml-1 px-1.5 py-0.5 text-xs bg-slate-700 group-hover:bg-slate-600 rounded">?</kbd>
           </button>
         </div>
+
+        {/* PWA Install Prompt */}
+        {user && (
+          <Suspense fallback={null}>
+            <PWAInstallPrompt />
+          </Suspense>
+        )}
       </div>
     </ErrorBoundary>
   );
