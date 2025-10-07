@@ -128,7 +128,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
     <div
       className="min-h-full flex flex-col items-center justify-center p-6 text-center animate-fade-in relative overflow-hidden"
       style={{
-        backgroundImage: `url('/banner/ivsenglish-banner.png')`,
+        backgroundImage: `url('/images/ivs-login-preview.webp')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}
