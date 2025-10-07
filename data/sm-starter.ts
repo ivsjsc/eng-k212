@@ -4,7 +4,7 @@ export const smStarterData: CurriculumLevel = {
     level: 0,
     title: { en: 'Super Minds Starter', vi: 'Super Minds Starter' },
     subtitle: { en: 'Primary - Grade 1', vi: 'Tiểu học - Lớp 1' },
-    ebookPdfUrl: 'https://drive.google.com/file/d/1starter-ebook-link/view?usp=sharing',
+    ebookPdfUrl: 'https://drive.google.com/file/d/1nFhT8dKSMvh_msQAmAC9PmQ_q4pVuYtC/view?usp=drive_link',
     units: [
         {
             id: 1101,

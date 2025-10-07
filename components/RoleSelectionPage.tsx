@@ -55,8 +55,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
     }
   }[language];
 
-  const [langMenuOpen, setLangMenuOpen] = useState(false);
-  const langRef = useRef<HTMLDivElement | null>(null);
+  // Language switching is handled inside the app (sidebar). Removed local language control from login page.
   const innerRef = useRef<HTMLDivElement | null>(null);
 
   // Ensure landing page defaults to Vietnamese (per requirement)
@@ -65,15 +64,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    function handleDocClick(e: MouseEvent) {
-      if (!langRef.current) return;
-      if (langRef.current.contains(e.target as Node)) return;
-      setLangMenuOpen(false);
-    }
-    document.addEventListener('mousedown', handleDocClick);
-    return () => document.removeEventListener('mousedown', handleDocClick);
-  }, []);
+  // Removed language menu event listener (login page no longer shows language menu)
 
   const RoleCard: React.FC<{
     role: 'student' | 'teacher' | 'foreigner-teacher';
@@ -141,50 +132,10 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}
-      onClick={(e) => {
-          // ignore clicks on the language control so it doesn't trigger the quick-select behavior
-          const target = e.target as Node;
-          if (langRef.current && langRef.current.contains(target)) return;
-          // if user clicks outside the inner content, treat as selecting foreigner teacher and switch to English
-          if (innerRef.current && !innerRef.current.contains(target)) {
-            setLanguage('en');
-            onSelectRole('foreigner-teacher');
-          }
-        }}
+      // No outer click quick-select behavior; language switching is available in the app sidebar only.
+      onClick={() => { /* intentionally no-op */ }}
     >
       <div className="absolute inset-0 bg-black/60 dark:bg-black/70" aria-hidden />
-
-      <header className="absolute top-6 right-6 z-20" ref={langRef}>
-        <div className="relative inline-block text-left">
-          <button
-            onClick={(e) => { e.stopPropagation(); setLangMenuOpen(v => !v); }}
-            aria-haspopup="true"
-            aria-expanded={langMenuOpen}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black/60 text-white font-semibold shadow-lg backdrop-blur-sm hover:bg-black/70 transition-colors"
-            title="Language"
-          >
-            <i className="fa-solid fa-globe text-lg" />
-            <span className="text-sm font-medium">{language === 'en' ? 'ENGLISH' : 'TIẾNG VIỆT'}</span>
-          </button>
-
-          {langMenuOpen && (
-            <div className="absolute right-0 mt-2 w-40 bg-white/95 dark:bg-slate-800 rounded-lg shadow-lg overflow-hidden z-30">
-              <button
-                onClick={(e) => { e.stopPropagation(); setLanguage('en'); setLangMenuOpen(false); }}
-                className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700"
-              >
-                English
-              </button>
-              <button
-                onClick={(e) => { e.stopPropagation(); setLanguage('vi'); setLangMenuOpen(false); }}
-                className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700"
-              >
-                Tiếng Việt
-              </button>
-            </div>
-          )}
-        </div>
-      </header>
 
   <div className="relative z-20 w-full max-w-7xl px-4" ref={innerRef}>
         {/* Logo and Title */}
