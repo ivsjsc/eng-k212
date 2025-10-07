@@ -727,7 +727,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                     <section className="relative">
                         <div className="mx-auto w-full max-w-lg rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(6,8,24,0.9),rgba(7,10,30,0.95))] text-slate-50 shadow-2xl backdrop-blur-md">
                             <div className="absolute -top-16 left-1/2 flex h-20 w-20 -translate-x-1/2 items-center justify-center rounded-full bg-white/5 text-white shadow-xl ring-2 ring-white/20">
-                                <img src="/images/logo/logo-lighting.png" alt="logo" className="h-14 w-auto" />
+                                <img src="public/images/logo/logo-lighting.webp" alt="logo" className="h-14 w-auto" />
                             </div>
                             <div className="space-y-6 px-6 py-8 sm:px-10">
                                 <div className="space-y-4 text-center">
@@ -735,7 +735,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ language, selectedRole, onBack }) =
                                         <div className="w-full h-full bg-center bg-cover rounded-md" style={{ backgroundImage: `url('/public/images/banner/ivs-login-preview.png')` }} aria-hidden="true" />
                                     </div>
                                     {/* small screens: inline svg for crispness */}
-                                    <img src="/public/images/banner/ivs-login-preview.png" alt="IVS Login" className="mx-auto h-16 w-auto lg:hidden" />
+                                    <img src="/public/images/banner/ivs-presentitation.webp" alt="IVS Login" className="mx-auto h-16 w-auto lg:hidden" />
                                     <div className="space-y-2">
                                         <h2 className="text-3xl font-extrabold text-white">
                                             {isLoginView ? t.loginTitle : t.signupTitle}
