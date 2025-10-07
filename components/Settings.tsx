@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { User, Classes } from '../types';
 import ProfileEditModal from './ProfileEditModal';
+import AboutModal from './AboutModal';
 // FIX: Removed setApiKey and clearApiKey as per API guidelines.
 import { isAiConfigured } from '../services/geminiService';
 import { auth } from '../services/firebase';
@@ -28,6 +29,7 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
   const [soundEnabled, setSoundEnabled] = useState<boolean>(false);
   const [soundVolume, setSoundVolume] = useState<number>(0.14);
   const [activeTab, setActiveTab] = useState<'profile' | 'account' | 'appearance' | 'data' | 'ai'>('profile');
+  const [showAbout, setShowAbout] = useState(false);
   
   // Account tab states
   const [currentPassword, setCurrentPassword] = useState('');
@@ -425,7 +427,7 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
 
         <div className="space-y-8">
         <div className="text-right">
-          <button onClick={() => window.open(window.location.origin + '/IVS_APP_INTRODUCTION.md', '_blank', 'noopener')} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-sm text-white/90">
+          <button onClick={() => setShowAbout(true)} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-sm text-white/90">
             <i className="fa-solid fa-info-circle"></i>
             About
           </button>
@@ -507,6 +509,10 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
                   </div>
                 </section>
               </>
+            )}
+
+            {showAbout && (
+              <AboutModal isOpen={showAbout} onClose={() => setShowAbout(false)} language={language} />
             )}
 
             {activeTab === 'account' && (
