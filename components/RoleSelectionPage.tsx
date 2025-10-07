@@ -16,37 +16,37 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
 }) => {
   const t = {
     en: {
-      welcome: 'Welcome to ENGLISH LEARNERS by IVS',
-      subtitle: 'The English learning platform for international users',
+      welcome: 'Welcome to IVS English',
+      subtitle: 'The English learning platform for Vietnamese people',
       student: 'I am a Student',
       studentDesc:
         'Start your English learning journey with a personalized and AI-powered curriculum.',
       teacher: 'I am a Teacher',
       teacherDesc:
         'Manage your classes, assign lessons, and track student progress.',
-      foreignerTeacher: 'I am a Foreigner Teacher',
-      foreignerTeacherDesc:
-        'Teach English with native language support and international teaching methods.',
+      foreignerTeacher: 'Foreigner Teacher',
+      vietnameseTeacher: 'Vietnamese Teacher',
       guest: 'Try with a guest account',
       login: 'Login / Sign Up',
-      aboutApp: 'About ENGLISH LEARNERS by IVS',
+      signInSignUp: 'Sign in / Sign up',
+      aboutApp: 'About IVS English',
       toggle: 'vn Tiếng Việt'
     },
     vi: {
-      welcome: 'Chào mừng đến ENGLISH LEARNERS by IVS',
-      subtitle: 'Nền tảng học tiếng Anh dành cho học sinh Việt Nam',
+      welcome: 'Chào mừng đến với IVS English',
+      subtitle: 'Nền tảng học tiếng Anh dành cho người Việt Nam',
       student: 'Tôi là Học sinh',
       studentDesc:
         'Bắt đầu hành trình học tiếng Anh với lộ trình cá nhân hóa và AI.',
       teacher: 'Tôi là Giáo viên',
       teacherDesc:
         'Quản lý lớp học, giao bài và theo dõi tiến độ của học sinh.',
-      foreignerTeacher: 'Tôi là Giáo viên Nước ngoài',
-      foreignerTeacherDesc:
-        'Dạy tiếng Anh với hỗ trợ ngôn ngữ bản địa và phương pháp giảng dạy quốc tế.',
-      guest: 'Dùng thử với vai trò khách',
+      foreignerTeacher: 'Foreigner Teacher',
+      vietnameseTeacher: 'Vietnamese Teacher',
+      guest: 'Dùng thử với tài khoản khách',
       login: 'Đăng nhập / Đăng ký',
-      aboutApp: 'Giới thiệu về ENGLISH LEARNERS by IVS',
+      signInSignUp: 'Đăng nhập / Đăng ký',
+      aboutApp: 'Giới thiệu về IVS English',
       toggle: 'us English'
     }
   }[language];
@@ -76,42 +76,35 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
     title: string;
     description: string;
     icon: string;
-    color: string;
-    buttonColor: string;
-    // optional custom actions (used for teacher card to match screenshot)
+    bgColor: string;
+    iconBg: string;
     actions?: React.ReactNode;
-  }> = ({ role, title, description, icon, color, buttonColor, actions }) => {
-    const shade = buttonColor.replace(/^bg-/, '');
+  }> = ({ role, title, description, icon, bgColor, iconBg, actions }) => {
     return (
       <div
-        className={`w-full max-w-sm text-center p-6 sm:p-8 transition-all duration-300 flex flex-col border-t-4 ${color} rounded-2xl shadow-lg card interactive-scale interactive-glow`}
+        className={`w-full max-w-md text-center p-8 transition-all duration-300 flex flex-col rounded-3xl shadow-2xl ${bgColor}`}
         style={{
-          background: 'linear-gradient(180deg, rgba(15,23,42,0.88), rgba(2,6,23,0.95))',
-          backdropFilter: 'blur(6px)'
+          backdropFilter: 'blur(8px)',
+          border: '1px solid rgba(255,255,255,0.1)'
         }}
       >
         <div className="flex-grow">
-          <div className={`w-20 h-20 rounded-full mx-auto flex items-center justify-center mb-6 ${buttonColor} bg-opacity-20`}>
-            <i className={`fa-solid ${icon} text-4xl text-${shade}`}></i>
+          <div className={`w-24 h-24 rounded-full mx-auto flex items-center justify-center mb-6 ${iconBg} shadow-lg`}>
+            <i className={`fa-solid ${icon} text-5xl text-white`}></i>
           </div>
-          <h3 className="text-2xl font-bold mb-2 text-white">{title}</h3>
-          <p className="text-base text-slate-300 mb-6">{description}</p>
+          <h3 className="text-3xl font-bold mb-4 text-white">{title}</h3>
+          <p className="text-base text-slate-200 mb-8 leading-relaxed">{description}</p>
         </div>
-        <div className="space-y-3">
-          {actions ? (
-            // render custom actions when provided (teacher card)
-            actions
-          ) : (
-            // default actions for student and other roles
+        <div className="space-y-4">
+          {actions || (
             <>
               <button
                 onClick={() => {
-                  // ensure language default per role when trying as guest
                   if (role === 'foreigner-teacher') setLanguage('en');
                   else setLanguage('vi');
                   onGuestLogin(role);
                 }}
-                className="btn bg-slate-700/80 text-slate-100 hover:bg-slate-700 w-full py-3 sm:py-2"
+                className="w-full py-3.5 rounded-xl bg-slate-700/60 text-white hover:bg-slate-700 transition-all duration-200 font-medium text-base backdrop-blur-sm border border-white/10"
               >
                 {t.guest}
               </button>
@@ -121,8 +114,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
                   else setLanguage('vi');
                   onSelectRole(role);
                 }}
-                className={`btn ${buttonColor} text-white w-full py-3 sm:py-2`}
-                style={{ boxShadow: '0 8px 24px rgba(2,6,23,0.35)' }}
+                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 transition-all duration-200 font-semibold text-base shadow-xl"
               >
                 {t.login}
               </button>
@@ -189,76 +181,116 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         </div>
       </header>
 
-  <div className="relative z-20 w-full max-w-4xl" ref={innerRef}>
-        <img
-          src="/images/logo/logo-lighting.png"
-          onError={e => {
-            (e.currentTarget as HTMLImageElement).src = '/images/logo/logo.svg';
-          }}
-          alt="IVS English Logo"
-          className="w-28 h-28 mx-auto mb-4 rounded-full border-4 border-white/20 shadow-xl"
-        />
+  <div className="relative z-20 w-full max-w-7xl px-4" ref={innerRef}>
+        {/* Logo and Title */}
+        <div className="text-center mb-12">
+          <img
+            src="/images/logo/logo-lighting.png"
+            onError={e => {
+              (e.currentTarget as HTMLImageElement).src = '/images/logo/logo.svg';
+            }}
+            alt="IVS English Logo"
+            className="w-24 h-24 mx-auto mb-6 rounded-full shadow-2xl ring-4 ring-white/20"
+          />
+          <h1 className="text-5xl lg:text-6xl font-extrabold text-white mb-3 tracking-tight">
+            {t.welcome}
+          </h1>
+          <p className="text-xl text-white/90">{t.subtitle}</p>
+        </div>
 
-        <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-2">{t.welcome}</h1>
-        <p className="text-lg text-white/90 mb-12">{t.subtitle}</p>
-
-        <div className="flex flex-col lg:flex-row gap-8 justify-center items-stretch">
-          {/* Student card (left) */}
+        {/* Two Column Layout */}
+        <div className="flex flex-col lg:flex-row gap-8 justify-center items-stretch max-w-6xl mx-auto">
+          {/* LEFT: Student Card */}
           <RoleCard
             role="student"
             title={t.student}
             description={t.studentDesc}
             icon="fa-graduation-cap"
-            color="border-blue-500"
-            buttonColor="bg-blue-500"
-            actions={null}
+            bgColor="bg-gradient-to-br from-blue-900/70 to-blue-800/60"
+            iconBg="bg-gradient-to-br from-blue-500 to-blue-600"
+            actions={
+              <>
+                <button
+                  onClick={() => {
+                    setLanguage('vi');
+                    onGuestLogin('student');
+                  }}
+                  className="w-full py-3.5 rounded-xl bg-slate-700/60 text-white hover:bg-slate-700 transition-all duration-200 font-medium text-base backdrop-blur-sm border border-white/10"
+                >
+                  {t.guest}
+                </button>
+                <button
+                  onClick={() => {
+                    setLanguage('vi');
+                    onSelectRole('student');
+                  }}
+                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 transition-all duration-200 font-semibold text-base shadow-xl"
+                >
+                  {t.login}
+                </button>
+              </>
+            }
           />
 
-          {/* Teacher card (right) - simplified with two clear options */}
+          {/* RIGHT: Teacher Card with TWO options */}
           <RoleCard
             role="teacher"
             title={t.teacher}
             description={t.teacherDesc}
             icon="fa-person-chalkboard"
-            color="border-green-500"
-            buttonColor="bg-green-500"
-            actions={(
+            bgColor="bg-gradient-to-br from-green-900/70 to-green-800/60"
+            iconBg="bg-gradient-to-br from-green-500 to-green-600"
+            actions={
               <>
+                {/* Option 1: Foreigner Teacher - purple highlight */}
+                <button
+                  onClick={() => {
+                    setLanguage('en');
+                    onSelectRole('foreigner-teacher');
+                  }}
+                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-600 text-white hover:from-purple-600 hover:to-fuchsia-700 transition-all duration-200 font-semibold text-base shadow-xl"
+                >
+                  {t.signInSignUp}
+                </button>
+                <div className="text-sm text-slate-300 -mt-2 mb-1">{t.foreignerTeacher}</div>
+
+                {/* Guest option */}
                 <button
                   onClick={() => {
                     setLanguage('vi');
                     onGuestLogin('teacher');
                   }}
-                  className="w-full py-3 rounded-lg bg-slate-700/80 text-slate-100 hover:bg-slate-700 transition font-medium"
+                  className="w-full py-3.5 rounded-xl bg-slate-700/60 text-white hover:bg-slate-700 transition-all duration-200 font-medium text-base backdrop-blur-sm border border-white/10"
                 >
                   {t.guest}
                 </button>
 
+                {/* Option 2: Vietnamese Teacher - green highlight */}
                 <button
-                  onClick={() => { 
-                    setLanguage('vi'); 
-                    onSelectRole('teacher'); 
+                  onClick={() => {
+                    setLanguage('vi');
+                    onSelectRole('teacher');
                   }}
-                  className="w-full py-3 rounded-lg bg-green-500 text-white hover:brightness-110 transition font-medium shadow-lg"
+                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700 transition-all duration-200 font-semibold text-base shadow-xl"
                 >
-                  {t.login}
+                  {t.signInSignUp}
                 </button>
+                <div className="text-sm text-slate-300 -mt-2">{t.vietnameseTeacher}</div>
               </>
-            )}
+            }
           />
         </div>
         
         {/* About App Button */}
-        <div className="mt-8 text-center">
+        <div className="mt-12 text-center">
           <button
             onClick={() => {
-              // Open introduction in new tab/window
               const introUrl = window.location.origin + '/IVS_APP_INTRODUCTION.md';
               window.open(introUrl, '_blank', 'noopener,noreferrer');
             }}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white/90 hover:text-white transition-all duration-200 backdrop-blur-sm border border-white/20 hover:border-white/30"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 text-white/90 hover:text-white transition-all duration-200 backdrop-blur-sm border border-white/20 hover:border-white/30 text-base font-medium shadow-lg"
           >
-            <i className="fa-solid fa-info-circle"></i>
+            <i className="fa-solid fa-info-circle text-lg"></i>
             {t.aboutApp}
           </button>
         </div>
