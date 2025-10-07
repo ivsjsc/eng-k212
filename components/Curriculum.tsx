@@ -27,6 +27,14 @@ const Curriculum: React.FC<CurriculumProps> = ({ language, user, onSelectCourse,
   const normalizeGradeLevel = (raw?: string) => {
     if (!raw) return '';
     const s = raw.toString().trim().toLowerCase();
+
+    // Handle new detailed format: kindergarten-3, primary-1, secondary-6, highschool-10
+    if (s.includes('kindergarten')) return 'kindergarten';
+    if (s.includes('primary')) return 'primary';
+    if (s.includes('secondary')) return 'secondary';
+    if (s.includes('highschool')) return 'high-school';
+
+    // Fallback to old format parsing
     // common numeric forms -> map to buckets
     const gradeNumMatch = s.match(/(grade\s*-?\s*)?(\d{1,2})/i);
     if (gradeNumMatch) {

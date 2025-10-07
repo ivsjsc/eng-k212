@@ -38,6 +38,35 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [hasPassword, setHasPassword] = useState(false);
 
+  const getGradeLevelDisplay = (gradeLevel: string | undefined, language: 'en' | 'vi') => {
+    if (!gradeLevel) return 'N/A';
+
+    const gradeLabels: Record<string, { en: string; vi: string }> = {
+      'kindergarten-3': { en: 'Kindergarten Age 3', vi: 'Mầm non 3 tuổi' },
+      'kindergarten-4': { en: 'Kindergarten Age 4', vi: 'Mầm non 4 tuổi' },
+      'kindergarten-5': { en: 'Kindergarten Age 5', vi: 'Mầm non 5 tuổi' },
+      'primary-1': { en: 'Grade 1', vi: 'Lớp 1' },
+      'primary-2': { en: 'Grade 2', vi: 'Lớp 2' },
+      'primary-3': { en: 'Grade 3', vi: 'Lớp 3' },
+      'primary-4': { en: 'Grade 4', vi: 'Lớp 4' },
+      'primary-5': { en: 'Grade 5', vi: 'Lớp 5' },
+      'secondary-6': { en: 'Grade 6', vi: 'Lớp 6' },
+      'secondary-7': { en: 'Grade 7', vi: 'Lớp 7' },
+      'secondary-8': { en: 'Grade 8', vi: 'Lớp 8' },
+      'secondary-9': { en: 'Grade 9', vi: 'Lớp 9' },
+      'highschool-10': { en: 'Grade 10', vi: 'Lớp 10' },
+      'highschool-11': { en: 'Grade 11', vi: 'Lớp 11' },
+      'highschool-12': { en: 'Grade 12', vi: 'Lớp 12' },
+      // Fallback for old format
+      'kindergarten': { en: 'Kindergarten', vi: 'Mầm non' },
+      'primary': { en: 'Primary School', vi: 'Tiểu học' },
+      'secondary': { en: 'Secondary School', vi: 'THCS' },
+      'highschool': { en: 'High School', vi: 'THPT' },
+    };
+
+    return gradeLabels[gradeLevel]?.[language] || gradeLevel;
+  };
+
   useEffect(() => {
     setAiStatus(isAiConfigured());
     // Check if user has password provider
@@ -413,7 +442,7 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
                           <p className="text-xl font-bold">{user.name}</p>
                           <p className="text-slate-500 dark:text-slate-400 capitalize">{user.role === 'student' ? t.student : t.teacher}</p>
                           <p className="text-sm text-slate-500 dark:text-slate-400">
-                            {user.role === 'student' ? `${t.grade}: ${user.gradeLevel || 'N/A'}` : `${t.subject}: ${user.subject || 'N/A'}`}
+                            {user.role === 'student' ? `${t.grade}: ${getGradeLevelDisplay(user.gradeLevel, language)}` : `${t.subject}: ${user.subject || 'N/A'}`}
                           </p>
                       </div>
                       <button onClick={() => setIsEditModalOpen(true)} className="btn btn-secondary">
@@ -434,13 +463,32 @@ const Settings: React.FC<SettingsProps> = ({ user, onUpdateUser, classes, onUpda
                         className="form-input w-full max-w-md"
                       >
                         <option value="">{language === 'vi' ? 'Chọn cấp lớp' : 'Select grade level'}</option>
-                        <option value="kindergarten">{language === 'vi' ? 'Mầm non (3-5 tuổi)' : 'Kindergarten (3-5 years)'}</option>
-                        <option value="primary">{language === 'vi' ? 'Tiểu học (6-10 tuổi)' : 'Primary (6-10 years)'}</option>
-                        <option value="secondary">{language === 'vi' ? 'Trung học Cơ sở (11-15 tuổi)' : 'Secondary (11-15 years)'}</option>
-                        <option value="highschool">{language === 'vi' ? 'Trung học Phổ thông (16-18 tuổi)' : 'High School (16-18 years)'}</option>
+                        <optgroup label={language === 'vi' ? 'Mầm non' : 'Kindergarten'}>
+                          <option value="kindergarten-3">{language === 'vi' ? 'Mầm non 3 tuổi' : 'Kindergarten Age 3'}</option>
+                          <option value="kindergarten-4">{language === 'vi' ? 'Mầm non 4 tuổi' : 'Kindergarten Age 4'}</option>
+                          <option value="kindergarten-5">{language === 'vi' ? 'Mầm non 5 tuổi' : 'Kindergarten Age 5'}</option>
+                        </optgroup>
+                        <optgroup label={language === 'vi' ? 'Tiểu học' : 'Primary School'}>
+                          <option value="primary-1">{language === 'vi' ? 'Lớp 1' : 'Grade 1'}</option>
+                          <option value="primary-2">{language === 'vi' ? 'Lớp 2' : 'Grade 2'}</option>
+                          <option value="primary-3">{language === 'vi' ? 'Lớp 3' : 'Grade 3'}</option>
+                          <option value="primary-4">{language === 'vi' ? 'Lớp 4' : 'Grade 4'}</option>
+                          <option value="primary-5">{language === 'vi' ? 'Lớp 5' : 'Grade 5'}</option>
+                        </optgroup>
+                        <optgroup label={language === 'vi' ? 'Trung học Cơ sở' : 'Secondary School'}>
+                          <option value="secondary-6">{language === 'vi' ? 'Lớp 6' : 'Grade 6'}</option>
+                          <option value="secondary-7">{language === 'vi' ? 'Lớp 7' : 'Grade 7'}</option>
+                          <option value="secondary-8">{language === 'vi' ? 'Lớp 8' : 'Grade 8'}</option>
+                          <option value="secondary-9">{language === 'vi' ? 'Lớp 9' : 'Grade 9'}</option>
+                        </optgroup>
+                        <optgroup label={language === 'vi' ? 'Trung học Phổ thông' : 'High School'}>
+                          <option value="highschool-10">{language === 'vi' ? 'Lớp 10' : 'Grade 10'}</option>
+                          <option value="highschool-11">{language === 'vi' ? 'Lớp 11' : 'Grade 11'}</option>
+                          <option value="highschool-12">{language === 'vi' ? 'Lớp 12' : 'Grade 12'}</option>
+                        </optgroup>
                       </select>
                       <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-                        {language === 'vi' ? 'Thay đổi cấp lớp sẽ điều chỉnh nội dung học phù hợp với trình độ của bạn.' : 'Changing your grade level will adjust the content to match your learning level.'}
+                        {language === 'vi' ? 'Chọn cấp lớp chính xác để hệ thống hiển thị chương trình học phù hợp nhất với trình độ của bạn.' : 'Select your exact grade level to display the most appropriate curriculum for your learning level.'}
                       </p>
                     </div>
                   )}
