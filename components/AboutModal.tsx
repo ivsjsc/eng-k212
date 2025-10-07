@@ -97,6 +97,7 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, language }) =>
                       <th className="pb-2">Units</th>
                       <th className="pb-2">Lessons</th>
                       <th className="pb-2">Cấu trúc Lessons/Unit</th>
+                      <th className="pb-2">Điểm Vượt Trội Chính</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -105,21 +106,36 @@ const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, language }) =>
                       <td className="pt-2">120</td>
                       <td className="pt-2">120</td>
                       <td className="pt-2">3</td>
+                      <td className="pt-2">Ngữ pháp hệ thống, Văn hóa và Xã hội.</td>
                     </tr>
                     <tr>
                       <td className="pt-2">THPT (10-12)</td>
                       <td className="pt-2">210</td>
                       <td className="pt-2">210</td>
                       <td className="pt-2">7</td>
+                      <td className="pt-2">Academic Content, Chuẩn bị Đại học, Đánh giá Toàn diện.</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
 
-              <p className="mt-2">Điểm Vượt Trội của Cấp THPT: Cấu Trúc 7 Bước Chuyên Nghiệp: Mỗi Unit có 7 Lessons (tăng 133% so với THCS), bao gồm đầy đủ các kỹ năng (Reading, Speaking, Listening, Writing) và tích hợp Culture/CLIL (Kiến thức văn hóa/liên môn) ở cấp độ cao.</p>
-              <p>Nền Tảng Ngữ Pháp Chuyên Sâu: Cung cấp 150+ điểm ngữ pháp với giải thích Song ngữ (Complete EN + VN) chi tiết, bao gồm cả lỗi sai thường gặp và bảng so sánh cấu trúc.</p>
-              <p>Nội dung Academic Nâng Cao: Chuẩn bị từ vựng học thuật và các chủ đề cấp Đại học/Quốc tế (Urbanization, Economic Reforms), cùng với kỹ năng Tư duy phản biện và Nghiên cứu/Thuyết trình cần thiết.</p>
-              <p>Khung Đánh Giá Toàn Diện: Tích hợp Success Criteria cho mỗi hoạt động và khả năng Progress Tracking để theo dõi chi tiết hiệu suất học tập.</p>
+              <p className="mt-3 font-semibold">Chi tiết Chương trình Cấp THCS (6-9):</p>
+              <p>
+                Chương trình THCS IVS-Mastery được thiết kế đặc biệt cho học sinh 11-15 tuổi, tập trung vào việc củng cố và phát triển các kỹ năng ngôn ngữ cơ bản đồng thời giới thiệu các khái niệm học thuật. Mỗi Unit gồm 3 Lessons với cấu trúc bài học khoa học: Lesson 1 tập trung vào Từ vựng và Ngữ pháp, Lesson 2 phát triển Kỹ năng Nghe và Nói, Lesson 3 củng cố qua Viết và Đọc hiểu. Điểm vượt trội chính là hệ thống ngữ pháp có hệ thống với 80+ điểm ngữ pháp được giải thích chi tiết bằng cả tiếng Anh và tiếng Việt, cùng với nội dung văn hóa và xã hội phù hợp lứa tuổi.
+              </p>
+
+              <p className="mt-3 font-semibold">Chi tiết Chương trình Cấp THPT (10-12):</p>
+              <p>
+                Chương trình THPT IVS-Mastery dành cho học sinh 16-18 tuổi, được thiết kế theo chuẩn quốc tế với cấu trúc chuyên nghiệp chuẩn bị cho Đại học và cuộc sống toàn cầu. Mỗi Unit gồm 7 Lessons với cấu trúc bài học toàn diện: 4 Lessons đầu tập trung vào các kỹ năng cốt lõi (Reading, Speaking, Listening, Writing), Lesson 5-6 tích hợp Culture/CLIL với kiến thức văn hóa và liên môn, Lesson 7 là bài ôn tập và đánh giá toàn diện.
+              </p>
+
+              <p className="mt-2 font-semibold">Điểm Vượt Trội của Cấp THPT:</p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li><strong>Cấu Trúc 7 Bước Chuyên Nghiệp:</strong> Mỗi Unit có 7 Lessons (tăng 133% so với THCS), bao gồm đầy đủ các kỹ năng (Reading, Speaking, Listening, Writing) và tích hợp Culture/CLIL (Kiến thức văn hóa/liên môn) ở cấp độ cao.</li>
+                <li><strong>Nền Tảng Ngữ Pháp Chuyên Sâu:</strong> Cung cấp 150+ điểm ngữ pháp với giải thích Song ngữ (Complete EN + VN) chi tiết, bao gồm cả lỗi sai thường gặp và bảng so sánh cấu trúc.</li>
+                <li><strong>Nội dung Academic Nâng Cao:</strong> Chuẩn bị từ vựng học thuật và các chủ đề cấp Đại học/Quốc tế (Urbanization, Economic Reforms), cùng với kỹ năng Tư duy phản biện và Nghiên cứu/Thuyết trình cần thiết.</li>
+                <li><strong>Khung Đánh Giá Toàn Diện:</strong> Tích hợp Success Criteria cho mỗi hoạt động và khả năng Progress Tracking để theo dõi chi tiết hiệu suất học tập.</li>
+              </ul>
 
               <h4 className="mt-4 font-semibold">🚀 Tính năng Nổi Bật & Công Nghệ AI</h4>
               <p>Ứng dụng IVS sử dụng công nghệ tiên tiến, đặc biệt là Trí tuệ Nhân tạo, để tối ưu hóa quá trình giảng dạy và học tập:</p>
