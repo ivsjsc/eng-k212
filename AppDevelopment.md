@@ -1,146 +1,158 @@
 # 📘 English for Business – Mobile-first Learning Platform
 
-## 🧭 1. Vision & Philosophy
+## 🧭 1. Tầm nhìn & Triết lý
 
-> “Train humans to serve like AI — faster, more precise, non-judgmental, and tireless.”
+> “Huấn luyện con người để phục vụ như AI — nhanh hơn, chính xác hơn, không phán xét, không mệt mỏi.”
 
-- **Consistency**: Emotion-free, bias-free, memory-rich responses  
-- **Service-mindedness**: Professional, prompt, tireless  
-- **Continuous Learning**: Daily updates, lifelong growth
-
----
-
-## 📚 2. Core Curriculum
-
-### 🔹 Foundation Modules
-
-| Module | Description | Skills |
-|--------|-------------|--------|
-| Business Email Writing | Write clear, professional emails | Writing, grammar, tone  
-| Meetings & Discussions | Speak confidently in meetings | Listening, speaking, reacting  
-| Presentations & Pitching | Present ideas and products | Public speaking, structure  
-| Negotiation Skills | Handle business negotiations | Strategy, persuasion  
-| Customer Service English | Communicate with clients | Politeness, empathy  
-| Grammar for Professionals | Use grammar for clarity | Accuracy, fluency  
-| Cross-cultural Communication | Work with global teams | Cultural awareness, etiquette
+- Tính nhất quán  
+- Tính phục vụ  
+- Tính học hỏi liên tục
 
 ---
 
-### 🔹 Industry-Specific Modules
+## 🧱 2. Công nghệ đề xuất
 
-| Industry | Module | Focus |
-|---------|--------|-------|
-| Sales & Marketing | English for Persuasion | Pitching, closing deals  
-| Human Resources | English for HR | Interviews, conflict resolution  
-| Finance & Accounting | English for Finance | Reports, analysis  
-| Logistics | English for Operations | Delivery, contracts  
-| IT & Tech | English for Tech Teams | Troubleshooting, documentation  
-| Legal | English for Legal Contexts | Terms, compliance  
-| Hospitality | English for Service Excellence | Greeting, handling requests
-
----
-
-## 📅 3. 30-Day Learning Roadmap
-
-| Week | Theme | Focus |
-|------|-------|-------|
-| Week 1 | Email Writing | Structure, tone, templates  
-| Week 2 | Meetings | Phrases, reactions, etiquette  
-| Week 3 | Presentations | Openings, transitions, closings  
-| Week 4 | Negotiation & Culture | Tactics, cross-cultural tips
-
-Each day includes:
-- Vocabulary  
-- Sample dialogues  
-- Practice exercises  
-- Embedded video  
-- Microsoft Learn resource
+| Thành phần | Công nghệ |
+|------------|-----------|
+| Frontend | React hoặc Next.js  
+| Styling | Tailwind CSS  
+| Routing | React Router / Next.js routing  
+| State | Context API / Zustand  
+| Backend | Firebase / Supabase / Node.js  
+| CI/CD | Vercel / Netlify  
+| AI Feedback | OpenAI API / Azure AI
 
 ---
 
-## 📘 4. Microsoft Resources Integration
-
-| Module | Microsoft Learn Resource | Link |
-|--------|--------------------------|------|
-| Email Writing | Write professional emails using Outlook | [🔗](https://learn.microsoft.com/en-us/training/modules/write-professional-emails-outlook/)  
-| Presentations | Create impactful presentations with PowerPoint | [🔗](https://learn.microsoft.com/en-us/training/modules/create-impactful-presentations-powerpoint/)  
-| Meetings | Collaborate effectively with Microsoft Teams | [🔗](https://learn.microsoft.com/en-us/training/modules/collaborate-effectively-teams/)  
-| Reports | Write business reports with Word | [🔗](https://learn.microsoft.com/en-us/training/modules/write-business-reports-word/)
-
-✅ Integration method:
-- Embed links in lessons  
-- Summarize key points  
-- Create parallel exercises
+## 📁 3. Cấu trúc thư mục ứng dụng
+english-business-app/ ├── public/ ├── src/ │   ├── components/ │   ├── pages/ │   ├── modules/ │   ├── data/ │   ├── hooks/ │   ├── context/ │   ├── utils/ │   └── styles/ ├── .env ├── README.md └── package.json
 
 ---
 
-## 📺 5. Accent & Speaking Resources
+## 📱 4. Cấu trúc tương tác người dùng
 
-### Recommended YouTube Channels
-
-- [Speak English With Tiffani](https://www.youtube.com/@SpeakEnglishWithTiffani)  
-- [English With Lucy](https://www.youtube.com/@EnglishwithLucy)  
-- [BBC Learning English](https://www.youtube.com/@bbclearningenglish)  
-- [Rachel’s English](https://www.youtube.com/@RachelsEnglish)  
-- [Accent’s Way English with Hadar](https://www.youtube.com/@AccentWayEnglish)
-
-### Learning Techniques
-
-- Shadowing  
-- Slow Speech Practice  
-- Muscle Memory Training  
-- Intonation & Tone  
-- Accent vs. Clarity
-
----
-
-## 📱 6. Mobile App Structure
-
-### Tabs
+### Tabs chính:
 
 - Home  
 - Learn  
-- Resources  
 - Practice  
+- Resources  
 - Profile
 
-### Features
+### Flow học bài:
 
-- Microlearning (5–7 min lessons)  
-- AI feedback (email correction, pronunciation)  
-- Progress tracker  
-- Flashcards & quizzes  
-- Embedded videos & documents
+1. Chọn module → hiển thị danh sách bài học  
+2. Mỗi bài gồm: từ vựng, hội thoại, bài tập, video, tài nguyên  
+3. Hoàn thành → cập nhật tiến độ → mở bài tiếp theo
 
 ---
 
-## ⚙️ 7. CI/CD Strategy
+## 📚 5. Giáo trình cơ bản
 
-### Git Branches
+### Phần nền tảng:
 
-| Branch | Purpose |
-|--------|---------|
-| `dev` | Development  
-| `staging` | Testing  
-| `main` | Production
+| Module | Nội dung | Kỹ năng |
+|--------|----------|--------|
+| Business Email Writing | Viết email chuyên nghiệp | Viết, ngữ pháp  
+| Meetings & Discussions | Giao tiếp trong họp | Nghe, nói  
+| Presentations & Pitching | Thuyết trình | Trình bày  
+| Negotiation Skills | Đàm phán | Chiến lược  
+| Customer Service English | Giao tiếp khách hàng | Lịch sự  
+| Grammar for Professionals | Ngữ pháp ứng dụng | Viết rõ  
+| Cross-cultural Communication | Giao tiếp quốc tế | Văn hóa
 
-### Deployment Tips
+### Phần chuyên biệt:
 
-- Disable auto-build  
-- Lock deploy until ready  
-- Manual trigger only  
-- Use Vercel or Netlify (free tier)
+| Ngành | Module |
+|-------|--------|
+| Sales & Marketing | English for Persuasion  
+| Human Resources | English for HR  
+| Finance & Accounting | English for Finance  
+| Logistics | English for Operations  
+| IT & Tech | English for Tech Teams  
+| Legal | English for Legal Contexts  
+| Hospitality | English for Service Excellence
+
+---
+
+## 📅 6. Lộ trình học 30 ngày
+
+| Tuần | Chủ đề | Nội dung |
+|------|--------|----------|
+| Tuần 1 | Email Writing | Cấu trúc, mẫu, phản hồi  
+| Tuần 2 | Meetings | Giao tiếp, phản xạ  
+| Tuần 3 | Presentations | Giới thiệu, trình bày  
+| Tuần 4 | Negotiation & Culture | Đàm phán, đa văn hóa
 
 ---
 
-## 🚀 8. Deployment Checklist
+## 📘 7. Tài nguyên Microsoft tích hợp
 
-- [ ] Create repo: `english-business-app`  
-- [ ] Set up CI/CD with manual deploy  
-- [ ] Register domain: `biz.ivsacademy.edu.vn`  
-- [ ] Build landing page  
-- [ ] Integrate Microsoft Learn links  
-- [ ] Embed YouTube videos  
-- [ ] Launch onboarding flow
+| Module | Microsoft Learn | Link |
+|--------|------------------|------|
+| Email Writing | Outlook Email | https://learn.microsoft.com/en-us/training/modules/write-professional-emails-outlook/  
+| Presentations | PowerPoint | https://learn.microsoft.com/en-us/training/modules/create-impactful-presentations-powerpoint/  
+| Meetings | Teams | https://learn.microsoft.com/en-us/training/modules/collaborate-effectively-teams/  
+| Reports | Word | https://learn.microsoft.com/en-us/training/modules/write-business-reports-word/
 
 ---
+
+## 📺 8. Video học ngoài giáo trình
+
+| Kênh | Nội dung | Link |
+|------|----------|------|
+| Tiffani | Giao tiếp, phản xạ | https://www.youtube.com/@SpeakEnglishWithTiffani  
+| Lucy | Phát âm, từ vựng | https://www.youtube.com/@EnglishwithLucy  
+| BBC | Hội thoại công sở | https://www.youtube.com/@bbclearningenglish  
+| Rachel | Phát âm giọng Mỹ | https://www.youtube.com/@RachelsEnglish  
+| Hadar | Shadowing, ngữ điệu | https://www.youtube.com/@AccentWayEnglish
+
+---
+
+## 🧠 9. Cấu trúc bài học mẫu
+
+```js
+{
+  id: "email-01",
+  title: "Professional Greetings",
+  vocabulary: ["Dear", "Best regards"],
+  dialogue: [
+    { speaker: "A", text: "Dear Mr. Smith..." },
+    { speaker: "B", text: "Thank you for reaching out..." }
+  ],
+  exercise: {
+    type: "fill-in-the-blank",
+    question: "___ Mr. Johnson...",
+    options: ["Hello", "Dear", "Hi", "Hey"],
+    answer: "Dear"
+  },
+  video: "https://youtube.com/embed/abc123",
+  resource: "https://learn.microsoft.com/en-us/training/modules/write-professional-emails-outlook/",
+  audioPractice: true
+}
+⚙️ 10. CI/CD & triển khai
+Chiến lược tiết kiệm tài nguyên:
+- Tắt Auto Build
+- Khóa Deploy
+- Chỉ build khi merge vào main
+- Ghi chú rõ trong README
+Nhánh Git:
+|  |  | 
+| dev |  | 
+| staging |  | 
+| main |  | 
+
+
+
+🚀 11. Checklist triển khai
+- [ ] Tạo repo english-business-app
+- [ ] Cấu hình CI/CD thủ công
+- [ ] Đăng ký domain biz.ivsacademy.edu.vn
+- [ ] Tạo landing page
+- [ ] Tích hợp Microsoft Learn
+- [ ] Nhúng video YouTube
+- [ ] Thiết kế onboarding flow
+
+---
+
+
