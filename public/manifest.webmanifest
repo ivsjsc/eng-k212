@@ -1,7 +1,7 @@
 {
-  "name": "IVS English K-12 Learning App",
-  "short_name": "IVS English",
-  "description": "Nền Tảng Giáo Dục Tiếng Anh Toàn Diện K-12",
+  "name": "English for Business - IVS",
+  "short_name": "EngBiz",
+  "description": "Mobile-First English Learning Platform for Business Professionals - Workplace Communication Made Easy",
   "icons": [
     {
       "src": "/images/logo/logo.png",
@@ -18,11 +18,15 @@
   ],
   "start_url": "/?source=homescreen",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#0f172a",
-  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
+  "background_color": "#1e293b",
+  "theme_color": "#3b82f6",
   "scope": "/",
-  "id": "ivs-english-k12",
-  "categories": ["education", "productivity"],
-  "lang": "vi"
+  "id": "ivs-english-business",
+  "categories": ["business", "education", "productivity"],
+  "lang": "en",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "screenshots": []
 }

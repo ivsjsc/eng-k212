@@ -2,19 +2,19 @@ import type { User, Classes, RewardTierConfig, TokenExchangeRate } from './types
 
 export const MOCK_USER: User = {
   id: 'user-01',
-  name: 'Alex',
-  avatar: 'fa-user-astronaut',
+  name: 'Professional User',
+  avatar: 'fa-user-tie',
   level: 'N/A',
   points: 0,
   badges: [],
   role: 'student',
   age: '',
-  gradeLevel: '',
+  gradeLevel: 'professional', // Changed for business context
   gender: '',
   streak: 0,
   pinnedCourses: [],
-  title: '',
-  subject: '',
+  title: 'Business Professional',
+  subject: 'Business English',
   // S-Score defaults
   sscore: 0,
   aiTokens: 100, // Starting tokens
@@ -38,6 +38,12 @@ export const SSCORE_POINT_VALUES: Record<string, number> = {
   first_try_bonus: 15,
   help_peer: 5,
   weekly_challenge: 50,
+  // Business-specific activities
+  email_practice: 15,
+  meeting_simulation: 25,
+  presentation_practice: 30,
+  negotiation_complete: 35,
+  phone_call_practice: 20,
 };
 
 export const REWARD_TIERS: RewardTierConfig[] = [
@@ -77,22 +83,28 @@ export const REWARD_TIERS: RewardTierConfig[] = [
 
 export const TOKEN_EXCHANGE_RATES: TokenExchangeRate[] = [
   {
-    feature: 'ai_writing_grader',
-    cost: 50,
-    displayName: 'AI Writing Grader',
-    description: 'Get detailed feedback on your essays',
+    feature: 'ai_email_grader',
+    cost: 40,
+    displayName: 'AI Email Grader',
+    description: 'Professional email review and suggestions',
   },
   {
-    feature: 'ai_speaking_partner',
+    feature: 'ai_meeting_partner',
+    cost: 80,
+    displayName: 'AI Meeting Simulation',
+    description: 'Practice business meetings with AI',
+  },
+  {
+    feature: 'ai_presentation_coach',
     cost: 100,
-    displayName: 'AI Speaking Partner',
-    description: '15-minute conversation practice session',
+    displayName: 'Presentation Coach',
+    description: 'AI feedback on your presentation',
   },
   {
-    feature: 'ai_personalized_lesson',
-    cost: 200,
-    displayName: 'Personalized Lesson',
-    description: 'Custom lesson tailored to your needs',
+    feature: 'ai_negotiation_practice',
+    cost: 120,
+    displayName: 'Negotiation Practice',
+    description: 'Role-play business negotiations',
   },
   {
     feature: 'ai_instant_feedback',
