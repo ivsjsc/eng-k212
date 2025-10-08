@@ -8,6 +8,8 @@ import { logger } from './utils/logger';
 // Lazy load heavy components
 const Sidebar = lazy(() => import('./components/Sidebar'));
 const Header = lazy(() => import('./components/Header'));
+const BottomNavigation = lazy(() => import('./components/BottomNavigation'));
+const OnboardingTour = lazy(() => import('./components/OnboardingTour'));
 const AdminPanel = lazy(() => import('./components/AdminPanel'));
 const Home = lazy(() => import('./components/Home'));
 const Dashboard = lazy(() => import('./components/Dashboard'));
@@ -60,6 +62,7 @@ function App() {
   const [showLinkPassword, setShowLinkPassword] = useState(false);
   const [showKeyboardHelp, setShowKeyboardHelp] = useState(false);
   const [showGlobalSearch, setShowGlobalSearch] = useState(false);
+  const [showOnboardingTour, setShowOnboardingTour] = useState(false);
 
   // Appearance states
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
@@ -211,9 +214,15 @@ function App() {
             if (hasGoogleProvider && !hasPasswordProvider && !linkPasswordShown) {
               setShowLinkPassword(true);
             } else {
-              // Trigger first-use overlay for new or returning users if not shown yet
-              const shown = localStorage.getItem('ivs-first-use-shown');
-              if (!shown) setShowFirstUseOverlay(true);
+              // Check for onboarding tour
+              const tourCompleted = localStorage.getItem('ivs-onboarding-tour-completed');
+              if (!tourCompleted) {
+                setShowOnboardingTour(true);
+              } else {
+                // Trigger first-use overlay for new or returning users if not shown yet
+                const shown = localStorage.getItem('ivs-first-use-shown');
+                if (!shown) setShowFirstUseOverlay(true);
+              }
             }
           }
         } else {
@@ -729,6 +738,23 @@ function App() {
                 />
               )}
 
+              {showOnboardingTour && user && (
+                <Suspense fallback={null}>
+                  <OnboardingTour
+                    user={user}
+                    language={language}
+                    onComplete={() => {
+                      setShowOnboardingTour(false);
+                      const shown = localStorage.getItem('ivs-first-use-shown');
+                      if (!shown) setShowFirstUseOverlay(true);
+                    }}
+                    onNavigate={(view) => {
+                      handleSetView(view);
+                    }}
+                  />
+                </Suspense>
+              )}
+
               {showProfileSetup && user && (
                 <ProfileSetupModal
                   user={user}
@@ -736,8 +762,13 @@ function App() {
                   onComplete={async (updates) => {
                     await handleUpdateUser({ ...user, ...updates });
                     setShowProfileSetup(false);
-                    const shown = localStorage.getItem('ivs-first-use-shown');
-                    if (!shown) setShowFirstUseOverlay(true);
+                    const tourCompleted = localStorage.getItem('ivs-onboarding-tour-completed');
+                    if (!tourCompleted) {
+                      setShowOnboardingTour(true);
+                    } else {
+                      const shown = localStorage.getItem('ivs-first-use-shown');
+                      if (!shown) setShowFirstUseOverlay(true);
+                    }
                   }}
                 />
               )}
@@ -820,6 +851,17 @@ function App() {
                 </Suspense>
               </div>
             </main>
+
+            {/* Bottom Navigation for Mobile */}
+            <Suspense fallback={null}>
+              <BottomNavigation
+                user={user}
+                currentView={currentView}
+                setView={handleSetView}
+                language={language}
+                isAdmin={isAdmin}
+              />
+            </Suspense>
           </div>
         </div>
 
