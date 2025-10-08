@@ -11,7 +11,10 @@
 
 import React, { useState, useEffect } from 'react';
 import type { User } from '../types';
-import { businessModules } from '../data/business-modules';
+import { foundationModules, industryModules, allBusinessModules } from '../data/business-modules-full';
+import LearningRoadmap from './LearningRoadmap';
+import AccentTraining from './AccentTraining';
+import VideoEmbed, { ChannelShowcase } from './VideoEmbed';
 
 interface BusinessDashboardProps {
   user: User;
@@ -20,6 +23,7 @@ interface BusinessDashboardProps {
 
 const BusinessDashboard: React.FC<BusinessDashboardProps> = ({ user, onNavigate }) => {
   const [activeModule, setActiveModule] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'home' | 'foundation' | 'industry' | 'roadmap' | 'accent'>('home');
 
   // Mobile-optimized module cards
   const ModuleCard = ({ module, icon, color }: any) => (
@@ -56,6 +60,75 @@ const BusinessDashboard: React.FC<BusinessDashboardProps> = ({ user, onNavigate 
       </div>
     </div>
   );
+
+  // Handle tab navigation
+  if (activeTab === 'roadmap') {
+    return <LearningRoadmap user={user} onLessonSelect={(day, lessonId) => console.log('Lesson:', day, lessonId)} />;
+  }
+
+  if (activeTab === 'accent') {
+    return <AccentTraining phrase="" />;
+  }
+
+  if (activeTab === 'foundation') {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pb-20">
+        {/* Header */}
+        <div className="sticky top-0 z-40 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-4 py-4">
+          <div className="flex items-center gap-3">
+            <button onClick={() => setActiveTab('home')} className="p-2 rounded-full bg-slate-100 dark:bg-slate-700">
+              <i className="fas fa-arrow-left text-slate-600 dark:text-slate-300"></i>
+            </button>
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white">
+              📚 Foundation Skills (7 Modules)
+            </h1>
+          </div>
+        </div>
+
+        {/* All Foundation Modules */}
+        <div className="px-4 py-6 space-y-4">
+          {foundationModules.map((module, idx) => (
+            <ModuleCard 
+              key={module.id}
+              module={module}
+              icon={['📧', '👥', '📊', '🤝', '📞', '📖', '🌏'][idx]}
+              color={['from-blue-500 to-blue-600', 'from-green-500 to-green-600', 'from-purple-500 to-purple-600', 'from-orange-500 to-orange-600', 'from-pink-500 to-pink-600', 'from-indigo-500 to-indigo-600', 'from-teal-500 to-teal-600'][idx]}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (activeTab === 'industry') {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pb-20">
+        {/* Header */}
+        <div className="sticky top-0 z-40 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-4 py-4">
+          <div className="flex items-center gap-3">
+            <button onClick={() => setActiveTab('home')} className="p-2 rounded-full bg-slate-100 dark:bg-slate-700">
+              <i className="fas fa-arrow-left text-slate-600 dark:text-slate-300"></i>
+            </button>
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white">
+              🏢 Industry-Specific (7 Modules)
+            </h1>
+          </div>
+        </div>
+
+        {/* All Industry Modules */}
+        <div className="px-4 py-6 space-y-4">
+          {industryModules.map((module, idx) => (
+            <ModuleCard 
+              key={module.id}
+              module={module}
+              icon={['💼', '👔', '💰', '📦', '💻', '⚖️', '🏨'][idx]}
+              color={['from-red-500 to-red-600', 'from-yellow-500 to-yellow-600', 'from-cyan-500 to-cyan-600', 'from-lime-500 to-lime-600', 'from-violet-500 to-violet-600', 'from-rose-500 to-rose-600', 'from-amber-500 to-amber-600'][idx]}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pb-20">
@@ -156,46 +229,67 @@ const BusinessDashboard: React.FC<BusinessDashboardProps> = ({ user, onNavigate 
           </div>
         </section>
 
-        {/* Learning Modules */}
+        {/* Foundation Modules (7) */}
         <section>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-mobile-lg font-bold text-slate-900 dark:text-white">
-              Learning Modules
+              📚 Foundation Skills
             </h2>
-            <button className="text-mobile-sm text-blue-600 dark:text-blue-400 font-semibold">
+            <button 
+              onClick={() => setActiveTab('foundation')}
+              className="text-mobile-sm text-blue-600 dark:text-blue-400 font-semibold"
+            >
               View All
             </button>
           </div>
 
           <div className="grid grid-cols-1 gap-4">
             <ModuleCard 
-              module={businessModules[0]} 
+              module={foundationModules[0]} 
               icon="📧" 
               color="from-blue-500 to-blue-600" 
             />
             <ModuleCard 
-              module={businessModules[1]} 
+              module={foundationModules[1]} 
               icon="👥" 
               color="from-green-500 to-green-600" 
             />
             <ModuleCard 
-              module={businessModules[2]} 
+              module={foundationModules[2]} 
               icon="📊" 
               color="from-purple-500 to-purple-600" 
             />
+          </div>
+        </section>
+
+        {/* Industry Modules (7) */}
+        <section>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-mobile-lg font-bold text-slate-900 dark:text-white">
+              🏢 Industry-Specific
+            </h2>
+            <button 
+              onClick={() => setActiveTab('industry')}
+              className="text-mobile-sm text-purple-600 dark:text-purple-400 font-semibold"
+            >
+              View All
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4">
             <ModuleCard 
-              module={businessModules[3]} 
-              icon="🤝" 
+              module={industryModules[0]} 
+              icon="💼" 
               color="from-orange-500 to-orange-600" 
             />
             <ModuleCard 
-              module={businessModules[4]} 
-              icon="📞" 
+              module={industryModules[1]} 
+              icon="�" 
               color="from-pink-500 to-pink-600" 
             />
             <ModuleCard 
-              module={businessModules[5]} 
-              icon="🌐" 
+              module={industryModules[2]} 
+              icon="💰" 
               color="from-indigo-500 to-indigo-600" 
             />
           </div>
@@ -230,27 +324,42 @@ const BusinessDashboard: React.FC<BusinessDashboardProps> = ({ user, onNavigate 
                     border-t border-slate-200 dark:border-slate-700 
                     pb-safe z-50 shadow-lg">
         <div className="flex items-center justify-around py-2">
-          <button className="flex flex-col items-center p-2 text-blue-600 dark:text-blue-400">
+          <button 
+            onClick={() => setActiveTab('home')}
+            className={`flex flex-col items-center p-2 ${activeTab === 'home' ? 'text-blue-600 dark:text-blue-400' : 'text-slate-500 dark:text-slate-400'}`}
+          >
             <i className="fas fa-home text-xl mb-1"></i>
             <span className="text-mobile-xs font-semibold">Home</span>
           </button>
           
-          <button className="flex flex-col items-center p-2 text-slate-500 dark:text-slate-400">
-            <i className="fas fa-book text-xl mb-1"></i>
-            <span className="text-mobile-xs">Lessons</span>
+          <button 
+            onClick={() => setActiveTab('roadmap')}
+            className={`flex flex-col items-center p-2 ${activeTab === 'roadmap' ? 'text-green-600 dark:text-green-400' : 'text-slate-500 dark:text-slate-400'}`}
+          >
+            <i className="fas fa-map text-xl mb-1"></i>
+            <span className="text-mobile-xs">30-Day</span>
           </button>
           
-          <button className="flex flex-col items-center p-2 text-slate-500 dark:text-slate-400">
-            <i className="fas fa-robot text-xl mb-1"></i>
-            <span className="text-mobile-xs">AI Coach</span>
+          <button 
+            onClick={() => setActiveTab('accent')}
+            className={`flex flex-col items-center p-2 ${activeTab === 'accent' ? 'text-purple-600 dark:text-purple-400' : 'text-slate-500 dark:text-slate-400'}`}
+          >
+            <i className="fas fa-microphone text-xl mb-1"></i>
+            <span className="text-mobile-xs">Accent</span>
           </button>
           
-          <button className="flex flex-col items-center p-2 text-slate-500 dark:text-slate-400">
+          <button 
+            onClick={() => onNavigate('progress')}
+            className="flex flex-col items-center p-2 text-slate-500 dark:text-slate-400"
+          >
             <i className="fas fa-chart-line text-xl mb-1"></i>
             <span className="text-mobile-xs">Progress</span>
           </button>
           
-          <button className="flex flex-col items-center p-2 text-slate-500 dark:text-slate-400">
+          <button 
+            onClick={() => onNavigate('profile')}
+            className="flex flex-col items-center p-2 text-slate-500 dark:text-slate-400"
+          >
             <i className="fas fa-user text-xl mb-1"></i>
             <span className="text-mobile-xs">Profile</span>
           </button>
