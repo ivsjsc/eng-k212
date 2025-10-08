@@ -26,4 +26,10 @@
     "allowImportingTsExtensions": true,
     "noEmit": true
   }
+  ,
+  "exclude": [
+    "App_old.tsx",
+    "archive/**",
+    "node_modules"
+  ]
 }

@@ -1,51 +1,38 @@
-import React, { useState } from 'react';
-import BusinessDashboard from './components/BusinessDashboard';
-import AccentTraining from './components/AccentTraining';
-import LearningRoadmap from './components/LearningRoadmap';
-import VideoEmbed, { ChannelShowcase } from './components/VideoEmbed';
-import type { User } from './types';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Home from './src/pages/Home';
+import Learn from './src/pages/Learn';
+import Practice from './src/pages/Practice';
+import Resources from './src/pages/Resources';
+import Profile from './src/pages/Profile';
 
-// Mock user for testing
-const mockUser: User = {
-  id: 'test-user-1',
-  name: 'Test User',
-  avatar: 'fa-user',
-  level: 'Beginner',
-  points: 1250,
-  badges: ['first-lesson', 'week-streak'],
-  role: 'student',
-  streak: 7,
-  sscore: 1250,
-  aiTokens: 50,
-  currentStreak: 7
-};
+const mockUser = { id: 'test-user-1', name: 'Test User' };
 
 const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<'home' | 'roadmap' | 'accent' | 'videos'>('home');
-
-  const renderView = () => {
-    switch (currentView) {
-      case 'roadmap':
-        return <LearningRoadmap user={mockUser} onLessonSelect={(day, lessonId) => console.log('Lesson:', day, lessonId)} />;
-      case 'accent':
-        return <AccentTraining phrase="" />;
-      case 'videos':
-        return (
-          <div className="min-h-screen bg-slate-50 dark:bg-slate-900 pb-20">
-            <div className="px-4 py-6">
-              <ChannelShowcase />
-            </div>
-          </div>
-        );
-      default:
-        return <BusinessDashboard user={mockUser} onNavigate={setCurrentView} />;
-    }
-  };
-
   return (
-    <div className="App">
-      {renderView()}
-    </div>
+    <BrowserRouter>
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+        <header className="p-4 border-b bg-white">
+          <nav className="flex gap-4">
+            <Link to="/" className="font-semibold">Home</Link>
+            <Link to="/learn">Learn</Link>
+            <Link to="/practice">Practice</Link>
+            <Link to="/resources">Resources</Link>
+            <Link to="/profile">Profile</Link>
+          </nav>
+        </header>
+
+        <main>
+          <Routes>
+            <Route path="/" element={<Home user={mockUser} />} />
+            <Route path="/learn" element={<Learn />} />
+            <Route path="/practice" element={<Practice />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+        </main>
+      </div>
+    </BrowserRouter>
   );
 };
 
