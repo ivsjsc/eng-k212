@@ -11,7 +11,8 @@
     ],
     "skipLibCheck": true,
     "types": [
-      "node"
+      "node",
+      "vite/client"
     ],
     "moduleResolution": "bundler",
     "isolatedModules": true,
@@ -28,8 +29,22 @@
   }
   ,
   "exclude": [
-    "App_old.tsx",
     "archive/**",
-    "node_modules"
+    "node_modules",
+    "netlify/**",
+    "scripts/**",
+    "services/**",
+    "src/main-auth0-wrapper.tsx",
+    "src/Auth0route.tsx",
+    "App_old.tsx"
+  ],
+  "include": [
+    "src/**/*",
+    "App.tsx",
+    "components/BusinessDashboard.tsx",
+    "components/AccentTraining.tsx",
+    "components/LearningRoadmap.tsx",
+    "components/VideoEmbed.tsx",
+    "data/**/*"
   ]
 }
