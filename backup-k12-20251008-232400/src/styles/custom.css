@@ -1,0 +1,193 @@
+/* Custom fallback styles extracted from previous index.css.
+   Keep small component-specific rules here that Tailwind may not cover.
+   This file is imported by index.css after Tailwind directives.
+*/
+:root{
+  --bg: #ffffff;
+  --bg-dark: #0f172a;
+  --muted: #64748b;
+  --primary: #0ea5e9; /* sky-500 */
+  --primary-600: #0284c7;
+  --accent: #0f172a;
+  --accent-dark: #f1f5f9;
+  --header-height: 4.25rem;
+}
+
+/* Dark mode background */
+html.dark,
+body.dark {
+  background: var(--bg-dark);
+  color: var(--accent-dark);
+}
+
+html:not(.dark),
+body:not(.dark) {
+  background: var(--bg);
+  color: var(--accent);
+}
+
+/* Smooth theme transition animations */
+html {
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  transition: background-color 0.2s ease,
+              border-color 0.2s ease,
+              color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+/* Prevent transition on page load */
+.no-transition,
+.no-transition * {
+  transition: none !important;
+}
+
+/* Range slider styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Checkbox styling */
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #3b82f6;
+}
+
+/* Enhanced focus indicators for keyboard navigation */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[data-nav-target]:focus,
+[tabindex]:focus-visible {
+  outline: 3px solid #3b82f6;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.2);
+  border-radius: 8px;
+  transition: outline 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Dark mode focus indicators */
+.dark button:focus-visible,
+.dark a:focus-visible,
+.dark input:focus-visible,
+.dark select:focus-visible,
+.dark textarea:focus-visible,
+.dark [data-nav-target]:focus,
+.dark [tabindex]:focus-visible {
+  outline-color: #60a5fa;
+  box-shadow: 0 0 0 5px rgba(96, 165, 250, 0.3);
+}
+
+/* Remove default focus outline (we use box-shadow instead) */
+button:focus,
+a:focus,
+input:focus {
+  outline: none;
+}
+
+/* Visible focus ring for accessibility */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg);
+  color: var(--accent);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* small utilities kept for components until full Tailwind is enabled */
+.min-h-screen{min-height:100vh}
+.flex{display:flex}
+.items-center{align-items:center}
+.justify-center{justify-content:center}
+.p-6{padding:1.5rem}
+
+.card-glass{background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.5)); backdrop-filter: blur(6px);}
+
+.form-label{display:block;font-size:0.875rem;color:var(--muted);margin-bottom:0.5rem}
+.form-input{width:100%;padding:0.6rem 0.75rem;border:1px solid #e6edf3;border-radius:0.5rem;background:#fff}
+
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.6rem 0.9rem;border-radius:0.6rem;border:0;cursor:pointer}
+.btn-primary{background:var(--primary);color:white}
+.btn-primary:disabled{opacity:0.6;cursor:not-allowed}
+
+.shadow-lg{box-shadow:0 10px 30px rgba(2,6,23,0.08)}
+.rounded-2xl{border-radius:1rem}
+
+.text-center{text-align:center}
+.text-sm{font-size:0.875rem}
+.text-3xl{font-size:1.875rem}
+
+.custom-scrollbar::-webkit-scrollbar{width:10px}
+.custom-scrollbar::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:8px}
+
+/* Utility spacing used in components */
+.mt-1{margin-top:0.25rem}
+.mt-2{margin-top:0.5rem}
+.mt-3{margin-top:0.75rem}
+.mt-4{margin-top:1rem}
+.mb-4{margin-bottom:1rem}
+.mb-6{margin-bottom:1.5rem}
+
+/* responsive container */
+.max-w-md{max-width:28rem}
+.w-full{width:100%}
+
+/* recaptcha container hidden by default */
+#recaptcha-container{display:none}
+
+/* small helper for error / success boxes used in UI */
+.bg-red-50{background:#fef2f2}
+.text-red-700{color:#b91c1c}
+.bg-green-50{background:#ecfdf5}
+.text-green-800{color:#065f46}

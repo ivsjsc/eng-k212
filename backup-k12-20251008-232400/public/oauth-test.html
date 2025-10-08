@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ENGLISH LEARNERS - Microsoft OAuth Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(45deg, #0078d4, #106ebe);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .microsoft-btn {
+            display: inline-block;
+            background: #0078d4;
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,120,212,0.3);
+        }
+
+        .microsoft-btn:hover {
+            background: #106ebe;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,120,212,0.4);
+        }
+
+        .microsoft-btn:active {
+            transform: translateY(0);
+        }
+
+        .microsoft-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+
+        .info {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .info h3 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .info p {
+            color: #6c757d;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .code {
+            background: #f1f3f4;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            padding: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #0078d4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">IVS</div>
+        <h1>ENGLISH LEARNERS</h1>
+        <p class="subtitle">Đăng nhập với tài khoản Microsoft</p>
+
+        <button class="microsoft-btn" onclick="startMicrosoftLogin()">
+            <svg class="microsoft-icon" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M11.4 24H0V12.6h11.4V24zM24 24H12.6V12.6H24V24zM11.4 11.4H0V0h11.4v11.4zm12.6 0H12.6V0H24v11.4z"/>
+            </svg>
+            Đăng nhập với Microsoft
+        </button>
+
+        <div id="status" class="status hidden">
+            <div id="status-content"></div>
+        </div>
+
+        <div class="info">
+            <h3>🔧 Cấu hình OAuth</h3>
+            <p><strong>Client ID:</strong> <span class="code">9fffc48e-73c3-4b66-9685-c152a0590a37</span></p>
+            <p><strong>Tenant ID:</strong> <span class="code">e6ee7282-fb62-4e9a-a1ec-577cbf49822f</span></p>
+            <p><strong>Redirect URI:</strong> <span class="code">https://ivsacademy.edu.vn/auth/callback</span></p>
+
+            <h3 style="margin-top: 20px;">📋 Hướng dẫn</h3>
+            <ol style="color: #6c757d; padding-left: 20px;">
+                <li>Tạo Client Secret trong Azure Portal</li>
+                <li>Cập nhật OAUTH_CLIENT_SECRET trong .env.oauth</li>
+                <li>Chạy server: <code>npm run oauth-server</code></li>
+                <li>Click nút đăng nhập để test</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        // Check if we're returning from OAuth callback
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const error = urlParams.get('error');
+
+        if (code) {
+            showStatus('success', '🔄 Đang xử lý đăng nhập...');
+            // Redirect to server callback
+            window.location.href = `http://localhost:3000/auth/callback?${window.location.search}`;
+        } else if (error) {
+            showStatus('error', `❌ Lỗi OAuth: ${error}`);
+        }
+
+        function startMicrosoftLogin() {
+            showStatus('warning', '<div class="spinner"></div>Đang chuyển hướng đến Microsoft...');
+
+            // For testing, redirect to local server
+            // In production, this would redirect to: https://ivsacademy.edu.vn/auth/microsoft
+            const loginUrl = 'http://localhost:3000/auth/microsoft';
+
+            setTimeout(() => {
+                window.location.href = loginUrl;
+            }, 1000);
+        }
+
+        function showStatus(type, message) {
+            const statusEl = document.getElementById('status');
+            const contentEl = document.getElementById('status-content');
+
+            statusEl.className = `status ${type}`;
+            statusEl.classList.remove('hidden');
+            contentEl.innerHTML = message;
+        }
+
+        // Auto-hide status after 5 seconds for success
+        setTimeout(() => {
+            const statusEl = document.getElementById('status');
+            if (statusEl.classList.contains('success')) {
+                statusEl.classList.add('hidden');
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

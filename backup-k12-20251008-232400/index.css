@@ -1,0 +1,10 @@
+
+/* Import custom styles FIRST - PostCSS requires @import before @tailwind */
+@import "./src/styles/custom.css";
+@import "./src/styles/enhancements.css";
+@import "./src/styles/modern-ui.css";
+@import "./src/styles/mobile-optimizations.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
