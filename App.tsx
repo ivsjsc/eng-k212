@@ -5,6 +5,8 @@ import Learn from './src/pages/Learn';
 import Practice from './src/pages/Practice';
 import Resources from './src/pages/Resources';
 import Profile from './src/pages/Profile';
+import ModuleDetail from './src/pages/ModuleDetail';
+import Lesson from './src/pages/Lesson';
 
 const mockUser = { id: 'test-user-1', name: 'Test User' };
 
@@ -26,6 +28,8 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<Home user={mockUser} />} />
             <Route path="/learn" element={<Learn />} />
+            <Route path="/learn/:moduleId" element={<ModuleDetail />} />
+            <Route path="/learn/:moduleId/:lessonId" element={<Lesson />} />
             <Route path="/practice" element={<Practice />} />
             <Route path="/resources" element={<Resources />} />
             <Route path="/profile" element={<Profile />} />
