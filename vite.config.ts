@@ -45,7 +45,7 @@ export default defineConfig(({ mode }) => {
               // Vendor chunks
               'react-vendor': ['react', 'react-dom'],
               'firebase-vendor': ['firebase/app', 'firebase/auth', 'firebase/firestore', 'firebase/functions'],
-              'ui-vendor': ['@google/genai', 'exceljs'],
+              'chart-vendor': ['recharts'],
               // Feature chunks
               'components': [
                 './components/TeacherDashboard',
@@ -81,9 +81,7 @@ export default defineConfig(({ mode }) => {
           'firebase/app',
           'firebase/auth',
           'firebase/firestore',
-          'firebase/functions',
-          '@google/genai',
-          'exceljs'
+          'firebase/functions'
         ],
         exclude: ['@firebase/app']
       }

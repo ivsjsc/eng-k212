@@ -3,7 +3,7 @@
  * Supports PDF, JSON, and Excel export formats
  */
 
-import { exportToExcel, type ExcelData } from './excelHelper';
+import type { ExcelData } from './excelHelper';
 import type { 
   QuizQuestion, 
   GeneratedConversation, 
@@ -43,6 +43,8 @@ export async function exportQuizToExcel(
   quiz: QuizQuestion[],
   lessonTitle: string
 ): Promise<void> {
+  const { exportToExcel } = await import('./excelHelper');
+  
   const headers = ['#', 'Question', 'Type', 'Difficulty', 'Options', 'Answer'];
   const rows = quiz.map((q, index) => [
     index + 1,

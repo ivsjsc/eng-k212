@@ -4,7 +4,8 @@
  */
 
 import { cache } from '../utils/cache';
-import * as geminiService from './geminiService';
+// import * as geminiService from './geminiService'; // Dynamic import
+import { isAiConfigured, gradeWriting, createChat, translateToVietnamese } from './geminiService';
 import type { 
   CurriculumLesson, 
   QuizQuestion,
@@ -54,12 +55,14 @@ export async function generateQuizCached(
     questionTypes?: QuestionType[];
   } = {}
 ): Promise<QuizQuestion[]> {
+  const { generateQuiz } = await import('./geminiService');
+  
   const cacheKey = generateCacheKey('quiz', lesson.id, language, options);
   
   try {
     return await cache.getOrSet(
       cacheKey,
-      () => geminiService.generateQuiz(lesson, language, options),
+      () => generateQuiz(lesson, language, options),
       CACHE_TTL.QUIZ
     );
   } catch (error) {
@@ -80,12 +83,14 @@ export async function generateConversationCached(
     numTurns?: number;
   } = {}
 ): Promise<GeneratedConversation> {
+  const { generateConversation } = await import('./geminiService');
+  
   const cacheKey = generateCacheKey('conversation', lesson.id, language, options);
   
   try {
     return await cache.getOrSet(
       cacheKey,
-      () => geminiService.generateConversation(lesson, language, options),
+      () => generateConversation(lesson, language, options),
       CACHE_TTL.CONVERSATION
     );
   } catch (error) {
@@ -104,12 +109,14 @@ export async function generateLessonPlanCached(
     duration?: string;
   } = {}
 ): Promise<LessonPlan> {
+  const { generateLessonPlan } = await import('./geminiService');
+  
   const cacheKey = generateCacheKey('lesson-plan', lesson.id, language, options);
   
   try {
     return await cache.getOrSet(
       cacheKey,
-      () => geminiService.generateLessonPlan(lesson, language, options),
+      () => generateLessonPlan(lesson, language, options),
       CACHE_TTL.LESSON_PLAN
     );
   } catch (error) {
@@ -130,12 +137,14 @@ export async function generateReadingPassageCached(
     numQuestions?: number;
   } = {}
 ): Promise<ReadingPassage> {
+  const { generateReadingPassage } = await import('./geminiService');
+  
   const cacheKey = generateCacheKey('reading', topic, language, options);
   
   try {
     return await cache.getOrSet(
       cacheKey,
-      () => geminiService.generateReadingPassage(topic, language, options),
+      () => generateReadingPassage(topic, language, options),
       CACHE_TTL.READING
     );
   } catch (error) {
@@ -154,12 +163,14 @@ export async function generateGrammarExerciseCached(
     numQuestions?: number;
   } = {}
 ): Promise<GrammarExercise> {
+  const { generateGrammarExercise } = await import('./geminiService');
+  
   const cacheKey = generateCacheKey('grammar', grammarPoint, language, options);
   
   try {
     return await cache.getOrSet(
       cacheKey,
-      () => geminiService.generateGrammarExercise(grammarPoint, language, options),
+      () => generateGrammarExercise(grammarPoint, language, options),
       CACHE_TTL.GRAMMAR
     );
   } catch (error) {
@@ -175,12 +186,14 @@ export async function generateSampleSentencesCached(
   lesson: CurriculumLesson,
   language: 'en' | 'vi'
 ): Promise<GeneratedSentence[]> {
+  const { generateSampleSentences } = await import('./geminiService');
+  
   const cacheKey = generateCacheKey('sentences', lesson.id, language);
   
   try {
     return await cache.getOrSet(
       cacheKey,
-      () => geminiService.generateSampleSentences(lesson, language),
+      () => generateSampleSentences(lesson, language),
       CACHE_TTL.SENTENCES
     );
   } catch (error) {
@@ -196,12 +209,14 @@ export async function generateStoryStarterCached(
   lesson: CurriculumLesson,
   language: 'en' | 'vi'
 ): Promise<string> {
+  const { generateStoryStarter } = await import('./geminiService');
+  
   const cacheKey = generateCacheKey('story', lesson.id, language);
   
   try {
     return await cache.getOrSet(
       cacheKey,
-      () => geminiService.generateStoryStarter(lesson, language),
+      () => generateStoryStarter(lesson, language),
       CACHE_TTL.STORY
     );
   } catch (error) {
