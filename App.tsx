@@ -27,7 +27,6 @@ const RoleSelectionPage = lazy(() => import('./components/RoleSelectionPage'));
 const KeyboardShortcutsHelp = lazy(() => import('./components/KeyboardShortcutsHelp'));
 const GlobalSearch = lazy(() => import('./components/GlobalSearch'));
 const PWAInstallPrompt = lazy(() => import('./components/PWAInstallPrompt'));
-import Curriculum from './components/Curriculum';
 import FirstUseOverlay from './components/FirstUseOverlay';
 import ProfileSetupModal from './components/ProfileSetupModal';
 import LinkPasswordModal from './components/LinkPasswordModal';
@@ -577,7 +576,7 @@ function App() {
       case 'home':
         return <Home user={user!} onUpdateUser={handleUpdateUser} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes} />;
       case 'curriculum':
-        return <Curriculum language={language} user={user!} onSelectCourse={handleSelectCourse} onUpdateUser={handleUpdateUser} setView={handleSetView} />;
+        return <Dashboard user={user!} onUpdateUser={handleUpdateUser} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes} />;
       case 'teacher-dashboard':
         return <TeacherDashboard classes={classes} setClasses={handleUpdateClasses} language={language} />;
       case 'teacher-analytics':
