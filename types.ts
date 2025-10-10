@@ -493,16 +493,17 @@ export interface RewardTierConfig {
 }
 
 export interface TokenExchangeRate {
-  feature: 
-    | 'ai_writing_grader' 
-    | 'ai_speaking_partner' 
-    | 'ai_personalized_lesson' 
+  feature:
+    | 'ai_writing_grader'
+    | 'ai_speaking_partner'
+    | 'ai_personalized_lesson'
     | 'ai_instant_feedback'
-    // Business-specific AI features
-    | 'ai_email_grader'
-    | 'ai_meeting_partner'
-    | 'ai_presentation_coach'
-    | 'ai_negotiation_practice';
+    // K-12 learning AI features
+    | 'ai_vocabulary_quiz'
+    | 'ai_grammar_exercise'
+    | 'ai_writing_feedback'
+    | 'ai_speaking_practice'
+    | 'ai_reading_comprehension';
   cost: number; // in S-Score points
   displayName: string;
   description: string;

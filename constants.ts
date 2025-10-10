@@ -2,19 +2,19 @@ import type { User, Classes, RewardTierConfig, TokenExchangeRate } from './types
 
 export const MOCK_USER: User = {
   id: 'user-01',
-  name: 'Professional User',
-  avatar: 'fa-user-tie',
-  level: 'N/A',
+  name: 'Student User',
+  avatar: 'fa-user-graduate',
+  level: 'Beginner',
   points: 0,
   badges: [],
   role: 'student',
   age: '',
-  gradeLevel: 'professional', // Changed for business context
+  gradeLevel: 'primary', // K-12 student context
   gender: '',
   streak: 0,
   pinnedCourses: [],
-  title: 'Business Professional',
-  subject: 'Business English',
+  title: 'Student',
+  subject: 'English Language',
   // S-Score defaults
   sscore: 0,
   aiTokens: 100, // Starting tokens
@@ -38,12 +38,13 @@ export const SSCORE_POINT_VALUES: Record<string, number> = {
   first_try_bonus: 15,
   help_peer: 5,
   weekly_challenge: 50,
-  // Business-specific activities
-  email_practice: 15,
-  meeting_simulation: 25,
-  presentation_practice: 30,
-  negotiation_complete: 35,
-  phone_call_practice: 20,
+  // K-12 learning activities
+  vocabulary_practice: 8,
+  grammar_exercise: 12,
+  reading_comprehension: 15,
+  listening_practice: 10,
+  speaking_exercise: 18,
+  writing_assignment: 25,
 };
 
 export const REWARD_TIERS: RewardTierConfig[] = [
@@ -83,32 +84,38 @@ export const REWARD_TIERS: RewardTierConfig[] = [
 
 export const TOKEN_EXCHANGE_RATES: TokenExchangeRate[] = [
   {
-    feature: 'ai_email_grader',
+    feature: 'ai_vocabulary_quiz',
+    cost: 20,
+    displayName: 'AI Vocabulary Quiz',
+    description: 'Personalized vocabulary practice quiz',
+  },
+  {
+    feature: 'ai_grammar_exercise',
+    cost: 25,
+    displayName: 'AI Grammar Exercise',
+    description: 'Custom grammar exercises with explanations',
+  },
+  {
+    feature: 'ai_writing_feedback',
     cost: 40,
-    displayName: 'AI Email Grader',
-    description: 'Professional email review and suggestions',
+    displayName: 'AI Writing Feedback',
+    description: 'Detailed feedback on writing assignments',
   },
   {
-    feature: 'ai_meeting_partner',
-    cost: 80,
-    displayName: 'AI Meeting Simulation',
-    description: 'Practice business meetings with AI',
+    feature: 'ai_speaking_practice',
+    cost: 35,
+    displayName: 'AI Speaking Practice',
+    description: 'Interactive speaking exercises with AI',
   },
   {
-    feature: 'ai_presentation_coach',
-    cost: 100,
-    displayName: 'Presentation Coach',
-    description: 'AI feedback on your presentation',
-  },
-  {
-    feature: 'ai_negotiation_practice',
-    cost: 120,
-    displayName: 'Negotiation Practice',
-    description: 'Role-play business negotiations',
+    feature: 'ai_reading_comprehension',
+    cost: 30,
+    displayName: 'AI Reading Coach',
+    description: 'Help with reading comprehension questions',
   },
   {
     feature: 'ai_instant_feedback',
-    cost: 30,
+    cost: 15,
     displayName: 'Instant Feedback',
     description: 'Quick AI feedback on exercises',
   },
