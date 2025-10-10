@@ -65,3 +65,14 @@ if ('serviceWorker' in navigator) {
     }
   });
 }
+
+// Capture the beforeinstallprompt event so we can show a custom install CTA
+window.addEventListener('beforeinstallprompt', (e: any) => {
+  // Prevent the mini-infobar from appearing on mobile
+  e.preventDefault();
+  // Stash the event for later use
+  (window as any).__PWAINSTALL__ = e;
+  console.log('[PWA] beforeinstallprompt captured');
+  // Optionally show a subtle in-app CTA by dispatching a custom event
+  window.dispatchEvent(new CustomEvent('pwa-install-available'));
+});

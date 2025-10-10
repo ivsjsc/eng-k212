@@ -41,10 +41,7 @@
   "include": [
     "src/**/*",
     "App.tsx",
-    "components/BusinessDashboard.tsx",
-    "components/AccentTraining.tsx",
-    "components/LearningRoadmap.tsx",
-    "components/VideoEmbed.tsx",
+    "components/**/*",
     "data/**/*"
   ]
 }

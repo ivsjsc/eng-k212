@@ -15,6 +15,7 @@ const AuthPage = lazy(() => import('./components/AuthPage'));
 const RoleSelectionPage = lazy(() => import('./components/RoleSelectionPage'));
 const PersonalizedLearningPath = lazy(() => import('./components/PersonalizedLearningPath'));
 const AssistiveTouch = lazy(() => import('./components/AssistiveTouch'));
+const PWAInstallPrompt = lazy(() => import('./components/PWAInstallPrompt'));
 
 // Import trực tiếp các component cần thiết ngay lập tức
 import Loading from './components/Loading';
@@ -387,6 +388,11 @@ function App() {
             <AssistiveTouch />
           </Suspense>
         )}
+
+        {/* PWA Install prompt UI */}
+        <Suspense fallback={null}>
+          <PWAInstallPrompt />
+        </Suspense>
       </div>
     </ErrorBoundary>
   );
