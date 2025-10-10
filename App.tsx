@@ -16,6 +16,10 @@ const RoleSelectionPage = lazy(() => import('./components/RoleSelectionPage'));
 const PersonalizedLearningPath = lazy(() => import('./components/PersonalizedLearningPath'));
 const AssistiveTouch = lazy(() => import('./components/AssistiveTouch'));
 const PWAInstallPrompt = lazy(() => import('./components/PWAInstallPrompt'));
+const ClassAnalyticsDashboard = lazy(() => import('./components/ClassAnalyticsDashboard'));
+const IVSAssistant = lazy(() => import('./components/IVSAssistant'));
+const AIContentGenerator = lazy(() => import('./components/AIContentGenerator'));
+const UserGuide = lazy(() => import('./components/UserGuide'));
 
 // Import trực tiếp các component cần thiết ngay lập tức
 import Loading from './components/Loading';
@@ -205,7 +209,6 @@ function App() {
               language={language} 
               user={user!} 
               onSelectCourse={handleSelectCourse} 
-              onUpdateUser={handleUpdateUser} 
               setView={handleSetView} 
             />
           </Suspense>
@@ -222,6 +225,34 @@ function App() {
           </Suspense>
         );
       
+      case 'teacher-analytics':
+        return (
+          <Suspense fallback={<LoadingFallback />}>
+            <ClassAnalyticsDashboard classes={classes} language={language} />
+          </Suspense>
+        );
+
+      case 'ai-content-generator':
+        return (
+          <Suspense fallback={<LoadingFallback />}>
+            <AIContentGenerator language={language} />
+          </Suspense>
+        );
+
+      case 'ivs-assistant':
+        return (
+          <Suspense fallback={<LoadingFallback />}>
+            <IVSAssistant user={user!} language={language} />
+          </Suspense>
+        );
+
+      case 'user-guide':
+        return (
+          <Suspense fallback={<LoadingFallback />}>
+            <UserGuide language={language} />
+          </Suspense>
+        );
+
       case 'learning-path':
         return (
           <Suspense fallback={<LoadingFallback />}>
@@ -260,8 +291,6 @@ function App() {
               onUpdateUser={handleUpdateUser}
               onSelectCourse={handleSelectCourse}
               language={language}
-              setView={handleSetView}
-              classes={classes}
             />
           </Suspense>
         );
@@ -385,8 +414,8 @@ function App() {
         {/* Assistive Touch for mobile */}
         {isMobile && (
           <Suspense fallback={null}>
-            <AssistiveTouch />
-          </Suspense>
+              <AssistiveTouch user={user!} language={language} />
+            </Suspense>
         )}
 
         {/* PWA Install prompt UI */}
