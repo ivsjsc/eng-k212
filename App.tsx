@@ -816,7 +816,7 @@ function App() {
                             } as any;
                             // open LessonView by setting selectedCourse then selected lesson after small tick
                             setTimeout(() => {
-                              setSelectedCourse(course);
+                              console.log('Selected course from search:', course);
                               // rely on CourseDetail to render LessonView when selectedLesson state is set via CourseDetail flow
                               // But we can also set a temporary global selectedLesson here by emulating CourseDetail behaviour
                               // For simplicity, we'll set current view to curriculum and let user click the lesson.
