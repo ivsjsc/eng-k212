@@ -270,7 +270,7 @@ export const demoAIResponses = {
         structure: "3-month intensive curriculum with daily lessons",
         features: [
           "🎯 84 daily structured lessons",
-          "📹 150+ professional video tutorials",
+          "📹 150+ educational video lessons",
           "🤖 AI-powered personal tutor (24/7 support)",
           "📊 Real-time progress analytics & insights",
           "🎤 Pronunciation AI with accent correction",
@@ -320,7 +320,7 @@ export const demoAIResponses = {
       },
       premiumFeatures: [
         "🎯 **Adaptive AI Learning**: Program adjusts daily based on YOUR performance",
-        "📹 **Professional Video Library**: 150+ HD video lessons with native speakers",
+        "📹 **Educational Video Library**: 150+ HD video lessons with native speakers",
         "🤖 **24/7 AI Tutor**: Get instant answers to unlimited questions",
         "✍️ **Smart Writing Assistant**: Real-time grammar, style, and content feedback",
         "� **Pronunciation Coach**: AI analyzes your speech and corrects accent",
