@@ -13,7 +13,6 @@ const OnboardingTour = lazy(() => import('./components/OnboardingTour'));
 const AdminPanel = lazy(() => import('./components/AdminPanel'));
 const Home = lazy(() => import('./components/Home'));
 const Dashboard = lazy(() => import('./components/Dashboard'));
-const CourseDetail = lazy(() => import('./components/CourseDetail'));
 const TeacherDashboard = lazy(() => import('./components/TeacherDashboard'));
 const ClassAnalyticsDashboard = lazy(() => import('./components/ClassAnalyticsDashboard'));
 const AIContentGenerator = lazy(() => import('./components/AIContentGenerator'));
