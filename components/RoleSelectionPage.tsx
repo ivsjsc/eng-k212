@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import AboutModal from './AboutModal';
 
 interface RoleSelectionPageProps {
   onSelectRole: (role: 'student' | 'teacher' | 'foreigner-teacher') => void;
@@ -15,12 +14,12 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
   language,
   setLanguage
 }) => {
-  const [aboutOpen, setAboutOpen] = useState(false);
   const t = {
     en: {
       welcome: 'Welcome to ENGLISH LEARNERS',
       byline: 'by IVS',
       subtitle: 'An English learning platform for every learner, harmonizing Vietnamese and international standards in a world shaped by accelerating technology.',
+      slogan: 'From local roots to global routes.' ,
       student: 'I am a Student',
       studentDesc:
         'Start your English learning journey with a personalized and AI-powered curriculum.',
@@ -32,13 +31,14 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
       guest: 'Try with a guest account',
       login: 'Login / Sign Up',
       signInSignUp: 'Sign in / Sign up',
-      aboutApp: 'About English Learners',
+      aboutApp: 'About IVS English',
       toggle: 'vn Tiếng Việt'
     },
     vi: {
       welcome: 'Chào mừng đến ENGLISH LEARNERS',
       byline: 'bởi IVS',
       subtitle: 'Nền tảng học tiếng Anh dành cho mọi người, kết nối tinh thần Việt và chuẩn mực toàn cầu giữa thời đại công nghệ bùng nổ.',
+      slogan: 'Từ gốc Việt đến đường quốc tế.',
       student: 'Tôi là Học sinh',
       studentDesc:
         'Bắt đầu hành trình học tiếng Anh với lộ trình cá nhân hóa và AI.',
@@ -49,13 +49,14 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
       vietnameseTeacher: 'Vietnamese Teacher',
       guest: 'Dùng thử với tài khoản khách',
       login: 'Đăng nhập / Đăng ký',
-      signInSignUp: 'Sign in / Sign up',
-      aboutApp: 'Giới thiệu về English Learners',
+      signInSignUp: 'Đăng nhập / Đăng ký',
+      aboutApp: 'Giới thiệu về IVS English',
       toggle: 'us English'
     }
   }[language];
 
-  // Language switching is handled inside the app (sidebar). Removed local language control from login page.
+  const [langMenuOpen, setLangMenuOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement | null>(null);
   const innerRef = useRef<HTMLDivElement | null>(null);
 
   // Ensure landing page defaults to Vietnamese (per requirement)
@@ -64,7 +65,15 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Removed language menu event listener (login page no longer shows language menu)
+  useEffect(() => {
+    function handleDocClick(e: MouseEvent) {
+      if (!langRef.current) return;
+      if (langRef.current.contains(e.target as Node)) return;
+      setLangMenuOpen(false);
+    }
+    document.addEventListener('mousedown', handleDocClick);
+    return () => document.removeEventListener('mousedown', handleDocClick);
+  }, []);
 
   const RoleCard: React.FC<{
     role: 'student' | 'teacher' | 'foreigner-teacher';
@@ -84,12 +93,8 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         }}
       >
         <div className="flex-grow">
-          <div className={`w-24 h-24 rounded-full mx-auto flex items-center justify-center mb-6 ${iconBg} shadow-lg overflow-hidden`}>
-            {icon && (icon.startsWith('/') || icon.includes('.webp') || icon.includes('.png')) ? (
-              <img src={icon} alt={`${title} icon`} className="w-16 h-16 object-contain" />
-            ) : (
-              <i className={`fa-solid ${icon} text-5xl text-white`}></i>
-            )}
+          <div className={`w-24 h-24 rounded-full mx-auto flex items-center justify-center mb-6 ${iconBg} shadow-lg`}>
+            <i className={`fa-solid ${icon} text-5xl text-white`}></i>
           </div>
           <h3 className="text-3xl font-bold mb-4 text-white">{title}</h3>
           <p className="text-base text-slate-200 mb-8 leading-relaxed">{description}</p>
@@ -128,23 +133,66 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
     <div
       className="min-h-full flex flex-col items-center justify-center p-6 text-center animate-fade-in relative overflow-hidden"
       style={{
-        backgroundImage: `url('/images/ivs-login-preview.webp')`,
+        backgroundImage: `url('/banner/ivsenglish-banner.png')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}
-      // No outer click quick-select behavior; language switching is available in the app sidebar only.
-      onClick={() => { /* intentionally no-op */ }}
+      onClick={(e) => {
+        // if user clicks outside the inner content, treat as selecting foreigner teacher and switch to English
+        if (innerRef.current && !innerRef.current.contains(e.target as Node)) {
+          setLanguage('en');
+          onSelectRole('foreigner-teacher');
+        }
+      }}
     >
       <div className="absolute inset-0 bg-black/60 dark:bg-black/70" aria-hidden />
+
+      <header className="absolute top-6 right-6 z-20" ref={langRef}>
+        <div className="relative inline-block text-left">
+          <button
+            onClick={() => setLangMenuOpen(v => !v)}
+            aria-haspopup="true"
+            aria-expanded={langMenuOpen}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-black/60 text-white font-semibold shadow-lg backdrop-blur-sm hover:bg-black/70 transition-colors"
+            title="Language"
+          >
+            <i className="fa-solid fa-globe text-lg" />
+            <span className="text-sm font-medium">{language === 'en' ? 'ENGLISH' : 'TIẾNG VIỆT'}</span>
+          </button>
+
+          {langMenuOpen && (
+            <div className="absolute right-0 mt-2 w-40 bg-white/95 dark:bg-slate-800 rounded-lg shadow-lg overflow-hidden z-30">
+              <button
+                onClick={() => {
+                  setLanguage('en');
+                  setLangMenuOpen(false);
+                }}
+                className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700"
+              >
+                English
+              </button>
+              <button
+                onClick={() => {
+                  setLanguage('vi');
+                  setLangMenuOpen(false);
+                }}
+                className="w-full text-left px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700"
+              >
+                Tiếng Việt
+              </button>
+            </div>
+          )}
+        </div>
+      </header>
 
   <div className="relative z-20 w-full max-w-7xl px-4" ref={innerRef}>
         {/* Logo and Title */}
         <div className="text-center mb-12">
           <picture>
             <source srcSet="/images/logo/logo-lighting.webp" type="image/webp" />
-            <source srcSet="/images/logo/logo-lighting.webp" type="image/webp" />
+            <source srcSet="/images/logo/logo-lighting.png" type="image/png" />
             <img
-              src="/images/logo/logo-lighting.webp"
+              src="/images/logo/logo-lighting.png"
               onError={e => { (e.currentTarget as HTMLImageElement).src = '/images/logo/logo.svg'; }}
               alt="IVS English Logo"
               className="w-24 h-24 mx-auto mb-6 rounded-full shadow-2xl ring-4 ring-white/20"
@@ -154,6 +202,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             {t.welcome} <span className="text-sm align-super font-light ml-3">{t.byline}</span>
           </h1>
           <p className="text-xl text-white/90 mb-2">{t.subtitle}</p>
+          <p className="text-sm text-slate-200 italic mb-6">{language === 'en' ? t.slogan : t.slogan}</p>
         </div>
 
         {/* Two Column Layout */}
@@ -163,7 +212,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             role="student"
             title={t.student}
             description={t.studentDesc}
-            icon="/images/logo/icon-student.webp"
+            icon="fa-graduation-cap"
             bgColor="bg-gradient-to-br from-blue-900/70 to-blue-800/60"
             iconBg="bg-gradient-to-br from-blue-500 to-blue-600"
             actions={
@@ -175,10 +224,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
                   }}
                   className="w-full py-3.5 rounded-xl bg-slate-700/60 text-white hover:bg-slate-700 transition-all duration-200 font-medium text-base backdrop-blur-sm border border-white/10"
                 >
-                  <span className="inline-flex items-center justify-center gap-2">
-                    <img src="/images/logo/logo-lighting.webp" alt="logo" className="w-5 h-5 inline-block" />
-                    <span>{t.guest}</span>
-                  </span>
+                  {t.guest}
                 </button>
                 <button
                   onClick={() => {
@@ -187,12 +233,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
                   }}
                   className="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 transition-all duration-200 font-semibold text-base shadow-xl"
                 >
-                  <span className="inline-flex items-center justify-center gap-3">
-                    <img src="/google-icon.svg" alt="google" className="w-5 h-5" />
-                    <img src="/microsoft-icon.svg" alt="microsoft" className="w-5 h-5" />
-                    <img src="/linkedin-icon.svg" alt="linkedin" className="w-5 h-5" />
-                    <span>{t.login}</span>
-                  </span>
+                  {t.login}
                 </button>
               </>
             }
@@ -203,7 +244,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
             role="teacher"
             title={t.teacher}
             description={t.teacherDesc}
-            icon="/images/logo/icon-teacher.webp"
+            icon="fa-person-chalkboard"
             bgColor="bg-gradient-to-br from-green-900/70 to-green-800/60"
             iconBg="bg-gradient-to-br from-green-500 to-green-600"
             actions={
@@ -214,14 +255,9 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
                     setLanguage('en');
                     onSelectRole('foreigner-teacher');
                   }}
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-600 text-white hover:from-purple-600 hover:to-fuchsia-700 transition-all duration-200 font-semibold text-base shadow-xl flex items-center justify-center gap-3"
+                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-purple-500 to-fuchsia-600 text-white hover:from-purple-600 hover:to-fuchsia-700 transition-all duration-200 font-semibold text-base shadow-xl"
                 >
-                  <span className="flex items-center gap-3">
-                    <img src="/google-icon.svg" alt="google" className="w-5 h-5" />
-                    <img src="/microsoft-icon.svg" alt="microsoft" className="w-5 h-5" />
-                    <img src="/linkedin-icon.svg" alt="linkedin" className="w-5 h-5" />
-                    <span>{t.signInSignUp}</span>
-                  </span>
+                  {t.signInSignUp}
                 </button>
                 <div className="text-sm text-slate-300 -mt-2 mb-1">{t.foreignerTeacher}</div>
 
@@ -233,10 +269,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
                   }}
                   className="w-full py-3.5 rounded-xl bg-slate-700/60 text-white hover:bg-slate-700 transition-all duration-200 font-medium text-base backdrop-blur-sm border border-white/10"
                 >
-                  <span className="inline-flex items-center justify-center gap-2">
-                    <img src="/images/logo/logo-lighting.webp" alt="logo" className="w-5 h-5 inline-block" />
-                    <span>{t.guest}</span>
-                  </span>
+                  {t.guest}
                 </button>
 
                 {/* Option 2: Vietnamese Teacher - green highlight */}
@@ -247,12 +280,7 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
                   }}
                   className="w-full py-3.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700 transition-all duration-200 font-semibold text-base shadow-xl"
                 >
-                  <span className="inline-flex items-center justify-center gap-3">
-                    <img src="/google-icon.svg" alt="google" className="w-5 h-5" />
-                    <img src="/microsoft-icon.svg" alt="microsoft" className="w-5 h-5" />
-                    <img src="/linkedin-icon.svg" alt="linkedin" className="w-5 h-5" />
-                    <span>{t.signInSignUp}</span>
-                  </span>
+                  {t.signInSignUp}
                 </button>
                 <div className="text-sm text-slate-300 -mt-2">{t.vietnameseTeacher}</div>
               </>
@@ -263,32 +291,33 @@ const RoleSelectionPage: React.FC<RoleSelectionPageProps> = ({
         {/* About App Button */}
         <div className="mt-8 text-center">
           <button
-            onClick={() => setAboutOpen(true)}
+            onClick={() => {
+              const introUrl = window.location.origin + '/IVS_APP_INTRODUCTION.md';
+              window.open(introUrl, '_blank', 'noopener,noreferrer');
+            }}
             className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 text-white/90 hover:text-white transition-all duration-200 backdrop-blur-sm border border-white/20 hover:border-white/30 text-base font-medium shadow-lg"
           >
             <i className="fa-solid fa-info-circle text-lg"></i>
             {t.aboutApp}
           </button>
         </div>
-
-        <AboutModal isOpen={aboutOpen} onClose={() => setAboutOpen(false)} language={language} />
         
         {/* Bilingual footer block */}
         <div className="mt-8 text-sm text-slate-300 max-w-3xl mx-auto leading-relaxed">
           {language === 'en' ? (
             <>
-              <div className="text-slate-100 font-medium mb-1">@2025</div>
-                <div className="mb-2">Published by <a href="https://ivsacademy.edu.vn" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline">IVS Education &amp; IVS Celestech, IVS JSC.</a></div>
+              <div className="text-slate-100 font-medium mb-1">English Version – 2025 Standard</div>
+              <div className="mb-2">Developed by IVS Education &amp; IVS Celestech, under IVS JSC, this platform delivers a Vietnamese-rooted yet globally-aligned English learning experience. Designed for all levels, it integrates AI, adaptive learning, and international standards to meet the demands of a rapidly evolving digital era.</div>
             </>
           ) : (
             <>
-              <div className="text-slate-100 font-medium mb-1">From local roots to global routes.</div>
-              <div className="mb-2">Developed by IVS Education &amp; IVS Celestech, IVS JSC.</div>
+              <div className="text-slate-100 font-medium mb-1">🇻🇳 Phiên bản tiếng Việt tương đương</div>
+              <div className="mb-2">Ứng dụng được phát triển bởi IVS Education &amp; IVS Celestech, trực thuộc IVS JSC. Nền tảng học tiếng Anh này kết hợp tinh thần Thuần Việt với chuẩn mực Quốc tế, dành cho mọi cấp độ. Tích hợp AI, học tập thích ứng và tiêu chuẩn toàn cầu, ứng dụng đáp ứng nhu cầu giáo dục trong thời đại số phát triển vượt bậc.</div>
             </>
           )}
 
-            <div className="mt-2 text-slate-400">©2025 All rights reserved IVS JSC</div>
-      
+          <div className="mt-2 text-slate-400">{language === 'en' ? 'Slogan:' : 'Slogan:'} <span className="font-semibold">{language === 'en' ? t.slogan : t.slogan}</span></div>
+          <div className="mt-2 text-slate-400">Tích hợp Firebase Firestore để lưu dữ liệu học tập</div>
         </div>
       </div>
     </div>
