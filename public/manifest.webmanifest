@@ -4,15 +4,15 @@
   "description": "Nền Tảng Giáo Dục Tiếng Anh Toàn Diện K-12 - Mobile First Design",
   "icons": [
     {
-      "src": "/images/logo/logo.png",
+      "src": "/images/logo/logo.svg",
       "sizes": "192x192",
-      "type": "image/png",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "/images/logo/logo-lighting.png",
+      "src": "/images/logo/logo-lighting.webp",
       "sizes": "512x512",
-      "type": "image/png",
+      "type": "image/webp",
       "purpose": "any maskable"
     }
   ],
