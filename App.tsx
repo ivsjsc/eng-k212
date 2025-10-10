@@ -24,7 +24,6 @@ const AuthPage = lazy(() => import('./components/AuthPage'));
 const RoleSelectionPage = lazy(() => import('./components/RoleSelectionPage'));
 const KeyboardShortcutsHelp = lazy(() => import('./components/KeyboardShortcutsHelp'));
 const GlobalSearch = lazy(() => import('./components/GlobalSearch'));
-const PWAInstallPrompt = lazy(() => import('./components/PWAInstallPrompt'));
 import FirstUseOverlay from './components/FirstUseOverlay';
 import ProfileSetupModal from './components/ProfileSetupModal';
 import LinkPasswordModal from './components/LinkPasswordModal';
@@ -872,12 +871,12 @@ function App() {
           </button>
         </div>
 
-        {/* PWA Install Prompt */}
-        {user && (
+        {/* PWA Install Prompt - Disabled */}
+        {/* {user && (
           <Suspense fallback={null}>
             <PWAInstallPrompt />
           </Suspense>
-        )}
+        )} */}
       </div>
     </ErrorBoundary>
   );
