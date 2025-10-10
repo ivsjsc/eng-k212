@@ -9,6 +9,7 @@ const Home = lazy(() => import('./components/Home'));
 const Dashboard = lazy(() => import('./components/Dashboard'));
 const Curriculum = lazy(() => import('./components/Curriculum'));
 const TeacherDashboard = lazy(() => import('./components/TeacherDashboard'));
+const CourseDetail = lazy(() => import('./components/CourseDetail'));
 const Settings = lazy(() => import('./components/Settings'));
 const AuthPage = lazy(() => import('./components/AuthPage'));
 const RoleSelectionPage = lazy(() => import('./components/RoleSelectionPage'));
@@ -171,23 +172,12 @@ function App() {
     if (selectedCourse) {
       return (
         <Suspense fallback={<LoadingFallback />}>
-          <div className="max-w-4xl mx-auto">
-            <button
-              onClick={() => setSelectedCourse(null)}
-              className="mb-4 flex items-center text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200"
-            >
-              <i className="fas fa-arrow-left mr-2"></i>
-              {language === 'vi' ? 'Quay lại' : 'Back'}
-            </button>
-            <div className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-lg">
-              <h1 className="text-2xl font-bold mb-4">{selectedCourse.title}</h1>
-              <p className="text-slate-600 dark:text-slate-400 mb-6">{selectedCourse.description}</p>
-              <div className="text-center py-8">
-                <i className="fas fa-book-open text-4xl text-blue-500 mb-4"></i>
-                <p className="text-lg">{language === 'vi' ? 'Nội dung khóa học đang được phát triển...' : 'Course content in development...'}</p>
-              </div>
-            </div>
-          </div>
+          <CourseDetail
+            course={selectedCourse}
+            onBack={() => setSelectedCourse(null)}
+            language={language}
+            setView={handleSetView}
+          />
         </Suspense>
       );
     }
