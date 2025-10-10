@@ -47,7 +47,10 @@ export default defineConfig(({ mode }) => {
               'firebase-vendor': ['firebase/app', 'firebase/auth', 'firebase/firestore', 'firebase/functions'],
               'chart-vendor': ['recharts'],
               // Feature chunks
-              'components': []
+              'components': [
+                './components/TeacherDashboard',
+                './components/CourseDetail'
+              ]
             },
             // Asset naming
             assetFileNames: (assetInfo) => {
