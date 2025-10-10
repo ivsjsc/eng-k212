@@ -337,8 +337,6 @@ function App() {
       if (e.key === 'Escape') {
         if (showKeyboardHelp) {
           setShowKeyboardHelp(false);
-        } else if (selectedCourse) {
-          setSelectedCourse(null);
         } else if (currentView !== 'home' && currentView !== 'curriculum') {
           handleSetView('home');
         }
@@ -470,7 +468,7 @@ function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentView, selectedCourse, showKeyboardHelp, user]);
+  }, [currentView, showKeyboardHelp, user]);
 
   const handleSetView = (view: View) => {
     // setSelectedCourse(null);
@@ -801,7 +799,7 @@ function App() {
                           rawLevel: level
                         };
 
-                        setSelectedCourse(course);
+                        console.log('Selected course:', course);
                         setCurrentView('curriculum');
 
                         if (lessonId) {
