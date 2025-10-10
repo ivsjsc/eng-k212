@@ -1,12 +1,13 @@
 {
-  "name": "english-learners-k-12---ivs-celestech",
+  "name": "english-for-business-ivs",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "description": "Mobile-first English learning platform for business professionals",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview --host"
   },
   "dependencies": {
     "@azure/msal-node": "^3.8.0",
@@ -16,6 +17,7 @@
     "firebase-admin": "^13.5.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-router-dom": "^6.14.0",
     "recharts": "^2.12.7"
   },
   "devDependencies": {
@@ -24,6 +26,7 @@
     "@vitejs/plugin-react": "^5.0.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
+    "qrcode-terminal": "^0.12.0",
     "tailwindcss": "^3.4.7",
     "terser": "^5.44.0",
     "tsx": "^4.20.6",
