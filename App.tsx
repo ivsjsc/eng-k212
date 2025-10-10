@@ -15,7 +15,6 @@ const Home = lazy(() => import('./components/Home'));
 const Dashboard = lazy(() => import('./components/Dashboard'));
 const TeacherDashboard = lazy(() => import('./components/TeacherDashboard'));
 const ClassAnalyticsDashboard = lazy(() => import('./components/ClassAnalyticsDashboard'));
-const AIContentGenerator = lazy(() => import('./components/AIContentGenerator'));
 const PersonalizedLearningPath = lazy(() => import('./components/PersonalizedLearningPath'));
 const IVSAssistant = lazy(() => import('./components/IVSAssistant'));
 const Settings = lazy(() => import('./components/Settings'));
@@ -52,7 +51,7 @@ function App() {
   const [selectedRole, setSelectedRole] = useState<'student' | 'teacher' | 'foreigner-teacher'>('student');
 
   const [currentView, setCurrentView] = useState<View>('home');
-  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  // const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showFirstUseOverlay, setShowFirstUseOverlay] = useState(false);
@@ -474,13 +473,13 @@ function App() {
   }, [currentView, selectedCourse, showKeyboardHelp, user]);
 
   const handleSetView = (view: View) => {
-    setSelectedCourse(null);
+    // setSelectedCourse(null);
     setCurrentView(view);
     setIsSidebarOpen(false);
   };
 
   const handleSelectCourse = (course: Course) => {
-    setSelectedCourse(course);
+    console.log('Course selected:', course);
   };
 
   const handleUpdateUser = async (updatedUser: User) => {
@@ -567,9 +566,6 @@ function App() {
   };
 
   const renderView = () => {
-    if (selectedCourse) {
-      return <CourseDetail course={selectedCourse} onBack={() => setSelectedCourse(null)} language={language} setView={handleSetView} />;
-    }
 
     switch (currentView) {
       case 'home':
@@ -581,7 +577,7 @@ function App() {
       case 'teacher-analytics':
         return <ClassAnalyticsDashboard classes={classes} language={language} />;
       case 'ai-content-generator':
-        return <AIContentGenerator language={language} />;
+        return <Dashboard user={user!} onUpdateUser={handleUpdateUser} onSelectCourse={handleSelectCourse} language={language} setView={handleSetView} classes={classes} />;
       case 'learning-path':
         return <PersonalizedLearningPath user={user!} language={language} />;
       case 'ivs-assistant':
