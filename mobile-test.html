@@ -2,36 +2,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mobile Testing - English for Business</title>
+    <title>Mobile Testing - IVS English K-12</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; }
-        .url { background: #f5f5f5; padding: 10px; border-radius: 5px; margin: 10px 0; word-break: break-all; }
-        .qr-placeholder { background: #eee; padding: 20px; text-align: center; border: 2px dashed #ccc; margin: 20px 0; }
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto; background: #f8fafc; }
+        .url { background: #fff; padding: 12px; border-radius: 8px; margin: 12px 0; word-break: break-all; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .qr-placeholder { background: #fff; padding: 24px; text-align: center; border: 2px dashed #cbd5e1; margin: 20px 0; border-radius: 8px; }
+        .feature { background: #f1f5f9; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #3b82f6; }
+        .badge { display: inline-block; background: #10b981; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h1>📱 English for Business - Mobile Testing</h1>
-    <p>Scan QR codes or use these URLs on your mobile devices:</p>
+    <h1>📱 IVS English K-12 - Mobile First Testing</h1>
+    <div class="badge">PWA Ready</div>
+    <p>Test the mobile-first design and PWA features on your devices:</p>
 
-    <h3>Network URL (for mobile devices):</h3>
-    <div class="url">http://192.168.1.6:3000/</div>
+    <h3>🌐 Network URL (for mobile devices):</h3>
+    <div class="url">http://192.168.1.6:4173/</div>
 
-    <h3>Local URL (for same network):</h3>
-    <div class="url">http://localhost:3000/</div>
+    <h3>🖥️ Local URL (for same network):</h3>
+    <div class="url">http://localhost:4173/</div>
 
     <div class="qr-placeholder">
-        <p>📷 QR Code would go here</p>
-        <small>Use a QR code generator with the network URL above</small>
+        <p>📷 QR Code Generator</p>
+        <small>Use any QR code generator with the network URL above</small>
+        <br><br>
+        <button onclick="generateQR()" style="background: #3b82f6; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">Generate QR Code</button>
     </div>
 
-    <h3>Testing Checklist:</h3>
-    <ul>
-        <li>Test all 4 views: Home, Roadmap, Accent, Videos</li>
-        <li>Check touch interactions and responsiveness</li>
-        <li>Verify video embeds work properly</li>
-        <li>Test in both portrait and landscape orientations</li>
-        <li>Check font sizes and readability</li>
-    </ul>
+    <div class="feature">
+        <h4>✨ Mobile-First Features</h4>
+        <ul>
+            <li><strong>Bottom Navigation</strong> - Tự động hiển thị trên mobile</li>
+            <li><strong>Responsive Sidebar</strong> - Overlay trên mobile, fixed trên desktop</li>
+            <li><strong>Touch-Optimized</strong> - Button sizes tối ưu cho touch</li>
+            <li><strong>PWA Ready</strong> - Có thể cài đặt như app native</li>
+            <li><strong>Offline Support</strong> - Service Worker với caching</li>
+        </ul>
+    </div>
+
+    <div class="feature">
+        <h4>🧪 Testing Checklist</h4>
+        <ul>
+            <li>✅ Test trang chọn vai trò (Học sinh/Giáo viên)</li>
+            <li>✅ Test navigation giữa các view: Home, Curriculum, Learning Path, Settings</li>
+            <li>✅ Test responsive design trên các kích thước màn hình</li>
+            <li>✅ Test touch interactions và gestures</li>
+            <li>✅ Test PWA install prompt</li>
+            <li>✅ Test offline functionality</li>
+            <li>✅ Test theme switching (dark/light mode)</li>
+            <li>✅ Test language switching (Vietnamese/English)</li>
+        </ul>
+    </div>
+
+    <script>
+        function generateQR() {
+            const url = 'http://192.168.1.6:4173/';
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(url)}`;
+            
+            const qrContainer = document.querySelector('.qr-placeholder');
+            qrContainer.innerHTML = `
+                <img src="${qrUrl}" alt="QR Code" style="max-width: 200px; border-radius: 8px;">
+                <p style="margin-top: 10px;">Scan để mở trên mobile</p>
+                <small>${url}</small>
+            `;
+        }
+    </script>
 </body>
 </html>

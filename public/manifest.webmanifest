@@ -1,7 +1,7 @@
 {
   "name": "IVS English K-12 Learning App",
   "short_name": "IVS English",
-  "description": "Nền Tảng Giáo Dục Tiếng Anh Toàn Diện K-12",
+  "description": "Nền Tảng Giáo Dục Tiếng Anh Toàn Diện K-12 - Mobile First Design",
   "icons": [
     {
       "src": "/images/logo/logo.png",
@@ -18,11 +18,37 @@
   ],
   "start_url": "/?source=homescreen",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "background_color": "#0f172a",
   "theme_color": "#0ea5e9",
   "scope": "/",
   "id": "ivs-english-k12",
   "categories": ["education", "productivity"],
-  "lang": "vi"
+  "lang": "vi",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui", "browser"],
+  "edge_side_panel": {
+    "preferred_width": 480
+  },
+  "screenshots": [
+    {
+      "src": "/images/screenshot-mobile-1.png",
+      "sizes": "320x640",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Trang chọn vai trò"
+    },
+    {
+      "src": "/images/screenshot-desktop-1.png", 
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Trang chủ desktop"
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+ivsenglish",
+      "url": "/?lesson=%s"
+    }
+  ]
 }
