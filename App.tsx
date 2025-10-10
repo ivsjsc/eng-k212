@@ -2,6 +2,10 @@ import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { View, User, Course, Classes } from './types';
 import { MOCK_CLASSES, MOCK_USER } from './constants';
 
+// Firebase imports
+import { auth, db, firebaseInitError, onAuthStateChanged, signOut, doc, getDoc, setDoc, updateDoc } from './services/firebase';
+import { logger } from './utils/logger';
+
 // Lazy load components cho performance
 const Sidebar = lazy(() => import('./components/Sidebar'));
 const Header = lazy(() => import('./components/Header'));
@@ -119,6 +123,89 @@ function App() {
   useEffect(() => {
     localStorage.setItem('ivs-language', language);
   }, [language]);
+
+  // Firebase Authentication State Management
+  useEffect(() => {
+    if (firebaseInitError) {
+      logger.error('Firebase initialization failed:', firebaseInitError);
+      setIsAuthLoading(false);
+      return;
+    }
+
+    if (!auth || !db) {
+      logger.warn('Firebase services not available');
+      setIsAuthLoading(false);
+      return;
+    }
+
+    setIsAuthLoading(true);
+
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      try {
+        console.info('onAuthStateChanged fired. firebaseUser:', firebaseUser);
+
+        if (!firebaseUser) {
+          // Not signed in
+          setUser(null);
+          setClasses({});
+          setAuthStep('roleSelection');
+          setIsAuthLoading(false);
+          return;
+        }
+
+        // User is signed in
+        let resolvedUser: User | null = null;
+        const userDocRef = doc(db, "users", firebaseUser.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          resolvedUser = { id: userDoc.id, ...userDoc.data() } as User;
+          console.info('Loaded existing user from Firestore:', resolvedUser.name);
+        } else {
+          // Create new user document
+          const storedRole = sessionStorage.getItem('authRole') as 'student' | 'teacher' | 'foreigner-teacher' || 'student';
+          const fallbackName = firebaseUser.displayName || firebaseUser.email?.split('@')[0] || (storedRole === 'teacher' ? 'New Teacher' : 'New Student');
+
+          const newUser: User = {
+            ...MOCK_USER,
+            id: firebaseUser.uid,
+            name: fallbackName,
+            email: firebaseUser.email || undefined,
+            role: storedRole,
+            avatar: MOCK_USER.avatar,
+          };
+
+          await setDoc(userDocRef, {
+            ...newUser,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          });
+
+          resolvedUser = newUser;
+          sessionStorage.removeItem('authRole');
+          console.info('Created new user in Firestore:', newUser.name);
+        }
+
+        setUser(resolvedUser);
+        setAuthStep('login'); // User is authenticated
+
+        // Load classes for teachers
+        if (resolvedUser?.role === 'teacher' || resolvedUser?.role === 'foreigner-teacher') {
+          setClasses(MOCK_CLASSES);
+        }
+
+      } catch (error) {
+        logger.error('Error in auth state change:', error);
+        setUser(null);
+        setClasses({});
+        setAuthStep('roleSelection');
+      } finally {
+        setIsAuthLoading(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   // Guest login handler
   const handleGuestLogin = (role: 'student' | 'teacher' | 'foreigner-teacher') => {
